@@ -1,0 +1,152 @@
+.markdown{
+    font-size: 15px;
+    margin-top: 26px;
+}
+.markdown a:hover{
+    text-decoration: underline;
+}
+.markdown a {
+    font-size: .93em;
+}
+.markdown h1, .markdown h2, .markdown h3, .markdown h4{
+    color: #555;
+}
+.markdown h2:before{
+    content: '#';
+    margin-right: 6px;
+    font-size: 19px;
+    color: #888;
+}
+.markdown h3:before{
+    content: '@';
+    margin-right: 5px;
+    font-size: 19px;
+    color: #111;
+}
+.markdown h1{
+    padding: 7px 5px;
+    border-bottom: 1px solid #e7e7e7;
+    margin-bottom: 12px;
+    font-size: 19px;
+    cursor: pointer;
+}
+.markdown h2{
+    padding: 5px 4px;
+    font-size: 18px;
+    margin-bottom: 7px;
+    color: #111;
+    font-weight: 400;
+}
+.markdown h3{
+    padding: 4px 10px;
+    font-size: 18px;
+    margin-bottom: 6px;
+    color: #777;
+    font-weight: 400;
+}
+.markdown p{
+    font-size: 1.19em;
+    line-height: 1.5;
+    color: #233;
+    margin-bottom: 19px;
+}
+.markdown ul, .markdown ol{
+    margin: 16px 12px;
+    font-size: 1.15em;
+    color: #2b2c25;
+}
+.markdown ul li,.markdown ol li{
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+.markdown ul li{
+    margin-left: 15px;
+    list-style-type: disc !important;
+}
+.markdown ol li{
+    margin-left: 16px;
+    list-style-type: decimal !important;
+}
+.markdown img{
+    max-width: 100%;
+    padding-top: 4px;
+    border-radius: 6px;
+    box-shadow: rgba(0,0,0,0.2) 0 1px 1px;
+}
+.markdown blockquote{
+    margin: 15px 4px;
+    padding: 10px;
+    color: #888;
+    border-left: 5px solid #409EFF;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+    font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
+    font-weight: 600;
+}
+.markdown .success {
+    border-left-color: #67C23A;
+}
+.markdown .warning {
+    border-left-color: #E6A23C;
+}
+.markdown .danger {
+    border-left-color: #F56C6C;
+}
+.markdown .info {
+    border-left-color: #909399;
+}
+
+.markdown hr{
+    margin-bottom: 10px;
+    height: 0.15em;
+    background-color: #e7e7e7;
+    border: 0;
+}
+.markdown br{
+    margin-bottom: 3px;
+}
+.markdown ._c{
+    overflow: auto;
+    word-wrap:break-word;
+    font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
+    padding: .2em .4em .1em;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 3px;
+    margin: 0 .2em;
+}
+.markdown pre{
+    overflow: auto;
+    word-wrap: break-word;
+    line-height: 1.1;
+    padding: 16px 16px 12px;
+    overflow: auto;
+    border-radius: 3px;
+    background-color: #282828;
+    margin: 15px 0 22px;
+}
+.markdown pre code{
+    font: 16px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
+    padding-bottom: 12px;
+}
+.markdown table{
+    margin-bottom: 10px;
+    overflow: auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font: 16px, -apple-system, "Roboto Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
+}
+.markdown table th {
+    font-weight: 600;
+}
+.markdown table th,
+.markdown table td {
+    padding: 8px 14px;
+    border: 1px solid #dfe2e5;
+}
+
+.markdown table tr {
+    background-color: #fff;
+    border-top: 1px solid #c6cbd1;
+}

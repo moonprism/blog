@@ -1,0 +1,184 @@
+.comment{
+    width: 100%;
+    margin: 60px 0 40px;
+}
+.comment #to_name{
+    display: block;
+    margin: 5px;
+}
+.comment #to_name a{
+    margin-left: 10px;
+}
+.comment input, .comment textarea{
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+}
+.comment label{
+    display: inline-block;
+    width: 10%;
+    font-size: 15px;
+}
+.comment #name{
+    width: 20%;
+    margin-right: 3%;
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+}
+.comment #email{
+    width: 30%;
+}
+.comment #name, .comment #email{
+    height: 20px;
+    padding: 6px 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    outline: none;
+    transition: border-color .3s;
+}
+.comment textarea {
+    outline: none;
+    transition: border-color .3s;
+}
+.comment #name:focus, .comment #email:focus, .comment textarea:focus {
+    border-color: aqua;
+}
+.comment .exp-p{
+    width: 44%;
+    height: 100px;
+    position: absolute;
+    padding: 14px 6px 7px;
+    background-color: rgba(255,255,255,0.9);
+}
+.comment .exp-p a{
+    margin: 4px 6px;
+    padding: 1px;
+    display: inline-block;
+    color: #888;
+    font-family: google
+}
+.comment .exp-p a:hover{
+    color: #333;
+    font-weight: 400;
+}
+.comment textarea{
+    width: 81%;
+    height: 111px;
+    margin-top: 10px;
+    padding: 5px 11px;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+}
+.comment .submit , .comment .exp{
+    font-family: "Microsoft YaHei Light";
+    border: 1px solid #555;
+    border-radius: 3px;
+    margin-top: 2px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: 0.3s
+}
+.comment .submit:hover{
+    background-color: #555;
+    color: #fff;
+}
+.comment .submit{
+    padding: 5px 0 4px;
+    width: 59px;
+    margin-left: 1%;
+}
+.comment .exp{
+    padding: 5px 0 4px;
+    width: 66px;
+    margin-left: 66%;
+}
+.comment .exp:hover{
+    background-color: #bbb;
+    color: #fff;
+    border-color: #bbb;
+}
+.com-list{
+    width: 100%;
+    margin-top: 30px;
+}
+.com {
+    padding: 10px 5px;
+    margin-top: 30px;
+    border-top: 1.2px solid #e2e2e2;
+}
+.com img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 10px;
+}
+.com a{
+    margin-top: 4px;
+    height: 18px;
+    display: block;
+    letter-spacing: 1px;
+    font-size: 14px;
+    color: #393939
+}
+.com .repl{
+    float: right;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #888
+}
+.com span{
+    height: 18px;
+    display: block;
+    color: #acacac
+}
+.com p{
+    padding: 10px 5px;
+}
+.com > .com{
+    margin-left: 33px;
+}
+.more_a{
+    display: none;
+    margin: 35px auto 0;
+    width: 80px;
+    text-align: center;
+    color: #a5a5a5
+}
+@media screen and (max-width: 750px){
+    .comment label{
+        display: block;
+        margin: 5px 3px;
+    }
+    .comment #name{
+        width: 85%;
+    }
+    .comment #email{
+        width: 85%;
+    }
+    .comment textarea{
+        width: 90%;
+    }
+    .comment .exp{
+        margin-left: 63%;
+    }
+    .comment .exp-p{
+        width: 92%;
+        padding-top: 0;
+    }
+    .comment .exp-p a{
+        margin: 1px 6px;
+    }
+    .comment .submit{
+        margin-left: 1%;
+    }
+}

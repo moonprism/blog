@@ -1,0 +1,49 @@
+.markdown h2{
+    color: #555;
+    text-shadow: 0 1px 1px rgba(0,0,0,.1);
+    line-height: 1.8;
+    padding: 6px 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 17px;
+    font-size: 18px;
+}
+.markdown ul {
+    margin: 15px 70px 20px
+}
+.markdown ul li {
+    font-size: 18px;
+    padding-top: 5px;
+}
+.markdown ul li a {
+    letter-spacing: .04rem;
+    color: #00a1d6;
+}
+.markdown ul li code {
+    font-size: 15px;
+    font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
+    font-weight: 600;
+    color: #9a9a9a;
+    letter-spacing: .03rem;
+}
+.markdown ul li a:hover {
+    text-decoration: underline;
+}
+.markdown ul li img {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    top: 6px;
+    border-radius: 50%;
+}
+
+#content{
+    width: 733px !important;
+}
+.comment{
+    margin-top: 20px !important;
+}
+@media screen and (max-width: 750px) {
+    #content {
+        width: 100% !important
+    }
+}

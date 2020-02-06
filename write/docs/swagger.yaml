@@ -1,0 +1,754 @@
+basePath: /api/v1
+definitions:
+  api.articleListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.ArticleInfo'
+        type: array
+      pagination:
+        $ref: '#/definitions/utils.Pagination'
+        type: object
+    type: object
+  api.authResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  api.codeListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.CodeMeta'
+        type: array
+      pagination:
+        $ref: '#/definitions/utils.Pagination'
+        type: object
+    type: object
+  api.fileListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.File'
+        type: array
+    type: object
+  errors.HTTPError:
+    properties:
+      key:
+        type: string
+      message:
+        type: string
+    type: object
+  model.ArticleDetail:
+    properties:
+      content:
+        type: string
+      created_time:
+        type: string
+      html:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      status:
+        type: integer
+      summary:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/model.TagMeta'
+        type: array
+      title:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  model.ArticleInfo:
+    properties:
+      created_time:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      status:
+        type: integer
+      summary:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/model.TagMeta'
+        type: array
+      title:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  model.CodeDetail:
+    properties:
+      content:
+        type: string
+      created_time:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      lang:
+        type: string
+      tags:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  model.CodeMeta:
+    properties:
+      created_time:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      lang:
+        type: string
+      tags:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  model.File:
+    properties:
+      created_time:
+        type: string
+      id:
+        type: integer
+      key:
+        type: string
+    type: object
+  model.FileMeta:
+    properties:
+      key:
+        type: string
+    type: object
+  model.TagInfo:
+    properties:
+      color:
+        type: string
+      count:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  model.TagMeta:
+    properties:
+      color:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  service.ArticleUpdateBody:
+    properties:
+      content:
+        type: string
+      created_time:
+        type: string
+      html:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      status:
+        type: integer
+      summary:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/model.TagMeta'
+        type: array
+      title:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  service.AuthBody:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  service.CodeUpdateBody:
+    properties:
+      content:
+        type: string
+      created_time:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      lang:
+        type: string
+      tags:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  utils.Pagination:
+    properties:
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: 'This is blog api test server. jwt token prefix: Bearer'
+  license: {}
+  title: Kicoe Blog API
+  version: "1.0"
+paths:
+  /article:
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: current page
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.articleListResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get article list
+      tags:
+      - Article
+    post:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ' '
+        in: body
+        name: articleInfo
+        required: true
+        schema:
+          $ref: '#/definitions/model.ArticleInfo'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: create article
+      tags:
+      - Article
+  /article/{id}:
+    delete:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: article id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: delete article
+      tags:
+      - Article
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: article id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ArticleDetail'
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: show article
+      tags:
+      - Article
+    put:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: article id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ' '
+        in: body
+        name: articleUpdateBody
+        required: true
+        schema:
+          $ref: '#/definitions/service.ArticleUpdateBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: update article
+      tags:
+      - Article
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ' '
+        in: body
+        name: loginData
+        required: true
+        schema:
+          $ref: '#/definitions/service.AuthBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.authResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: admin login (jwt)
+      tags:
+      - Auth
+  /code:
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: current page
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.codeListResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get code list
+      tags:
+      - Code
+    post:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ' '
+        in: body
+        name: codeMeta
+        required: true
+        schema:
+          $ref: '#/definitions/service.CodeUpdateBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: create code
+      tags:
+      - Code
+  /code/{id}:
+    delete:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: code id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: delete code
+      tags:
+      - Code
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: code id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CodeDetail'
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: show code
+      tags:
+      - Code
+    put:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: code id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ' '
+        in: body
+        name: codeUpdateBody
+        required: true
+        schema:
+          $ref: '#/definitions/service.CodeUpdateBody'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: update code
+      tags:
+      - Code
+  /file/image:
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: current time yyyy-MM-dd HH:mm:ss
+        in: query
+        name: max_time
+        type: string
+      - description: fetch list length
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.fileListResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get file list
+      tags:
+      - File
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ' '
+        in: formData
+        name: image
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FileMeta'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: upload image
+      tags:
+      - File
+  /file/image/{id}:
+    delete:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: file id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: delete file
+      tags:
+      - File
+  /tag:
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TagInfo'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get tag list
+      tags:
+      - Tag
+    post:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ' '
+        in: body
+        name: tagMeta
+        required: true
+        schema:
+          $ref: '#/definitions/model.TagMeta'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: create tag
+      tags:
+      - Tag
+  /tag/{id}:
+    delete:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: tag id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: delete tag
+      tags:
+      - Tag
+    put:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: tag id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ' '
+        in: body
+        name: TagMeta
+        required: true
+        schema:
+          $ref: '#/definitions/model.TagMeta'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: update tag
+      tags:
+      - Tag
+swagger: "2.0"

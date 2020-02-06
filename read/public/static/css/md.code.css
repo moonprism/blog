@@ -1,0 +1,90 @@
+.search-input {
+    text-align: center;
+    margin-bottom: 17px;
+}
+.search-input input {
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 0 15px;
+    transition: border-color .3s;
+    width: 44.5%;
+}
+.search-input input:focus {
+    border-color: aqua;
+}
+.search-result .search-item {
+    
+}
+.search-result blockquote {
+    margin: 12px 0 2px;
+    padding: 5px 5px 0;
+    color: #777;
+    word-wrap: break-word;
+    font-size: 18px;
+}
+.search-result blockquote span {
+    color: #777;
+    font-size: 15px;
+}
+
+.search-result .tags {
+    padding: 5px 10px;
+    margin-top: 3px;
+    background-color: #fff;
+    border: 1px solid #d3d4d6;
+    color: #909399;
+    border-radius: 4px;
+}
+.search-result pre {
+    border: 1px solid #ddd;
+    overflow: auto;
+    word-wrap: break-word;
+    line-height: 1.1;
+    padding: 10px 16px;
+    border-radius: 3px;
+    margin: 5px 0 22px;
+}
+.search-result pre code {
+    font: 15px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
+}
+.search-result em {
+    border-bottom: 2px solid aqua;
+    margin: 0 2px;
+    padding: 0 4px;
+    border-radius: 2px;
+    font-style: normal;
+}
+
+.hljs {
+    border: 0;
+    font-size: 12px;
+    display: block;
+    padding: 1px;
+    margin: 0;
+    width: 100%;
+    font-weight: 200;
+    white-space: pre-wrap
+}
+.hljs ol {
+    list-style: decimal;
+    margin: 0 0 0 33px !important;
+    padding: 0;
+}
+.hljs ol li {
+    border-left: 1px solid #ddd !important;
+    padding: 1px 10px!important;
+    margin: 0 !important;
+    white-space: pre;
+}
+
+
