@@ -1,43 +1,50 @@
 let backupHTML = $('searchResult').innerHTML;
-var searchLockKey = '';
+var searchResult = {};
 f.addEve($('searchInput'), 'input', () => {
     let searchText = $('searchInput').value;
     if (searchText) {
-        searchLockKey = searchText;
-        setTimeout(function () {
-            f.ajax({
-                url: "/code/search/" + searchText,
-                type: "GET",
-                dataType: "json",
-                success: function (response) {
-                    if (!$('searchInput').value) {
-                        $('searchResult').innerHTML = backupHTML;
-                        highlight()
-                        return;
-                    }
-                    if ($('searchInput').value != searchLockKey) {
-                        $('searchResult').innerHTML = '';
-                        return;
-                    }
-                    let result = JSON.parse(response);
-                    $('searchResult').innerHTML = '';
-                    result.forEach(
-                        (element) => {
-                            render(element)
-                        }
-                    )
-                    highlight()
-
-                },
-                fail: function (status) {
-                    $('searchResult').innerHTML = '<div style="text-align:center;margin-top:35px">500</div>';
+        if (searchResult[searchText]) {
+            $('searchResult').innerHTML = '';
+            searchResult[searchText].forEach(
+                (item) => {
+                    render(item);
                 }
-            });
-        }, 50)
+            )
+            highlight();
+        } else {
+            setTimeout(function () {
+                f.ajax({
+                    url: "/code/search/" + searchText,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                        if ($('searchInput').value == '') {
+                            $('searchResult').innerHTML = backupHTML;
+                            highlight();
+                        }
+                        if ($('searchInput').value != searchText) {
+                            return
+                        }
+                        let result = JSON.parse(response);
+                        searchResult[searchText] = result;
+                        $('searchResult').innerHTML = '';
+                        result.forEach(
+                            (item) => {
+                                render(item);
+                            }
+                        )
+                        highlight();
+                    },
+                    fail: function (status) {
+                        $('searchResult').innerHTML = '<div style="text-align:center;margin-top:35px">500</div>';
+                    }
+                });
+            }, 50)
+        }
     } else  {
         // 清空处理
         $('searchResult').innerHTML = backupHTML;
-        highlight()
+        highlight();
     }
 })
 function render(searchItem) {
@@ -45,7 +52,7 @@ function render(searchItem) {
         '<blockquote>'+searchItem.description+'<span>.'+searchItem.lang+'</span></blockquote>\n'+
         '<div class="tags">'+searchItem.tags+'</div>\n'+
         '<pre><code class="'+searchItem.lang+'">'+searchItem.content+'</code></pre>\n'+
-        '</div>'
+        '</div>';
 }
 function addLineNumber() {
     let codeEl = document.getElementsByTagName('code');
@@ -58,7 +65,7 @@ function highlight() {
     document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightBlock(block);
     });
-    addLineNumber()
+    addLineNumber();
 }
 hljs.initHighlightingOnLoad();
-addLineNumber()
+addLineNumber();
