@@ -9,12 +9,12 @@ const router = new Router({
     routes: [
         {
             path: '/login',
-            component: () => import('@/views/login/index'),
+            component: (resolve) => require(['@/views/login/index'], resolve),
         },
         {
             path: '/article/edit/:id',
             name: 'article_edit',
-            component: () => import('@/views/article/edit'),
+            component: (resolve) => require(['@/views/article/edit'], resolve),
         },
         {
             path: '/',
@@ -24,7 +24,7 @@ const router = new Router({
                 {
                     path: 'article',
                     name: 'article',
-                    component: () => import('@/views/article/list'),
+                    component: (resolve) => require(['@/views/article/list'], resolve),
                     children: [
                         {
                             path: 'list/:page',
@@ -35,17 +35,17 @@ const router = new Router({
                 {
                     path: 'article/create',
                     name: 'article_create',
-                    component: () => import('@/views/article/create')
+                    component: (resolve) => require(['@/views/article/create'], resolve)
                 },
                 {
                     path: 'tag',
                     name: 'tag',
-                    component: () => import('@/views/tag/list')
+                    component: (resolve) => require(['@/views/tag/list'], resolve)
                 },
                 {
                     path: 'code',
                     name: 'code',
-                    component: () => import('@/views/code/list'),
+                    component: (resolve) => require(['@/views/code/list'], resolve),
                     children: [
                         {
                             path: 'list/:page',
@@ -56,17 +56,17 @@ const router = new Router({
                 {
                     path: 'code/create',
                     name: 'code_create',
-                    component: () => import('@/views/code/create')
+                    component: (resolve) => require(['@/views/code/create'], resolve)
                 },
                 {
                     path: 'code/edit/:id',
                     name: 'code_edit',
-                    component: () => import('@/views/code/edit'),
+                    component: (resolve) => require(['@/views/code/edit'], resolve),
                 },
                 {
                     path: 'file',
                     name: 'file',
-                    component: () => import('@/views/file/index'),
+                    component: (resolve) => require(['@/views/file/index'], resolve),
                 }
             ]
         }
