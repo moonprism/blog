@@ -7,6 +7,7 @@ cd ..\
 move .\write\main .\docker\write\write
 xcopy .\write\config\prod.ini .\docker\write\ /y
 cd .\write\web
+call npm install
 call npm run build
 xcopy .\dist ..\..\docker\write\dist /s /e /y
 REM docker-compose build write
