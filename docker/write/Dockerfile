@@ -10,6 +10,9 @@ RUN chmod +x /www/write
 COPY ./prod.ini /www/config
 COPY ./dist /www/web
 
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' >/etc/timezone
+
 WORKDIR /www
 
 ENTRYPOINT ["./write", "--env", "prod"]
