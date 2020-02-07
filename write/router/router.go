@@ -28,10 +28,14 @@ func Routers() *echo.Echo {
 	})
 
 	e.Static("/", "web")
+
+	if config.App.EnableStatic {
+		e.Static("/static", "static")
+	}
+
 	// router
 	v1 := e.Group("/api/v1")
 	{
-		// v1.Static("/static", "static")
 
 		authG := v1.Group("/auth")
 		{

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"git.kicoe.com/blog/write/config"
 	"git.kicoe.com/blog/write/errors"
 	"git.kicoe.com/blog/write/model"
 	"git.kicoe.com/blog/write/utils"
@@ -33,7 +34,12 @@ func CreateFile(file multipart.File) (fileModel *model.File, err error) {
 		return
 	}
 
-	err = bucket.PutObjectFromFile(key, filePath)
+	if !config.App.EnableStatic {
+		go func() {
+			err = bucket.PutObjectFromFile(key, filePath)
+			// todo chan接收err处理
+		}()
+	}
 	return
 }
 
@@ -71,6 +77,11 @@ func DeleteFile(id int) (err error) {
 		return
 	}
 
-	err = bucket.DeleteObject(file.Key)
+	if !config.App.EnableStatic {
+		go func() {
+			err = bucket.DeleteObject(file.Key)
+		}()
+	}
+
 	return
 }

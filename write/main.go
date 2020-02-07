@@ -28,10 +28,12 @@ func main() {
 	// init
 	config.InitConfig(env)
 	database.InitMysqlEngine()
-	//utils.InitEs()
-	utils.InitOss()
+	if env == "prod" {
+		utils.InitEs()
+		utils.InitOss()
+	}
 
 	app := router.Routers()
 	app.GET("/swagger/*", echoSwagger.WrapHandler)
-	app.Logger.Fatal(app.Start(":3000"))
+	app.Logger.Fatal(app.Start(":"+config.App.Port))
 }

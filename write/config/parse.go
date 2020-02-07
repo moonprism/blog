@@ -15,6 +15,8 @@ type (
 
 	AppConf struct {
 		EnableCors	bool	`ini:"enable_cors"`
+		EnableStatic	bool	`ini:"enable_static"`
+		Port	string	`ini:"port"`
 	}
 
 	MysqlConf struct {
