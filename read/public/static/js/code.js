@@ -1,7 +1,9 @@
 let backupHTML = $('searchResult').innerHTML;
+var searchLockKey = '';
 f.addEve($('searchInput'), 'input', () => {
     let searchText = $('searchInput').value;
     if (searchText) {
+        searchLockKey = searchText;
         setTimeout(function () {
             f.ajax({
                 url: "/code/search/" + searchText,
@@ -11,6 +13,11 @@ f.addEve($('searchInput'), 'input', () => {
                     if (!$('searchInput').value) {
                         $('searchResult').innerHTML = backupHTML;
                         highlight()
+                        return;
+                    }
+                    if ($('searchInput').value != searchLockKey) {
+                        $('searchResult').innerHTML = '';
+                        return;
                     }
                     let result = JSON.parse(response);
                     $('searchResult').innerHTML = '';
