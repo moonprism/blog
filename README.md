@@ -1,6 +1,6 @@
 # kicoe-blog
 
-[kicoe.com](kicoe.com) 站点的所有源码
+[kicoe.com](https://www.kicoe.com) 站点的所有源码
 
 ## 目录
 
@@ -28,13 +28,13 @@
 |    | -  | - .env.product *
 | - docker-compose.yml
 ```
-标 * 的为可配置文件，配置好product就可以打包上线了
+标 * 的为可配置文件
 
-## 使用
+## 运行
 
 > 在docker目录下构建镜像的Dockerfile中有很多注释代码可能帮助解锁网络环境
 
-首先安装 `go` `npm` 环境，可以通过docker镜像不过这里我用的交叉编译。
+首先安装好 `go` `npm` 环境，可以通过docker镜像，不过我这里依赖了本地环境。
 
 ```shell
 # Linux
