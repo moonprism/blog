@@ -28,7 +28,7 @@
     <div class="article">
         <h1> <a><?php echo $article_obj->title ?></a> </h1>
         <div class="mark">
-            <?php echo $article_obj->updated_time ?>
+            <?php echo $article_obj->created_time ?>
                 <b>#</b>
                 <?php foreach($article_obj->tags as $tag){ ?>
                     <a style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
