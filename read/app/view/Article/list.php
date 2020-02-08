@@ -80,7 +80,7 @@
     </div>
 </div>
 <div id="footer">
-    <span class="f_en">Powered by<a href="https://github.com/kicoer/kicoephp" target="_blank"> kicoephp </a></span>
+    <span class="f_en">Powered by<a href="https://github.com/moonprism/kicoephp-src" target="_blank"> kicoephp </a></span>
 </div>
 <script type="text/javascript" src="/static/js/main.js"></script>
 </body>

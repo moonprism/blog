@@ -9,46 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
     <link rel="stylesheet" type="text/css" href="/static/css/markdown.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/md.about.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
-    <style>
-        .markdown {
-            margin: 0 auto;
-        }
-        .markdown h1 {
-            text-align: center
-        }
-        .markdown h2 a {
-            font-size: 1em !important;
-        }
-        .markdown h1 img {
-            height: 67px;
-            width: 67px;
-            border-radius: 50%;
-        }
-        .markdown i {
-            font-size: .9em;
-        }
-        .markdown a code {
-            font-size: 1em !important;
-            color: #455 !important;
-        }
-        .markdown blockquote {
-            margin: 20px 17px;
-        }
-        .markdown blockquote img {
-            height: 22px;
-            width: 22px;
-            border-radius: 50%;
-            position: relative;
-            top: 3px;
-            margin-left: 7px;
-        }
-        .markdown blockquote a {
-            font-weight: 100;
-            font-size: 17px;
-            margin-left: 3px;
-        }
-    </style>
 </head>
 <body>
 <div id="up" class="p_up"><a href="javascript:up()"><b>^</b></a></div>

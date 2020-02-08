@@ -65,7 +65,7 @@ function comment_list(total){
                     } else {
                         src = 'https://secure.gravatar.com/avatar/'+responsejson[i]['email'][1];
                     }
-                    var dateDiff = getDateDiff(parseInt(responsejson[i]['time'])*1000);
+                    var dateDiff = getDateDiff(responsejson[i]['created_time']);
                     if(responsejson[i]['to_id'] === "0"){
                         // 一层
                         var com = document.createElement('div');
@@ -108,7 +108,9 @@ function comment_list(total){
         }
     });
 }
-function getDateDiff(dateTimeStamp){
+function getDateDiff(date){
+    commentData = new Date(date);
+    let dateTimeStamp = commentData.getTime();
     var minute = 1000 * 60;
     var hour = minute * 60;
     var day = hour * 24;

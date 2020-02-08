@@ -2,17 +2,32 @@
     color: #555;
     text-shadow: 0 1px 1px rgba(0,0,0,.1);
     line-height: 1.8;
-    padding: 6px 10px;
+    padding: 6px 12px;
     border-bottom: 1px solid #eee;
     margin-bottom: 17px;
+    margin-top: 30px;
     font-size: 18px;
 }
+.markdown h3:before{
+    content: '@';
+    margin-right: 5px;
+    font-size: 19px;
+    color: #777;
+}
+.markdown h3{
+    padding: 4px 24px;
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 5px;
+    font-weight: 400;
+}
 .markdown ul {
-    margin: 15px 70px 20px
+    margin: 0 70px 20px
 }
 .markdown ul li {
     font-size: 18px;
     padding-top: 5px;
+    color: #444;
 }
 .markdown ul li a {
     letter-spacing: .04rem;

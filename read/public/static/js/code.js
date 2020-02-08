@@ -58,7 +58,7 @@ function addLineNumber() {
     let codeEl = document.getElementsByTagName('code');
     let codeList = Array.prototype.slice.call(codeEl);
     codeList.forEach((code) => {
-        code.innerHTML = ('<ol><li>' + code.innerHTML.replace(/\n/g, '\n</li><li>') + '\n</li></ol>')
+        code.innerHTML = ('<ol><li><span class="cl">' + code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ol>')
     })
 }
 function highlight() {
