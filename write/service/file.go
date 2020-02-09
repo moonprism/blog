@@ -29,12 +29,12 @@ func CreateFile(file multipart.File) (fileModel *model.File, err error) {
 		return
 	}
 
-	bucket, err := utils.OssBlogBucket()
-	if err != nil {
-		return
-	}
 
 	if !config.App.EnableStatic {
+		bucket, err := utils.OssBlogBucket()
+		if err != nil {
+			return nil, err
+		}
 		go func() {
 			err = bucket.PutObjectFromFile(key, filePath)
 			// todo chan接收err处理
@@ -72,12 +72,12 @@ func DeleteFile(id int) (err error) {
 		return
 	}
 
-	bucket, err := utils.OssBlogBucket()
-	if err != nil {
-		return
-	}
 
 	if !config.App.EnableStatic {
+		bucket, err := utils.OssBlogBucket()
+		if err != nil {
+			return err
+		}
 		go func() {
 			err = bucket.DeleteObject(file.Key)
 		}()

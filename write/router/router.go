@@ -27,10 +27,12 @@ func Routers() *echo.Echo {
 		ErrorHandler: errors.CustomJwtErrorHandler,
 	})
 
-	e.Static("/", "web")
 
 	if config.App.EnableStatic {
+		e.Static("/", "web/dist")
 		e.Static("/static", "static")
+	} else {
+		e.Static("/", "web")
 	}
 
 	// router

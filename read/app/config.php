@@ -21,5 +21,5 @@ return [
     'cache_comment_prefix' => 'blog-comment-',
     'elastic_code_index' => 'elastic-code-index',
     'elastic_code_type' => 'elastic-code-type',
-    'image_cdn' => 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/',
+    'image_cdn' => 'http://127.0.0.1:2999/static/',
 ];
