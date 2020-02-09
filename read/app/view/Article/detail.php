@@ -14,6 +14,7 @@
 </head>
 <body>
 <div id="up"><a href="javascript:up()"><b>^</b></a></div>
+<div id="bg"></div>
 <div id="header">
     <div class="nav">
         <ul>
@@ -63,7 +64,7 @@
 <script type="text/javascript" src="/static/js/comment.js"></script>
 <!---------高亮处理---------->
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+<script>hljs.initHighlightingOnLoad();bg();</script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/gruvbox-dark.min.css">
 <!-------------------------->
 </body>

@@ -31,6 +31,36 @@ body {
     position:relative;
 }
 
+#bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    margin: 0;
+    text-align: center;
+    z-index: 2233;
+    background-color: rgba(0, 0, 0, .3);
+    cursor: pointer;
+}
+
+.cl-bg {
+    border: 1px solid #fff;
+    transition: 0.4s;
+}
+.cl-bg:hover {
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+#bg img {
+    max-width: 98%;
+    position: relative;
+    border-radius: 4px;
+}
+
 #header {
     height: 42px;
     background-color: #fff;

@@ -37,12 +37,12 @@ var f = {};
 // 绑定事件
 f.addEve = function(node, even, fun){
     if(window.addEventListener){
-        node.addEventListener(even,function(){
-            fun();
+        node.addEventListener(even,function(e){
+            fun(e);
         }, false);
     } else { // IE
-        node.attachEvent('on'+even, function(){
-            fun();
+        node.attachEvent('on'+even, function(e){
+            fun(e);
         });
     }
 }
@@ -94,4 +94,23 @@ f.addNode = function(parent_n, child_s, string, attr){
     }
     parent_n.appendChild(child_n);
     return child_n;
+}
+
+function bg() {
+    let imgEl = document.getElementsByTagName('img');
+    let imgList = Array.prototype.slice.call(imgEl);
+    f.addEve($('bg'), 'click', (i) => {
+        $('bg').style.display = 'none';
+    })
+    imgList.forEach((img) => {
+        img.className = 'cl-bg';
+        f.addEve(img, 'click', (i) => {
+            let wh = document.documentElement.clientHeight || document.body.clientHeight;
+            let h = (wh - i.srcElement.naturalHeight) / 2.1;
+            let paddingHeigh = h > 0 ? h : 15;
+            console.log(paddingHeigh)
+            $('bg').style.display = 'block';
+            $('bg').innerHTML = '<img style="margin: '+paddingHeigh+'px auto" src="'+ i.srcElement.currentSrc +'">';
+        })
+    })
 }
