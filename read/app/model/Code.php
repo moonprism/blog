@@ -17,7 +17,7 @@ class Code extends Model
     {
         return $this->set($whereSet)
             ->limit(0, $limit)
-            ->order('id', 'desc')
+            ->order('updated_time', 'desc')
             ->select('id,lang,description,tags,content', 'id');
     }
 }

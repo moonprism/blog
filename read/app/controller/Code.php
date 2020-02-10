@@ -60,22 +60,10 @@ class Code extends Controller
 
     public function index()
     {
-        $aquaSearch = [
-            'description' => '一个简单的代码搜索框',
-            'lang' => 'css',
-            'tags' => 'aqua, unable search',
-            'content' => "input{
-    width: 44.5%;
-}
-input:focus {
-    border-color: aqua;
-}",
-        ];
         $limit = 11;
         $whereSet = [['deleted_at', 'is null']];
         $codeModel = New CodeModel();
         $codeList = $codeModel->getCodeList($limit, $whereSet);
-        $codeList = ['114514' => $aquaSearch] + $codeList;
         $this->assign('code_list', $codeList);
         $this->show('Page/code');
     }
