@@ -7,9 +7,9 @@
     <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
     <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/md.link.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/comment.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/md.link.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/comment.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -49,7 +49,7 @@
         <a href="javascript:comment_list()" class="more_a" id="more_a">查看所有</a>
     </div>
 </div>
-<script type="text/javascript" src="/static/js/main.js"></script>
-<script type="text/javascript" src="/static/js/comment.js"></script>
+<script type="text/javascript" src="/dist/js/main.min.js"></script>
+<script type="text/javascript" src="/dist/js/comment.min.js"></script>
 </body>
 </html>

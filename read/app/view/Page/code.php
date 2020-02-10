@@ -6,8 +6,8 @@
     <meta name="keywords" content="kicoe,博客,blog,代码,code,游戏,game">
     <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/md.code.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/md.code.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -37,8 +37,9 @@
     </div>
 </div>
 </body>
-<script src="/static/js/main.js"></script>
+<script src="/dist/js/main.min.js"></script>
+<script type="text/javascript" src="/dist/js/markdown.min.js"></script>
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/github-gist.min.css">
-<script src="/static/js/code.js"></script>
+<script src="/dist/js/code.min.js"></script>
 </html>

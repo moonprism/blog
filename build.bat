@@ -10,4 +10,8 @@ cd .\write\web
 call npm install
 call npm run build
 xcopy .\dist ..\..\docker\write\dist /s /e /y
+
+cd ..\..\read
+call npm install
+call gulp build
 REM docker-compose build write

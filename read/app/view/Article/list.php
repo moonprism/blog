@@ -7,7 +7,7 @@
     <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
     <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -82,6 +82,6 @@
 <div id="footer">
     <span class="f_en">Powered by<a href="https://github.com/moonprism/kicoephp-src" target="_blank"> kicoephp </a></span>
 </div>
-<script type="text/javascript" src="/static/js/main.js"></script>
+<script type="text/javascript" src="/dist/js/main.min.js"></script>
 </body>
 </html>
