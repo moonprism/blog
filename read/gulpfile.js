@@ -7,20 +7,20 @@ var gulp = require('gulp'),
     browserSync = require('browser-sync').create(),
     clean = require('gulp-clean')
 
-function browserReload() {
+gulp.task('browser-reload', (done) => {
     browserSync.reload()
-}
+    done()
+})
 
 gulp.task('css', () => {
-    gulp.src('public/static/css/*.css')
+    return gulp.src('public/static/css/*.css')
         .pipe(cleanCss())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('public/dist/css'))
-    browserReload()
 });
 
 gulp.task('js', () => {
-    gulp.src(['public/static/js/*.js'])
+    return gulp.src(['public/static/js/*.js'])
         .pipe(babel({
             presets: ['es2015']
         }))
@@ -31,14 +31,12 @@ gulp.task('js', () => {
 
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('public/dist/js'))
-    browserReload()
 });
 
 // clean
-gulp.task('clean', function(done) {
-    // return gulp.src(['public/dist/*'])
-    //     .pipe(clean())
-    done()
+gulp.task('clean', () => {
+    return gulp.src(['public/dist/*'])
+        .pipe(clean())
 })
 
 gulp.task('build', gulp.series('clean', gulp.parallel('css', 'js')))
@@ -55,7 +53,7 @@ gulp.task('watch', function() {
     watch([
         "public/static/css/*.css",
         "public/static/js/*.js"
-    ], gulp.series('build'))
+    ], gulp.series('build', 'browser-reload'))
 })
 
-gulp.task('serve', gulp.series('browser', 'watch'))
+gulp.task('serve', gulp.series('build', 'browser', 'watch'))

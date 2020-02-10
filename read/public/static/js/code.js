@@ -1,4 +1,4 @@
-let backupHTML = $('searchResult').innerHTML;
+var backupHTML = $('searchResult').innerHTML;
 var searchResult = {};
 f.addEve($('searchInput'), 'input', () => {
     let searchText = $('searchInput').value;
@@ -34,6 +34,7 @@ f.addEve($('searchInput'), 'input', () => {
                             }
                         )
                         highlight();
+                        hoverMarkdown()
                     },
                     fail: function (status) {
                         $('searchResult').innerHTML = '<div style="text-align:center;margin-top:35px">500</div>';
@@ -45,13 +46,14 @@ f.addEve($('searchInput'), 'input', () => {
         // 清空处理
         $('searchResult').innerHTML = backupHTML;
         highlight();
+        hoverMarkdown()
     }
 })
 function render(searchItem) {
     $('searchResult').innerHTML += '<div class="search-item">\n'+
         '<blockquote>'+searchItem.description+'<span>.'+searchItem.lang+'</span></blockquote>\n'+
         '<div class="tags">'+searchItem.tags+'</div>\n'+
-        '<pre><code class="'+searchItem.lang+'">'+searchItem.content+'</code></pre>\n'+
+        '<pre class="c-'+searchItem.lang+'"><code class="'+searchItem.lang+'">'+searchItem.content+'</code><div class="markdown"></div></pre>\n'+
         '</div>';
 }
 function addLineNumber() {
@@ -67,5 +69,29 @@ function highlight() {
     });
     addLineNumber();
 }
+function hoverMarkdown() {
+    let preEl = document.getElementsByTagName('pre');
+    let preList = Array.prototype.slice.call(preEl);
+    preList.forEach((pre) => {
+        if (pre.className != 'c-md') {
+            return;
+        }
+        let code = pre.getElementsByTagName('code')[0];
+        let show = pre.getElementsByTagName('div')[0];
+        show.innerHTML = markdown(code.innerText);
+        show.style.display = 'block';
+        code.style.display = 'none';
+        f.addEve(pre, 'click', (e) => {
+            if (code.style.display != 'none') {
+                show.style.display = 'block';
+                code.style.display = 'none';
+            } else {
+                show.style.display = 'none';
+                code.style.display = 'block';
+            }
+        })
+    })
+}
+hoverMarkdown()
 hljs.initHighlightingOnLoad();
 addLineNumber();

@@ -31,7 +31,7 @@
             <div class="search-item">
                 <blockquote><?php echo $code['description'] ?> <span>.<?php echo $code['lang'] ?></span></blockquote>
                 <div class="tags"><?php echo $code['tags'] ?></div>
-                <pre><code class="<?php echo $code['lang'] ?>"><?php echo htmlspecialchars($code['content']) ?></code></pre>
+                <pre class="c-<?php echo $code['lang'] ?>"><code class="<?php echo $code['lang'] ?>"><?php echo htmlspecialchars($code['content']) ?></code><div class="markdown"></div></pre>
             </div>
         <?php } ?>
     </div>

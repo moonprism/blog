@@ -13,7 +13,6 @@ class Code extends Controller
     public function search(Response $response, $text)
     {
         $elasticConf = Config::prpr('elastic');
-        $fields = ['description', 'lang', 'tags'];
         $client = ClientBuilder::create()->setSSLVerification(false) ->setHosts(["{$elasticConf['host']}:9200"])->build();
         $searchParams = [
             'index' => Config::prpr('elastic_code_index'),
@@ -22,7 +21,7 @@ class Code extends Controller
                 'query' => [
                     'multi_match' => [
                         'query' => $text,
-                        'fields' => $fields,
+                        'fields' => ['description', 'lang', 'tags'],
                     ]
                 ],
                 'from' => 0,
@@ -42,8 +41,9 @@ class Code extends Controller
         foreach ($esResult['hits']['hits'] as $hit) {
             $res[] = [
                     'id' => $hit['_id'],
+                    'lang' => htmlspecialchars($hit['_source']['lang']),
                     'content' => htmlspecialchars($hit['_source']['content']),
-                ] + $this->mergeEsHitHighlightFields($hit, $fields);
+                ] + $this->mergeEsHitHighlightFields($hit, ['description', 'tags']);
         }
 
         $response->json($res);
