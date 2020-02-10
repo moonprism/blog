@@ -129,6 +129,7 @@ function markdown(input){
                 if (block[i] === undefined) {
                     code_block_index = true;
                 } else {
+                    _html = _html.substr(0, _html.length-1);
                     _html += '</code></pre>';
                 }
                 block[i] = '';
