@@ -313,6 +313,35 @@ body {
         width: 100%
     }
 
+    .article h1 a {
+        font-size: 18px !important;
+    }
+    .article .summary {
+        font-size: 15px;
+    }
+    .markdown h1,.markdown h2,.markdown h3,.markdown h4 {
+        font-size: 17px !important;
+    }
+    .markdown p {
+        font-size: 15px !important;
+    }
+    .markdown table td {
+        font-size: 14px !important;
+    }
+    .markdown ul, .markdown ol{
+        font-size: 1em !important;
+    }
+    .markdown pre code {
+        font-size: 15px !important;
+    }
+    .markdown blockquote {
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+    }
+    .search-item {
+        margin: 0 6px;
+    }
+
     #content .article {
         width: auto;
         padding: 0 10px

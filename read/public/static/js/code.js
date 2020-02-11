@@ -33,8 +33,8 @@ f.addEve($('searchInput'), 'input', () => {
                                 render(item);
                             }
                         )
-                        highlight();
                         hoverMarkdown()
+                        highlight();
                     },
                     fail: function (status) {
                         $('searchResult').innerHTML = '<div style="text-align:center;margin-top:35px">500</div>';
@@ -45,8 +45,8 @@ f.addEve($('searchInput'), 'input', () => {
     } else  {
         // 清空处理
         $('searchResult').innerHTML = backupHTML;
-        highlight();
         hoverMarkdown()
+        highlight();
     }
 })
 function render(searchItem) {

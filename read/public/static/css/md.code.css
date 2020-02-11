@@ -102,6 +102,9 @@
 .markdown {
     padding: 10px 15px 3px;
     display: none;
+    animation: fade-in;
+    animation-duration: .3s;
+    -webkit-animation: fade-in .3s
 }
 .markdown p {
     font-size: 15px;

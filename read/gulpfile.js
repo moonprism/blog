@@ -34,9 +34,10 @@ gulp.task('js', () => {
 });
 
 // clean
-gulp.task('clean', () => {
-    return gulp.src(['public/dist/*'])
-        .pipe(clean())
+gulp.task('clean', (done) => {
+    // return gulp.src(['public/dist/*'])
+    //     .pipe(clean())
+    done()
 })
 
 gulp.task('build', gulp.series('clean', gulp.parallel('css', 'js')))

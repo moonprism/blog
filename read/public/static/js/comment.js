@@ -109,7 +109,7 @@ function comment_list(total){
     });
 }
 function getDateDiff(date){
-    commentData = new Date(date);
+    let commentData = new Date(date);
     let dateTimeStamp = commentData.getTime();
     var minute = 1000 * 60;
     var hour = minute * 60;
@@ -124,6 +124,7 @@ function getDateDiff(date){
     var dayC =diffValue/day;
     var hourC =diffValue/hour;
     var minC =diffValue/minute;
+    let result = ''
     if (monthC>12) {
         result="" + parseInt(monthC/12) + "年前";
     }else if(monthC>=1 && monthC<=12){
