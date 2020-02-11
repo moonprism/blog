@@ -10,6 +10,7 @@ f.addEve($('searchInput'), 'input', () => {
                     render(item);
                 }
             )
+            hoverMarkdown();
             highlight();
         } else {
             setTimeout(function () {
@@ -20,10 +21,12 @@ f.addEve($('searchInput'), 'input', () => {
                     success: function (response) {
                         if ($('searchInput').value == '') {
                             $('searchResult').innerHTML = backupHTML;
+                            hoverMarkdown();
                             highlight();
+                            return;
                         }
                         if ($('searchInput').value != searchText) {
-                            return
+                            return;
                         }
                         let result = JSON.parse(response);
                         searchResult[searchText] = result;
@@ -33,7 +36,7 @@ f.addEve($('searchInput'), 'input', () => {
                                 render(item);
                             }
                         )
-                        hoverMarkdown()
+                        hoverMarkdown();
                         highlight();
                     },
                     fail: function (status) {
