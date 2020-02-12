@@ -23,9 +23,9 @@
 .search-input input:focus {
     border-color: aqua;
 }
-/* .search-result .search-item {
-    
-} */
+.search-result .search-item {
+    margin: 5px 0 22px;
+}
 .search-result blockquote {
     margin: 12px 0 2px;
     padding: 5px 5px 0;
@@ -53,7 +53,7 @@
     line-height: 1.1;
     padding: 10px 16px;
     border-radius: 3px;
-    margin: 5px 0 22px;
+    margin: 5px 0;
 }
 .search-result pre code {
     font: 15px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
@@ -170,4 +170,7 @@
     max-width: 100%;
     padding-top: 4px;
     border-radius: 6px;
+}
+.markdown ._c {
+    padding: 0;
 }

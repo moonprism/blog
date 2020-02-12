@@ -60,10 +60,12 @@ function render(searchItem) {
         '</div>';
 }
 function addLineNumber() {
-    let codeEl = document.getElementsByTagName('code');
-    let codeList = Array.prototype.slice.call(codeEl);
-    codeList.forEach((code) => {
-        code.innerHTML = ('<ol><li><span class="cl">' + code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ol>')
+    document.querySelectorAll('pre code').forEach((code) => {
+        console.log(code.classList)
+        if (!code.classList.contains('_c'))
+            code.innerHTML = ('<ol><li><span class="cl">' + code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ol>')
+        else
+            code.innerHTML = ('<ul><li><span class="cl">' + code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ul>')
     })
 }
 function highlight() {
