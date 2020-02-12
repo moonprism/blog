@@ -3,6 +3,7 @@
 return [
     '/'                   => 'article/index',
     'article/page'        => 'Article@fetchList',
+    'article/tag'         => 'Article@tag',
     'article/id'          => 'Article@detail',
     // post
     'comment/up'          => 'Comment@up',

@@ -32,7 +32,7 @@
             <?php echo $article_obj->created_time ?>
                 <b>#</b>
                 <?php foreach($article_obj->tags as $tag){ ?>
-                    <a style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
+                    <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
                 <?php } ?>
         </div>
     </div>

@@ -19,8 +19,8 @@ class Article extends Model
     {
         return $this->set($whereSet)
             ->limit(($page-1)*$limit, $limit)
-            ->order('updated_time', 'desc')
-            ->select('id,title,image,summary,updated_time', 'id');
+            ->order('created_time', 'desc')
+            ->select('id,title,image,summary,created_time', 'id');
     }
 
     /**
@@ -32,6 +32,23 @@ class Article extends Model
     public function getTotalPage($limit, $whereSet)
     {
         $pages = $this->set($whereSet)->select('count(id) as total')[0]["total"];
+        return ceil($pages/number_format($limit, 1));
+    }
+
+    public function getArticleListByTagId($tagId, $page, $limit, $whereSql)
+    {
+        $start = ($page-1)*$limit;
+        // todo 框架里的 build sql 方法都应该抽出来
+        return $this->query("select a.id, a.title, a.image, a.summary, a.created_time 
+            from article as a 
+            inner join article_tag as at 
+            on a.id = at.art_id and at.tag_id = ? where 
+            {$whereSql} order by created_time desc limit {$start}, {$limit}", [$tagId]);
+    }
+
+    public function getTotalPageByTagId($tagId, $limit, $whereSql)
+    {
+        $pages = $this->query("select count(a.id) as total from article as a inner join article_tag as at on a.id = at.art_id and at.tag_id = ?", [$tagId])[0]["total"];
         return ceil($pages/number_format($limit, 1));
     }
 }

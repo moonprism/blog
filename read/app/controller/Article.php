@@ -13,10 +13,43 @@ class Article extends Controller
         $this->fetchList(1);
     }
 
-    public function fetchList($page)
+    public function tag($tagId, $page = 1)
     {
-        $pageSize = 10;
+        $pageSize = 2;
+        $whereSql = "a.status = ".ArticleModel::STATUS_PUBLISH." and a.deleted_at is null";
+        $articleModel = new ArticleModel;
+        $articleList = $articleModel->getArticleListByTagId($tagId, $page, $pageSize, $whereSql);
+        $articleIds = [];
+        $articleTagsMap = [];
+
+        foreach ($articleList as $article) {
+            $articleIds[] = $article['id'];
+        }
+
+        if ($articleIds !== []) {
+            // 整合tag
+            $articleTagsMap = Tags::getArticleTagsMap(implode($articleIds, ','));
+        }
+
+        foreach ($articleList as $key => $article) {
+            $articleList[$key]['tags'] = $articleTagsMap[$article['id']] ?? [];
+        }
+
+        $this->assign([
+            'article_list' => $articleList,
+            'page' => $page,
+            // todo 这里要优化成自动需要重构下路由
+            'url'  => "/article/tag/{$tagId}/",
+            'total_page' => $articleModel->getTotalPageByTagId($tagId, $pageSize, $whereSql)
+        ]);
+        $this->show('Article/list');
+    }
+
+    public function fetchList($page, $where = [])
+    {
+        $pageSize = 2;
         $whereSet = [['status', ArticleModel::STATUS_PUBLISH], ['deleted_at', 'is null']];
+        $whereSet = array_merge($whereSet, $whereSet);
         $articleModel = new ArticleModel();
         $articleList = $articleModel->getArticleList($page, $pageSize, $whereSet);
         $articleIds = [];
@@ -38,7 +71,8 @@ class Article extends Controller
         $this->assign([
             'article_list' => $articleList,
             'page' => $page,
-            'total_page' => $articleModel->getTotalPage(10, $whereSet)
+            'url'  => '/article/page/',
+            'total_page' => $articleModel->getTotalPage($pageSize, $whereSet)
         ]);
         $this->show('Article/list');
     }
@@ -47,6 +81,9 @@ class Article extends Controller
     {
         $article = new ArticleModel();
         $article->get($id);
+        if ($article->status == ArticleModel::STATUS_DRAFT) {
+            $article->content = ">[danger] 这篇文章还没发布呢 ~ \n （￣へ￣） \n\n *** \n *** \n ---";
+        }
         // 整合tag
         $articleTagsMap = Tags::getArticleTagsMap($id);
         $article->tags = $articleTagsMap[$id] ?? [];

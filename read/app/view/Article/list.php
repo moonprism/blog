@@ -28,10 +28,10 @@
     <div class="article">
         <h1><a href="/article/id/<?php echo $article['id'] ?>"><?php echo stripslashes($article['title']) ?></a></h1>
         <div class="mark">
-            <?php echo $article['updated_time'] ?>
+            <?php echo $article['created_time'] ?>
             <?php if($article['tags']){ ?> <b>#</b> <?php } ?>
             <?php foreach($article['tags'] as $tag) { ?>
-                <a style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
+                <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
             <?php } ?>
         </div>
         <div class="summary">
@@ -51,25 +51,25 @@
                 $end_page = min($page+3, $total_page);
                 for ($i = $start_page; $i <= $end_page; $i++) {
                     if ($i != $page) {
-                        echo '<li><a href="/article/page/'.$i.'">'.$i.'</a></li>';
+                        echo '<li><a href="'.$url.$i.'">'.$i.'</a></li>';
                     } else {
                         echo '<li><span>'.$i.'</span></li>';
                     }
                 }
                 if($page+3 < $total_page){
                     echo '<li><span>...</span></li>';
-                    echo '<li><a href="/article/page/'.$total_page.'">'.$total_page.'</a></li>';
+                    echo '<li><a href="'.$url.$total_page.'">'.$total_page.'</a></li>';
                 }
             } else {
                 if($page-3 > 1){
-                    echo '<li><a href="/article/page/1">1</a></li>';
+                    echo '<li><a href="'.$url.'1">1</a></li>';
                     echo '<li><span>...</span></li>';
                 }
                 $start_page = max($page-3, 1);
                 $end_page = min($page+3, $total_page);
                 for ($i = $start_page; $i <= $end_page; $i++) {
                     if ($i != $page) {
-                        echo '<li><a href="/article/page/'.$i.'">'.$i.'</a></li>';
+                        echo '<li><a href="'.$url.$i.'">'.$i.'</a></li>';
                     } else {
                         echo '<li><span>'.$i.'</span></li>';
                     }
