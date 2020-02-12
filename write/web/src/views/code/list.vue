@@ -1,6 +1,6 @@
 <template>
-    <el-row :gutter="20" style="margin-top: 15px">
-        <el-col :span="12" :offset="5">
+    <el-row :gutter="20" style="margin-top: 15px;text-align: center">
+        <el-col class="code-list" :xs="24" :md="12" :lg="12" :xl="10">
             <div class="article-list">
                 <el-table
                         :data="codeList"
@@ -22,7 +22,8 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            align="right">
+                            align="right"
+                            width="150px">
                         <template slot="header">
                             <el-button
                                     icon="el-icon-plus"
@@ -116,5 +117,9 @@
     .pagination {
         margin-top: 50px;
         text-align: center;
+    }
+    .code-list {
+        float: none;
+        margin: 0 auto;
     }
 </style>

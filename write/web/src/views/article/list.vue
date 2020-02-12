@@ -1,6 +1,6 @@
 <template>
     <el-row :gutter="20" style="margin-top: 10px">
-        <el-col :span="15" :offset="4">
+        <el-col class="article-l" :xs="24" :md="15" :lg="15" :xl="12">
             <div class="article-list">
                 <el-table
                         :data="articleList"
@@ -35,7 +35,6 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            width="180px"
                             align="right">
                         <template slot="header">
                             <el-button
@@ -159,5 +158,9 @@
     }
     .updateForm {
         
+    }
+    .article-l {
+        float: none;
+        margin: 0 auto;
     }
 </style>

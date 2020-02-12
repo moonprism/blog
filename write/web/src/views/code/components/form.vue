@@ -1,5 +1,5 @@
 <template>
-    <el-form label-position="left" label-width="80px" class="updateForm code-form">
+    <el-form label-position="top" label-width="80px" class="updateForm code-form">
     <el-form-item label="language">
         <el-select v-model="$props.code.lang" @change="changeLang" placeholder="status">
             <el-option
@@ -32,7 +32,7 @@
             <el-button v-else class="button-new-tag" size="small" @click="showTagInput">+ New Tag</el-button>
         </el-form-item>
     <el-form-item label="description">
-        <el-input type="textarea" :rows="3" v-model="$props.code.description" style="width:500px;"></el-input>
+        <el-input type="textarea" :rows="3" v-model="$props.code.description" style="width:70%;"></el-input>
     </el-form-item>
     <el-form-item label="code">
         <!-- code mirror 编辑模块 -->
