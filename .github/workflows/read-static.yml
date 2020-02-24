@@ -16,7 +16,7 @@ jobs:
       - name: gulp
         uses: elstudio/actions-js-build/build@v2
         with:
-          wdPath: './web'
+          wdPath: './read'
 
       - name: deploy
         uses: appleboy/scp-action@master
