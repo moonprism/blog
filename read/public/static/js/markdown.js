@@ -2,7 +2,7 @@
 //   markdown.js - https://github.com/moonprism/markdown.js
 // -----------------------------------------------------------------
 function markdown(input){
-    let img_cdn = 'http://127.0.0.1:2999/static/';
+    let img_cdn = 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/';
     let text = input.replace(/(\r\n|\n|\r)/g, "\n")
                 .replace( /&/g, "&amp;" )
                 .replace( /</g, "&lt;" )

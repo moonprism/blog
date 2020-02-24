@@ -42,6 +42,8 @@ gulp.task('clean', (done) => {
 
 gulp.task('build', gulp.series('clean', gulp.parallel('css', 'js')))
 
+gulp.task('default', gulp.series('build'))
+
 gulp.task('browser', function(done) {
     browserSync.init({
         proxy: "127.0.0.1:8080",
