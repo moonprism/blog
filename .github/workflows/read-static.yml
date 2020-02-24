@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'web/public/static/**'
+      - 'read/public/static/**'
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
           host: ${{ secrets.ECS_HOST }}
           username: ${{ secrets.ECS_USER }}
           key: ${{ secrets.ECS_ACCESS_TOKEN }}
-          source: "web/public/dist/*"
+          source: "read/public/dist/*"
           target: "/blog/dist/"
 
       - name: cp
@@ -34,4 +34,4 @@ jobs:
           username: ${{ secrets.ECS_USER }}
           key: ${{ secrets.ECS_ACCESS_TOKEN }}
           script: |
-            cp -r /blog/dist/web/public/dist /blog/read/public/
+            cp -r /blog/dist/read/public/dist /blog/read/public/
