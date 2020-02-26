@@ -1,27 +1,26 @@
 #content {
-    width: 680px;
+    width: 740px;
 }
 .markdown {
     margin: 0 auto;
 }
 .markdown h1 {
-    text-align: center
-}
-.markdown h2 a {
-    font-size: 1em !important;
-}
-.markdown h3::before {
-    position: initial;
-    margin-right: 7px;
-    color: #ff5151;
-}
-.markdown h3 {
-    padding-left: 15px;
+    text-align: center;
+    margin-bottom: 18px;
 }
 .markdown h1 img {
     height: 67px;
     width: 67px;
     border-radius: 50%;
+    padding: 0;
+    margin: 0;
+}
+.markdown h2::before {
+    position: initial;
+    margin-right: 9px;
+}
+.markdown h2 {
+    padding-left: 12px;
 }
 .markdown i {
     font-size: .9em;
@@ -37,6 +36,7 @@
     background-color: #fff;
     border-left: none;
     text-align: center;
+    margin-top: 33px;
 }
 .markdown blockquote.icon img {
     height: 33px;
