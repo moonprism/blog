@@ -37,8 +37,7 @@ function markdown(input){
             case 'c':
             break;
         }
-        return str.replace(/\t/g, '    ')
-                  .replace(/(\/\/.+)/, '<span class="comment">$1</span>');
+        return str;
     }
     if ( ( m = /^(\s*\n)/.exec(text) ) != null ) {
         re.lastIndex = m[0].length;

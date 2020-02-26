@@ -359,6 +359,11 @@ body {
         font-size: 13px !important;
         line-height: 1.4 !important;
     }
+    .markdown h2:before{
+        top: 3px !important;
+        left: -10px !important;
+    }
+
     .search-item {
         margin: 0 6px;
     }
