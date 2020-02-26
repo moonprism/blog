@@ -37,6 +37,14 @@
         </div>
     </div>
     <div class="markdown" id="markdown"></div>
+
+    <div class="parse-info">
+        parse by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a>,<br>
+    </div>
+    <div class="agreement">
+        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by/4.0/">知识共享署名 4.0 国际许可协议</a>进行许可。
+    </div>
+
     <textarea id="text" style="display: none;">
 <?php echo trim($article_obj->content); ?>
     </textarea>

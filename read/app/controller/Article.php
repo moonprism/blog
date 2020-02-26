@@ -15,7 +15,7 @@ class Article extends Controller
 
     public function tag($tagId, $page = 1)
     {
-        $pageSize = 2;
+        $pageSize = 10;
         $whereSql = "a.status = ".ArticleModel::STATUS_PUBLISH." and a.deleted_at is null";
         $articleModel = new ArticleModel;
         $articleList = $articleModel->getArticleListByTagId($tagId, $page, $pageSize, $whereSql);
@@ -47,7 +47,7 @@ class Article extends Controller
 
     public function fetchList($page, $where = [])
     {
-        $pageSize = 2;
+        $pageSize = 10;
         $whereSet = [['status', ArticleModel::STATUS_PUBLISH], ['deleted_at', 'is null']];
         $whereSet = array_merge($whereSet, $whereSet);
         $articleModel = new ArticleModel();

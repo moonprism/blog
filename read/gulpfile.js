@@ -57,6 +57,9 @@ gulp.task('watch', function() {
         "public/static/css/*.css",
         "public/static/js/*.js"
     ], gulp.series('build', 'browser-reload'))
+    watch([
+        "app/view/*/*.php",
+    ], gulp.series('browser-reload'))
 })
 
 gulp.task('serve', gulp.series('build', 'browser', 'watch'))

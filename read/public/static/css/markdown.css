@@ -11,18 +11,6 @@
 .markdown h1, .markdown h2, .markdown h3, .markdown h4{
     color: #555;
 }
-.markdown h2:before{
-    content: '#';
-    margin-right: 6px;
-    font-size: 19px;
-    color: #888;
-}
-.markdown h3:before{
-    content: '@';
-    margin-right: 5px;
-    font-size: 19px;
-    color: #111;
-}
 .markdown h1{
     padding: 7px 7px;
     border-bottom: 1px solid #e7e7e7;
@@ -31,18 +19,37 @@
     cursor: pointer;
 }
 .markdown h2{
-    padding: 5px 4px;
+    padding: 5px 3px;
     font-size: 18px;
     margin-bottom: 10px;
     color: #111;
     font-weight: 400;
+    position: relative;
+}
+.markdown h2:before{
+    content: '#';
+    font-size: 18px;
+    color: #eb5055;
+    font-weight: 600;
+    position: absolute;
+    top: 5px;
+    left: -16px;
 }
 .markdown h3{
-    padding: 4px 10px;
+    padding: 4px 12px;
     font-size: 18px;
-    margin-bottom: 6px;
-    color: #777;
+    margin-bottom: 5px;
+    color: #555;
     font-weight: 400;
+    position: relative;
+}
+.markdown h3:before{
+    content: '@';
+    font-size: 19px;
+    color: #ffa372;
+    position: absolute;
+    top: 5px;
+    left: -6px;
 }
 .markdown p{
     font-size: 1.19em;
@@ -51,7 +58,7 @@
     margin-bottom: 19px;
 }
 .markdown ul, .markdown ol{
-    margin: 16px 12px;
+    margin: 16px 18px;
     font-size: 1.15em;
     color: #2b2c25;
 }
@@ -76,14 +83,13 @@
 .markdown blockquote{
     margin: 15px 4px;
     padding: 10px;
-    color: #888;
+    color: #111;
     border-left: 5px solid #409EFF;
     word-wrap: break-word;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.6;
     background-color: #f8f8f8;
-    font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
-    font-weight: 600;
+    letter-spacing: .05em;
 }
 .markdown .success {
     border-left-color: #67C23A;

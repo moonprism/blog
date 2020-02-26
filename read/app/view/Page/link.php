@@ -31,7 +31,8 @@
     <style>
         .repl{display:none !important}
         .com a{color: #3498db !important;font-family: google !important;font-size: 15px !important}
-        .comment{margin-top:20px !important;}
+        .comment{margin:20px 0 50px !important}
+        .com-list{width: 100% !important}
     </style>
     <div class="comment">
         <span id="to_name"></span>
