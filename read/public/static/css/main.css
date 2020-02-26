@@ -206,7 +206,7 @@ body {
 #content .parse-info {
     background-color: #f5f8fc;
     text-align: center;
-    margin: 70px 10px 0;
+    margin: 80px 10px 0;
     border-radius: 1px;
     padding: 4px 0;
     color: #8796a8;
@@ -221,7 +221,9 @@ body {
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
-
+#content .agreement a {
+    color: #ababab;
+}
 .page {
     padding-bottom: 50px;
 }
