@@ -25,7 +25,7 @@ html {
 }
 
 body {
-    min-height:90%;
+    min-height:88%;
     margin:0;
     padding:0;
     position:relative;
@@ -206,23 +206,26 @@ body {
 #content .parse-info {
     background-color: #f5f8fc;
     text-align: center;
-    margin: 80px 10px 0;
+    margin: 80px 95px 0;
     border-radius: 1px;
-    padding: 4px 0;
+    padding: 5px 0;
     color: #8796a8;
 }
 #content .parse-info a:hover {
-    color: #9d53c3;
+    color: #fe346e;
 }
 #content .agreement {
     text-align: center;
-    margin: 13px 10px;
-    padding: 13px 0 10px;
+    margin: 13px 95px;
+    padding: 13px 0 13px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
 #content .agreement a {
     color: #ababab;
+}
+#content .agreement a:hover {
+    text-decoration: underline;
 }
 .page {
     padding-bottom: 50px;

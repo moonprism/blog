@@ -1,3 +1,6 @@
+#content {
+    width: 680px;
+}
 .markdown {
     margin: 0 auto;
 }
@@ -6,6 +9,14 @@
 }
 .markdown h2 a {
     font-size: 1em !important;
+}
+.markdown h3::before {
+    position: initial;
+    margin-right: 7px;
+    color: #ff5151;
+}
+.markdown h3 {
+    padding-left: 15px;
 }
 .markdown h1 img {
     height: 67px;
@@ -20,15 +31,19 @@
     color: #455 !important;
 }
 .markdown blockquote {
-    margin: 20px 17px;
+    margin: 20px 19px;
 }
-.markdown blockquote img {
-    height: 22px;
-    width: 22px;
-    border-radius: 50%;
-    position: relative;
-    top: 3px;
+.markdown blockquote.icon {
+    background-color: #fff;
+    border-left: none;
+    text-align: center;
+}
+.markdown blockquote.icon img {
+    height: 33px;
+    width: 33px;
     margin-left: 7px;
+    border: none;
+    box-shadow: none;
 }
 .markdown blockquote a {
     font-weight: 100;
