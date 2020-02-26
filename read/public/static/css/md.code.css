@@ -157,6 +157,19 @@
     background-color: #f8f8f8;
     font-family: -apple-system, "Roboto Mono","Microsoft YaHei", sans-serif;
 }
+.markdown .success {
+    border-left-color: #67C23A;
+}
+.markdown .warning {
+    border-left-color: #E6A23C;
+}
+.markdown .danger {
+    border-left-color: #F56C6C;
+}
+.markdown .info {
+    border-left-color: #909399;
+}
+
 .markdown hr{
     margin-bottom: 10px;
     height: 0.15em;
@@ -171,6 +184,13 @@
     padding-top: 4px;
     border-radius: 6px;
 }
-.markdown ._c {
-    padding: 0;
+.markdown ._c{
+    overflow: auto;
+    word-wrap:break-word;
+    font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
+    padding: 3px 9px 5px;
+    background-color: rgba(0,0,0,0.05) !important;
+    display: inline;
+    border-radius: 3px;
+    margin: 0 .2em;
 }

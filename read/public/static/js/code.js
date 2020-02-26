@@ -64,8 +64,6 @@ function addLineNumber() {
         console.log(code.classList)
         if (!code.classList.contains('_c'))
             code.innerHTML = ('<ol><li><span class="cl">' + code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ol>')
-        else
-            code.innerHTML = ('<ul><li><span class="cl">' + code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ul>')
     })
 }
 function highlight() {

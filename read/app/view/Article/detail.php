@@ -37,6 +37,8 @@
         </div>
     </div>
     <div class="markdown" id="markdown"></div>
+    <textarea id="text" style="display: none;">
+<?php echo trim($article_obj->content); ?> </textarea>
 
     <div class="parse-info">
         parse by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a>,<br>
@@ -45,9 +47,6 @@
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>
     </div>
 
-    <textarea id="text" style="display: none;">
-<?php echo trim($article_obj->content); ?>
-    </textarea>
     <div class="comment">
         <span id="to_name"></span>
         <div id="com_up">
