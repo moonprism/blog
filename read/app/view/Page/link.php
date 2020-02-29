@@ -28,19 +28,13 @@
     <div class="markdown" id="markdown">
         <?php echo $article_obj->html ?>
     </div>
-    <style>
-        .repl{display:none !important}
-        .com a{color: #3498db !important;font-family: google !important;font-size: 15px !important}
-        .comment{margin:20px 0 50px !important}
-        .com-list{width: 100% !important}
-    </style>
     <div class="comment">
         <span id="to_name"></span>
         <div id="com_up">
             <input type="hidden" name="art_id" value="<?php echo $article_obj->id ?>" >
             <input type="hidden" name="to_id" value="0" >
-            <label for="name">Name:</label><input id="name" name="name" autocomplete="off" placeholder="your name." type="text" >
-            <label for="email">Email:</label><input id="email" name="email" autocomplete="off" placeholder="Email" type="text" >
+            <label for="name">🙎 Name:</label><input id="name" name="name" autocomplete="off" placeholder="your name." type="text" >
+            <label for="email">✉️ Email:</label><input id="email" name="email" autocomplete="off" placeholder="Email" type="text" >
             <div class="exp-p" id="exp_p" style="display: none;"></div>
             <textarea name="content"></textarea>
             <button id="exp" class="exp">(｡・`ω´･)</button>

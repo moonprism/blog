@@ -169,7 +169,7 @@
         width: 90%;
     }
     .comment .exp{
-        margin-left: 50%;
+        margin-left: 50% !important;
     }
     .comment .exp-p{
         width: 92%;
