@@ -46,7 +46,9 @@
     <div class="page">
         <ul>
         <?php
-        if ($page-1 < $total_page-$page) {
+            if ($total_page == 1) {
+
+            } else if ($page-1 < $total_page-$page) {
                 $start_page = max($page-3, 1);
                 $end_page = min($page+3, $total_page);
                 for ($i = $start_page; $i <= $end_page; $i++) {
