@@ -77,6 +77,9 @@
                 return this.$props.code.tags.split(',')
             }
         },
+        mounted() {
+            this.$props.code.lang = 'md'
+        },
         methods: {
             handleTagClose(tag) {
                 let tags = this.tags
