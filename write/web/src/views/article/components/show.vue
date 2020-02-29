@@ -45,7 +45,7 @@
                 this.$refs['article'].getElementsByTagName('pre').forEach((element) => {
                     let code = element.getElementsByTagName('code')[0]
                     let html = ''
-                    if (code.className !== "") {
+                    if (code.className !== "" && ["php", "javascript", "go", "shell", "json"].includes(code.className)) {
                         let lang = code.className.split('-')[1]
                         html = hljs.highlight(lang, code.innerText).value
                     } else {
