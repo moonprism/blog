@@ -1,3 +1,13 @@
+.markdown h1 {
+    font-size: 20px;
+    padding: 6px 12px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 17px;
+}
+.markdown h1::before {
+    content: '💖';
+    margin-right: 5px;
+}
 .markdown h2{
     color: #555;
     text-shadow: 0 1px 1px rgba(0,0,0,.1);
@@ -8,57 +18,131 @@
     margin-top: 30px;
     font-size: 18px;
 }
-.markdown h3:before{
-    content: '@';
+.markdown h2::before {
+    content: '📖';
     margin-right: 5px;
-    font-size: 19px;
-    color: #777;
 }
-.markdown h3{
+.markdown h3 {
     padding: 4px 24px;
     font-size: 18px;
     color: #777;
     margin-bottom: 5px;
     font-weight: 400;
 }
-.markdown ul {
-    margin: 0 70px 20px
+.markdown h3:before {
+    content: '⭐️';
+    margin-right: 5px;
+    font-size: 19px;
+    color: #777;
 }
-.markdown ul li {
+.markdown blockquote {
     font-size: 18px;
-    padding-top: 5px;
     color: #444;
+    list-style: none;
+    padding: 5px 10px 12px;
+    margin: 12px 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
-.markdown ul li a {
-    letter-spacing: .04rem;
-    color: #00a1d6;
-}
-.markdown ul li code {
+
+.markdown blockquote code {
     font-size: 15px;
     font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
     font-weight: 600;
-    color: #9a9a9a;
+    color: #aaa;
     letter-spacing: .03rem;
+    float: right;
+    line-height: 40px;
 }
-.markdown ul li a:hover {
+.markdown blockquote code::before {
+    content: '//';
+}
+.markdown blockquote a {
+    letter-spacing: .04rem;
+    width: 40px;
+}
+.markdown blockquote a:hover {
+    color: deeppink;
     text-decoration: underline;
 }
-.markdown ul li img {
-    width: 28px;
-    height: 28px;
+.markdown blockquote img {
+    width: 30px;
+    height: 30px;
     position: relative;
     top: 6px;
     border-radius: 50%;
+    box-shadow: rgba(0,0,0,.2) 0 1px 3px;
+    margin-right: 15px;
 }
 
 #content{
-    width: 733px !important;
+    width: 633px !important;
 }
 .comment{
+    width: 100%;
     margin-top: 20px !important;
+}
+.comment textarea {
+    width: 95% !important;
+}
+.comment .exp {
+    margin-left: 77% !important;
 }
 @media screen and (max-width: 750px) {
     #content {
         width: 100% !important
     }
+}
+
+.markdown blockquote.kira code::before {
+    content: '✨';
+}
+.markdown blockquote.heart code::before {
+    content: '❤️';
+}
+.markdown blockquote.cherry code::before {
+    content: '🌸';
+}
+.markdown blockquote.sunflower code::before {
+    content: '🌻';
+}
+.markdown blockquote.maple code::before {
+    content: '🍁';
+}
+.markdown blockquote.mushroom code::before {
+    content: '🍄';
+}
+.markdown blockquote.rabbit code::before {
+    content: '🐰';
+}
+.markdown blockquote.zzz code::before {
+    content: '💤';
+}
+.markdown blockquote.skull code::before {
+    content: '💀';
+}
+.markdown blockquote.zap code::before {
+    content: '⚡️';
+}
+.markdown blockquote.blossom code::before {
+    content: '🌼';
+}
+.markdown blockquote.pill code::before {
+    content: '💊';
+}
+.markdown blockquote.watermelon code::before {
+    content: '🍉';
+}
+
+.repl{display:none !important}
+.comment{margin:20px 0 50px !important}
+.com-list{width: 100% !important}
+.com a {
+    color: #000;
+}
+.com a::after {
+    content: '💬 ';
+}
+.comment label {
+    width: 14% !important;
 }
