@@ -1,6 +1,6 @@
 .markdown h1 {
     font-size: 19px;
-    padding: 6px 12px;
+    padding: 9px 12px;
     border-bottom: 1px solid #eee;
     margin-bottom: 17px;
 }
@@ -126,16 +126,27 @@
 .markdown blockquote.zap code::before {
     content: '⚡️';
 }
-.markdown blockquote.blossom code::before {
-    content: '🌼';
-}
 .markdown blockquote.pill code::before {
     content: '💊';
 }
 .markdown blockquote.watermelon code::before {
     content: '🍉';
 }
-
+.markdown blockquote.snowflake code::before {
+    content: '❄️';
+}
+.markdown blockquote.game code::before {
+    content: '🎮';
+}
+.markdown blockquote.meat code::before {
+    content: '🍖';
+}
+.markdown blockquote.peach code::before {
+    content: '🍑';
+}
+.markdown blockquote.flag code::before {
+    content: '🚩';
+}
 .repl{display:none !important}
 .comment{margin:20px 0 50px !important}
 .com-list{width: 100% !important}
