@@ -41,11 +41,16 @@
     font-size: 17px;
     color: #fff;
 }
+.markdown blockquote.info {
+    padding: 13px 20px;
+    margin: 10px 25px;
+    border-color: purple;
+}
 .markdown blockquote.icon {
     background-color: #fff;
     border-left: none;
     text-align: center;
-    margin-top: 22px;
+    margin-top: 23px;
 }
 .markdown blockquote.icon img {
     height: 31px;
