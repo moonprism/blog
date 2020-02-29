@@ -1,6 +1,6 @@
 # kicoe-blog
 
-[kicoe.com](https://www.kicoe.com) 站点的所有源码
+博客站点的所有源码
 
 ## 目录
 
@@ -45,29 +45,31 @@ make build
 docker-compose up -d
 ```
 
-### 开发模式
+### 开发
 
 不用先配置write中的`prod.ini`，只需要先把其他docker容器跑起来。
 
 * 进入write目录运行`go run main.go --env dev`启动后台api
-* 进入write/web目录运行`npm run dev`启动后台web界面
+* 进入write/web目录运行`npm run dev`启动后台web界面，监听相关代码修改自动刷新`127.0.0.1:8081`
+* 进入read目录运行`gulp serve`启动前台web界面，监听相关代码修改自动刷新`127.0.0.1:2000`
 
-read前端页面通过gulp监听并压缩，在read目录下运行`gulp serve`就可以监听所有js/css的变化并刷新浏览器了
+```
+// 切换dev分支，设置提交模板
+git config commit.template .git-commit-template.txt
+```
 
 ### 上线
 
-先把各product配置文件配置好。
-
+先把各product配置文件配置好，运行build。在build结束后将以下三个文件打包上传服务器。
 ```
 docker/
 read/
 docker-compose.yml
 ```
-在build结束后将以上三个文件打包上传服务器。
 
 服务器上运行`docker-compose up -d`
 
-> `.github/workflows`目录下配置了持续集成，借助github actions编译上线
+> `.github/workflows`目录下配置了持续集成，借助github actions自动编译上线
 
 ## 依赖
 
