@@ -32,9 +32,9 @@
 
 ## 运行
 
-> 在docker目录下构建镜像的Dockerfile中有很多注释代码可能帮助解锁网络环境
+> 在docker目录下构建镜像的Dockerfile中有些注释代码可帮助解锁网络环境
 
-首先安装好 `go` `npm` `gulp` 环境，可以通过docker镜像，不过我这里依赖了本地环境。
+首先在本地环境安装好 `go` `npm` `gulp`
 
 ```shell
 # Linux
@@ -47,32 +47,27 @@ docker-compose up -d
 
 ### 开发模式
 
-不用先配置write中的`prod.ini`，只需要先把其他docker容器跑起来，再运行`go run main.go --env dev`启动后台api，进入web目录运行`npm run dev`启动后台界面。具体配置在各自的dev配置中相关联。
+不用先配置write中的`prod.ini`，只需要先把其他docker容器跑起来。
 
-read页面通过gulp监听并压缩，在read页面下运行`gulp serve`就可以监听所有js/css的变化并刷新浏览器了
+* 进入write目录运行`go run main.go --env dev`启动后台api
+* 进入write/web目录运行`npm run dev`启动后台web界面
 
-运行build将会编译go与前端程序并放置到对应的docker目录下，之后只要 `docker-compose up` 运行。
-
-### composer
-
-PHP就不copy进容器了
-```shell
-docker-compose exec read bash
-$composer install
-```
+read前端页面通过gulp监听并压缩，在read目录下运行`gulp serve`就可以监听所有js/css的变化并刷新浏览器了
 
 ### 上线
 
-先把各product配置都写好。
+先把各product配置文件配置好。
 
 ```
 docker/
 read/
 docker-compose.yml
 ```
-在build结束后将以上三个文件打包。
+在build结束后将以上三个文件打包上传服务器。
 
-服务器上直接`docker-compose up -d`
+服务器上运行`docker-compose up -d`
+
+> `.github/workflows`目录下配置了持续集成，借助github actions编译上线
 
 ## 依赖
 
