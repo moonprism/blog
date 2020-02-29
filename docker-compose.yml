@@ -51,6 +51,6 @@ services:
     #   - "9200:9200"
     #   - "9300:9300"
     environment:
-      - "ES_JAVA_OPTS=-Xms255m -Xmx255m"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - "./data/elasticsearch:/usr/share/elasticsearch/data"
