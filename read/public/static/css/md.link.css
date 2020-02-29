@@ -1,5 +1,5 @@
 .markdown h1 {
-    font-size: 20px;
+    font-size: 19px;
     padding: 6px 12px;
     border-bottom: 1px solid #eee;
     margin-bottom: 17px;
@@ -25,7 +25,7 @@
 .markdown h3 {
     padding: 4px 24px;
     font-size: 18px;
-    color: #777;
+    color: #888;
     margin-bottom: 5px;
     font-weight: 400;
 }
@@ -36,11 +36,11 @@
     color: #777;
 }
 .markdown blockquote {
-    font-size: 18px;
+    font-size: 1.24em;
     color: #444;
     list-style: none;
     padding: 5px 10px 12px;
-    margin: 12px 8px;
+    margin: 11px 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
@@ -56,6 +56,7 @@
 }
 .markdown blockquote code::before {
     content: '//';
+    margin-right: 3px;
 }
 .markdown blockquote a {
     letter-spacing: .04rem;
@@ -77,6 +78,7 @@
 
 #content{
     width: 633px !important;
+    margin-top: 78px;
 }
 .comment{
     width: 100%;
@@ -137,6 +139,9 @@
 .repl{display:none !important}
 .comment{margin:20px 0 50px !important}
 .com-list{width: 100% !important}
+#com_up {
+    margin-left: 8px;
+}
 .com a {
     color: #000;
 }
