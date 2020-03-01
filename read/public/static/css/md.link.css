@@ -52,7 +52,7 @@
     color: #aaa;
     letter-spacing: .03rem;
     float: right;
-    line-height: 40px;
+    line-height: 43px;
 }
 .markdown blockquote code::before {
     content: '//';

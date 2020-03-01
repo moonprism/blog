@@ -58,12 +58,14 @@
     margin-left: 7px;
     border: none;
     box-shadow: none;
-    opacity:0.6;
+    opacity:0.7;
     transition: .3s;
+    position: relative;
 }
 .markdown blockquote.icon img:hover {
     opacity: 1;
     transition: .4s;
+    bottom: 2px;
 }
 .markdown blockquote a {
     font-weight: 100;

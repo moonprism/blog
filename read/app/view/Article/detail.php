@@ -40,11 +40,8 @@
     <textarea id="text" style="display: none;">
 <?php echo trim($article_obj->content); ?> </textarea>
 
-    <div class="parse-info">
-        parse by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a>,<br>
-    </div>
     <div class="agreement">
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>
+        parse by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a><br>
     </div>
 
     <div class="comment">
