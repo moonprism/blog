@@ -21,7 +21,7 @@
 .markdown h2{
     padding: 5px 4px;
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 13px;
     color: #111;
     font-weight: 400;
     position: relative;
@@ -38,8 +38,8 @@
 .markdown h3{
     padding: 4px 12px;
     font-size: 18px;
-    margin-bottom: 5px;
-    color: #555;
+    margin-bottom: 10px;
+    color: #222;
     font-weight: 400;
     position: relative;
 }
@@ -53,17 +53,17 @@
 }
 .markdown p{
     font-size: 1.19em;
-    line-height: 1.5;
+    line-height: 1.7;
     color: #233;
-    margin-bottom: 19px;
+    margin-bottom: 15px;
 }
 .markdown ul, .markdown ol{
-    margin: 16px 18px;
+    margin: 20px 18px;
     font-size: 1.15em;
     color: #2b2c25;
 }
 .markdown ul li,.markdown ol li{
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     padding-left: 5px;
 }
 .markdown ul li{
@@ -82,12 +82,12 @@
 }
 .markdown blockquote{
     margin: 15px 4px;
-    padding: 10px;
+    padding: 12px 12px;
     color: #111;
     border-left: 5px solid #409EFF;
     word-wrap: break-word;
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.5;
     background-color: #f8f8f8;
     letter-spacing: .05em;
 }
@@ -116,7 +116,7 @@
 .markdown ._c{
     overflow: auto;
     word-wrap:break-word;
-    font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
+    font: .9em Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,Hiragino Sans GB,Microsoft YaHei, monospace;
     padding: .2em .4em .1em;
     background-color: rgba(0,0,0,0.05);
     border-radius: 3px;
@@ -137,11 +137,10 @@
     padding-bottom: 12px;
 }
 .markdown table{
-    margin-bottom: 10px;
+    margin: 13px 7px 15px;
     overflow: auto;
     border-spacing: 0;
     border-collapse: collapse;
-    font: 16px, -apple-system, "Roboto Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
 }
 .markdown table th {
     font-weight: 600;

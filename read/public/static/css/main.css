@@ -147,7 +147,7 @@ body {
 
 #content .article h1 {
     font-weight: 400;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     line-height: 120%;
 }
 
@@ -185,14 +185,13 @@ body {
 
 #content .article .summary {
     text-shadow: 0 -1px 1px rgba(0, 0, 0, .1);
-    margin-top: 6px;
+    margin-top: 9px;
     letter-spacing: 1px;
     line-height: 1.7;
     color: #111;
     font-size: 16px;
     padding-bottom: 19px;
     border-bottom: 1.2px solid #eee;
-    font-family: -apple-system, "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
 }
 .article-list .article:last-child .summary {
     border-bottom: 0!important;
@@ -200,6 +199,7 @@ body {
 #content .article .summary img {
     width: 100%;
     border-radius: 6px;
+    margin-top: 4px;
     box-shadow: rgba(0,0,0,0.2) 0 1px 1px;
 }
 
@@ -216,14 +216,20 @@ body {
 }
 #content .agreement {
     text-align: center;
-    margin: 13px 76px 0 36px;
+    margin: 63px 76px 0 36px;
     padding: 13px 0 13px;
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
 }
 #content .agreement a {
     color: #ababab;
+    transition: .2s;
 }
+#content .agreement a:hover {
+    color: darkorchid;
+    transition: .4s;
+}
+
 #content .agreement a:hover {
     text-decoration: underline;
 }
