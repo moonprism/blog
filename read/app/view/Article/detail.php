@@ -31,7 +31,9 @@
         <div class="mark">
             <?php echo $article_obj->created_time ?>
                 <b>#</b>
+                <?php $asciinema_flag = false ?>
                 <?php foreach($article_obj->tags as $tag){ ?>
+                    <?php if ($asciinema_flag != true) $asciinema_flag = (strtolower($tag['name']) === 'asciinema'); ?>
                     <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
                 <?php } ?>
         </div>
@@ -66,6 +68,10 @@
     $('markdown').innerHTML = replace_sym(markdown($('text').value));
 </script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
+<?php if ($asciinema_flag) { ?>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/css/asciinema-player.css">
+<script src="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/js/asciinema-player.min.js"></script>
+<?php } ?>
 <!---------高亮处理---------->
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();bg();</script>
