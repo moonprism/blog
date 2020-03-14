@@ -6,7 +6,7 @@ function markdown(src, img_cdn = '') {
     let _html = '';
     let tokens = [];
     let inline_parse = function (str) {
-        return str.replace(/([^\\]|^)!\[(.*?)\]\((http.*?)\)/g, '$1<img alt="$2" src="$3" >')
+        return global_parse(str).replace(/([^\\]|^)!\[(.*?)\]\((http.*?)\)/g, '$1<img alt="$2" src="$3" >')
             .replace(/([^\\]|^)!\[(.*?)\]\((.*?)\)/g, '$1<img alt="$2" src="' + img_cdn + '$3" >')
             .replace(/([^\\]|^)\[(.*?)\]\((#.*?)\)/g, '$1<a href="$3">$2</a>')
             .replace(/([^\\]|^)\[(.*?)\]\((.*?)\)/g, '$1<a target="_blank" href="$3">$2</a>')
@@ -16,15 +16,23 @@ function markdown(src, img_cdn = '') {
             .replace(/([^\\]|^)`(.+?)`/g, function (match, prefix, code) {
                 return prefix + '<code>' + code_parse(code) + '</code>'
             })
+            .replace(/\\</g, "&lt;")
+            .replace(/\\>/g, "&gt;")
             .replace(/\\([!\[\*\~`#])/g, '$1');
     };
     let code_parse = function (str) {
-        return str.replace(/</g, "&lt;")
+        return global_parse(str).replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
     }
-    let h, br, li, code, blockquote, table, p, s, n;
+    let global_parse = function (str) {
+        return str.replace(/\:bread\:/g, '🍞')
+            .replace(/\:heart\:/g, '❤️')
+            .replace(/\:sparkling_heart\:/g, '💖')
+            .replace(/\:cherries\:/g, '🍒');
+    }
+    let h, br, li, code, blockquote, table, p, s, n, html;
     while (_text) {
         if (h = _text.match(/^(#{1,6})\s+(.*?)(?:\s*|{#(\S*)})(?:\n+|$)/)) {
             // heading
@@ -42,31 +50,30 @@ function markdown(src, img_cdn = '') {
                 tag: br[1] === '*' ? 'br' : 'hr',
             });
             _text = _text.substring(br[0].length);
-        } else if (li = _text.match(/^(\*|(\d)\.)\s([\s\S]*?)(?:\n{2,}|$)/)) {
+        } else if (li = _text.match(/^(\*|\-|(\d)\.)\s([\s\S]*?)(?:\n{2,}|$)/)) {
             // list
-            let text = li[0].replace(/\t/g, '    ');
+            let list_text = li[0].replace(/\t/g, '    ');
             let item, list_item = [];
-            while (item = text.match(/^(\s*(\*|(\d)\.)\s([\s\S]*?)(\n|$))(?:\s*(\*|(\d)\.)\s*|\n|$)/)) {
+            while (item = list_text.match(/^(\s*(\*|\-|(\d)\.)\s([\s\S]*?)(\n|$))(?:\s*(\*|\-|(\d)\.)\s*|\n|$)/)) {
                 list_item.push(item[1]);
-                text = text.substring(item[1].length);
+                list_text = list_text.substring(item[1].length);
             }
             let token = {
                 type: 'li',
-                tag: li[1] === '*' ? 'ul' : 'ol',
                 list: [],
             };
-            let list_level_stack = [];
+            let list_level_stack = [], pop_info;
             for (let i=0; i<list_item.length; i++) {
-                let item = list_item[i].match(/^(\s*)(\*|(\d)\.)\s([\s\S]*?)$/);
+                let item = list_item[i].match(/^(\s*)(\*|\-|(\d)\.)\s([\s\S]*?)$/);
                 let prefix_space_lv = item[1].length;
-                let tag = item[2] === '*' ? 'ul' : 'ol';
+                let tag = (item[2] === '*' || item[2] === '-') ? 'ul' : 'ol';
                 let prefix_tag = '';
                 if (list_level_stack.length === 0) {
                     list_level_stack.push({
                         lv: prefix_space_lv,
                         tag
                     })
-                    prefix_tag = '<li>';
+                    prefix_tag = '<' + tag + '><li>';
                 } else {
                     let last_level_info = list_level_stack[list_level_stack.length-1];
                     if (prefix_space_lv > last_level_info.lv) {
@@ -76,14 +83,13 @@ function markdown(src, img_cdn = '') {
                         });
                         prefix_tag = '<' + tag + '><li>';
                     } else if (prefix_space_lv < last_level_info.lv) {
-                        prefix_tag = '</li>';
-                        let pop_info;
+                        prefix_tag = '';
                         while(pop_info = list_level_stack.pop()) {
                             if (pop_info.lv === prefix_space_lv) {
                                 list_level_stack.push(pop_info);
                                 break;
                             }
-                            prefix_tag += '</' + pop_info.tag + '>';
+                            prefix_tag += '</li></' + pop_info.tag + '>';
                         }
                         prefix_tag += '</li><li>';
                     } else {
@@ -92,10 +98,13 @@ function markdown(src, img_cdn = '') {
                 }
                 token.list.push(prefix_tag + inline_parse(item[4].trim()));
             }
-            token.list.push('</li>');
+            // pop all parse stack
+            while (pop_info = list_level_stack.pop()) {
+                token.list.push('</li></' + pop_info.tag + '>');
+            }
             tokens.push(token);
             _text = _text.substring(li[0].length);
-        } else if (code = _text.match(/^```(\S*)\n([\s\S]+?)\n```\s*(?:\n|$)/)) {
+        } else if (code = _text.match(/^```(\S*)\n*([\s\S]+?)```/)) {
             // code
             tokens.push({
                 type: 'code',
@@ -152,6 +161,14 @@ function markdown(src, img_cdn = '') {
                 }
                 tokens.push(token);
             }
+        } else if (html = _text.match(/^<(\S+?)[\s|>][\s\S]?(?:<\/\S+>\s*|\n{2,}|$)/)) {
+            // html block
+            tokens.push({
+                type: 'html',
+                html: html[0],
+                tag: html[1]
+            })
+            _text = _text.substring(html[0].length);
         } else if (p = _text.match(/^.+/)) {
             // paragraph
             let token = {
@@ -161,7 +178,7 @@ function markdown(src, img_cdn = '') {
             let last_token = tokens.pop();
             if (last_token) {
                 if (last_token.type === 'p') {
-                    last_token.text += ('\n' + token.text);
+                    last_token.text += ('<br>' + token.text);
                     tokens.push(last_token)
                 } else {
                     tokens.push(last_token, token)
@@ -195,7 +212,7 @@ function markdown(src, img_cdn = '') {
                 _html += '<p>' + inline_parse(token.text) + '</p>';
                 break;
             case 'li':
-                _html += '<' + token.tag + '>' + token.list.join('') + '</' + token.tag + '>';
+                _html += token.list.join('');
                 break;
             case 'code':
                 _html += '<pre><code' + token.attributes + '>' + code_parse(token.text) + '</code></pre>';
@@ -219,6 +236,9 @@ function markdown(src, img_cdn = '') {
                 }
                 tbody += '</tbody>';
                 _html += '<table>' + thead + tbody + '</table>';
+                break;
+            case 'html':
+                _html += token.html;
                 break;
         }
     }

@@ -43,6 +43,22 @@
     font-weight: 400;
     position: relative;
 }
+@keyframes anchorTarget {
+    0%   {color: #a2f965;}
+    25%  {color: #c1a268;}
+    50%  {color: #d66669;}
+    100% {color: #ef1f6c;}
+}
+.markdown h1:target,.markdown h2:target,.markdown h3:target {
+    padding-top: 94px;
+    margin-top: -90px;
+    animation: anchorTarget 1.3s;
+    color: #ef1f6c;
+    z-index: -9;
+}
+.markdown h1:target:before,.markdown h2:target:before,.markdown h3:target:before {
+    padding-top: 90px;
+}
 .markdown h3:before{
     content: '@';
     font-size: 19px;
@@ -78,6 +94,9 @@
 }
 .markdown ol ol li, .markdown ul ol li {
     list-style-type: lower-alpha !important;
+}
+.markdown ul ul ul li {
+    list-style-type: square !important;
 }
 .markdown img{
     max-width: 100%;
