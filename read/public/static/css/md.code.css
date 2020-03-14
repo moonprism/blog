@@ -130,21 +130,26 @@
     font-weight: 400;
 }
 .markdown ul, .markdown ol{
-    margin: 16px 12px;
-    font-size: 1.15em;
+    margin: 13px 0;
+    font-size: 16px;
     color: #2b2c25;
+    padding-left: 1.7em;
 }
 .markdown ul li,.markdown ol li{
-    margin-bottom: 5px;
+    margin-bottom: 7px;
     padding-left: 5px;
 }
 .markdown ul li{
-    margin-left: 15px;
     list-style-type: disc !important;
 }
 .markdown ol li{
-    margin-left: 16px;
     list-style-type: decimal !important;
+}
+.markdown ul ul li, .markdown ol ul li {
+    list-style-type: circle !important;
+}
+.markdown ol ol li, .markdown ul ol li {
+    list-style-type: lower-alpha !important;
 }
 .markdown blockquote{
     margin: 15px 4px;

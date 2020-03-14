@@ -3,8 +3,8 @@
 </template>
 
 <script>
-    import Markdown from 'moonprism-markdown'
-    Markdown.imageCDN = process.env.VUE_APP_FILE_ORIGIN
+    import markdown from 'moonprism-markdown'
+    process.env.VUE_APP_FILE_ORIGIN
     import '@/style/markdown.css'
 
     import hljs from 'highlight.js/lib/highlight'
@@ -63,7 +63,7 @@
         },
         computed: {
             html() {
-                return Markdown.parse(this.insertCursorIndexForMarkdown())
+                return markdown(this.insertCursorIndexForMarkdown(), process.env.VUE_APP_FILE_ORIGIN)
             }
         },
         props: {

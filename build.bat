@@ -14,4 +14,6 @@ xcopy .\dist ..\..\docker\write\dist /s /e /y
 cd ..\..\read
 call npm install
 call gulp build
+cd ..\
+docker-compose exec read composer install
 REM docker-compose build write
