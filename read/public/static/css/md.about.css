@@ -15,19 +15,30 @@
 .markdown h2::before {
     position: initial;
     margin-right: 9px;
-    content: '🍭';
+    content: '⚓️';
+}
+.markdown h2 {
+    color: #05dfd7;
 }
 .markdown h2, .markdown h3{
     padding-left: 12px;
 }
+.markdown ul {
+    padding-left: 2.7em;
+}
 .markdown h3::before {
     position: initial;
     margin-right: 9px;
-    content: '🍨';
+    content: '🍥';
+}
+.markdown h3 {
+    color: #f35588;
 }
 .markdown h2 i, .markdown h3 i {
     font-size: 19px;
-    color: purple;
+}
+.markdown img {
+    margin: 2px 24px;
 }
 .markdown i {
     font-size: .9em;
@@ -55,10 +66,10 @@
 .markdown blockquote.icon img {
     height: 31px;
     width: 31px;
-    margin-left: 7px;
+    margin: 0 4px !important;
     border: none;
     box-shadow: none;
-    opacity:0.7;
+    opacity:0.8;
     transition: .3s;
     position: relative;
 }

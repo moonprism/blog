@@ -48,8 +48,8 @@
 
     import '@/style/cm.edit.css'
 
-    import Markdown from 'moonprism-markdown'
-    Markdown.imageCDN = process.env.VUE_APP_FILE_ORIGIN
+    import markdown from 'moonprism-markdown'
+    process.env.VUE_APP_FILE_ORIGIN
 
     import ArticleShow from "./components/show"
 
@@ -125,7 +125,7 @@
             },
             async save() {
                 this.article.content = this.articleEdit.markdownText = this.editor.getValue()
-                this.article.html = Markdown.parse(this.article.content)
+                this.article.html = markdown(this.article.content, process.env.VUE_APP_FILE_ORIGIN)
                 const res = await articleApi.update(this.article.id, this.article)
                 if (res.data === 'ok') {
                     this.$message({
