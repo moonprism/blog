@@ -6,7 +6,7 @@ function markdown(src, img_cdn = '') {
     let _html = '';
     let tokens = [];
     let inline_parse = function (str) {
-        return str.replace(/([^\\]|^)!\[(.*?)\]\((http.*?)\)/g, '$1<img alt="$2" src="$3" >')
+        return global_parse(str).replace(/([^\\]|^)!\[(.*?)\]\((http.*?)\)/g, '$1<img alt="$2" src="$3" >')
             .replace(/([^\\]|^)!\[(.*?)\]\((.*?)\)/g, '$1<img alt="$2" src="' + img_cdn + '$3" >')
             .replace(/([^\\]|^)\[(.*?)\]\((#.*?)\)/g, '$1<a href="$3">$2</a>')
             .replace(/([^\\]|^)\[(.*?)\]\((.*?)\)/g, '$1<a target="_blank" href="$3">$2</a>')
@@ -19,10 +19,16 @@ function markdown(src, img_cdn = '') {
             .replace(/\\([!\[\*\~`#])/g, '$1');
     };
     let code_parse = function (str) {
-        return str.replace(/</g, "&lt;")
+        return global_parse(str).replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
+    }
+    let global_parse = function(str) {
+        return str.replace(/\:bread\:/g, '🍞')
+            .replace(/\:heart\:/g, '❤️')
+            .replace(/\:sparkling_heart\:/g, '💖')
+            .replace(/\:cherries\:/g, '🍒');
     }
     let h, br, li, code, blockquote, table, p, s, n;
     while (_text) {

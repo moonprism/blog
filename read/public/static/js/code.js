@@ -81,7 +81,7 @@ function hoverMarkdown() {
         }
         let code = pre.getElementsByTagName('code')[0];
         let show = pre.getElementsByTagName('div')[0];
-        show.innerHTML = markdown(code.innerText);
+        show.innerHTML = markdown(code.innerText, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
         show.style.display = 'block';
         code.style.display = 'none';
         f.addEve(pre, 'click', (e) => {

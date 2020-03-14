@@ -25,11 +25,15 @@
     </div>
 </div>
 <div id="content" style="min-height: 0">
-    <div class="markdown" id="markdown">
-        <?php echo $article_obj->html ?>
-    </div>
+    <div class="markdown" id="markdown"></div>
+    <textarea id="text" style="display: none;">
+<?php echo trim($article_obj->content); ?> </textarea>
 </div>
 <br>
 </body>
 <script src="/dist/js/main.min.js"></script>
+<script type="text/javascript" src="/dist/js/markdown.min.js"></script>
+<script type="text/javascript">
+    $('markdown').innerHTML = replace_sym(markdown($('text').value, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'));
+</script>
 </html>
