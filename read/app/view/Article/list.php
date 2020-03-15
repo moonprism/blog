@@ -8,6 +8,7 @@
     <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -34,11 +35,11 @@
                 <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
             <?php } ?>
         </div>
-        <div class="summary">
+        <div class="summary markdown">
             <?php if($article['image']){ ?>
                 <img src="<?php echo kicoe\core\Config::prpr('image_cdn').$article['image'] ?>">
             <?php } ?>
-            <?php echo stripslashes($article['summary']) ?>
+            <textarea style="display:none"><?php echo $article['summary']?></textarea>
         </div>
     </div>
 <?php } ?>
@@ -85,5 +86,16 @@
     <span class="f_en">Powered by<a href="https://github.com/moonprism/kicoephp-src" target="_blank"> kicoephp </a></span>
 </div>
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
+<script type="text/javascript" src="/dist/js/markdown.min.js"></script>
+<script type="text/javascript">
+    document.querySelectorAll('.summary').forEach((summary) => {
+        summary.innerHTML = replace_sym(markdown(summary.getElementsByTagName('textarea')[0].value), 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
+    });
+</script>
+<!---------高亮处理---------->
+<script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/hopscotch.min.css">
+<!-------------------------->
 </body>
 </html>
