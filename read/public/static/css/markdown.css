@@ -44,20 +44,33 @@
     position: relative;
 }
 @keyframes anchorTarget {
-    0%   {color: #a2f965;}
-    25%  {color: #c1a268;}
-    50%  {color: #d66669;}
-    100% {color: #ef1f6c;}
+    0%{
+        color: #000;
+    }
+    40% {
+        color: #fff;
+    }
+    100%{
+        color: #000;
+    }
 }
-.markdown h1:target,.markdown h2:target,.markdown h3:target {
-    padding-top: 94px;
-    margin-top: -90px;
-    animation: anchorTarget 1.3s;
-    color: #ef1f6c;
+.markdown h1:target,
+.markdown h2:target,
+.markdown h3:target,
+.markdown h4:target,
+.target:target {
+    padding-top: 124px;
+    margin-top: -120px;
+    color: #000;
+    animation: anchorTarget .9s linear;
     z-index: -9;
 }
-.markdown h1:target:before,.markdown h2:target:before,.markdown h3:target:before {
-    padding-top: 90px;
+.markdown h1:target:before,
+.markdown h2:target:before,
+.markdown h3:target:before,
+.markdown h4:target:before,
+.target:before {
+    padding-top: 120px;
 }
 .markdown h3:before{
     content: '@';
@@ -92,8 +105,11 @@
 .markdown ul ul li, .markdown ol ul li {
     list-style-type: circle !important;
 }
-.markdown ol ol li, .markdown ul ol li {
+.markdown ol ol li {
     list-style-type: lower-alpha !important;
+}
+.markdown ul ol li {
+    list-style-type: lower-roman !important;
 }
 .markdown ul ul ul li {
     list-style-type: square !important;
@@ -129,10 +145,10 @@
 }
 
 .markdown hr{
-    margin-bottom: 10px;
-    height: 0.15em;
-    background-color: #e7e7e7;
-    border: 0;
+    margin-bottom: 15px;
+    height: 0;
+    border: none;
+    border-top: 1.8px solid #e7e7e7;
 }
 .markdown br{
     margin-bottom: 3px;
