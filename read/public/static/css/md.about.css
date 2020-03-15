@@ -52,9 +52,11 @@
     font-size: 17px;
     color: #fff;
 }
+.markdown blockquote {
+   padding: 13px 20px;
+    margin: 10px 25px; 
+}
 .markdown blockquote.info {
-    padding: 13px 20px;
-    margin: 10px 25px;
     border-color: purple;
 }
 .markdown blockquote.icon {

@@ -194,6 +194,18 @@ body {
     margin: 5px 0;
     background-color: #322931;
 }
+.summary.markdown blockquote {
+    margin: 5px 0 1px;
+}
+.summary.markdown table {
+    width: 100%;
+    margin: 5px;
+    font-size: 15px;
+    
+}
+.summary.markdown table td {
+    padding: 5px 15px;
+}
 
 #content .article .summary {
     text-shadow: 0 -1px 1px rgba(0, 0, 0, .1);
@@ -234,11 +246,12 @@ body {
     border-bottom: 1px solid #eee;
 }
 #content .agreement a {
-    color: #f67280;
+    color: darkorchid;
     transition: .2s;
 }
 #content .agreement a:hover {
-    color: darkorchid;
+    color: #f67280;
+    text-decoration: underline;
     transition: .4s;
 }
 .page {
