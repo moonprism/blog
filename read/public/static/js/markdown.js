@@ -1,37 +1,61 @@
 // -----------------------------------------------------------------
 //          https://github.com/moonprism/markdown.js
 // -----------------------------------------------------------------
+var inline_parse = function (str, img_cdn) {
+    return global_parse(str).replace(/([^\\]|^)!\[(.*?)\]\((http.*?)\)/g, '$1<img alt="$2" src="$3" >')
+        .replace(/([^\\]|^)!\[(.*?)\]\((.*?)\)/g, '$1<img alt="$2" src="' + img_cdn + '$3" >')
+        .replace(/([^\\]|^)\[(.*?)\]\((#.*?)\)/g, '$1<a href="$3">$2</a>')
+        .replace(/([^\\]|^)\[(.*?)\]\((.*?)\)/g, '$1<a target="_blank" href="$3">$2</a>')
+        .replace(/([^\\]|^)\*\*(.+?)\*\*/g, '$1<b>$2</b>')
+        .replace(/([^\\]|^)\*(.+?)\*/g, '$1<i>$2</i>')
+        .replace(/([^\\]|^)~~(.+?)~~/g, '$1<s>$2</s>')
+        .replace(/([^\\]|^)`(.+?)`/g, function (match, prefix, code) {
+            return prefix + '<code>' + code_parse(code) + '</code>'
+        })
+        .replace(/\\</g, "&lt;")
+        .replace(/\\>/g, "&gt;")
+        .replace(/\\([!\[\*\~`#])/g, '$1');
+};
+var code_parse = function (str) {
+    return global_parse(str).replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+var global_parse = function (str) {
+    return str.replace(/\:bread\:/g, '🍞')
+        .replace(/\:heart\:/g, '❤️')
+        .replace(/\:sparkling_heart\:/g, '💖')
+        .replace(/\:zap\:/g, '⚡️')
+        .replace(/\:snowflake\:/g, '❄️')
+        .replace(/\:books\:/g, '📚')
+        .replace(/\:bookmark\:/g, '🔖')
+        .replace(/\:dart\:/g, '🎯')
+        .replace(/\:fish_cake\:/g, '🍥')
+        .replace(/\:lollipop\:/g, '🍭')
+        .replace(/\:ice_cream\:/g, '🍨')
+        .replace(/\:star\:/g, '⭐️')
+        .replace(/\:speech_balloon\:/g, '💬')
+        .replace(/\:cloud\:/g, '☁️')
+        .replace(/\:chestnut\:/g, '🌰')
+        .replace(/\:jack_o_lantern\:/g, '🎃')
+        .replace(/\:email\:/g, '✉️')
+        .replace(/\:anchor\:/g, '⚓️')
+        .replace(/\:triangular_flag_on_post\:/g, '🚩')
+        .replace(/\:link\:/g, '🔗')
+        .replace(/\:whale\:/g, '🐳')
+        .replace(/\:tada\:/g, '🎉')
+        .replace(/\:cake\:/g, '🍰')
+        .replace(/\:art\:/g, '🎨')
+        .replace(/\:book\:/g, '📖')
+        .replace(/\:game\:/g, '🎮')
+        .replace(/\:pushpin\:/g, '📌')
+        .replace(/\:cherries\:/g, '🍒')
+}
 function markdown(src, img_cdn = '') {
     let _text = src.replace(/(\r\n|\r)/g, "\n");
     let _html = '';
     let tokens = [];
-    let inline_parse = function (str) {
-        return global_parse(str).replace(/([^\\]|^)!\[(.*?)\]\((http.*?)\)/g, '$1<img alt="$2" src="$3" >')
-            .replace(/([^\\]|^)!\[(.*?)\]\((.*?)\)/g, '$1<img alt="$2" src="' + img_cdn + '$3" >')
-            .replace(/([^\\]|^)\[(.*?)\]\((#.*?)\)/g, '$1<a href="$3">$2</a>')
-            .replace(/([^\\]|^)\[(.*?)\]\((.*?)\)/g, '$1<a target="_blank" href="$3">$2</a>')
-            .replace(/([^\\]|^)\*\*(.+?)\*\*/g, '$1<b>$2</b>')
-            .replace(/([^\\]|^)\*(.+?)\*/g, '$1<i>$2</i>')
-            .replace(/([^\\]|^)~~(.+?)~~/g, '$1<s>$2</s>')
-            .replace(/([^\\]|^)`(.+?)`/g, function (match, prefix, code) {
-                return prefix + '<code>' + code_parse(code) + '</code>'
-            })
-            .replace(/\\</g, "&lt;")
-            .replace(/\\>/g, "&gt;")
-            .replace(/\\([!\[\*\~`#])/g, '$1');
-    };
-    let code_parse = function (str) {
-        return global_parse(str).replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
-    }
-    let global_parse = function (str) {
-        return str.replace(/\:bread\:/g, '🍞')
-            .replace(/\:heart\:/g, '❤️')
-            .replace(/\:sparkling_heart\:/g, '💖')
-            .replace(/\:cherries\:/g, '🍒');
-    }
     // lexing
     let token;
     let heading, br, li, code, blockquote, table, paragraph, space, none, html;
@@ -226,13 +250,13 @@ function markdown(src, img_cdn = '') {
         switch(token.type) {
             case 'heading':
                 token.attributes = token.id === undefined ? '' : ' id="' + token.id + '"';
-                _html += '<h' + token.level + token.attributes + '>' + inline_parse(token.text) + '</h' + token.level + '>';
+                _html += '<h' + token.level + token.attributes + '>' + inline_parse(token.text, img_cdn) + '</h' + token.level + '>';
                 break;
             case 'br':
                 _html += '<' + token.tag + '>';
                 break;
             case 'paragraph':
-                _html += '<p>' + inline_parse(token.text).replace(/\n/g, '<br>') + '</p>';
+                _html += '<p>' + inline_parse(token.text, img_cdn).replace(/\n/g, '<br>') + '</p>';
                 break;
             case 'list':
                 token.list.forEach(function(item) {
@@ -250,7 +274,7 @@ function markdown(src, img_cdn = '') {
                             _html += '</li>';
                             break;
                         case 'item':
-                            _html += inline_parse(item.text).replace(/\n/g, '<br>');
+                            _html += inline_parse(item.text, img_cdn).replace(/\n/g, '<br>');
                             break;
                     }
                 });
@@ -261,19 +285,19 @@ function markdown(src, img_cdn = '') {
                 break;
             case 'blockquote':
                 token.attributes = token.class === undefined ? '' : ' class="' + token.class + '"';
-                _html += '<blockquote' + token.attributes + '>' + inline_parse(token.text.replace(/\n/g, '<br>')) + '</blockquote>';
+                _html += '<blockquote' + token.attributes + '>' + inline_parse(token.text.replace(/\n/g, '<br>'), img_cdn) + '</blockquote>';
                 break;
             case 'table':
                 let thead = '<thead><tr>';
                 for (let i=0; i<token.header.length; i++) {
-                    thead += '<th' + (token.align[i] ? ' align="' + token.align[i] + '"' : '') + '>' + inline_parse(token.header[i]) + '</th>';
+                    thead += '<th' + (token.align[i] ? ' align="' + token.align[i] + '"' : '') + '>' + inline_parse(token.header[i], img_cdn) + '</th>';
                 }
                 thead += '</tr></thead>';
                 let tbody = '<tbody>';
                 for (let i=0; i<token.cells.length; i++) {
                     tbody += "<tr>";
                     for (let j=0; j < token.cells[i].length; j++) {
-                        tbody += '<td' + (token.align[j] ? ' align="' + token.align[j] + '"' : '') + '>' + inline_parse(token.cells[i][j]) + '</td>';
+                        tbody += '<td' + (token.align[j] ? ' align="' + token.align[j] + '"' : '') + '>' + inline_parse(token.cells[i][j], img_cdn) + '</td>';
                     }
                     tbody += "</tr>";
                 }

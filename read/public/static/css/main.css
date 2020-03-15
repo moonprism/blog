@@ -163,6 +163,11 @@ body {
     transition: 0.3s;
 }
 
+#content .article h1 a i{
+    font-style: normal;
+    font-size: .8em;
+}
+
 #content .article .mark {
     margin: 5px 0 3px 5px;
     letter-spacing: 1px;
@@ -206,7 +211,15 @@ body {
 .summary.markdown table td {
     padding: 5px 15px;
 }
-
+.summary.markdown ul {
+    margin: 10px 0 0 !important;
+}
+.summary.markdown li {
+    margin: 3px 0 !important;
+    font-size: 16px;
+    color: #444;
+    list-style-type: circle!important;
+}
 #content .article .summary {
     text-shadow: 0 -1px 1px rgba(0, 0, 0, .1);
     margin-top: 9px;
