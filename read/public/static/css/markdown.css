@@ -80,8 +80,13 @@
     top: 5px;
     left: -7px;
 }
+.markdown b {
+    padding: 0 2px;
+    color: #555;
+    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei Light,SimSun,sans-serif;
+}
 .markdown p{
-    font-size: 1.17em;
+    font-size: 17px;
     line-height: 1.7;
     color: #233;
     margin-bottom: 15px;
@@ -171,6 +176,10 @@
     border-radius: 3px;
     background-color: #282828;
     margin: 15px 0 22px;
+    tab-size: 4;
+}
+.hljs-comment, .hljs-emphasis {
+    font-style: inherit !important;
 }
 .markdown pre code{
     font: 16px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
