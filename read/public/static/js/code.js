@@ -67,6 +67,7 @@ function addLineNumber() {
 function highlight() {
     document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightBlock(block);
+        block.innerHTML = block.innerHTML.replace(/\<span class=\"hljs-comment\">(.+\s)(https?:\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])\<\/span\>/, '<span class="hljs-comment">$1<a href="$2">$2</a></span>')
     });
     addLineNumber();
 }
@@ -94,5 +95,4 @@ function hoverMarkdown() {
     })
 }
 hoverMarkdown()
-hljs.initHighlightingOnLoad();
-addLineNumber();
+highlight();
