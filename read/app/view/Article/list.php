@@ -88,14 +88,15 @@
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
 <script type="text/javascript">
+    document.querySelectorAll('h1 a').forEach((heading) => {
+        heading.innerHTML = inline_parse(heading.innerHTML)
+    })
     document.querySelectorAll('.summary').forEach((summary) => {
-        summary.innerHTML = replace_sym(markdown(summary.getElementsByTagName('textarea')[0].value), 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
+        summary.innerHTML = markdown(summary.getElementsByTagName('textarea')[0].value, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
     });
 </script>
-<!---------高亮处理---------->
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/hopscotch.min.css">
-<!-------------------------->
 </body>
 </html>

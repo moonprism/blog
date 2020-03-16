@@ -54,6 +54,7 @@
     padding: 10px 16px;
     border-radius: 3px;
     margin: 5px 0;
+    tab-size: 4;
 }
 .search-result pre code {
     font: 15px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
@@ -81,6 +82,9 @@
     list-style: decimal;
     margin: 0 0 0 27px !important;
     padding: 0;
+}
+.c-md .hljs ol {
+    margin: 0 !important;
 }
 .hljs ol li {
     padding: 2px 7px!important;
@@ -138,6 +142,7 @@
 .markdown ul li,.markdown ol li{
     margin-bottom: 7px;
     padding-left: 5px;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
 }
 .markdown ul li{
     list-style-type: disc !important;
@@ -148,8 +153,14 @@
 .markdown ul ul li, .markdown ol ul li {
     list-style-type: circle !important;
 }
-.markdown ol ol li, .markdown ul ol li {
+.markdown ol ol li {
     list-style-type: lower-alpha !important;
+}
+.markdown ul ol li {
+    list-style-type: lower-roman !important;
+}
+.markdown ul ul ul li {
+    list-style-type: square !important;
 }
 .markdown blockquote{
     margin: 15px 4px;
@@ -189,12 +200,20 @@
     padding-top: 4px;
     border-radius: 6px;
 }
-.markdown ._c{
+.markdown pre{
+    margin: 0 .2em;
+}
+.markdown pre code{
+    background-color: #fff !important;
+    display: block;
+    padding: 0;
+}
+.markdown code{
     overflow: auto;
     word-wrap:break-word;
     font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
     padding: 3px 9px 5px;
-    background-color: rgba(0,0,0,0.05) !important;
+    background-color: rgba(0,0,0,0.04) !important;
     display: inline;
     border-radius: 3px;
     margin: 0 .2em;

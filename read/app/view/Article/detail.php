@@ -32,8 +32,10 @@
             <?php echo $article_obj->created_time ?>
                 <b>#</b>
                 <?php $asciinema_flag = false ?>
+                <?php $math_flag = false ?>
                 <?php foreach($article_obj->tags as $tag){ ?>
                     <?php if ($asciinema_flag != true) $asciinema_flag = (strtolower($tag['name']) === 'asciinema'); ?>
+                    <?php if ($math_flag != true) $math_flag = (strtolower($tag['name']) === 'math'); ?>
                     <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
                 <?php } ?>
         </div>
@@ -65,12 +67,16 @@
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
 <script type="text/javascript">
-    $('markdown').innerHTML = replace_sym(markdown($('text').value, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'));
+    $('markdown').innerHTML = markdown($('text').value, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
 </script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 <?php if ($asciinema_flag) { ?>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/css/asciinema-player.css">
-<script src="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/css/asciinema-player.css">
+    <script src="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/js/asciinema-player.min.js"></script>
+<?php } ?>
+<?php if ($math_flag) { ?>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 <?php } ?>
 <!---------高亮处理---------->
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
