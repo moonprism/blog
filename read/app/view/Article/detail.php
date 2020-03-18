@@ -67,7 +67,7 @@
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
 <script type="text/javascript">
-    $('markdown').innerHTML = markdown($('text').value, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
+    $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
 </script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 <?php if ($asciinema_flag) { ?>

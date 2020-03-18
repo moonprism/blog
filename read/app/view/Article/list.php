@@ -88,11 +88,8 @@
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
 <script type="text/javascript">
-    document.querySelectorAll('h1 a').forEach((heading) => {
-        heading.innerHTML = inline_parse(heading.innerHTML)
-    })
     document.querySelectorAll('.summary').forEach((summary) => {
-        summary.innerHTML = markdown(summary.getElementsByTagName('textarea')[0].value, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
+        summary.innerHTML = markdown(summary.getElementsByTagName('textarea')[0].value, main_markdown_config);
     });
 </script>
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
