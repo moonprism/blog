@@ -140,8 +140,6 @@
                 this.$props.article.tags = this.$props.article.tags.filter((element) => {
                     return tag.id !== element.id
                 })
-
-                this.$props.article.tags = [];
             }
         }
     }

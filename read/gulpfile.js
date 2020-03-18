@@ -40,13 +40,18 @@ gulp.task('clean', (done) => {
     done()
 })
 
-gulp.task('build', gulp.series('clean', gulp.parallel('css', 'js')))
+gulp.task('markdown', () => {
+    return gulp.src('node_modules/moonprism-markdown/dist/markdown.min.js')
+        .pipe(gulp.dest('public/dist/js'))
+})
+
+gulp.task('build', gulp.series('clean', gulp.parallel( gulp.parallel('css', 'js'), 'markdown')))
 
 gulp.task('default', gulp.series('build'))
 
 gulp.task('browser', function(done) {
     browserSync.init({
-        proxy: "127.0.0.1:8080",
+        proxy: "127.0.0.1:8081",
         port: 2000
     })
     done()
