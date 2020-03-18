@@ -63,7 +63,7 @@
         },
         computed: {
             html() {
-                return markdown(this.insertCursorIndexForMarkdown(), process.env.VUE_APP_FILE_ORIGIN)
+                return markdown(this.insertCursorIndexForMarkdown(), this.$props.articleShow.config)
             }
         },
         props: {
@@ -73,7 +73,8 @@
                 cursor: {
                     line: 0,
                     ch: 0
-                }
+                },
+                config: {}
             }
         },
         mounted() {

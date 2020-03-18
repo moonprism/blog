@@ -69,6 +69,8 @@
                     cursor: {
                         line: 0,
                         ch: 0
+                    },
+                    config: {
                     }
                 },
                 articleEdit: {
@@ -147,7 +149,10 @@
             show() {
                 this.articleShow = {
                     markdownText: this.articleEdit.markdownText,
-                    cursor: this.articleEdit.cursor
+                    cursor: this.articleEdit.cursor,
+                    config: {
+                        imageCDN: process.env.VUE_APP_FILE_ORIGIN
+                    }
                 }
                 this.articleVisible = !this.articleVisible
             },
