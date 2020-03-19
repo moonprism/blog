@@ -1,12 +1,9 @@
 .markdown h1 {
-    font-size: 19px;
-    padding: 9px 12px;
+    font-size: 18px;
+    padding: 15px 12px;
     border-bottom: 1px solid #eee;
     margin-bottom: 17px;
-}
-.markdown h1::before {
-    content: '💖';
-    margin-right: 5px;
+    color: #233;
 }
 .markdown h2{
     color: #555;
@@ -18,22 +15,14 @@
     margin-top: 30px;
     font-size: 18px;
 }
-.markdown h2::before {
-    content: '📖';
-    margin-right: 5px;
-}
 .markdown h3 {
-    padding: 4px 24px;
-    font-size: 18px;
-    color: #888;
-    margin-bottom: 5px;
-    font-weight: 400;
+    font-size:17px;
+    padding: 5px 20px 0;
+    color: #777;
+    margin: 0;
 }
 .markdown h3:before {
-    content: '⭐️';
-    margin-right: 5px;
-    font-size: 19px;
-    color: #777;
+    left: -4px;
 }
 .markdown blockquote {
     font-size: 1.24em;
@@ -43,9 +32,11 @@
     margin: 11px 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    background-color: #fff;
 }
 
 .markdown blockquote code {
+    background-color: #fff;
     font-size: 15px;
     font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
     font-weight: 600;
@@ -67,6 +58,7 @@
     text-decoration: underline;
 }
 .markdown blockquote img {
+    padding-top: 0;
     width: 30px;
     height: 30px;
     position: relative;
