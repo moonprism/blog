@@ -67,6 +67,7 @@ function addLineNumber() {
 function highlight() {
     document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightBlock(block);
+        block.innerHTML = block.innerHTML.replace(/\<span class=\"hljs-comment\">(.+\s)(https?:\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])\<\/span\>/, '<span class="hljs-comment">$1<a href="$2">$2</a></span>')
     });
     addLineNumber();
 }
@@ -79,7 +80,7 @@ function hoverMarkdown() {
         }
         let code = pre.getElementsByTagName('code')[0];
         let show = pre.getElementsByTagName('div')[0];
-        show.innerHTML = markdown(code.innerText, 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/');
+        show.innerHTML = markdown(code.innerText, main_markdown_config);
         show.style.display = 'block';
         code.style.display = 'none';
         f.addEve(pre, 'click', (e) => {
@@ -94,5 +95,4 @@ function hoverMarkdown() {
     })
 }
 hoverMarkdown()
-hljs.initHighlightingOnLoad();
-addLineNumber();
+highlight();

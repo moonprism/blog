@@ -85,7 +85,7 @@
     color: #555;
     font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei Light,SimSun,sans-serif;
 }
-.markdown p{
+.markdown>p{
     font-size: 17px;
     line-height: 1.7;
     color: #233;

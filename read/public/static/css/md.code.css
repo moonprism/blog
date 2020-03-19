@@ -110,7 +110,7 @@
     animation-duration: .3s;
     -webkit-animation: fade-in .3s
 }
-.markdown p {
+.markdown>p {
     font-size: 15px;
     margin-bottom: 16px;
 }

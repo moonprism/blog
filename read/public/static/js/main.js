@@ -1,3 +1,39 @@
+var emoji_parse = function (str) {
+    return str.replace(/\:bread\:/g, '🍞')
+        .replace(/\:heart\:/g, '❤️')
+        .replace(/\:sparkling_heart\:/g, '💖')
+        .replace(/\:zap\:/g, '⚡️')
+        .replace(/\:snowflake\:/g, '❄️')
+        .replace(/\:books\:/g, '📚')
+        .replace(/\:bookmark\:/g, '🔖')
+        .replace(/\:dart\:/g, '🎯')
+        .replace(/\:fish_cake\:/g, '🍥')
+        .replace(/\:lollipop\:/g, '🍭')
+        .replace(/\:ice_cream\:/g, '🍨')
+        .replace(/\:star\:/g, '⭐️')
+        .replace(/\:speech_balloon\:/g, '💬')
+        .replace(/\:cloud\:/g, '☁️')
+        .replace(/\:chestnut\:/g, '🌰')
+        .replace(/\:jack_o_lantern\:/g, '🎃')
+        .replace(/\:email\:/g, '✉️')
+        .replace(/\:anchor\:/g, '⚓️')
+        .replace(/\:triangular_flag_on_post\:/g, '🚩')
+        .replace(/\:link\:/g, '🔗')
+        .replace(/\:whale\:/g, '🐳')
+        .replace(/\:tada\:/g, '🎉')
+        .replace(/\:cake\:/g, '🍰')
+        .replace(/\:art\:/g, '🎨')
+        .replace(/\:book\:/g, '📖')
+        .replace(/\:game\:/g, '🎮')
+        .replace(/\:pushpin\:/g, '📌')
+        .replace(/\:cherries\:/g, '🍒')
+}
+var main_markdown_config = {
+    inlineParse: emoji_parse,
+    codeParse: emoji_parse,
+    linkTargetBlank: true,
+    imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
+};
 function replace_sym(re_str) {
     return re_str.replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
 }

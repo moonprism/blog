@@ -16,7 +16,7 @@
 |    | - public
 |    | -  | - static
 |    | -  | -  | - js 
-|    | -  | -  | - | - markdown.js * 
+|    | -  | -  | - | - main.js * 
 | - write     后台管理 (go)
 |    | - api
 |    | - config
