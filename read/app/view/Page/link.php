@@ -8,6 +8,7 @@
     <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/md.link.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/comment.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
@@ -25,9 +26,9 @@
     </div>
 </div>
 <div id="content">
-    <div class="markdown" id="markdown">
-        <?php echo $article_obj->html ?>
-    </div>
+    <div class="markdown" id="markdown"></div>
+    <textarea id="text" style="display: none;">
+<?php echo trim($article_obj->content); ?> </textarea>
     <div class="comment">
         <span id="to_name"></span>
         <div id="com_up">
@@ -45,6 +46,10 @@
     </div>
 </div>
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
+<script type="text/javascript" src="/dist/js/markdown.min.js"></script>
+<script type="text/javascript">
+    $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
+</script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 </body>
 </html>
