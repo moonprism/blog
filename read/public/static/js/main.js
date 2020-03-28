@@ -32,6 +32,7 @@ var main_markdown_config = {
     inlineParse: emoji_parse,
     codeParse: emoji_parse,
     linkTargetBlank: true,
+    debug: true,
     imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
 };
 function replace_sym(re_str) {

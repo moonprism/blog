@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "主要用来压缩",
   "author": "kicoe",
+  "scripts": {
+    "build": "node_modules/.bin/gulp",
+    "serve": "node_modules/.bin/gulp serve"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
@@ -17,6 +21,6 @@
     "gulp-watch": "^5.0.1"
   },
   "dependencies": {
-    "moonprism-markdown": "^2.3.5"
+    "moonprism-markdown": "^2.4.1"
   }
 }
