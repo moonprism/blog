@@ -4,7 +4,7 @@ services:
   read:
     build: ./docker/read/
     ports:
-      - "8080:80"
+      - "8081:80"
     volumes:
       - "./read:/www"
       - "./log/nginx:/var/log/nginx"
@@ -17,7 +17,7 @@ services:
   write:
     build: ./docker/write/
     ports:
-      - "3000:3000"
+      - "3000:2999"
     volumes:
       - "./data/write/static:/static"
     links:
@@ -27,8 +27,8 @@ services:
   mysql:
     hostname: mysql
     build: ./docker/mysql
-    # ports:
-    #   - "3306:3306"
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 123456
     volumes:
@@ -38,8 +38,8 @@ services:
   redis:
     hostname: redis
     image: redis:5.0
-    # ports:
-    #   - "6379:6379"
+    ports:
+      - "6379:6379"
     volumes:
       - "./log/redis:/var/log"
       - "./data/redis:/data"
@@ -47,9 +47,9 @@ services:
   elastic:
     hostname: elasticsearch
     build: ./docker/elastic
-    # ports:
-    #   - "9200:9200"
-    #   - "9300:9300"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     environment:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
