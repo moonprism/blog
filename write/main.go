@@ -20,7 +20,7 @@ var (
 )
 
 func init() {
-	flag.StringVar(&env, "env", "dev", "environment for server:[dev|prod]")
+	flag.StringVar(&env, "env", "dev", "environment for server:[dev|test|prod]")
 	flag.Parse()
 }
 

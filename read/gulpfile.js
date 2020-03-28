@@ -28,7 +28,6 @@ gulp.task('js', () => {
             mangle: true,
             output: {ascii_only: true}
         }))
-
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('public/dist/js'))
 });
@@ -41,6 +40,16 @@ gulp.task('clean', (done) => {
 })
 
 gulp.task('markdown', () => {
+    // return gulp.src(['node_modules/moonprism-markdown/markdown.js'])
+    //     .pipe(babel({
+    //         presets: ['es2015']
+    //     }))
+    //     .pipe(uglify({
+    //         mangle: true,
+    //         output: {ascii_only: true}
+    //     }))
+    //     .pipe(rename({suffix: '.min'}))
+    //     .pipe(gulp.dest('public/dist/js'))
     return gulp.src('node_modules/moonprism-markdown/dist/markdown.min.js')
         .pipe(gulp.dest('public/dist/js'))
 })

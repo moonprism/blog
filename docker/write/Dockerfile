@@ -15,4 +15,4 @@ RUN echo 'Asia/Shanghai' >/etc/timezone
 
 WORKDIR /www
 
-ENTRYPOINT ["./write", "--env", "prod"]
+ENTRYPOINT ["./write", "--env", "test"]
