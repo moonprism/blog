@@ -36,9 +36,6 @@
             <?php } ?>
         </div>
         <div class="summary markdown">
-            <?php if($article['image']){ ?>
-                <img src="<?php echo kicoe\core\Config::prpr('image_cdn').$article['image'] ?>">
-            <?php } ?>
             <textarea style="display:none"><?php echo $article['summary']?></textarea>
         </div>
     </div>
