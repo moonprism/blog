@@ -43,10 +43,15 @@
     import CodeMirror from 'codemirror/lib/codemirror'
     import 'codemirror/lib/codemirror.css'
     import 'codemirror/mode/markdown/markdown'
+    import 'codemirror/mode/go/go'
+    import 'codemirror/mode/javascript/javascript'
+    import 'codemirror/mode/shell/shell'
+    import 'codemirror/mode/sql/sql'
+    import 'codemirror/mode/css/css'
+    import 'codemirror/mode/php/php'
     import 'codemirror/keymap/vim'
     import 'codemirror/addon/dialog/dialog.css'
-
-    import '@/style/cm.edit.css'
+    import 'codemirror/theme/material.css'
 
     import markdown from 'moonprism-markdown'
     process.env.VUE_APP_FILE_ORIGIN
@@ -89,7 +94,7 @@
                 cmOptions: {
                     mode:   'text/markdown',
                     keyMap: 'vim',
-                    theme:  'edit',
+                    theme:  'material',
                     lineWrapping: true,
                     matchBrackets: true,
                     //tyautofocus: true,
@@ -215,5 +220,16 @@
         color: #f56c6c;
         cursor: pointer;
         transition: all .2s linear;
+    }
+    .cm-s-material {
+        font-family: Consolas,"Liberation Mono",Menlo,Courier,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+        width: 920px;
+        margin: 0 auto 30px;
+        font-size: 17px;
+        padding: 10px;
+    }
+    .cm-s-material.CodeMirror {
+        line-height: 1.4;
+        height: auto;
     }
 </style>

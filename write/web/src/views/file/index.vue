@@ -10,6 +10,7 @@
                     <el-button icon="el-icon-upload" type="primary" plain>upload</el-button>
                 </el-upload>
             </div>
+            <!-- 图片瀑布流展示模块 -->
             <image-waterfall @select-image="selectImage" v-if="hackReset == true"></image-waterfall>
         </div>
         <div v-if="isEdit" class="file-edit">
