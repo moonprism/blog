@@ -1,6 +1,6 @@
 .search-input {
     text-align: center;
-    margin-bottom: 17px;
+    margin: 17px 0;
 }
 .search-input input {
     -webkit-appearance: none;
