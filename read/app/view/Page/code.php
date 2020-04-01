@@ -25,7 +25,7 @@
 </div>
 <div id="content">
     <div class="search-input">
-        <input id="searchInput">
+        <input id="searchInput" autocomplete="off" placeholder="</>">
     </div>
     <div id="searchResult" class="search-result">
         <?php foreach($code_list as $code) { ?>
