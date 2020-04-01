@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="an"></div>
 <div id="up" class="p_up"><a href="javascript:up()"><b>^</b></a></div>
 <div id="header">
     <div class="nav">
@@ -79,9 +80,9 @@
         </ul>
     </div>
 </div>
-<div id="footer">
+<!-- <div id="footer">
     <span class="f_en">Powered by<a href="https://github.com/moonprism/kicoephp-src" target="_blank"> kicoephp </a></span>
-</div>
+</div> -->
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
 <script type="text/javascript">

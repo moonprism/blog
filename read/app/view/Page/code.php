@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="an"></div>
 <div id="up"><a href="javascript:up()"><b>^</b></a></div>
 <div id="header">
     <div class="nav">
@@ -24,7 +25,7 @@
 </div>
 <div id="content">
     <div class="search-input">
-        <input id="searchInput">
+        <input id="searchInput" autocomplete="off" placeholder="</>">
     </div>
     <div id="searchResult" class="search-result">
         <?php foreach($code_list as $code) { ?>

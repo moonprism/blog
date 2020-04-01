@@ -54,7 +54,7 @@
         color: #000;
     }
 }
-.markdown h1:target,
+/* .markdown h1:target,
 .markdown h2:target,
 .markdown h3:target,
 .markdown h4:target,
@@ -71,7 +71,7 @@
 .markdown h4:target:before,
 .target:before {
     padding-top: 120px;
-}
+} */
 .markdown h3:before{
     content: '@';
     font-size: 19px;
