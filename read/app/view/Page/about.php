@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>kicoe - About</title>
+    <title>about | kicoe</title>
     <meta name="keywords" content="kicoe,博客,blog,代码,code,游戏,game,about,关于">
     <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
     <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/md.about.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Noto+Sans:ital@1&family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="an"></div>
