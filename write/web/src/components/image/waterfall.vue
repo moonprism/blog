@@ -1,9 +1,9 @@
 <template>
     <div class="image-list-wrapper">
-        <Waterfall :list="list" :gutter="15" :width="waterfallItemWidth" :phoneCol="2" @handleClick="handleClick" ref="waterfall">
+        <Waterfall :list="list" :gutter="15" :width="waterfallItemWidth" :phoneCol="2" ref="waterfall">
             <template slot="item" slot-scope="props">
                 <el-card :body-style="{padding:'0px'}">
-                    <div class="card" v-bind:class="{selected: props.data.selected}">
+                    <div class="card" v-bind:class="{selected: props.data.selected}" @click="handleClick(props.data)">
                         <div v-if="props.data.selected" class="selected-icon"><i class="el-icon-success"></i></div>
                         <img :src="props.data.src" alt="" @load="$refs.waterfall.refresh()">
                         <div class="info">

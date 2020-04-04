@@ -26,13 +26,16 @@ var emoji_parse = function (str) {
         .replace(/\:book\:/g, '📖')
         .replace(/\:game\:/g, '🎮')
         .replace(/\:pushpin\:/g, '📌')
-        .replace(/\:cherries\:/g, '🍒')
+        .replace(/\:baby_chick\:/g, '🐤')
+        .replace(/\:sparkles\:/g, '✨')
+        .replace(/\:rocket\:/g, '🚀')
+        .replace(/\:cherries\:/g, '🍒');
 }
 var main_markdown_config = {
     inlineParse: emoji_parse,
     codeParse: emoji_parse,
     linkTargetBlank: true,
-    debug: true,
+    debug: false,
     imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
 };
 function replace_sym(re_str) {
@@ -150,4 +153,9 @@ function bg() {
             $('bg').innerHTML = '<img style="margin: '+paddingHeigh+'px auto" src="'+ i.srcElement.currentSrc +'">';
         })
     })
+}
+// 4.4
+if (new Date() < new Date('2020/4/5 00:00:00')) {
+    // html {filter: grayscale(1)}
+    document.documentElement.style.filter = 'grayscale(1)'
 }

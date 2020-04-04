@@ -2,7 +2,7 @@
 
 body,h1,h2,h3,h4,h5,h6,p,form,blockquote {
     margin: 0;
-    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif
+    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif
 }
 
 ol,ul,li {
@@ -22,6 +22,19 @@ html {
     background: #fff;
     color: #233;
     height:100%;
+}
+
+.an {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -9;
+    top: 0;
+    background: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/gFjsJhJcSZCsIyBGbLVL.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter:alpha(opacity=90);  
+    opacity: 0.9;
 }
 
 body {
@@ -62,15 +75,16 @@ body {
 }
 
 #header {
-    height: 42px;
+    height: 44px;
     background-color: #fff;
     box-shadow: rgba(0,0,0,0.1) 0 1px 2px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    width: 777px;
+    margin: 47px auto 42px;
+    padding: 2px 45px;
+    border-radius: 3px;
     color: #222;
-    z-index: 99
+    z-index: 99;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 #header .nav {
@@ -92,7 +106,7 @@ body {
 
 #header .nav ul li a {
     text-shadow: 0 0 1px rgba(0, 0, 0, .3);
-    width: 50px;
+    width: 52px;
     position: relative;
     padding: 2px 10px;
     display: inline-block;
@@ -136,13 +150,17 @@ body {
 
 #content {
     width: 777px;
-    min-height: 300px;
-    margin: 77px auto 0
+    margin: 30px auto 290px;
+    background-color: #fff;
+    padding: 22px 45px 20px;
+    border-radius: 3px;
 }
 
 #content .article {
-    width: 100%;
-    margin-top: 22px;
+    margin-top: 19px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 0 3px 0;
 }
 
 #content .article h1 {
@@ -156,11 +174,12 @@ body {
     text-shadow: 0 1px 1px rgba(0,0,0,.2);
     font-size: 20px;
     padding: 1px 5px;
+    transition: 0.16s;
 }
 
 #content .article h1 a:hover{
-    color: #888;
-    transition: 0.3s;
+    color: #be8abf;
+    transition: 0.25s;
 }
 
 #content .article h1 a i{
@@ -170,22 +189,40 @@ body {
 
 #content .article .mark {
     margin: 5px 0 3px 5px;
-    letter-spacing: 1px;
-    color: #707070
+    color: #111
+}
+#content .article .mark .icon-date {
+    position: relative;
+    top: 1px;
+}
+#content .article .mark .icon-tag {
+    margin-left: 8px;
+    position: relative;
+    top: 4px;
 }
 
 .tag {
     letter-spacing: 0;
     background-color: #56c4e1;
     display: inline-block;
-    margin-left: 0.3rem;
+    margin-right: 0.3rem;
     padding: .3rem .5em;
     min-width: 2.1rem;
     text-align: center;
     line-height: 1;
     color: #fff;
     font-size: 12px;
-    border-radius: 2px;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    transition: 0.2s;
+    font-family: 'Roboto Mono', sans-serif;
+}
+.tag:hover {
+    background-color: #fff !important;
+    color: #00a1d6;
+    border: 1px solid #00a1d6;
+    border-radius: 0;
+    transition: 0.3s;
 }
 
 .summary {
@@ -231,8 +268,8 @@ body {
     line-height: 1.7;
     color: #111;
     font-size: 16px;
-    padding-bottom: 19px;
-    border-bottom: 1.2px solid #eee;
+    padding-bottom: 25px;
+    border-bottom: 1.4px solid #eee;
 }
 .article-list .article:last-child .summary {
     border-bottom: 0!important;
@@ -263,29 +300,29 @@ body {
     border-bottom: 1px solid #eee;
 }
 #content .agreement a {
-    color: darkorchid;
+    color: #7bd9f4;
     transition: .2s;
 }
 #content .agreement a:hover {
-    color: #f67280;
+    color: #f4cad3;
     text-decoration: underline;
     transition: .4s;
 }
 .page {
-    padding-bottom: 50px;
+    padding-bottom: 10px;
 }
 
 .page ul {
-    text-align: left;
+    text-align: center;
     margin-left: 3px
 }
 
 .page ul li a {
     margin: 10px 4px;
     display: inline-block;
-    line-height: 27px;
-    height: 27px;
-    width: 27px;
+    line-height: 28px;
+    height: 28px;
+    width: 28px;
     border-radius: 50%;
     border: 1px solid #bbb;
     transition: 0.5s;
@@ -298,7 +335,8 @@ body {
 }
 
 .page ul li span {
-    margin: 1px 7px
+    margin: 1px 7px;
+    font-weight: 700;
 }
 
 #footer {
@@ -349,8 +387,8 @@ body {
 
 #up {
     position: fixed;
-    right: 50px;
-    bottom: 50px;
+    right: 60px;
+    bottom: 55px;
     text-align: center;
     z-index: 99;
     display: none;
@@ -377,8 +415,14 @@ body {
 }
 
 @media screen and (max-width: 750px) {
+    #header {
+        width: 100%;
+        padding: 0;
+        margin: 30px 0 10px;
+    }
     #content {
         width: 100% !important;
+        padding: 10px 0;
     }
 
     .article h1 a {

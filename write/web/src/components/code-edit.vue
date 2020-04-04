@@ -20,14 +20,14 @@
     import 'codemirror/mode/php/php'
     import 'codemirror/keymap/vim'
     import 'codemirror/addon/dialog/dialog.css'
-    import 'codemirror/theme/3024-day.css'
+    import 'codemirror/theme/monokai.css'
 
     export default {
         name: 'CodeEdit',
         data() {
             return {
                 cmOptions: {
-                    theme:  '3024-day',
+                    theme:  'monokai',
                     lineWrapping: true,
                     matchBrackets: true,
                     inputStyle: "contenteditable",
@@ -69,7 +69,7 @@
                 } else {
                     this.editor.setOption('indentWithTabs', false)
                 }
-                this.editor.setOption('mode', this.$props.code.lang)
+                this.editor.setOption('mode', this.$props.code.lang === 'md' ? 'markdown' : this.$props.code.lang)
             },
             getContent() {
                 return this.editor.getValue()
@@ -88,5 +88,4 @@
     .code-edit .CodeMirror {
         font-family: 'Roboto Mono', "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif !important;
     }
-
 </style>

@@ -94,5 +94,5 @@ function hoverMarkdown() {
         })
     })
 }
-hoverMarkdown()
+hoverMarkdown();
 highlight();

@@ -2,15 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>kicoe - Code</title>
+    <title>code | kicoe</title>
     <meta name="keywords" content="kicoe,博客,blog,代码,code,游戏,game">
     <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/md.code.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Noto+Sans:ital@1&family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="an"></div>
 <div id="up"><a href="javascript:up()"><b>^</b></a></div>
 <div id="header">
     <div class="nav">
@@ -24,7 +25,7 @@
 </div>
 <div id="content">
     <div class="search-input">
-        <input id="searchInput">
+        <input id="searchInput" autocomplete="off">
     </div>
     <div id="searchResult" class="search-result">
         <?php foreach($code_list as $code) { ?>
