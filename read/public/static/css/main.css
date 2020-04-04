@@ -2,7 +2,7 @@
 
 body,h1,h2,h3,h4,h5,h6,p,form,blockquote {
     margin: 0;
-    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif
+    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif
 }
 
 ol,ul,li {
@@ -83,7 +83,8 @@ body {
     padding: 2px 45px;
     border-radius: 3px;
     color: #222;
-    z-index: 99
+    z-index: 99;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 #header .nav {
@@ -149,7 +150,6 @@ body {
 
 #content {
     width: 777px;
-    min-height: 300px;
     margin: 30px auto 290px;
     background-color: #fff;
     padding: 22px 45px 20px;
@@ -157,8 +157,10 @@ body {
 }
 
 #content .article {
-    width: 100%;
     margin-top: 19px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 0 3px 0;
 }
 
 #content .article h1 {
@@ -172,11 +174,12 @@ body {
     text-shadow: 0 1px 1px rgba(0,0,0,.2);
     font-size: 20px;
     padding: 1px 5px;
+    transition: 0.16s;
 }
 
 #content .article h1 a:hover{
-    color: #888;
-    transition: 0.3s;
+    color: #be8abf;
+    transition: 0.25s;
 }
 
 #content .article h1 a i{
@@ -186,22 +189,40 @@ body {
 
 #content .article .mark {
     margin: 5px 0 3px 5px;
-    letter-spacing: 1px;
-    color: #707070
+    color: #111
+}
+#content .article .mark .icon-date {
+    position: relative;
+    top: 1px;
+}
+#content .article .mark .icon-tag {
+    margin-left: 8px;
+    position: relative;
+    top: 4px;
 }
 
 .tag {
     letter-spacing: 0;
     background-color: #56c4e1;
     display: inline-block;
-    margin-left: 0.3rem;
+    margin-right: 0.3rem;
     padding: .3rem .5em;
     min-width: 2.1rem;
     text-align: center;
     line-height: 1;
     color: #fff;
     font-size: 12px;
-    border-radius: 2px;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    transition: 0.2s;
+    font-family: 'Roboto Mono', sans-serif;
+}
+.tag:hover {
+    background-color: #fff !important;
+    color: #00a1d6;
+    border: 1px solid #00a1d6;
+    border-radius: 0;
+    transition: 0.3s;
 }
 
 .summary {
@@ -247,7 +268,7 @@ body {
     line-height: 1.7;
     color: #111;
     font-size: 16px;
-    padding-bottom: 21px;
+    padding-bottom: 25px;
     border-bottom: 1.4px solid #eee;
 }
 .article-list .article:last-child .summary {
@@ -279,11 +300,11 @@ body {
     border-bottom: 1px solid #eee;
 }
 #content .agreement a {
-    color: darkorchid;
+    color: #7bd9f4;
     transition: .2s;
 }
 #content .agreement a:hover {
-    color: #f67280;
+    color: #f4cad3;
     text-decoration: underline;
     transition: .4s;
 }
