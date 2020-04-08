@@ -309,7 +309,7 @@ body {
     transition: .4s;
 }
 .page {
-    padding-bottom: 10px;
+    padding: 20px 0 5px;
 }
 
 .page ul {
