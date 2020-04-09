@@ -154,8 +154,8 @@ function bg() {
         })
     })
 }
-// 4.4
-if (new Date() < new Date('2020/4/5 00:00:00')) {
-    // html {filter: grayscale(1)}
-    document.documentElement.style.filter = 'grayscale(1)'
-}
+// // 4.4
+// if (new Date() < new Date('2020/4/5 00:00:00')) {
+//     // html {filter: grayscale(1)}
+//     document.documentElement.style.filter = 'grayscale(1)'
+// }

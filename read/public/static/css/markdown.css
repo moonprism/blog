@@ -128,7 +128,7 @@
 .markdown blockquote{
     margin: 15px 4px;
     padding: 12px 12px;
-    color: #111;
+    color: #444;
     border-left: 5px solid #409EFF;
     word-wrap: break-word;
     font-size: 15px;
@@ -177,6 +177,10 @@
     background-color: #282828;
     margin: 15px 0 22px;
     tab-size: 4;
+}
+.markdown ul pre, .markdown ol pre {
+    margin-left: -10px;
+    margin-top: 10px;
 }
 .hljs-comment, .hljs-emphasis {
     font-style: inherit !important;

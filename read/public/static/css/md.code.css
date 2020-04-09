@@ -1,3 +1,7 @@
+.markdown li, .markdown p {
+    margin: 0;
+    font-family: 'Roboto Mono',Helvetica Neue,Helvetica, Microsoft YaHei,SimSun,sans-serif !important;
+}
 .search-input {
     text-align: center;
     margin: 17px 0;
@@ -107,7 +111,7 @@
 }
 
 .markdown {
-    padding: 10px 15px 3px;
+    padding: 15px 12px;
     display: none;
     animation: fade-in;
     animation-duration: .3s;
@@ -164,8 +168,8 @@
 }
 .markdown blockquote{
     margin: 10px 4px;
-    padding: 5px 10px;
-    color: #888;
+    padding: 8px 10px;
+    color: #666;
     border-left: 5px solid #409EFF;
     word-wrap: break-word;
     font-size: 14px;
@@ -201,7 +205,11 @@
     border-radius: 6px;
 }
 .markdown pre{
-    margin: 0 .2em;
+    margin: 5px .2em;
+}
+.markdown ul pre, .markdown ol pre {
+    margin-left: -13px;
+    margin-top: 12px;
 }
 .markdown pre code{
     background-color: #fff !important;
@@ -212,7 +220,7 @@
     overflow: auto;
     word-wrap:break-word;
     font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
-    padding: 3px 9px 5px;
+    padding: 0 8px 0;
     background-color: rgba(0,0,0,0.04) !important;
     display: inline;
     border-radius: 3px;
