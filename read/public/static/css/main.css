@@ -4,7 +4,23 @@ body,h1,h2,h3,h4,h5,h6,p,form,blockquote {
     margin: 0;
     font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif
 }
-
+/* iconfont init */
+.icon {
+   width: 1em; height: 1em;
+   vertical-align: -0.15em;
+   fill: currentColor;
+   overflow: hidden;
+   font-size: 18px;
+}
+.i-date {
+    position: relative;
+    top: -1px;
+}
+.i-tag {
+    position: relative;
+    top: 1px;
+    margin: 0 2px 0 5px;
+}
 ol,ul,li {
     padding: 0;
     margin: 0
@@ -190,15 +206,6 @@ body {
 #content .article .mark {
     margin: 5px 0 3px 5px;
     color: #111
-}
-#content .article .mark .icon-date {
-    position: relative;
-    top: 1px;
-}
-#content .article .mark .icon-tag {
-    margin-left: 8px;
-    position: relative;
-    top: 4px;
 }
 
 .tag {
