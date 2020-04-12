@@ -2,7 +2,7 @@
 
 博客站点的所有源码
 
-## 目录
+## Directory Structure
 
 ```
 | - data      数据
@@ -26,11 +26,11 @@
 |    | -  | - src 
 |    | -  | - .env.development *
 |    | -  | - .env.product *
-| - docker-compose.yml
+| - docker-compose.yml *
 ```
 标 * 的为可配置文件
 
-## 运行
+## Run
 
 > 在docker目录下构建镜像的Dockerfile中有些注释代码可帮助解锁网络环境
 
@@ -45,7 +45,7 @@ make build
 docker-compose up -d
 ```
 
-### 开发
+## Development
 
 不用先配置write中的`prod.ini`，只需要先把其他docker容器跑起来。
 
@@ -58,7 +58,7 @@ docker-compose up -d
 git config commit.template .git-commit-template.txt
 ```
 
-### 上线
+## Deployment
 
 先把各product配置文件配置好，运行build。在build结束后将以下三个文件打包上传服务器。
 ```
@@ -71,7 +71,7 @@ docker-compose.yml
 
 > `.github/workflows`目录下配置了持续集成，借助github actions自动编译上线
 
-## 依赖
+## Dependency
 
 * [kicoephp](https://github.com/moonprism/kicoephp-src)
 * [markdown.js](https://github.com/moonprism/markdown.js)
