@@ -43,6 +43,14 @@
     font-weight: 400;
     position: relative;
 }
+.markdown h3:before{
+    content: '@';
+    font-size: 19px;
+    color: #9b45e4;
+    position: absolute;
+    top: 5px;
+    left: -7px;
+}
 @keyframes anchorTarget {
     0%{
         color: #000;
@@ -72,14 +80,6 @@
 .target:before {
     padding-top: 120px;
 } */
-.markdown h3:before{
-    content: '@';
-    font-size: 19px;
-    color: #9b45e4;
-    position: absolute;
-    top: 5px;
-    left: -7px;
-}
 .markdown b {
     padding: 0 2px;
     color: #555;

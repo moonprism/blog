@@ -54,14 +54,17 @@ f.addEve($('searchInput'), 'input', () => {
 })
 function render(searchItem) {
     $('searchResult').innerHTML += '<div class="search-item">\n'+
-        '<blockquote>'+searchItem.description+'<span>.'+searchItem.lang+'</span></blockquote>\n'+
+        '<blockquote><svg class="icon icon-code" aria-hidden="true"><use xlink:href="#icon-'+searchItem.lang+'></use></svg>'+
+        searchItem.description+'<span>.'+searchItem.lang+'</span></blockquote>\n'+
         '<div class="tags">'+searchItem.tags+'</div>\n'+
-        '<pre class="c-'+searchItem.lang+'"><code class="'+searchItem.lang+'">'+searchItem.content+'</code><div class="markdown"></div></pre>\n'+
+        '<pre class="c-'+searchItem.lang+'"><code class="'+searchItem.lang+'">'+searchItem.content+
+        '</code><div class="markdown"></div></pre>\n'+
         '</div>';
 }
 function addLineNumber() {
     document.querySelectorAll('.search-item>pre>code').forEach((code) => {
-        code.innerHTML = ('<ol><li><span class="cl">' + code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ol>')
+        code.innerHTML = ('<ol><li><span class="cl">' + 
+            code.innerHTML.replace(/\n/g, '\n</span></li><li><span class="cl">') + '\n</span></li></ol>')
     })
 }
 function highlight() {
