@@ -1,3 +1,10 @@
+.markdown li, .markdown p {
+    margin: 0;
+    font-family: 'Roboto Mono',Helvetica Neue,Helvetica, Microsoft YaHei,SimSun,sans-serif !important;
+}
+.icon-code {
+    font-size: 20px;
+}
 .search-input {
     text-align: center;
     margin: 17px 0;
@@ -107,7 +114,7 @@
 }
 
 .markdown {
-    padding: 10px 15px 3px;
+    padding: 15px 12px;
     display: none;
     animation: fade-in;
     animation-duration: .3s;
@@ -115,7 +122,7 @@
 }
 .markdown>p {
     font-size: 15px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 .markdown a {
     font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
@@ -132,6 +139,22 @@
     margin-bottom: 10px;
     color: #111;
     font-weight: 400;
+}
+.markdown h3{
+    padding: 4px 12px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #222;
+    font-weight: 400;
+    position: relative;
+}
+.markdown h3:before{
+    content: '@';
+    font-size: 19px;
+    color: #9b45e4;
+    position: absolute;
+    top: 3px;
+    left: -5px;
 }
 .markdown ul, .markdown ol{
     margin: 13px 0;
@@ -164,8 +187,8 @@
 }
 .markdown blockquote{
     margin: 10px 4px;
-    padding: 5px 10px;
-    color: #888;
+    padding: 8px 10px;
+    color: #666;
     border-left: 5px solid #409EFF;
     word-wrap: break-word;
     font-size: 14px;
@@ -201,7 +224,11 @@
     border-radius: 6px;
 }
 .markdown pre{
-    margin: 0 .2em;
+    margin: 5px .2em 10px;
+}
+.markdown ul pre, .markdown ol pre {
+    margin-left: -13px;
+    margin-top: 12px;
 }
 .markdown pre code{
     background-color: #fff !important;
@@ -212,7 +239,7 @@
     overflow: auto;
     word-wrap:break-word;
     font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
-    padding: 3px 9px 5px;
+    padding: 0 8px 0;
     background-color: rgba(0,0,0,0.04) !important;
     display: inline;
     border-radius: 3px;

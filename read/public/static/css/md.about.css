@@ -60,13 +60,13 @@
 .markdown blockquote.info {
     border-color: purple;
 }
-.markdown blockquote.icon {
+.markdown blockquote.ab-icon {
     background-color: #fff;
     border-left: none;
     text-align: center;
     margin-top: 23px;
 }
-.markdown blockquote.icon img {
+.markdown blockquote.ab-icon img {
     height: 31px;
     width: 31px;
     margin: 0 4px !important;
@@ -76,7 +76,7 @@
     transition: .3s;
     position: relative;
 }
-.markdown blockquote.icon img:hover {
+.markdown blockquote.ab-icon img:hover {
     opacity: 1;
     transition: .4s;
     bottom: 2px;

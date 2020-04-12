@@ -29,6 +29,10 @@ var emoji_parse = function (str) {
         .replace(/\:baby_chick\:/g, '🐤')
         .replace(/\:sparkles\:/g, '✨')
         .replace(/\:rocket\:/g, '🚀')
+        .replace(/\:rabbit\:/g, '🐰')
+        .replace(/\:cherry\:/g, '🌸')
+        .replace(/\:pill\:/g, '💊')
+        .replace(/\:watermelon\:/g, '🍉')
         .replace(/\:cherries\:/g, '🍒');
 }
 var main_markdown_config = {
@@ -154,8 +158,8 @@ function bg() {
         })
     })
 }
-// 4.4
-if (new Date() < new Date('2020/4/5 00:00:00')) {
-    // html {filter: grayscale(1)}
-    document.documentElement.style.filter = 'grayscale(1)'
-}
+// // 4.4
+// if (new Date() < new Date('2020/4/5 00:00:00')) {
+//     // html {filter: grayscale(1)}
+//     document.documentElement.style.filter = 'grayscale(1)'
+// }
