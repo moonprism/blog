@@ -2,7 +2,7 @@
     padding: 0 36px;
 }
 .comment {
-    padding-left: 35px;
+    padding-left: 40px;
     width: 90% !important;
 }
 .markdown h1 {
@@ -52,9 +52,13 @@
     float: right;
     line-height: 43px;
 }
-.markdown blockquote code::before {
+/* .markdown blockquote code::before {
     content: '//';
     margin-right: 3px;
+} */
+.markdown blockquote code i {
+    font-style: normal;
+    margin-left: 3px;
 }
 .markdown blockquote a {
     letter-spacing: .04rem;
@@ -94,58 +98,6 @@
     #content {
         width: 100% !important
     }
-}
-
-.markdown blockquote.kira code::before {
-    content: '✨';
-}
-.markdown blockquote.heart code::before {
-    content: '❤️';
-}
-.markdown blockquote.cherry code::before {
-    content: '🌸';
-}
-.markdown blockquote.sunflower code::before {
-    content: '🌻';
-}
-.markdown blockquote.maple code::before {
-    content: '🍁';
-}
-.markdown blockquote.mushroom code::before {
-    content: '🍄';
-}
-.markdown blockquote.rabbit code::before {
-    content: '🐰';
-}
-.markdown blockquote.zzz code::before {
-    content: '💤';
-}
-.markdown blockquote.skull code::before {
-    content: '💀';
-}
-.markdown blockquote.zap code::before {
-    content: '⚡️';
-}
-.markdown blockquote.pill code::before {
-    content: '💊';
-}
-.markdown blockquote.watermelon code::before {
-    content: '🍉';
-}
-.markdown blockquote.snowflake code::before {
-    content: '❄️';
-}
-.markdown blockquote.game code::before {
-    content: '🎮';
-}
-.markdown blockquote.meat code::before {
-    content: '🍖';
-}
-.markdown blockquote.peach code::before {
-    content: '🍑';
-}
-.markdown blockquote.flag code::before {
-    content: '🚩';
 }
 .repl{display:none !important}
 .comment{margin:20px 0 50px !important}
