@@ -196,6 +196,15 @@
     background-color: #f8f8f8;
     font-family: -apple-system, "Roboto Mono","Microsoft YaHei", sans-serif;
 }
+.markdown blockquote.book {
+    border: 0;
+    padding: 10px;
+    font-size: 15px;
+    font-style: italic;
+    margin: 3px 0;
+    color: #333;
+    background-color: #fff;
+}
 .markdown .success {
     border-left-color: #67C23A;
 }
