@@ -11,7 +11,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Noto+Sans:ital@1&family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="an"></div>
+<div class="an" style=" <?php
+$setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting');
+if ($setting && $setting['background_image']) {
+    echo 'background-image: url('.$setting['background_image'].')';
+}
+?>"></div>
 <div id="up"><a href="javascript:up()"><b>^</b></a></div>
 <div id="header">
     <div class="nav">

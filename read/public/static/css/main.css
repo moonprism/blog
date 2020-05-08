@@ -46,7 +46,7 @@ html {
     height: 100%;
     z-index: -9;
     top: 0;
-    background: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/gFjsJhJcSZCsIyBGbLVL.jpg);
+    background-color: #e5edf2;
     background-repeat: no-repeat;
     background-size: cover;
     filter:alpha(opacity=90);  
