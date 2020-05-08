@@ -2,6 +2,11 @@
     <el-container>
         <el-aside width="77px">
             <el-menu class="sideMenu" :collapse="true">
+                <router-link to="/setting">
+                    <el-menu-item index="4">
+                        <i class="el-icon-setting"></i>
+                    </el-menu-item>
+                </router-link>
                 <router-link to="/article">
                     <el-menu-item index="1">
                         <i class="el-icon-document"></i>

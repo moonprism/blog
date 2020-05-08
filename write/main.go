@@ -16,7 +16,7 @@ import (
 
 // @BasePath /api/v1
 var (
-	env	string
+	env string
 )
 
 func init() {
@@ -35,5 +35,5 @@ func main() {
 
 	app := router.Routers()
 	app.GET("/swagger/*", echoSwagger.WrapHandler)
-	app.Logger.Fatal(app.Start(":"+config.App.Port))
+	app.Logger.Fatal(app.Start(":" + config.App.Port))
 }

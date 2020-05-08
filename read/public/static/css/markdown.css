@@ -21,7 +21,7 @@
 .markdown h2{
     padding: 5px 4px;
     font-size: 18px;
-    margin-bottom: 13px;
+    margin: 10px 0 15px;
     color: #111;
     font-weight: 400;
     position: relative;
@@ -38,7 +38,7 @@
 .markdown h3{
     padding: 4px 12px;
     font-size: 18px;
-    margin-bottom: 10px;
+    margin: 10px 0 12px;
     color: #222;
     font-weight: 400;
     position: relative;
@@ -89,7 +89,7 @@
     font-size: 17px;
     line-height: 1.7;
     color: #233;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 .markdown ul, .markdown ol{
     margin: 18px 0;
@@ -190,7 +190,7 @@
     padding-bottom: 12px;
 }
 .markdown table{
-    margin: 13px 7px 15px;
+    margin: 20px 7px 22px;
     overflow: auto;
     border-spacing: 0;
     border-collapse: collapse;

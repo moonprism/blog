@@ -1,6 +1,6 @@
 <template>
     <el-row :gutter="20" style="margin-top: 20px">
-        <el-col :span="13" :offset="4">
+        <el-col :span="13" :offset="5">
             <div class="tag-list">
                 <el-table
                         :data="tagList"

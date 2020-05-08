@@ -27,7 +27,6 @@ func Routers() *echo.Echo {
 		ErrorHandler: errors.CustomJwtErrorHandler,
 	})
 
-
 	if config.App.EnableStatic {
 		e.Static("/", "web/dist")
 		e.Static("/static", "static")
@@ -75,6 +74,12 @@ func Routers() *echo.Echo {
 			fileG.POST("/image", api.UploadImage)
 			fileG.GET("/image", api.FileList)
 			fileG.DELETE("/image/:id", api.DeleteFile)
+		}
+
+		sysG := v1.Group("/setting", jwtMiddle)
+		{
+			sysG.GET("", api.SettingDetail)
+			sysG.PUT("", api.UpdateSetting)
 		}
 	}
 

@@ -37,6 +37,11 @@ type (
 		AccessKeySecret	string	`ini:"access_key_secret"`
 		BucketName	string	`ini:"bucket_name"`
 	}
+
+	RedisConf struct {
+		Host	string	`ini:"host"`
+		Port	string	`ini:"port"`
+	}
 )
 
 var (
@@ -45,12 +50,14 @@ var (
 	App = new(AppConf)
 	Elastic = new(ElasticConf)
 	Oss = new(OssConf)
+	Redis = new(RedisConf)
 	sectionMap = map[string]interface{}{
 		"auth":	Auth,
 		"mysql":	Mysql,
 		"app":	App,
 		"elastic": Elastic,
 		"oss":	Oss,
+		"redis": Redis,
 	}
 
 	once sync.Once
