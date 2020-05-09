@@ -1,6 +1,6 @@
 <template>
     <el-row :gutter="20">
-        <el-col :span="13" :offset="4">
+        <el-col>
             <article-form :article="createArticleModel" @update-data="returnList"></article-form>
         </el-col>
     </el-row>

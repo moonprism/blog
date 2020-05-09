@@ -1,6 +1,6 @@
 <template>
     <el-row :gutter="20" style="margin-top: 10px">
-        <el-col class="article-l" :xs="24" :md="15" :lg="15" :xl="12">
+        <el-col class="article-l">
             <div class="article-list">
                 <el-table
                         :data="articleList"
@@ -15,7 +15,7 @@
                     <el-table-column
                             prop="title"
                             label="Title"
-                            width="350px">
+                            width="300px">
                     </el-table-column>
                     <el-table-column
                             width="120px"

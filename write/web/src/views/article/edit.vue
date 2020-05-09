@@ -1,5 +1,5 @@
 <template>
-    <el-container>
+    <el-container class="edit-main">
         <el-header>
             <div class="edit-header">
                 <!--       先这样         -->
@@ -203,6 +203,11 @@
 </script>
 
 <style>
+    .edit-main {
+        background-color: #e5edf2;
+        margin: -8px;
+        min-height: 1000px;
+    }
     .edit-header {
         padding: 5px;
         position: fixed;
@@ -225,11 +230,12 @@
         font-family: Consolas,"Liberation Mono",Menlo,Courier,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
         width: 920px;
         margin: 0 auto 30px;
-        font-size: 17px;
+        font-size: 16px;
         padding: 10px;
     }
     .cm-s-material.CodeMirror {
-        line-height: 1.4;
+        line-height: 1.5;
+        letter-spacing: 1.3px;
         height: auto;
     }
 </style>

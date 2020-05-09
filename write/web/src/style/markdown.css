@@ -32,7 +32,7 @@
 /* ------------------------------------------------- */
 .markdown{
     font-size: 15px;
-    margin-top: 26px;
+    margin-top: 0px;
 }
 .markdown a:hover{
     text-decoration: underline;
@@ -53,7 +53,7 @@
 .markdown h2{
     padding: 5px 4px;
     font-size: 18px;
-    margin-bottom: 13px;
+    margin: 10px 0 15px;
     color: #111;
     font-weight: 400;
     position: relative;
@@ -70,10 +70,18 @@
 .markdown h3{
     padding: 4px 12px;
     font-size: 18px;
-    margin-bottom: 10px;
+    margin: 10px 0 12px;
     color: #222;
     font-weight: 400;
     position: relative;
+}
+.markdown h3:before{
+    content: '@';
+    font-size: 19px;
+    color: #9b45e4;
+    position: absolute;
+    top: 5px;
+    left: -7px;
 }
 @keyframes anchorTarget {
     0%{
@@ -86,7 +94,7 @@
         color: #000;
     }
 }
-.markdown h1:target,
+/* .markdown h1:target,
 .markdown h2:target,
 .markdown h3:target,
 .markdown h4:target,
@@ -103,15 +111,7 @@
 .markdown h4:target:before,
 .target:before {
     padding-top: 120px;
-}
-.markdown h3:before{
-    content: '@';
-    font-size: 19px;
-    color: #9b45e4;
-    position: absolute;
-    top: 5px;
-    left: -7px;
-}
+} */
 .markdown b {
     padding: 0 2px;
     color: #555;
@@ -121,7 +121,7 @@
     font-size: 17px;
     line-height: 1.7;
     color: #233;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 .markdown ul, .markdown ol{
     margin: 18px 0;
@@ -160,7 +160,7 @@
 .markdown blockquote{
     margin: 15px 4px;
     padding: 12px 12px;
-    color: #111;
+    color: #444;
     border-left: 5px solid #409EFF;
     word-wrap: break-word;
     font-size: 15px;
@@ -210,6 +210,10 @@
     margin: 15px 0 22px;
     tab-size: 4;
 }
+.markdown ul pre, .markdown ol pre {
+    margin-left: -10px;
+    margin-top: 10px;
+}
 .hljs-comment, .hljs-emphasis {
     font-style: inherit !important;
 }
@@ -218,7 +222,7 @@
     padding-bottom: 12px;
 }
 .markdown table{
-    margin: 13px 7px 15px;
+    margin: 20px 7px 22px;
     overflow: auto;
     border-spacing: 0;
     border-collapse: collapse;

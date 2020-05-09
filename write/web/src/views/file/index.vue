@@ -56,6 +56,8 @@
                 this.isEdit = true
                 this.imageModel = imageModel
                 this.uploadConfig.isUpload = false
+                document.body.scrollTop = 0
+                document.documentElement.scrollTop = 0
             },
             async handleImageUpload(file) {
                 this.imageModel = {}
@@ -116,7 +118,7 @@
     }
 </script>
 
-<style>
+<style scope>
     .conf-img {
         width: 100%;
     }
