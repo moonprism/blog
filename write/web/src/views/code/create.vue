@@ -1,6 +1,6 @@
 <template>
     <el-row :gutter="20">
-        <el-col class="code-edit" :xs="24" :md="12" :lg="12" :xl="12">
+        <el-col>
             <code-form :code="createCodeModel" @update-data="returnList"></code-form>
         </el-col>
     </el-row>

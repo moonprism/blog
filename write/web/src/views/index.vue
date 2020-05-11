@@ -1,5 +1,6 @@
 <template>
     <el-container>
+        <div class="an" v-bind:style="{ backgroundImage: backgroundImageUrl}" ></div>
         <el-aside width="77px">
             <el-menu class="sideMenu" :collapse="true">
                 <router-link to="/setting">
@@ -41,7 +42,7 @@
                 </el-dropdown>
             </el-header>
             <el-main>
-                <section class="main">
+                <section class="main board">
                     <transition name="fade-transform" mode="out-in">
                         <!--子页面-->
                         <router-view :key="key" />
@@ -66,6 +67,9 @@
         computed: {
             key() {
                 return this.$router.path + Math.random()
+            },
+            backgroundImageUrl() {
+                    return 'url(' + this.$store.getters['setting/backgroundImage'] + ')'
             }
         },
         methods: {
@@ -85,6 +89,9 @@
                     this.logout()
                 }
             }
+        },
+        created() {
+            this.$store.commit('setting/getBackgroundImage')
         }
     }
 </script>
@@ -92,6 +99,7 @@
 <style scoped>
     .sideMenu {
         padding-bottom: 10px;
+        border-radius: 2px;
     }
     .header {
         text-align: right;
@@ -101,5 +109,24 @@
         width: 35px;
         height: 35px;
         border-radius: 50%;
+    }
+    .an {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: -9;
+        top: 0;
+        left: 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #e5edf2;
+    }
+    .board {
+        width: 766px;
+        margin: 3px auto 290px;
+        background-color: #fff;
+        padding: 34px 47px 30px;
+        border-radius: 3px;
+        min-height: 650px;
     }
 </style>

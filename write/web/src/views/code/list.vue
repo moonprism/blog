@@ -1,6 +1,6 @@
 <template>
     <el-row :gutter="20" style="margin-top: 15px;text-align: center">
-        <el-col class="code-list" :xs="24" :md="12" :lg="12" :xl="10">
+        <el-col class="code-list">
             <div class="article-list">
                 <el-table
                         :data="codeList"
@@ -22,8 +22,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            align="right"
-                            width="150px">
+                            align="right">
                         <template slot="header">
                             <el-button
                                     icon="el-icon-plus"
