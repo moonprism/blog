@@ -10,3 +10,15 @@ re-write:
 
 config:
 	git config commit.template .git-commit-template.txt
+up:
+	docker-compose up -d
+read-dev:
+	cd read & npm run serve
+write-dev:
+	cd write & go run main.go
+write-web-dev:
+	cd write/web & npm run dev
+sh-read:
+	docker-compose exec read /bin/bash
+sh-write:
+	docker-compose exec write /bin/bash
