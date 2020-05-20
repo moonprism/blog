@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<?php $setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting'); ?>
 <head>
     <meta charset="utf-8">
     <title>link | kicoe</title>
@@ -12,6 +13,11 @@
     <link rel="stylesheet" type="text/css" href="/dist/css/md.link.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/comment.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Noto+Sans:ital@1&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style><?php
+        if ($setting && $setting['global_css']) {
+            echo $setting['global_css'];
+        }
+    ?></style>
 </head>
 <body>
 <div class="an" style=" <?php
@@ -56,6 +62,11 @@ if ($setting && $setting['background_image']) {
 <script type="text/javascript">
     $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
 </script>
+<script><?php
+    if ($setting && $setting['global_js']) {
+        echo $setting['global_js'];
+    }
+?></script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@ const setting = {
     detail() {
         return request.get('/setting')
     },
-    update( data) {
+    update(data) {
         return request.put('/setting', data)
     },
 }
