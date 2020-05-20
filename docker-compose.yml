@@ -19,7 +19,7 @@ services:
     ports:
       - "3000:2999"
     volumes:
-      - "./data/write/static:/static"
+      - "./data/write/static:/www/static"
     links:
       - mysql
       - elastic

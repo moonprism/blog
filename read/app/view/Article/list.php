@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<?php $setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting'); ?>
 <head>
     <meta charset="utf-8">
     <title>kicoe</title>
@@ -10,10 +11,14 @@
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Noto+Sans:ital@1&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style><?php
+        if ($setting && $setting['global_css']) {
+            echo $setting['global_css'];
+        }
+    ?></style>
 </head>
 <body>
 <div class="an" style=" <?php
-$setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting');
 if ($setting && $setting['background_image']) {
     echo 'background-image: url('.$setting['background_image'].')';
 }
@@ -105,6 +110,11 @@ if ($setting && $setting['background_image']) {
 <script src="//at.alicdn.com/t/font_1747613_gq90x707awu.js"></script>
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
+<script><?php
+    if ($setting && $setting['global_js']) {
+        echo $setting['global_js'];
+    }
+?></script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/hopscotch.min.css">
 </body>
 </html>

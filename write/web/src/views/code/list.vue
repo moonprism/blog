@@ -8,7 +8,11 @@
                     <el-table-column
                             prop="description"
                             label="Description"
-                            width="400px">
+                            width="300px">
+                    </el-table-column>
+                    <el-table-column
+                            prop="tags"
+                            label="Tags">
                     </el-table-column>
                     <el-table-column
                             width="100px"

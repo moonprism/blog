@@ -91,7 +91,7 @@
             }
         },
         created() {
-            this.$store.commit('setting/getBackgroundImage')
+            this.$store.commit('setting/init')
         }
     }
 </script>

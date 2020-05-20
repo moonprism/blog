@@ -69,7 +69,16 @@
                 } else {
                     this.editor.setOption('indentWithTabs', false)
                 }
-                this.editor.setOption('mode', this.$props.code.lang === 'md' ? 'markdown' : this.$props.code.lang)
+                let setLang = this.$props.code.lang
+                switch (this.$props.code.lang) {
+                    case 'md':
+                        setLang = 'markdown'
+                        break;
+                    case 'js':
+                        setLang = 'javascript'
+                        break;
+                }
+                this.editor.setOption('mode', setLang)
             },
             getContent() {
                 return this.editor.getValue()
