@@ -81,12 +81,14 @@ class Article extends Controller
     {
         $article = new ArticleModel();
         $article->get($id);
-        if ($article->status == ArticleModel::STATUS_DRAFT) {
-            $article->content = ">[danger] 这篇文章还没发布呢 ~ \n （￣へ￣） \n\n *** \n *** \n ---";
-        }
         // 整合tag
         $articleTagsMap = Tags::getArticleTagsMap($id);
         $article->tags = $articleTagsMap[$id] ?? [];
+        if ($article->status == ArticleModel::STATUS_DRAFT) {
+            $article->title = implode('', array_map(function($rune){return $rune===' '?$rune:'*';}, str_split($article->title)));
+            $article->content = ">[danger] 这篇文章还没发布呢 ~";
+            $article->tags = [['id'=>0, 'name'=>404, 'color'=>'red']];
+        }
         $this->assign([
             'article_obj' => $article,
         ]);

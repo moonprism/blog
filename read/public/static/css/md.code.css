@@ -186,36 +186,44 @@
     list-style-type: square !important;
 }
 .markdown blockquote{
-    margin: 10px 4px;
-    padding: 8px 10px;
-    color: #666;
-    border-left: 5px solid #409EFF;
+    margin: 11px 3px;
+    padding: 8px 13px;
+    border-radius: 4px;
     word-wrap: break-word;
     font-size: 14px;
     line-height: 1.6;
-    background-color: #f8f8f8;
     font-family: -apple-system, "Roboto Mono","Microsoft YaHei", sans-serif;
+    background-color: #eee;
+    color: #000;
+}
+.markdown blockquote blockquote {
+    margin: 3px 0;
 }
 .markdown blockquote.book {
     border: 0;
-    padding: 10px;
+    padding: 7px 10px;
     font-size: 15px;
     font-style: italic;
     margin: 3px 0;
     color: #333;
     background-color: #fff;
+    text-decoration: underline;
 }
 .markdown .success {
-    border-left-color: #67C23A;
+    background-color: #f0f9eb;
+    color: #67c23a;
 }
 .markdown .warning {
-    border-left-color: #E6A23C;
+    background-color: #fdf6ec;
+    color: #e6a23c;
 }
 .markdown .danger {
-    border-left-color: #F56C6C;
+    color: #f56c6c;
+    background-color: #fef0f0;
 }
 .markdown .info {
-    border-left-color: #909399;
+    background-color: #f4f4f5;
+    color: #909399;
 }
 
 .markdown hr{
