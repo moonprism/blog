@@ -15,7 +15,7 @@
                     <li> <a @click="$router.push({name: 'article_edit', params: {id: 2}})">🍥 About</a> </li>
                 </ul>
             </p>
-            <h2>background</h2>
+            <h2>Background</h2>
             <p>
                 <ul>
                     <li> <a @click="waterfallDialog.visible = true">select background</a> </li>
@@ -41,8 +41,8 @@
             <p>
                 <code-edit ref="codeEditJS" :code="{lang:'js', content:this.js}"></code-edit>
             </p>
-            <br><hr>
-            <p style="text-align: center">
+            <br><br><hr>
+            <p style="text-align: center; position: relative; top: 15px;">
                 <el-button @click="save()" type="primary" size="medium" icon="el-icon-edit" circle></el-button>
             </p>
         </div>
@@ -90,12 +90,13 @@ export default {
         })
     },
     methods: {
-        async save() {
-            let c = console
+        async sync() {
             this.settingInfo.background_image = this.img
             this.settingInfo.global_js = this.$refs.codeEditJS.getContent()
             this.settingInfo.global_css = this.$refs.codeEditCSS.getContent()
-            c.log(this.settingInfo)
+        },
+        async save() {
+            this.sync()
             await this.$store.dispatch('setting/post', this.settingInfo)
             this.$message({
                 message: 'write setting',
@@ -108,9 +109,9 @@ export default {
             this.$store.commit('setting/set', this.settingInfo)
             this.waterfallDialog.visible = false
         },
-        async clear() {
-            this.settingInfo.background_image = '',
-            await this.save()
+        clear() {
+            this.settingInfo.background_image = ''
+            this.$store.commit('setting/setBackgroundImage', '')
         },
         async selectImageFromLocal (file) {
             const data = await getBase64FromRaw(file.raw)

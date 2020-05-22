@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-  @import url('https://fonts.font.im/css?family=Roboto+Mono');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono');
   body {
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
   }
