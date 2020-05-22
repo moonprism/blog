@@ -33,7 +33,6 @@
                     inputStyle: "contenteditable",
                     indentUnit: 4,
                     showCursorWhenSelecting: true,
-                    lineNumbers: true,
                 },
                 editor: {}
             }
@@ -89,10 +88,11 @@
 
 <style>
     .code-edit {
-        line-height: 19px;
+        line-height: 21px;
     }
     .code-edit .CodeMirror {
-        padding: 8px 0;
+        padding: 5px 9px;
+        height: auto;
     }
     .code-edit .CodeMirror {
         font-family: 'Roboto Mono', "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif !important;
