@@ -47,7 +47,7 @@ if ($setting && $setting['background_image']) {
                     </svg>
                     <?php echo $code['description'] ?> <span>.<?php echo $code['lang'] ?></span>
                 </blockquote>
-                <div class="tags"><?php echo $code['tags'] ?></div>
+                <?php if($code['tags']) { ?><div class="tags"><?php echo $code['tags'] ?></div><?php } ?>
                 <pre class="c-<?php echo $code['lang'] ?>"><code class="<?php echo $code['lang'] ?>"><?php echo htmlspecialchars($code['content']) ?></code><div class="markdown"></div></pre>
             </div>
         <?php } ?>
