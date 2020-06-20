@@ -1,6 +1,7 @@
 CREATE DATABASE `blog`;
 USE `blog`;
 
+-- todo 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`(
     `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -20,7 +21,6 @@ CREATE TABLE `article`(
     `image` varchar(64) NOT NULL DEFAULT '',
     `summary` varchar(500) NOT NULL DEFAULT '',
     `content` text NOT NULL,
-    `html`  text NOT NULL,
     `created_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_time` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `deleted_at` TIMESTAMP NULL,

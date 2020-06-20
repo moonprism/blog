@@ -36,6 +36,7 @@ var emoji_parse = function (str) {
         .replace(/\:trophy\:/g, '🏆')
         .replace(/\:seedling\:/g, '🌱')
         .replace(/\:maple_leaf\:/g, '🍁')
+        .replace(/\:evergreen_tree\:/g, '🌲')
         .replace(/\:octocat\:/g, '<img title=":octocat:" alt=":octocat:" src="https://github.githubassets.com/images/icons/emoji/octocat.png" height="20" width="20" align="absmiddle">')
         .replace(/\:cherries\:/g, '🍒');
 }

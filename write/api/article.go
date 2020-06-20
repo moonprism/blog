@@ -86,7 +86,6 @@ func UpdateArticle(c echo.Context) error {
 	article := &service.ArticleUpdateBody{
 		ArticleInfo: new(model.ArticleInfo),
 		Content:     "",
-		HTML:        "",
 	}
 
 	if err := c.Bind(article); err != nil {
