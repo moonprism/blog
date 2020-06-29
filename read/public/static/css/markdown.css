@@ -6,6 +6,7 @@
     text-decoration: underline;
 }
 .markdown a {
+    margin: 0 2px;
     font-size: .93em;
 }
 .markdown h1, .markdown h2, .markdown h3, .markdown h4{
@@ -87,9 +88,9 @@
 }
 .markdown>p{
     font-size: 17px;
-    line-height: 1.7;
+    line-height: 1.75;
     color: #233;
-    margin-bottom: 18px;
+    margin-bottom: 19px;
 }
 .markdown ul, .markdown ol{
     margin: 18px 0;
@@ -127,26 +128,30 @@
 }
 .markdown blockquote{
     margin: 15px 4px;
-    padding: 12px 12px;
+    padding: 16px 15px;
     color: #444;
-    border-left: 5px solid #409EFF;
+    border-left: 3px solid #409EFF;
     word-wrap: break-word;
     font-size: 15px;
-    line-height: 1.5;
-    background-color: #f8f8f8;
+    line-height: 1.6;
+    background-color: #f1f8ff;
     letter-spacing: .05em;
 }
 .markdown .success {
     border-left-color: #67C23A;
+    background-color: #f2faee;
 }
 .markdown .warning {
     border-left-color: #E6A23C;
+    background-color: #fcf5ea;
 }
 .markdown .danger {
     border-left-color: #F56C6C;
+    background-color: #feeded;
 }
 .markdown .info {
     border-left-color: #909399;
+    background-color: #f6f6f7;
 }
 
 .markdown hr{
@@ -166,6 +171,7 @@
     background-color: rgba(0,0,0,0.05);
     border-radius: 3px;
     margin: 0 .2em;
+    color: #ff4301;
 }
 .markdown pre{
     overflow: auto;
@@ -175,8 +181,11 @@
     overflow: auto;
     border-radius: 3px;
     background-color: #282828;
-    margin: 15px 0 22px;
+    margin: 17px 0 24px;
     tab-size: 4;
+}
+.markdown pre code {
+    color: #ebdbb2;
 }
 .markdown ul pre, .markdown ol pre {
     margin-left: -10px;
