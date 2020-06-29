@@ -25,7 +25,6 @@ type Article struct {
 	*ArticleMeta	`xorm:"extends -"`
 	DeletedAt	time.Time	`xorm:"deleted" json:"-"`
 	Content	string	`json:"content"`
-	HTML	string	`xorm:"'html'" json:"html"`
 }
 
 type ArticleDetail struct {

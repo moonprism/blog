@@ -53,7 +53,7 @@
     import 'codemirror/addon/dialog/dialog.css'
     import 'codemirror/theme/material.css'
 
-    import markdown from 'moonprism-markdown'
+    //import markdown from 'moonprism-markdown'
     process.env.VUE_APP_FILE_ORIGIN
 
     import ArticleShow from "./components/show"
@@ -132,7 +132,7 @@
             },
             async save() {
                 this.article.content = this.articleEdit.markdownText = this.editor.getValue()
-                this.article.html = markdown(this.article.content, process.env.VUE_APP_FILE_ORIGIN)
+                //this.article.html = markdown(this.article.content, process.env.VUE_APP_FILE_ORIGIN)
                 const res = await articleApi.update(this.article.id, this.article)
                 if (res.data === 'ok') {
                     this.$message({

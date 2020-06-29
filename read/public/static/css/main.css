@@ -236,7 +236,7 @@ body {
     word-wrap: break-word;
 }
 
-.summary.markdown p {
+.summary.markdown>p {
     font-size: 16px;
 }
 .summary.markdown p {

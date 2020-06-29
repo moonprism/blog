@@ -96,14 +96,12 @@ func CreateArticleByInfo(info *model.ArticleInfo) (err error) {
 type ArticleUpdateBody struct {
 	*model.ArticleInfo
 	Content	string	`json:"content"`
-	HTML	string	`json:"html"`
 }
 
 func UpdateArticle(id int64, articleUp *ArticleUpdateBody) (err error) {
 	article := &model.Article{
 		ArticleMeta: articleUp.ArticleMeta,
 		Content:     articleUp.Content,
-		HTML:        articleUp.HTML,
 	}
 
 	affected, err := model.UpdateArticle(id, article, []string{"image"})

@@ -60,7 +60,7 @@ class Code extends Controller
 
     public function index()
     {
-        $limit = 11;
+        $limit = 13;
         $whereSet = [['deleted_at', 'is null']];
         $codeModel = New CodeModel();
         $codeList = $codeModel->getCodeList($limit, $whereSet);
