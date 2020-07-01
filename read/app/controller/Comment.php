@@ -8,6 +8,7 @@ use kicoe\core\Request;
 use kicoe\core\Response;
 use kicoe\core\Config;
 use kicoe\core\cache\Factory as CacheFactory;
+use app\lib\Queue;
 
 class Comment extends Controller
 {
@@ -26,8 +27,11 @@ class Comment extends Controller
         if ($name === false || $email === false || $text === false || $artId === false || $toId === false) {
             $response->status('404 Not Found');
         } else {
-            $comment->insert(['art_id', 'to_id', 'name', 'email', 'text'],
-                [[$artId, $toId, $name, $email, $text]]);
+            $comment->insert(['art_id', 'to_id', 'name', 'email', 'text'], [[$artId, $toId, $name, $email, $text]]);
+            // 投递邮件队列
+            if ($toId != 0) {
+                Queue::push('comment_message', $comment->lastInsertId());
+            }
             $this->cacheComment($artId);
         }
         return;
