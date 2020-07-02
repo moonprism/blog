@@ -54,7 +54,7 @@ if ($setting && $setting['background_image']) {
             <input type="submit" class="submit" value="留言" >
         </div>
         <div class="com-list" id="com_list"></div>
-        <a href="javascript:comment_list()" class="more_a" id="more_a">查看所有</a>
+        <a href="javascript:comment_list()" class="more_a" id="more_a">更多评论</a>
     </div>
 </div>
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
