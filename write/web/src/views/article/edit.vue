@@ -238,4 +238,18 @@
         letter-spacing: 1.3px;
         height: auto;
     }
+    .cm-s-material .cm-string {
+        color: #00a1d6;
+    }
+    .cm-s-material .cm-header-2 {
+        color: #fe346e;
+        font-size: 16px;
+    }
+    .cm-s-material .cm-header-3 {
+        color: #4cbbb9;
+        font-size: 15px;
+    }
+    .cm-s-material .cm-comment {
+        color: #fb7b6b;
+    }
 </style>
