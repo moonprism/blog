@@ -39,7 +39,9 @@ html {
     color: #233;
     height:100%;
 }
-
+html, body {
+  scroll-behavior: smooth;
+}
 .an {
     position: fixed;
     width: 100%;

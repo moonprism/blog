@@ -167,10 +167,12 @@ f.addEve(com_inputs[4], 'click', function(){
     }else if(com_text.value === ''){
         alert('没什么想说的吗 ,,Ծ‸Ծ,,');
     } else {
+        let comment_text = com_text.value;
+        com_text.value = '';
         f.ajax({
             url: "/comment/up",
             type: "POST",
-            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, comment: com_text.value },
+            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, comment: comment_text},
             dataType: "json",
             success: function (response, xml) {
                 com_inputs[1].value = '0';
