@@ -58,13 +58,14 @@ class Code extends Controller
         return $res;
     }
 
-    public function index()
+    public function index($page = 1)
     {
-        $limit = 13;
+        $limit = 10;
         $whereSet = [['deleted_at', 'is null']];
         $codeModel = New CodeModel();
-        $codeList = $codeModel->getCodeList($limit, $whereSet);
+        $codeList = $codeModel->getCodeList($page, $limit, $whereSet);
         $this->assign('code_list', $codeList);
+        $this->assign('next_page', count($codeList) == 10 ? $page+1 : 0);
         $this->show('Page/code');
     }
 }

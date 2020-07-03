@@ -59,6 +59,7 @@ if ($setting && $setting['background_image']) {
 </div>
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
+<script src="//at.alicdn.com/t/font_1922445_olfo3nycsle.js"></script>
 <script type="text/javascript">
     $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
 </script>

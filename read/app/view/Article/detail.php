@@ -90,6 +90,7 @@ if ($setting && $setting['background_image']) {
 </script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 <script src="//at.alicdn.com/t/font_1747613_gq90x707awu.js"></script>
+<script src="//at.alicdn.com/t/font_1922445_olfo3nycsle.js"></script>
 <?php if ($asciinema_flag) { ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/css/asciinema-player.css">
     <script src="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/js/asciinema-player.min.js"></script>
@@ -98,7 +99,6 @@ if ($setting && $setting['background_image']) {
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <?php } ?>
-<!---------高亮处理---------->
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();bg();</script>
 <script><?php
@@ -107,6 +107,5 @@ if ($setting && $setting['background_image']) {
     }
 ?></script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/gruvbox-dark.min.css">
-<!-------------------------->
 </body>
 </html>

@@ -5,11 +5,15 @@
 .comment #to_name{
     display: block;
     margin: 5px;
-    color: #0e9aa7;
+    color: #6a097d;
     font-size: 15px;
 }
 .comment #to_name a{
-    margin-left: 10px;
+    color: #c70039;
+    margin-left: 5px;
+}
+.comment #to_name a:hover {
+    color: #f40552;
 }
 .comment input, .comment textarea{
     text-rendering: auto;

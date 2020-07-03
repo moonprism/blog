@@ -66,6 +66,7 @@ function comment_list(total){
                         src = 'https://secure.gravatar.com/avatar/'+responsejson[i]['email'][1];
                     }
                     var dateDiff = getDateDiff(responsejson[i]['created_time']);
+                    let h = null;
                     if(responsejson[i]['to_id'] === "0"){
                         // 一层
                         var com = document.createElement('div');
@@ -76,7 +77,7 @@ function comment_list(total){
                         f.addNode(com, 'a', responsejson[i]['name'], {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")'});
                         f.addNode(com, 'span', dateDiff);
                         f.addNode(com, 'p', responsejson[i]['text']);
-                        f.addNode(com, 'a', '回复', {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")','class':'repl'});
+                        h = f.addNode(com, 'a', '', {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")','class':'repl'});
                         index_tree[responsejson[i]['id']] = com;
                     } else {
                         // 二层
@@ -90,9 +91,10 @@ function comment_list(total){
                         f.addNode(com, 'a', responsejson[i]['name']+' @ '+responsejson[index_id[responsejson[i]['to_id']]]['name'], {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")'});
                         f.addNode(com, 'span', dateDiff);
                         f.addNode(com, 'p', responsejson[i]['text']);
-                        f.addNode(com, 'a', '回复', {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")','class':'repl'});
+                        h = f.addNode(com, 'a', '', {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")','class':'repl'});
                         index_tree[responsejson[i]['id']] = in_node;
                     }
+                    h.innerHTML = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-icon-test"></use></svg>';
                     index_id[responsejson[i]['id']] = i;
                 }
                 if(total === 10){
@@ -150,9 +152,11 @@ comment_list(10);
 function repl(to_id, name){
     window.scrollTo(0, $('markdown').offsetHeight+100);
     com_inputs[1].value = to_id;
-    to_name.innerText = ' @ '+name;
+    to_name.innerHTML = '';
+    f.addNode(to_name, 'span', '@', {style: 'font-family:none;margin-right:3px'});
+    f.addNode(to_name, 'span', name, {style: 'color: #233;'});
     com_inputs[4].value = '回复';
-    f.addNode(to_name, 'a', '撤销', {href:'javascript:de_repl()'});
+    to_name.innerHTML += '<a href="javascript:de_repl()"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></a>';
 }
 function de_repl(){
     com_inputs[1].value = "0";

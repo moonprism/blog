@@ -13,10 +13,10 @@ class Code extends Model
      * @return array
      * @throws \kicoe\core\Exception
      */
-    public function getCodeList($limit, $whereSet)
+    public function getCodeList($page, $limit, $whereSet)
     {
         return $this->set($whereSet)
-            ->limit(0, $limit)
+            ->limit(($page-1)*$limit, $limit)
             ->order('updated_time', 'desc')
             ->select('id,lang,description,tags,content', 'id');
     }
