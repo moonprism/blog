@@ -1,15 +1,17 @@
 package email
 
 import (
+	"fmt"
+	"git.kicoe.com/blog/write/config"
 	db "git.kicoe.com/blog/write/database"
 	"git.kicoe.com/blog/write/model"
 	"git.kicoe.com/blog/write/utils"
 	"html/template"
-	"io/ioutil"
+	"bytes"
 	"net/smtp"
-	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type CommentMessage struct {
@@ -20,28 +22,26 @@ type CommentMessage struct {
 	ReplyName	string
 }
 
-func run() {
+func Run() {
 	for ;; {
 		// todo log
-		commentID, err := utils.NewRedisClient().Do("brpop", "comment_message", 10).Result()
+		commentID, err := utils.NewRedisClient().BLPop(5*time.Second, "comment_message").Result()
 		if err != nil {
-			break
+			continue;
 		}
 		// comment
 		comment := new(model.Comment)
 		has, err := db.MysqlXEngine.Id(commentID).Get(comment)
+		
 		if err != nil || !has {
-			break
 		}
 		messageComment := new(model.Comment)
-		has, err = db.MysqlXEngine.Id(comment.ToID).Get(comment)
+		has, err = db.MysqlXEngine.Id(comment.ToID).Get(messageComment)
 		if err != nil || !has {
-			break
 		}
 		// article
 		article, has, err := model.FetchArticle(comment.ArtID)
 		if err != nil || !has {
-			break
 		}
 		data := CommentMessage {
 			Name: messageComment.Name,
@@ -50,9 +50,9 @@ func run() {
 			Text: comment.Text,
 			ReplyName: comment.Name,
 		}
-
-		t, err := template.New("comment").Parse()
-		err = t.Execute(os.Stdout, data)
+		println(messageComment.Email)
+		sendMail(messageComment.Email, data)
+		fmt.Printf("%v\n", data)
 	}
 }
 
@@ -79,24 +79,41 @@ func (e *Email) Parse() []byte {
 	return []byte(to+from+subject+mime+e.body)
 }
 
-func sendMail() {
-	user := ""
-	port := ""
-	passwd := ""
-	host := ""
-	to      :=      []string{"1370808234@qq.com", "ankicoe@gmail.com"}
+const html = `
+<table align="center" style="border: 1px solid #ccc;padding: 0 17px 18px;border-radius: 5px;" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+		<tr>
+				<td style="line-height: 1;">
+						<div style="font-family:微软雅黑; font-size:15px;padding: 5px 10px 10px;margin: 0 10px; background-color: #fff;color: #233; position: relative; bottom: 10px;width: max-content;"><span style="color: #f54291;font-weight: 600;margin-right: 4px;">@</span><span style="font-family: Arial, 微软雅黑;margin-right: 1px;">{{.Name}}</span>酱</div>
+				</td>
+		</tr>
+		<tr>
+				<td><div style="font-family:微软雅黑; font-size:15px;color: #42426F;margin: 4px 3px 8px;">你在<a style="color: #12cad6;text-decoration: none;margin: 0 1px;" href="{{.ArtLink}}#com_list">「{{.ArtTitle}}」</a>下的留言有了新回复哦</div></td>
+		</tr>
+		<tr>
+				<td><div style="font-family:微软雅黑; font-size: 15px;margin: 20px 0; padding: 22px 20px 14px; background-color: #f5f5f5;color: #233;border-radius: 5px;">{{.Text}}<div style="font-family: cursive;text-align: right;color: #383e56;margin-top: 5px">—— {{.ReplyName}}</div></div></td>
+		</tr>
+		<tr>
+				<td align="center"><div style="font-family: Arial, 微软雅黑;width: max-content; background-color: #444;color: #fff;font-size: 12px;text-shadow: 0 1px 1px rgba(255,255,255,.2); padding: 0 4px;border-radius: 1px;margin: 10px 0 0;">系统邮件 by <a style="color: aqua;text-decoration: none;" href="https://www.kicoe.com/">kicoe.com</a></div></td>
+		</tr>
+</table>
+`
 
-	file, err := os.Open("./email.html")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	content, _ := ioutil.ReadAll(file)
+func sendMail(email string, info CommentMessage) {
+	t, err := template.New("comment").Parse(html)
+	ww := bytes.NewBufferString("")
+	err = t.Execute(ww, info)
+
+	user := config.SMTP.User
+	port := ":" + config.SMTP.Port
+	passwd := config.SMTP.Pass
+	host := config.SMTP.Host
+	to      :=      []string{email}
+
+	content := fmt.Sprint(ww)
 
 	auth := smtp.PlainAuth("", user, passwd, host)
-	mail := NewEmail(to, "测试", string(content))
+	mail := NewEmail(to, "评论回复提醒", content)
 	err = smtp.SendMail(host+port, auth, user, to, mail.Parse())
 	if err != nil {
-
 	}
 }

@@ -14,7 +14,6 @@ type Comment struct {
 	Email	string	`json:"email"`
 	Text	string	`json:"text"`
 	CreatedTime	time.Time	`xorm:"created 'created_time'" json:"created_time"`
-	UpdatedTime	time.Time	`xorm:"updated 'updated_time'" json:"updated_time"`
 }
 
 func fetchComments(offset, limit int, whereField interface{}) (comments []*Comment, err error) {
