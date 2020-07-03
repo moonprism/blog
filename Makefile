@@ -22,3 +22,5 @@ sh-read:
 	docker-compose exec read /bin/bash
 sh-write:
 	docker-compose exec write /bin/bash
+sh-redis:
+	docker-compose exec redis /bin/bash
