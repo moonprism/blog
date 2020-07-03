@@ -57,17 +57,18 @@ var main = $('content');
 up_but.style.display = 'none';
 function up(){
     var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
-    var sup = setInterval(function(){
-        up_index += 3;
-        scrollTop -= up_index;
-        if (scrollTop>0) {
-            window.scrollTo(0, scrollTop);
-        } else {
-            window.scrollTo(0, 0);
-            up_index = 50;
-            clearInterval(sup);
-        }   
-    },20);
+    window.scrollTo(0, 0);
+    // var sup = setInterval(function(){
+    //     up_index += 3;
+    //     scrollTop -= up_index;
+    //     if (scrollTop>0) {
+    //         window.scrollTo(0, scrollTop);
+    //     } else {
+    //         window.scrollTo(0, 0);
+    //         up_index = 50;
+    //         clearInterval(sup);
+    //     }   
+    // },20);
 }
 var timer = null;
 window.onscroll = function(){

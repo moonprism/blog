@@ -29,6 +29,12 @@
 .search-input input:focus {
     border-color: aqua;
 }
+.search-result .next {
+    text-align: center;
+}
+.search-result .next a {
+    
+}
 .search-result .search-item {
     margin: 5px 0 22px;
 }

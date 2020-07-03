@@ -54,11 +54,12 @@ if ($setting && $setting['background_image']) {
             <input type="submit" class="submit" value="留言" >
         </div>
         <div class="com-list" id="com_list"></div>
-        <a href="javascript:comment_list()" class="more_a" id="more_a">查看所有</a>
+        <a href="javascript:comment_list()" class="more_a" id="more_a">更多评论</a>
     </div>
 </div>
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
+<script src="//at.alicdn.com/t/font_1922445_olfo3nycsle.js"></script>
 <script type="text/javascript">
     $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
 </script>

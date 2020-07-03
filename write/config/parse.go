@@ -42,6 +42,13 @@ type (
 		Host	string	`ini:"host"`
 		Port	string	`ini:"port"`
 	}
+
+	SMTPConf struct {
+		User	string	`ini:"user"`
+		Port	string	`ini:"port"`
+		Pass	string	`ini:"pass"`
+		Host	string	`ini:"host"`
+	}
 )
 
 var (
@@ -51,6 +58,7 @@ var (
 	Elastic = new(ElasticConf)
 	Oss = new(OssConf)
 	Redis = new(RedisConf)
+	SMTP = new(SMTPConf)
 	sectionMap = map[string]interface{}{
 		"auth":	Auth,
 		"mysql":	Mysql,
@@ -58,6 +66,7 @@ var (
 		"elastic": Elastic,
 		"oss":	Oss,
 		"redis": Redis,
+		"smtp": SMTP,
 	}
 
 	once sync.Once

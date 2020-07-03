@@ -5,9 +5,15 @@
 .comment #to_name{
     display: block;
     margin: 5px;
+    color: #6a097d;
+    font-size: 15px;
 }
 .comment #to_name a{
-    margin-left: 10px;
+    color: #c70039;
+    margin-left: 5px;
+}
+.comment #to_name a:hover {
+    color: #f40552;
 }
 .comment input, .comment textarea{
     text-rendering: auto;
@@ -153,6 +159,15 @@
     width: 80px;
     text-align: center;
     color: #a5a5a5
+}
+.more_a:hover{
+    text-decoration: underline;
+}
+.more_a::after{
+    content: '\00a0'
+}
+.more_a::before{
+    content: '\00a0'
 }
 @media screen and (max-width: 750px){
     .comment label{

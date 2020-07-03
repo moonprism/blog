@@ -7,6 +7,7 @@ import (
 	_ "git.kicoe.com/blog/write/docs"
 	"git.kicoe.com/blog/write/router"
 	"git.kicoe.com/blog/write/utils"
+	"git.kicoe.com/blog/write/worker/email"
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
@@ -25,6 +26,7 @@ func init() {
 }
 
 func main() {
+
 	// init
 	config.InitConfig(env)
 	database.InitMysqlEngine()
@@ -32,6 +34,8 @@ func main() {
 		utils.InitEs()
 		utils.InitOss()
 	}
+
+	go email.Run()
 
 	app := router.Routers()
 	app.GET("/swagger/*", echoSwagger.WrapHandler)
