@@ -38,6 +38,7 @@ if ($setting && $setting['background_image']) {
     <div class="search-input">
         <input id="searchInput" autocomplete="off">
     </div>
+    <div id="load"></div>
     <div id="searchResult" class="search-result">
         <?php foreach($code_list as $code) { ?>
             <div class="search-item">

@@ -97,11 +97,6 @@
 .comment .exp {
     margin-left: 77% !important;
 }
-@media screen and (max-width: 750px) {
-    #content {
-        width: 100% !important
-    }
-}
 .repl{display:none !important}
 .comment{margin:20px 0 50px !important}
 .com-list{width: 100% !important}

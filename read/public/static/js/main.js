@@ -158,7 +158,6 @@ function bg() {
             let wh = document.documentElement.clientHeight || document.body.clientHeight;
             let h = (wh - i.srcElement.naturalHeight) / 2.1;
             let paddingHeigh = h > 0 ? h : 15;
-            console.log(paddingHeigh)
             $('bg').style.display = 'block';
             $('bg').innerHTML = '<img style="margin: '+paddingHeigh+'px auto" src="'+ i.srcElement.currentSrc +'">';
         })

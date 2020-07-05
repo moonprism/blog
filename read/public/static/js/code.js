@@ -2,6 +2,7 @@ var backupHTML = $('searchResult').innerHTML;
 var searchResult = {};
 f.addEve($('searchInput'), 'input', () => {
     let searchText = $('searchInput').value;
+    $('searchResult').innerHTML = '';
     if (searchText) {
         if (searchResult[searchText]) {
             $('searchResult').innerHTML = '';
@@ -12,8 +13,13 @@ f.addEve($('searchInput'), 'input', () => {
             )
             hoverMarkdown();
             highlight();
+            setTimeout(function () {$('load').innerHTML = '';}, 100)
         } else {
             setTimeout(function () {
+                let loading;
+                if ($('load').innerHTML === '') {
+                   loading = f.addNode($('load'), 'div', '', {class: 'loading'});
+                }
                 f.ajax({
                     url: "/code/search/" + searchText,
                     type: "GET",
@@ -31,6 +37,7 @@ f.addEve($('searchInput'), 'input', () => {
                         let result = JSON.parse(response);
                         searchResult[searchText] = result;
                         $('searchResult').innerHTML = '';
+                        setTimeout(function () {$('load').innerHTML = '';}, 100)
                         result.forEach(
                             (item) => {
                                 render(item);
@@ -41,6 +48,8 @@ f.addEve($('searchInput'), 'input', () => {
                     },
                     fail: function (status) {
                         $('searchResult').innerHTML = '<div style="text-align:center;margin-top:35px">500</div>';
+                        $('load').innerHTML = '';
+                        setTimeout(function () {$('load').innerHTML = '';}, 100)
                     }
                 });
             }, 50)
@@ -50,6 +59,7 @@ f.addEve($('searchInput'), 'input', () => {
         $('searchResult').innerHTML = backupHTML;
         hoverMarkdown()
         highlight();
+        setTimeout(function () {$('load').innerHTML = '';}, 100)
     }
 })
 function render(searchItem) {

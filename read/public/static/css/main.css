@@ -425,15 +425,15 @@ body {
 
 @media screen and (max-width: 750px) {
     #header {
-        width: 100%;
+        width: 96%;
         padding: 0;
-        margin: 30px 0 10px;
+        margin: 30px auto 10px;
     }
     #content {
-        width: 100% !important;
+        width: 96% !important;
+        margin: 0 auto;
         padding: 10px 0;
     }
-
     .article h1 a {
         font-size: 18px !important;
     }
@@ -482,12 +482,19 @@ body {
         width: auto;
         padding: 0 10px
     }
+    .page {
+        margin-bottom: 20px;
+    }
 
     #up {
         left: 0;
         right: 0;
         margin: auto;
-        bottom: 2px
+        bottom: 2px 
+    }
+
+    .an {
+        display: none
     }
 
     #up a {
@@ -496,10 +503,6 @@ body {
         background-color: #fff
     }
 
-    .p_up {
-        bottom: 32px!important
-    }
-  
     ::-webkit-scrollbar {
         height: 3px!important
     }
@@ -528,4 +531,34 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background-color: #ddd;
+}
+
+.loading {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+  background-color: #333;
+ 
+  border-radius: 100%; 
+  -webkit-animation: scaleout 1.0s infinite ease-in-out;
+  animation: scaleout 1.0s infinite ease-in-out;
+}
+ 
+@-webkit-keyframes scaleout {
+  0% { -webkit-transform: scale(0.0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+ 
+@keyframes scaleout {
+  0% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 100% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
 }
