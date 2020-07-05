@@ -30,6 +30,8 @@ for (var i = exp_i.length - 1; i >= 0; i--) {
 // 显示评论列表
 var more_a = $('more_a');
 function comment_list(total){
+    com_list.innerHTML = '';
+    let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
     // 加载缓存
     if (total === 10) {
         var m_url = '/json/comment/'+com_inputs[0].value;
@@ -40,7 +42,6 @@ function comment_list(total){
         var m_url = "/comment/list";
         var m_type = "POST";
         var m_data = { art_id: com_inputs[0].value };
-        com_list.innerHTML = '';
     }
     f.ajax({
         url: m_url,
@@ -104,6 +105,7 @@ function comment_list(total){
                 else
                     window.scrollTo(0, $('markdown').offsetHeight+350);
             }
+            loading.parentNode.removeChild(loading);
         },
         fail: function (status) {
             
