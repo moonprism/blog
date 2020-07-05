@@ -180,6 +180,7 @@ f.addEve(com_inputs[4], 'click', function(){
             dataType: "json",
             success: function (response, xml) {
                 com_inputs[1].value = '0';
+                com_inputs[4].value = '留言';
                 com_inputs[2].value = '';
                 com_inputs[3].value = '';
                 com_text.value = '';
