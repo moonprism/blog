@@ -175,6 +175,9 @@ f.addEve(com_inputs[4], 'click', function(){
     } else {
         let comment_text = com_text.value;
         com_text.value = '';
+        com_list.innerHTML = '';
+        let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
+        $('more_a').style.display = 'none';
         f.ajax({
             url: "/comment/up",
             type: "POST",
@@ -191,6 +194,7 @@ f.addEve(com_inputs[4], 'click', function(){
                 comment_list(10);
             },
             fail: function (status) {
+                loading.parentNode.removeChild(loading);
                 alert(status);
             }
         });
