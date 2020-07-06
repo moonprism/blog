@@ -50,7 +50,9 @@ if ($setting && $setting['background_image']) {
             </svg>
             <?php } ?>
             <?php foreach($article['tags'] as $tag) { ?>
-                <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
+                <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>;<?php if ($tag['id'] == $tag_id) echo 'text-decoration: underline'; ?>" class="tag">
+                    <?php echo $tag['name'] ?>
+                </a>
             <?php } ?>
         </div>
         <div class="summary markdown">
