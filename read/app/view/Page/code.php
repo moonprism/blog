@@ -52,7 +52,7 @@ if ($setting && $setting['background_image']) {
                 <pre class="c-<?php echo $code['lang'] ?>"><code class="<?php echo $code['lang'] ?>"><?php echo htmlspecialchars($code['content']) ?></code><div class="markdown"></div></pre>
             </div>
         <?php } ?>
-        <?php if($next_page) { ?><div class="next"><a href="/page/code/<?php echo $next_page;?>">下一页</a></div><?php } ?>
+        <?php if($next_page) { ?><div class="next"><a href="/page/code/<?php echo $next_page;?>">Next</a></div><?php } ?>
     </div>
 </div>
 </body>

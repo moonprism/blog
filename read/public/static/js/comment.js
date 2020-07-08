@@ -64,7 +64,7 @@ function comment_list(total){
                     if (responsejson[i]['email'][0] == 'q') {
                         src = 'https://q1.qlogo.cn/g?b=qq&nk='+responsejson[i]['email'][1]+'&s=640';
                     } else {
-                        src = 'https://secure.gravatar.com/avatar/'+responsejson[i]['email'][1];
+                        src = 'https://cdn.v2ex.com/gravatar/'+responsejson[i]['email'][1];
                     }
                     var dateDiff = getDateDiff(responsejson[i]['created_time']);
                     let h = null;
