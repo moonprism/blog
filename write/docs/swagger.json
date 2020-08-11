@@ -71,7 +71,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/model.ArticleInfo"
                         }
                     }
@@ -167,7 +166,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/service.ArticleUpdateBody"
                         }
                     }
@@ -258,7 +256,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/service.AuthBody"
                         }
                     }
@@ -341,7 +338,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/service.CodeUpdateBody"
                         }
                     }
@@ -437,7 +433,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/service.CodeUpdateBody"
                         }
                     }
@@ -638,6 +633,81 @@
                 }
             }
         },
+        "/setting": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "setting"
+                ],
+                "summary": "get setting",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Setting"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "setting"
+                ],
+                "summary": "set setting",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": " ",
+                        "name": "settingInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Setting"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/tag": {
             "get": {
                 "produces": [
@@ -660,7 +730,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.TagInfo"
+                            "$ref": "#/definitions/model.TagList"
                         }
                     },
                     "403": {
@@ -693,7 +763,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/model.TagMeta"
                         }
                     }
@@ -744,7 +813,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/model.TagMeta"
                         }
                     }
@@ -887,9 +955,6 @@
                 "created_time": {
                     "type": "string"
                 },
-                "html": {
-                    "type": "string"
-                },
                 "id": {
                     "type": "integer"
                 },
@@ -1019,21 +1084,44 @@
                 }
             }
         },
-        "model.TagInfo": {
+        "model.Setting": {
+            "type": "object",
+            "properties": {
+                "background_image": {
+                    "type": "string"
+                },
+                "global_css": {
+                    "type": "string"
+                },
+                "global_js": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Tag": {
             "type": "object",
             "properties": {
                 "color": {
                     "type": "string"
                 },
-                "count": {
-                    "type": "integer"
+                "created_time": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "name": {
                     "type": "string"
+                },
+                "updated_time": {
+                    "type": "string"
                 }
+            }
+        },
+        "model.TagList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/model.Tag"
             }
         },
         "model.TagMeta": {
@@ -1057,9 +1145,6 @@
                     "type": "string"
                 },
                 "created_time": {
-                    "type": "string"
-                },
-                "html": {
                     "type": "string"
                 },
                 "id": {

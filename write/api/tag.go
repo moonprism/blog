@@ -12,7 +12,7 @@ import (
 // @Tags Tag
 // @Produce  json
 // @param Authorization header string true "Authorization"
-// @Success 200 {object} model.TagInfo[]
+// @Success 200 {object} model.TagList
 // @Failure 403 {object} errors.HTTPError
 // @Router /tag [get]
 func TagList(c echo.Context) error {

@@ -25,6 +25,9 @@ type Tag struct {
 	UpdatedTime	time.Time	`xorm:"updated 'updated_time'" json:"updated_time"`
 }
 
+// tags
+type TagList []Tag
+
 // article_tag DO
 type ArticleTag struct {
 	ID	int64	`xorm:"pk autoincr 'id'" json:"id"`

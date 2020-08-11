@@ -34,7 +34,7 @@ func Run() {
 		// comment
 		comment := new(model.Comment)
 		has, err := db.MysqlXEngine.Id(commentID).Get(comment)
-		
+
 		if err != nil || !has {
 			fmt.Printf("%v\n", err)
 		}
