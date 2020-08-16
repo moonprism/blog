@@ -72,6 +72,7 @@ class Article extends Controller
         $this->assign([
             'article_list' => $articleList,
             'page' => $page,
+            'tag_id' => 0,
             'url'  => '/article/page/',
             'total_page' => $articleModel->getTotalPage($pageSize, $whereSet)
         ]);

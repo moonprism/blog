@@ -96,7 +96,7 @@ body {
     background-color: #fff;
     box-shadow: rgba(0,0,0,0.1) 0 1px 2px;
     width: 766px;
-    margin: 47px auto 42px;
+    margin: 44px auto 39px;
     padding: 2px 47px;
     border-radius: 3px;
     color: #222;
@@ -537,7 +537,7 @@ body {
   width: 40px;
   height: 40px;
   margin: 100px auto;
-  background-color: #333;
+  background-color: #6a197d;
  
   border-radius: 100%; 
   -webkit-animation: scaleout 1.0s infinite ease-in-out;

@@ -36,7 +36,7 @@ if ($setting && $setting['background_image']) {
 </div>
 <div id="content">
     <div class="search-input">
-        <input id="searchInput" autocomplete="off">
+        <input id="searchInput" autocomplete="off" autofocus>
     </div>
     <div id="load"></div>
     <div id="searchResult" class="search-result">
