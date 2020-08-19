@@ -1,19 +1,22 @@
 package email
 
 import (
+	"bytes"
+	"crypto/tls"
 	"fmt"
+	"html/template"
+	"log"
+	"net"
+	"net/smtp"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
 	"git.kicoe.com/blog/write/config"
 	db "git.kicoe.com/blog/write/database"
 	"git.kicoe.com/blog/write/model"
 	"git.kicoe.com/blog/write/utils"
-	"html/template"
-	"bytes"
-	"net/smtp"
-	"strconv"
-	"strings"
-	"time"
-	"crypto/tls"
-	"net"
 )
 
 type CommentMessage struct {
@@ -25,6 +28,12 @@ type CommentMessage struct {
 }
 
 func Run() {
+	f, err := os.OpenFile("log/email.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening file: %v", err)
+	}
+	log.SetOutput(f)
+	defer f.Close()
 	for ;; {
 		// todo log
 		commentID, err := utils.NewRedisClient().BLPop(20*time.Second, "comment_message").Result()
@@ -36,17 +45,17 @@ func Run() {
 		has, err := db.MysqlXEngine.Id(commentID).Get(comment)
 
 		if err != nil || !has {
-			fmt.Printf("%v\n", err)
+			log.Printf("select comment id:%d error: %v\n", commentID, err)
 		}
 		messageComment := new(model.Comment)
 		has, err = db.MysqlXEngine.Id(comment.ToID).Get(messageComment)
 		if err != nil || !has {
-			fmt.Printf("%v\n", err)
+			log.Printf("select comment to id:%d error:%v\n", commentID, err)
 		}
 		// article
 		article, has, err := model.FetchArticle(comment.ArtID)
 		if err != nil || !has {
-			fmt.Printf("%v\n", err)
+			log.Printf("select article id:%d, %v\n", comment.ArtID, err)
 		}
 		data := CommentMessage {
 			Name: messageComment.Name,
@@ -57,7 +66,7 @@ func Run() {
 		}
 		println(messageComment.Email)
 		sendMail(messageComment.Email, data)
-		fmt.Printf("%v\n", data)
+		log.Printf("send email success %v\n", data)
 	}
 }
 

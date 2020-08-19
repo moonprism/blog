@@ -1,6 +1,6 @@
 FROM debian:9
 
-RUN mkdir -p /www/static
+RUN mkdir -p /www/static /www/log
 COPY . /www
 RUN chmod +x /www/main
 

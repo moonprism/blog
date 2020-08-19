@@ -28,11 +28,11 @@ build-write:
 
 ## write-dev: 运行博客后台接口服务
 write-dev:
-	cd $(WRITE_DIR) &&　make serve
+	cd $(WRITE_DIR) && make serve
 
 ## write-web-dev: 运行博客后台前端服务
 write-web-dev:
-	cd $(WRITE_DIR) &&　make serve-web
+	cd $(WRITE_DIR) && make serve-web
 
 ## sh-write: 进入博客后台容器shell
 sh-write:

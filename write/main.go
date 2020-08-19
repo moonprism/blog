@@ -2,12 +2,15 @@ package main
 
 import (
 	"flag"
+	"log"
+	"os"
+
 	"git.kicoe.com/blog/write/config"
 	"git.kicoe.com/blog/write/database"
 	_ "git.kicoe.com/blog/write/docs"
 	"git.kicoe.com/blog/write/router"
-	"git.kicoe.com/blog/write/utils"
 	"git.kicoe.com/blog/write/worker/email"
+	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
@@ -30,14 +33,28 @@ func main() {
 	// init
 	config.InitConfig(env)
 	database.InitMysqlEngine()
-	if env == "prod" {
-		utils.InitEs()
-		utils.InitOss()
-	}
+
+	// todo check serve health
 
 	go email.Run()
 
 	app := router.Routers()
+
+	if env == "prod" {
+		app.Debug = false
+		app.Use(middleware.Recover())
+		f, err := os.OpenFile("log/app.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatalf("error opening file: %v", err)
+		}
+		defer f.Close()
+		app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+			Output: f,
+		}))
+	} else {
+		app.Use(middleware.Logger())
+	}
+
 	app.GET("/swagger/*", echoSwagger.WrapHandler)
 	app.Logger.Fatal(app.Start(":" + config.App.Port))
 }

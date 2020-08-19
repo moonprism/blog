@@ -1,2 +1,19 @@
-data
-log
+/data
+/log
+
+.idea
+
+# docker
+
+/docker/write/main
+/docker/write/write
+/docker/write/web/
+/docker/write/config/
+
+/docker/elastic/*.zip
+
+# write
+
+/write/static/
+/write/main
+/write/log/*.log
