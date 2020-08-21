@@ -32,7 +32,6 @@ func UpdateSetting(c echo.Context) error {
 	if err := c.Bind(setting); err != nil {
 		return err
 	}
-	
 	service.SetSetting(setting)
 	return c.JSON(http.StatusOK, "ok")
 }

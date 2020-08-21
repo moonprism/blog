@@ -1,4 +1,4 @@
-package email
+package workers
 
 import (
 	"bytes"
@@ -27,7 +27,7 @@ type CommentMessage struct {
 	ReplyName	string
 }
 
-func Run() {
+func RunSendEmail() {
 	f, err := os.OpenFile("log/email.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)

@@ -13,7 +13,7 @@ var serviceCodeToHTTPErrorMap = map[int]*HTTPError{
 }
 
 type serviceError struct {
-	code    int 	`json:"-"`
+	code    int		`json:"-"`
 	Message string	`json:"message"`
 }
 

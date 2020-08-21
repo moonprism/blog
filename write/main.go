@@ -8,8 +8,9 @@ import (
 	"git.kicoe.com/blog/write/config"
 	"git.kicoe.com/blog/write/database"
 	_ "git.kicoe.com/blog/write/docs"
+	"git.kicoe.com/blog/write/middlewares"
 	"git.kicoe.com/blog/write/router"
-	"git.kicoe.com/blog/write/worker/email"
+	"git.kicoe.com/blog/write/workers"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
@@ -36,7 +37,7 @@ func main() {
 
 	// todo check serve health
 
-	go email.Run()
+	go workers.RunSendEmail()
 
 	app := router.Routers()
 
@@ -52,6 +53,7 @@ func main() {
 			Output: f,
 		}))
 	} else {
+		app.Use(middlewares.Test)
 		app.Use(middleware.Logger())
 	}
 

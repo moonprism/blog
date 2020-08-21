@@ -1,5 +1,8 @@
 # todo 未来会和持续集成整合
 
+DOCKER=docker
+DOCKER_COMPOSE=docker-compose.exe
+
 help: Makefile
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
 
@@ -9,7 +12,10 @@ config:
 	git config commit.template .git-commit-template.txt
 
 up:
-	docker-compose up -d
+	$(DOCKER_COMPOSE) up -d
+
+ps:
+	$(DOCKER_COMPOSE) ps
 
 DOCKER_DIR=./docker/
 WRITE_DIR=./write/
@@ -24,37 +30,41 @@ build-write:
 	mv $(WRITE_DIR)main $(DOCKER_WRITE_DIR)
 	mkdir -p $(DOCKER_WRITE_DIR)config && cp -r $(WRITE_DIR)config/*.ini $(DOCKER_WRITE_DIR)config
 	mkdir -p $(DOCKER_WRITE_DIR)web && cp -r $(WRITE_DIR)web/dist/* $(DOCKER_WRITE_DIR)web
-	sudo docker-compose build write
+	$(DOCKER_COMPOSE) build write
 
-## write-dev: 运行博客后台接口服务
+## write-dev: 启动博客后台接口服务
 write-dev:
 	cd $(WRITE_DIR) && make serve
 
-## write-web-dev: 运行博客后台前端服务
+## write-web-dev: 启动博客后台前端服务
 write-web-dev:
 	cd $(WRITE_DIR) && make serve-web
 
 ## sh-write: 进入博客后台容器shell
 sh-write:
-	docker-compose exec write /bin/bash
+	$(DOCKER_COMPOSE) exec write /bin/bash
 
 ## re-write: 重编译博客后台服务
 re-write:
-	docker-compose stop write
-	docker-compose rm write
-	docker-compose build write
-	docker-compose up -d
+	$(DOCKER_COMPOSE) stop write
+	$(DOCKER_COMPOSE) rm write
+	$(DOCKER_COMPOSE) build write
+	$(DOCKER_COMPOSE) up -d
 
 # Read
 
-## read-dev: 启动前台前端服务
+## read-dev: 启动博客前台前端服务
 read-dev:
-	cd read & npm run serve
+	cd read && npm install && npm run serve
 
 ## sh-read: 进入博客前台容器shell
 sh-read:
-	docker-compose exec read /bin/bash
+	$(DOCKER_COMPOSE) exec read /bin/bash
 
 ## sh-redis: 进入redis容器shell
 sh-redis:
-	docker-compose exec redis /bin/bash
+	$(DOCKER_COMPOSE) exec redis /bin/bash
+
+## sh-mysql: 进入mysql容器shell
+sh-mysql:
+	$(DOCKER_COMPOSE) exec mysql /bin/bash

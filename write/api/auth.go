@@ -43,3 +43,29 @@ func Login(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, &authResponse{t})
 }
+
+// todo
+type infoResponse struct {
+	IsRegister	bool	`json:"is_register"`
+	BackgroundImage	string	`json:"background_image"`
+}
+// @bolg system info
+// @Tags Auth
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} infoResponse
+// @Router /auth/info [get]
+func Info(c echo.Context) error {
+	return nil
+}
+
+// @admin regist (jwt)
+// @Tags Auth
+// @Accept  json
+// @Produce  json
+// @Param loginData body service.AuthBody true " "
+// @Success 200 {object} authResponse
+// @Router /auth/regist [post]
+func Regist(c echo.Context) error {
+	return nil
+}

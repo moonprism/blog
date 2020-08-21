@@ -16,7 +16,7 @@ return [
     'route' => include 'route.php',
     'route_cache' => 'redis',
     'cp'    => 'cache',
-    'test'  => false,
+    'test'  => true,
     'description' => 'dd',
     'cache_comment_prefix' => 'blog-comment-',
     'elastic_code_index' => 'elastic-code-index',
