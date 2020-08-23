@@ -11,8 +11,6 @@ import (
 
 func Routers() *echo.Echo {
 	e := echo.New()
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
 
 	if config.App.EnableCors {
 		e.Use(middleware.CORS())

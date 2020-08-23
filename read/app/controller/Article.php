@@ -38,6 +38,7 @@ class Article extends Controller
         $this->assign([
             'article_list' => $articleList,
             'page' => $page,
+            'tag_id' => $tagId,
             // todo 这里要优化成自动需要重构下路由
             'url'  => "/article/tag/{$tagId}/",
             'total_page' => $articleModel->getTotalPageByTagId($tagId, $pageSize, $whereSql)
@@ -71,6 +72,7 @@ class Article extends Controller
         $this->assign([
             'article_list' => $articleList,
             'page' => $page,
+            'tag_id' => 0,
             'url'  => '/article/page/',
             'total_page' => $articleModel->getTotalPage($pageSize, $whereSet)
         ]);

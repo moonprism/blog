@@ -20,11 +20,13 @@
     display: inline-block;
     height: 40px;
     line-height: 40px;
-    font: 17px Consolas,"Liberation Mono",Menlo,Courier,"Noto Sans SC",monospacea;
+    font: 16px Consolas,"Liberation Mono",Menlo,Courier,"Noto Sans SC",monospacea;
+    letter-spacing: 1px;
     outline: none;
     padding: 0 15px;
     transition: border-color .3s;
     width: 44.5%;
+    color: #4d3e3e
 }
 .search-input input:focus {
     border-color: aqua;

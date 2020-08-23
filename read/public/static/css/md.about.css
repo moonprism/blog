@@ -38,24 +38,26 @@
 .markdown h2 i, .markdown h3 i {
     font-size: 19px;
 }
+.markdown>p {
+    margin: 2px 28px;
+}
 .markdown img {
     margin: 2px 24px;
 }
 .markdown i {
     font-size: .9em;
 }
-.markdown a code {
-    font-size: 1em !important;
-    color: #455 !important;
-}
 .markdown pre {
-    margin: 20px 25px;
+    margin: 17px 25px;
     font-size: 17px;
     color: #fff;
 }
+.markdown pre code {
+    color: #dddddd
+}
 .markdown blockquote {
     padding: 13px 20px;
-    margin: 10px 25px; 
+    margin: 12px 25px 0; 
 }
 .markdown blockquote.info {
     border-color: purple;

@@ -8,7 +8,7 @@
                 <el-input type="password" v-model="loginForm.password" placeholder="Password" prefix-icon="el-icon-lollipop" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" style="width:100%" @click="login()">Login</el-button>
+                <el-button type="primary" style="width:100%" @click="login()" :loading="loading">Login</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -20,13 +20,19 @@
             return {
                 loginForm: {
                     username: '',
-                    password: ''
+                    password: '',
                 },
+                loading: false
             }
         },
         methods: {
             async login() {
-                await this.$store.dispatch('auth/login', this.loginForm)
+                this.loading = true
+                try {
+                    await this.$store.dispatch('auth/login', this.loginForm)
+                } catch (err) {
+                    this.loading = false
+                }
                 this.$router.push({path: '/'})
             }
         },
@@ -40,11 +46,13 @@
         left: 0;
         height: 100%;
         width: 100%;
-        background-image: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/cc/bg.jpg)
+        background-image: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/gFjsJhJcSZCsIyBGbLVL.jpg);
+		background-repeat: no-repeat;
+		/* background-size: cover; */
     }
     .login-form {
         width: 277px;
-        margin: 170px auto;
+        margin: 260px auto;
     }
     .login-form input {
         font-family: 'Roboto Mono';

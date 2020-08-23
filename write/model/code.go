@@ -26,7 +26,7 @@ type CodeDetail struct {
 
 func FetchCodeMetas(offset, limit int, whereField interface{}) (codeMetas []*CodeMeta, err error) {
 	codeMetas = make([]*CodeMeta, 0)
-	engine := db.MysqlXEngine.Table("code").Limit(limit, offset).Desc("created_time")
+	engine := db.MysqlXEngine.Table("code").Limit(limit, offset).Desc("updated_time")
 	if whereField != nil {
 		err = engine.Where(whereField).Find(&codeMetas)
 	} else {

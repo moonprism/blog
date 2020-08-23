@@ -16,7 +16,7 @@ type Comment struct {
 	CreatedTime	time.Time	`xorm:"created 'created_time'" json:"created_time"`
 }
 
-func fetchComments(offset, limit int, whereField interface{}) (comments []*Comment, err error) {
+func FetchComments(offset, limit int, whereField interface{}) (comments []*Comment, err error) {
 	comments = make([]*Comment, 0)
 	engine := db.MysqlXEngine.Table("comment").Limit(limit, offset).Desc("created_time")
 	if whereField != nil {

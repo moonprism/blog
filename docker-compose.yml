@@ -20,6 +20,7 @@ services:
       - "3000:2999"
     volumes:
       - "./data/write/static:/www/static"
+      - "./log/write:/www/log"
     links:
       - mysql
       - elastic

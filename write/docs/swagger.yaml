@@ -45,8 +45,6 @@ definitions:
         type: string
       created_time:
         type: string
-      html:
-        type: string
       id:
         type: integer
       image:
@@ -131,17 +129,32 @@ definitions:
       key:
         type: string
     type: object
-  model.TagInfo:
+  model.Setting:
+    properties:
+      background_image:
+        type: string
+      global_css:
+        type: string
+      global_js:
+        type: string
+    type: object
+  model.Tag:
     properties:
       color:
         type: string
-      count:
-        type: integer
+      created_time:
+        type: string
       id:
         type: integer
       name:
         type: string
+      updated_time:
+        type: string
     type: object
+  model.TagList:
+    items:
+      $ref: '#/definitions/model.Tag'
+    type: array
   model.TagMeta:
     properties:
       color:
@@ -156,8 +169,6 @@ definitions:
       content:
         type: string
       created_time:
-        type: string
-      html:
         type: string
       id:
         type: integer
@@ -256,7 +267,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model.ArticleInfo'
-          type: object
       produces:
       - application/json
       responses:
@@ -350,7 +360,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/service.ArticleUpdateBody'
-          type: object
       produces:
       - application/json
       responses:
@@ -380,7 +389,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/service.AuthBody'
-          type: object
       produces:
       - application/json
       responses:
@@ -435,7 +443,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/service.CodeUpdateBody'
-          type: object
       produces:
       - application/json
       responses:
@@ -529,7 +536,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/service.CodeUpdateBody'
-          type: object
       produces:
       - application/json
       responses:
@@ -633,6 +639,55 @@ paths:
       summary: delete file
       tags:
       - File
+  /setting:
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Setting'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get setting
+      tags:
+      - setting
+    put:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ' '
+        in: body
+        name: settingInfo
+        required: true
+        schema:
+          $ref: '#/definitions/model.Setting'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: set setting
+      tags:
+      - setting
   /tag:
     get:
       parameters:
@@ -647,7 +702,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.TagInfo'
+            $ref: '#/definitions/model.TagList'
         "403":
           description: Forbidden
           schema:
@@ -668,7 +723,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model.TagMeta'
-          type: object
       produces:
       - application/json
       responses:
@@ -732,7 +786,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/model.TagMeta'
-          type: object
       produces:
       - application/json
       responses:

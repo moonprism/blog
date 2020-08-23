@@ -1,14 +1,35 @@
 import axios from 'axios'
 import store from '@/store'
-import { MessageBox, Message } from 'element-ui'
+import { MessageBox, Message, Loading } from 'element-ui'
 
 var instance = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
     timeout: 3000
 })
 
+let loading
+let requestNum = 0
+
 instance.interceptors.request.use(
     data => {
+        // login page not loading
+        if (data.url != '/auth/login') {
+            if (requestNum == 0) {
+                let url = data.url
+                if (data.params) {
+                    url += '?'
+                    Object.keys(data.params).forEach(key => {
+                        url += (key+'='+data.params[key]+'&')
+                    })
+                    url = url.substr(0, url.length - 1)
+                }
+                loading = Loading.service({
+                    lock: true,
+                    text: '[ '+url+' ]',
+                })
+            }
+            requestNum++
+        }
         // 全局附加jwt校验
         if (store.getters['auth/token']) {
             data.headers['Authorization'] = 'Bearer ' + store.getters['auth/token']
@@ -20,9 +41,18 @@ instance.interceptors.request.use(
     }
 )
 
+
 instance.interceptors.response.use(
     // 延迟执行
-    res => res.status === 200 ? Promise.resolve(res) : Promise.reject(res),
+    res => {
+        requestNum--
+        if (requestNum == 0) {
+            loading.close()
+        } else if (requestNum < 0) {
+            requestNum = 0
+        }
+        return res.status === 200 ? Promise.resolve(res) : Promise.reject(res)
+    },
     error => {
         if (error.response) {
             let data = error.response.data
@@ -39,7 +69,7 @@ instance.interceptors.response.use(
                             location.reload()
                         })
                     })
-                    break;
+                    break
                 default:
                     Message({
                         message: data.message,

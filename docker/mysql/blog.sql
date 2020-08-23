@@ -6,7 +6,8 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`(
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
-    `password` char(32) NOT NULL,
+    `avatar` varchar(500) NOT NULL DEFAULT '',
+    `password` char(60) NOT NULL,
     `created_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_time` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
