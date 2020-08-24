@@ -24,6 +24,7 @@ services:
     links:
       - mysql
       - elastic
+      - redis  
 
   mysql:
     hostname: mysql

@@ -8,8 +8,6 @@ import (
 
 type (
 	AuthConf struct {
-		User	string	`ini:"user"`
-		Password	string	`ini:"password"`
 		SigningKey	string	`ini:"signing_key"`
 	}
 

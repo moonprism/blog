@@ -1,16 +1,18 @@
 # todo 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=docker-compose.exe
+DOCKER_COMPOSE=sudo docker-compose
 
 help: Makefile
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
 
 # Dev
 
+## config: 配置开发环境
 config:
 	git config commit.template .git-commit-template.txt
 
+## up: 启动docker服务
 up:
 	$(DOCKER_COMPOSE) up -d
 
@@ -20,6 +22,9 @@ ps:
 DOCKER_DIR=./docker/
 WRITE_DIR=./write/
 DOCKER_WRITE_DIR=$(DOCKER_DIR)write/
+
+init:
+	cd $(WRITE_DIR)config && cp test.ini prod.ini
 
 # Write
 
