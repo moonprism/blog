@@ -1,5 +1,5 @@
 <template>
-    <el-form label-position="left" label-width="80px" class="updateForm">
+    <el-form label-position="left" label-width="90px" class="updateForm">
         <el-form-item label="status">
             <el-select v-model="$props.article.status" placeholder="status">
                 <el-option
@@ -28,7 +28,7 @@
             </el-tag>
             <el-button size="small" @click="tagSelectVisible = true">+ Add Tag</el-button>
         </el-form-item>
-        <el-form-item label="illustration">
+        <el-form-item label="image">
             <!--图片上传模块-->
             <upload-img :image="image" :config="uploadConfig" @on-del="uploadImgDel" @on-cancel="uploadImgCancel"></upload-img>
         </el-form-item>

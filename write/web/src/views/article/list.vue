@@ -27,7 +27,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            width="120px"
+                            width="130px"
                             label="Updated">
                         <template slot-scope="scope">
                             <i class="el-icon-time"></i>
