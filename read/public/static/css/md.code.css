@@ -59,6 +59,7 @@
     border: 1px solid #dedede;
     color: #909399;
     border-radius: 4px;
+    font-family: space mono;
 }
 .search-result pre {
     border: 1px solid #ddd;

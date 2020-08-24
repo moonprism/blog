@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/md.link.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/comment.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&family=Noto+Sans:ital@1&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Noto+Sans+SC&family=Roboto+Mono&display=swap" rel="stylesheet">
     <style><?php
         if ($setting && $setting['global_css']) {
             echo $setting['global_css'];
