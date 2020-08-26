@@ -33,7 +33,7 @@
             <upload-img :image="image" :config="uploadConfig" @on-del="uploadImgDel" @on-cancel="uploadImgCancel"></upload-img>
         </el-form-item>
         <el-form-item label="summary:">
-            <el-input  type="textarea" v-model="$props.article.summary" :rows="5"></el-input>
+            <el-input type="textarea" v-model="$props.article.summary" :rows="5"></el-input>
         </el-form-item>
         <div class="button-wrapper">
             <el-button @click="update" icon="el-icon-upload2" type="primary">Update</el-button>
