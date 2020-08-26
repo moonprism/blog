@@ -93,7 +93,7 @@
         width: 800px;
         margin: 0 auto;
         padding: 0 20px;
-        height: 620px;
+        height: 1000px;
         overflow-y: auto;
     }
 </style>

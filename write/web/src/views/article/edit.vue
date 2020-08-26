@@ -9,7 +9,7 @@
                 <a @click="handleClose" class="close"><i class="el-icon-circle-close"></i></a>
             </div>
         </el-header>
-        <el-main>
+        <el-main style="padding:0">
             <div class="edit-wrapper">
             <textarea
                 style="display: none"
@@ -227,10 +227,10 @@
         transition: all .2s linear;
     }
     .cm-s-material {
-        font-family: Consolas,"Liberation Mono",Menlo,Courier,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
-        width: 920px;
+        font-family: "Space Mono",yuan;
+        width: 92%;
         margin: 0 auto 30px;
-        font-size: 16px;
+        font-size: 22px;
         padding: 10px;
     }
     .cm-s-material.CodeMirror {
@@ -243,11 +243,11 @@
     }
     .cm-s-material .cm-header-2 {
         color: #fe346e;
-        font-size: 16px;
+        font-size: 24px;
     }
     .cm-s-material .cm-header-3 {
         color: #4cbbb9;
-        font-size: 15px;
+        font-size: 23px;
     }
     .cm-s-material .cm-comment {
         color: #fb7b6b;
