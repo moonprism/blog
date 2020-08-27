@@ -17,6 +17,8 @@ return [
     'page/about'          => 'Article@aboutDetail',
     'page/code'           => 'Code@index',
 
+    'code/preview'        => 'Code@preview',
+
     // search
     'code/search'         => 'Code@search'
 ];

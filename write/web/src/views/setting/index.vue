@@ -35,11 +35,11 @@
 
             <h2>CSS</h2>
             <p>
-                <code-edit ref="codeEditCSS" :code="{lang:'css', content:this.css}"></code-edit>
+                <code-edit ref="codeEditCSS" :code="{lang:'css', content:this.css}" :config="{useVim:false}"></code-edit>
             </p>
             <h2>JS</h2>
             <p>
-                <code-edit ref="codeEditJS" :code="{lang:'js', content:this.js}"></code-edit>
+                <code-edit ref="codeEditJS" :code="{lang:'js', content:this.js}" :config="{useVim:false}"></code-edit>
             </p>
             <br><br><hr>
             <p style="text-align: center; position: relative; top: 15px;">

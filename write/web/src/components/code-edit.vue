@@ -41,6 +41,9 @@
             code: {
                 lang: '',
                 content: ''
+            },
+            config: {
+                useVim: false
             }
         },
         mounted() {
@@ -52,10 +55,16 @@
         methods: {
             init() {
                 CodeMirror.Vim.map('jk', '<Esc>', 'insert')
+                if (this.$props.config.useVim) {
+                    this.cmOptions.keyMap = 'vim'
+                }
                 let editor = CodeMirror.fromTextArea(
                     this.$refs.edit, this.cmOptions
                 )
                 this.editor = editor
+                if (this.$props.config.useVim) {
+                    this.editor.focus()
+                }
                 this.updateLang()
             },
             update() {
@@ -95,6 +104,6 @@
         height: auto;
     }
     .code-edit .CodeMirror {
-        font-family: 'Roboto Mono', "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif !important;
+        font-family: 'Space Mono', "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif !important;
     }
 </style>

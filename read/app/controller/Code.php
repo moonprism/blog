@@ -68,4 +68,19 @@ class Code extends Controller
         $this->assign('next_page', count($codeList) == 10 ? $page+1 : 0);
         $this->show('Page/code');
     }
+
+    public function preview($lang = 'md', $code = '', $title = '', $tags = '')
+    {
+        $lang = htmlspecialchars($lang);
+        $code = htmlspecialchars(urldecode(base64_decode($code)));
+        $this->assign('code_list', [[
+            'id' => 0,
+            'tags' => htmlspecialchars(urldecode($tags)),
+            'description' => htmlspecialchars(urldecode($title)),
+            'lang' => $lang,
+            'content' => $code
+        ]]);
+        $this->assign('next_page', -1);
+        $this->show('Page/code');
+    }
 }

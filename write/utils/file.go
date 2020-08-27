@@ -18,3 +18,14 @@ func FileCopy(file multipart.File, path string) error {
 	_, err = io.Copy(dst, file)
 	return err
 }
+
+func FileExists(path string) bool {
+	_, err := os.Stat(path)
+	if err != nil {
+		if os.IsExist(err) {
+			return true
+		}
+		return false
+	}
+	return true
+}

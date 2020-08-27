@@ -1,7 +1,7 @@
 # todo 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=sudo docker-compose
+DOCKER_COMPOSE=docker-compose.exe
 
 help: Makefile
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
@@ -10,11 +10,14 @@ help: Makefile
 
 ## config: 配置开发环境
 config:
-	git config commit.template .git-commit-template.txt
+	git config commit.template .github/.git-commit-template.txt
 
 ## up: 启动docker服务
 up:
 	$(DOCKER_COMPOSE) up -d
+
+down:
+	$(DOCKER_COMPOSE) down
 
 ps:
 	$(DOCKER_COMPOSE) ps
@@ -57,6 +60,11 @@ re-write:
 	$(DOCKER_COMPOSE) up -d
 
 # Read
+
+## build-read: 博客前台编译
+build-read:
+	cd read && npm run build
+
 
 ## read-dev: 启动博客前台前端服务
 read-dev:

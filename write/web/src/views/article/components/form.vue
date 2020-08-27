@@ -1,6 +1,6 @@
 <template>
-    <el-form label-position="left" label-width="90px" class="updateForm">
-        <el-form-item label="status">
+    <el-form label-position="right" label-width="90px" class="updateForm">
+        <el-form-item label="status:">
             <el-select v-model="$props.article.status" placeholder="status">
                 <el-option
                         v-for="item in statusList"
@@ -10,10 +10,10 @@
                 </el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="title">
+        <el-form-item label="title:">
             <el-input v-model="$props.article.title" style="width:300px"></el-input>
         </el-form-item>
-        <el-form-item label="tags">
+        <el-form-item label="tags:">
             <el-tag
                     class="tag"
                     v-for="tag in $props.article.tags"
@@ -28,12 +28,12 @@
             </el-tag>
             <el-button size="small" @click="tagSelectVisible = true">+ Add Tag</el-button>
         </el-form-item>
-        <el-form-item label="image">
+        <el-form-item label="image:">
             <!--图片上传模块-->
             <upload-img :image="image" :config="uploadConfig" @on-del="uploadImgDel" @on-cancel="uploadImgCancel"></upload-img>
         </el-form-item>
-        <el-form-item label="summary">
-            <el-input  type="textarea" v-model="$props.article.summary" :rows="5"></el-input>
+        <el-form-item label="summary:">
+            <el-input type="textarea" v-model="$props.article.summary" :rows="5"></el-input>
         </el-form-item>
         <div class="button-wrapper">
             <el-button @click="update" icon="el-icon-upload2" type="primary">Update</el-button>
@@ -156,5 +156,8 @@
     .tag {
         border: none;
         margin: 0 5px;
+    }
+    .el-form-item__label {
+        font-size: 16px;
     }
 </style>

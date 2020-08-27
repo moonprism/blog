@@ -1,15 +1,17 @@
 <template>
     <el-container class="edit-main">
-        <el-header>
+        <el-header style="height: 45px">
             <div class="edit-header">
                 <!--       先这样         -->
-                <el-button @click="handleUpload" plain>Show</el-button>
+                <!-- <el-button @click="handleUpload" plain>Show</el-button>
                 <el-button @click="handleSelect" plain>Select</el-button>
                 <el-button @click="handleWrite" type="primary" plain>Write</el-button>
+		-->
                 <a @click="handleClose" class="close"><i class="el-icon-circle-close"></i></a>
+                <a @click="handleSelect" class="select"><i class="el-icon-picture-outline-round"></i></a>
             </div>
         </el-header>
-        <el-main>
+        <el-main style="padding:0">
             <div class="edit-wrapper">
             <textarea
                 style="display: none"
@@ -214,23 +216,28 @@
         right: 10px;
         z-index: 2;
     }
-    .edit-header .close {
+    .edit-header .close, .edit-header .select {
         font-size: 28px;
         margin: 0 0 0 15px;
         position: relative;
         top: 7px;
         transition: all .2s linear;
+        cursor: pointer;
+	display: block;
     }
     .edit-header .close:hover {
         color: #f56c6c;
-        cursor: pointer;
+        transition: all .2s linear;
+    }
+    .edit-header .select:hover {
+        color: #91d18b;
         transition: all .2s linear;
     }
     .cm-s-material {
-        font-family: Consolas,"Liberation Mono",Menlo,Courier,Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
-        width: 920px;
+        font-family: "Space Mono",yuan;
+        width: 93%;
         margin: 0 auto 30px;
-        font-size: 16px;
+        font-size: 21px;
         padding: 10px;
     }
     .cm-s-material.CodeMirror {
@@ -243,11 +250,11 @@
     }
     .cm-s-material .cm-header-2 {
         color: #fe346e;
-        font-size: 16px;
+        font-size: 22px;
     }
     .cm-s-material .cm-header-3 {
         color: #4cbbb9;
-        font-size: 15px;
+        font-size: 22px;
     }
     .cm-s-material .cm-comment {
         color: #fb7b6b;

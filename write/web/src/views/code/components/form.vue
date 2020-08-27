@@ -32,12 +32,13 @@
             <el-button v-else class="button-new-tag" size="small" @click="showTagInput">+ New Tag</el-button>
         </el-form-item>
     <el-form-item label="description">
-        <el-input type="textarea" :rows="3" v-model="$props.code.description" style="width:70%;"></el-input>
+        <el-input v-model="$props.code.description" style="width:70%;font-size: 17px;"></el-input>
     </el-form-item>
     <el-form-item label="code">
         <!-- code mirror 编辑模块 -->
-        <code-edit ref="codeEdit" :code="$props.code"></code-edit>
+        <code-edit ref="codeEdit" :code="$props.code" :config="{useVim:true}"></code-edit>
     </el-form-item>
+        <li><a target="_blank" rel="noopener" style="color:#ae81ff;cursor:pointer;font-size:15px" @click="preview">preview</a></li>
         <div class="button-wrapper">
             <el-button @click="update" icon="el-icon-upload2" type="primary">Update</el-button>
         </div>
@@ -81,6 +82,17 @@
             this.$props.code.lang = 'md'
         },
         methods: {
+            preview() {
+                window.open(this.previewLink(), '_blank');
+            },
+            previewLink() {
+                this.$props.code.content = this.$refs.codeEdit.getContent()
+                return 'https://www.kicoe.com/code/preview/'+
+                    this.$props.code.lang+
+                    '/'+btoa(encodeURIComponent(this.$props.code.content))+
+                    '/'+encodeURIComponent(this.$props.code.description)+
+                    '/'+encodeURIComponent(this.$props.code.tags);
+            },
             handleTagClose(tag) {
                 let tags = this.tags
                 tags.splice(tags.indexOf(tag), 1);
@@ -151,6 +163,9 @@
         text-align: center;
     }
     .code-form .el-textarea__inner {
-        font-family: 'Roboto Mono', "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif !important;
+        font-family: 'Space Mono', "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif !important;
+    }
+    .el-form-item__label {
+        font-size: 16px;
     }
 </style>

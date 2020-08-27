@@ -35,7 +35,7 @@ if ($setting && $setting['background_image']) {
     </div>
 </div>
 <div id="content">
-    <div class="search-input">
+    <div <?php if($next_page == -1){ echo 'style="display:none"'; } ?> class="search-input">
         <input id="searchInput" autocomplete="off" autofocus>
     </div>
     <div id="load"></div>
@@ -52,7 +52,7 @@ if ($setting && $setting['background_image']) {
                 <pre class="c-<?php echo $code['lang'] ?>"><code class="<?php echo $code['lang'] ?>"><?php echo htmlspecialchars($code['content']) ?></code><div class="markdown"></div></pre>
             </div>
         <?php } ?>
-        <?php if($next_page) { ?><div class="next"><a href="/page/code/<?php echo $next_page;?>">Next</a></div><?php } ?>
+        <?php if($next_page>0) { ?><div class="next"><a href="/page/code/<?php echo $next_page;?>">Next</a></div><?php } ?>
     </div>
 </div>
 </body>
