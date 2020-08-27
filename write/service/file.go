@@ -58,9 +58,13 @@ func DeleteFile(id int) (err error) {
 		return errors.ServiceResourceNotFoundError
 	}
 
-	err = os.Rename("./static/"+file.Key, "./static/DEL-"+file.Key)
-	if err != nil {
-		return
+	realFile := "./static/"+file.Key
+
+	if (utils.FileExists(realFile)) {
+		err = os.Rename(realFile, "./static/DEL-"+file.Key)
+		if err != nil {
+			return
+		}
 	}
 
 	affected, err := model.DeleteFile(id)
