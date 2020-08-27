@@ -1,7 +1,7 @@
 # todo 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=sudo docker-compose
+DOCKER_COMPOSE=docker-compose.exe
 
 help: Makefile
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
@@ -60,6 +60,11 @@ re-write:
 	$(DOCKER_COMPOSE) up -d
 
 # Read
+
+## build-read: 博客前台编译
+build-read:
+	cd read && npm run build
+
 
 ## read-dev: 启动博客前台前端服务
 read-dev:
