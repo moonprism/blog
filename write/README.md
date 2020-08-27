@@ -9,10 +9,12 @@
 make help
 ```
 
-指定prod配置运行：
+指定dev配置运行：
+```sh
+go run main.go --env dev
 ```
-go run main.go prod
-```
+
+> 运行dev开发环境，在write下必须存在`log`与`static`目录
 
 #### 设计
 

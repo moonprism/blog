@@ -10,11 +10,14 @@ help: Makefile
 
 ## config: 配置开发环境
 config:
-	git config commit.template .git-commit-template.txt
+	git config commit.template .github/.git-commit-template.txt
 
 ## up: 启动docker服务
 up:
 	$(DOCKER_COMPOSE) up -d
+
+down:
+	$(DOCKER_COMPOSE) down
 
 ps:
 	$(DOCKER_COMPOSE) ps

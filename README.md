@@ -8,7 +8,7 @@
 | - data      数据
 | - docker    各容器的编译目录
 | -  | - mysql
-| -  | -  | - blog.sql *
+| -  | -  | - blog.sql
 | - log       日志
 | - read      前端展示 (php)
 |    | - app
