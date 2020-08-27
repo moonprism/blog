@@ -29,7 +29,9 @@ export default {
         },
         init(state) {
             setting.detail().then(response => {
-                state.setting = response.data
+                if (response.data != null) {
+                    state.setting = response.data
+                }
             })
         }
     },
