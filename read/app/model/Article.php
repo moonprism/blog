@@ -23,6 +23,13 @@ class Article extends Model
             ->select('id,title,image,summary,created_time', 'id');
     }
 
+    public function getIdGroupByDate()
+    {
+        return $this->order('created_time', 'desc')
+            ->set([['status', self::STATUS_PUBLISH], ['deleted_at', 'is null']])
+            ->select("id, date_format(created_time, '%Y-%m') as date, title");
+    }
+
     /**
      * 获取文章总页数
      * @param int $limit 每页数量
