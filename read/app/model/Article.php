@@ -30,6 +30,8 @@ class Article extends Model
             ->select("id, date_format(created_time, '%Y-%m') as date, title");
     }
 
+    private $count = 0;
+
     /**
      * 获取文章总页数
      * @param int $limit 每页数量
@@ -39,7 +41,13 @@ class Article extends Model
     public function getTotalPage($limit, $whereSet)
     {
         $pages = $this->set($whereSet)->select('count(id) as total')[0]["total"];
+        $this->count = $pages;
         return ceil($pages/number_format($limit, 1));
+    }
+
+    public function getTotal()
+    {
+        return $this->count;
     }
 
     public function getArticleListByTagId($tagId, $page, $limit, $whereSql)
@@ -56,6 +64,7 @@ class Article extends Model
     public function getTotalPageByTagId($tagId, $limit, $whereSql)
     {
         $pages = $this->query("select count(a.id) as total from article as a inner join article_tag as at on a.id = at.art_id and at.tag_id = ?", [$tagId])[0]["total"];
+        $this->count = $pages;
         return ceil($pages/number_format($limit, 1));
     }
 }

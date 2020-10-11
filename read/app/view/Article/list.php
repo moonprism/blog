@@ -35,6 +35,9 @@ if ($setting && $setting['background_image']) {
     </div>
 </div>
 <div id="content">
+    <?php if($tag){ ?> 
+    <div style="border-color: <?php echo $tag->color ?>"><div class="tag-banner">当前标签<span class="t" style="background-color: <?php echo $tag->color; ?>"><?php echo $tag->name; ?></span>, 文章数<span class="c"><?php echo $tag->count; ?><span></div></div>
+    <?php } ?>
     <div class="article-list">
 <?php foreach($article_list as $article){ ?>
     <div class="article">
@@ -49,10 +52,12 @@ if ($setting && $setting['background_image']) {
                 <use xlink:href="#icontag"></use>
             </svg>
             <?php } ?>
-            <?php foreach($article['tags'] as $tag) { ?>
-                <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>;<?php if ($tag['id'] == $tag_id) echo 'text-decoration: underline'; ?>" class="tag">
-                    <?php echo $tag['name'] ?>
+            <?php foreach($article['tags'] as $t) { ?>
+            <span style="border-color:<?php echo $t['color']; ?>;color:<?php echo $t['color']; ?>">
+            <a href="/article/tag/<?php echo $t['id'] ?>" style="<?php if ($tag && $t['id'] == $tag->id) echo 'background-color: #fff;color: inherit;border-color: inherit'; else echo 'background-color: '.$t['color']; ?>" class="tag">
+                    <?php echo $t['name'] ?>
                 </a>
+            </span>
             <?php } ?>
         </div>
         <div class="summary markdown">

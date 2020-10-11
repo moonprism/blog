@@ -6,8 +6,9 @@ use \kicoe\Core\Model;
 /**
 * tags表的模型类
 */
-class Tags extends Model
+class Tag extends Model
 {
+    
     /**
      * 根据id获取对应tag信息 Map
      * @param string $ids
@@ -25,5 +26,10 @@ class Tags extends Model
         }
 
         return $articleTagsMap;
+    }
+
+    public static function loadByID(int $id)
+    {
+        return (new self)->get($id);
     }
 }
