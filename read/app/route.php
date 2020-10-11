@@ -20,5 +20,8 @@ return [
     'code/preview'        => 'Code@preview',
 
     // search
-    'code/search'         => 'Code@search'
+    'code/search'         => 'Code@search',
+    // api
+    'api/articles'         => 'Api@articleList',
+    'api/article'         => 'Api@article'
 ];

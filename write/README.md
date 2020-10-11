@@ -14,7 +14,7 @@ make help
 go run main.go --env dev
 ```
 
-> 运行dev开发环境，在write下必须存在`log`与`static`目录
+> 完整docker构建可以参考项目根目录下的Makefile
 
 #### 设计
 

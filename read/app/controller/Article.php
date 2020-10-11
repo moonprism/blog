@@ -2,8 +2,8 @@
 
 namespace app\controller;
 
-use app\model\Tags;
 use kicoe\core\Controller;
+use app\model\Tag as TagModel;
 use app\model\Article as ArticleModel;
 
 class Article extends Controller 
@@ -28,20 +28,24 @@ class Article extends Controller
 
         if ($articleIds !== []) {
             // 整合tag
-            $articleTagsMap = Tags::getArticleTagsMap(implode($articleIds, ','));
+            $articleTagsMap = TagModel::getArticleTagsMap(implode($articleIds, ','));
         }
 
         foreach ($articleList as $key => $article) {
             $articleList[$key]['tags'] = $articleTagsMap[$article['id']] ?? [];
         }
 
+        $tag = TagModel::loadById($tagId);
+        $total_page = $articleModel->getTotalPageByTagId($tagId, $pageSize, $whereSql);
+        $tag->count = $articleModel->getTotal();
+
         $this->assign([
             'article_list' => $articleList,
             'page' => $page,
-            'tag_id' => $tagId,
             // todo 这里要优化成自动需要重构下路由
             'url'  => "/article/tag/{$tagId}/",
-            'total_page' => $articleModel->getTotalPageByTagId($tagId, $pageSize, $whereSql)
+            'total_page' => $total_page,
+            'tag' => $tag,
         ]);
         $this->show('Article/list');
     }
@@ -62,7 +66,7 @@ class Article extends Controller
 
         if ($articleIds !== []) {
             // 整合tag
-            $articleTagsMap = Tags::getArticleTagsMap(implode($articleIds, ','));
+            $articleTagsMap = TagModel::getArticleTagsMap(implode($articleIds, ','));
         }
 
         foreach ($articleList as $key => $article) {
@@ -72,9 +76,9 @@ class Article extends Controller
         $this->assign([
             'article_list' => $articleList,
             'page' => $page,
-            'tag_id' => 0,
             'url'  => '/article/page/',
-            'total_page' => $articleModel->getTotalPage($pageSize, $whereSet)
+            'total_page' => $articleModel->getTotalPage($pageSize, $whereSet),
+            'tag' => null
         ]);
         $this->show('Article/list');
     }
@@ -84,7 +88,7 @@ class Article extends Controller
         $article = new ArticleModel();
         $article->get($id);
         // 整合tag
-        $articleTagsMap = Tags::getArticleTagsMap($id);
+        $articleTagsMap = TagModel::getArticleTagsMap($id);
         $article->tags = $articleTagsMap[$id] ?? [];
         if ($article->status == ArticleModel::STATUS_DRAFT) {
             $article->title = implode('', array_map(function($rune){return $rune===' '?$rune:'*';}, str_split($article->title)));

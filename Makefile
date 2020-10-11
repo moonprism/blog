@@ -1,7 +1,7 @@
 # todo 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=docker-compose.exe
+DOCKER_COMPOSE=docker-compose.exe # sudo docker-compose
 
 help: Makefile
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
@@ -15,6 +15,18 @@ config:
 ## up: 启动docker服务
 up:
 	$(DOCKER_COMPOSE) up -d
+
+## read-dev: 启动博客前台服务
+read-dev:
+	cd read && npm install && npm run serve
+
+## write-dev: 启动博客后台接口服务
+write-dev:
+	cd $(WRITE_DIR) && make serve
+
+## write-web-dev: 启动博客后台web服务
+write-web-dev:
+	cd $(WRITE_DIR) && make serve-web
 
 down:
 	$(DOCKER_COMPOSE) down
@@ -40,14 +52,6 @@ build-write:
 	mkdir -p $(DOCKER_WRITE_DIR)web && cp -r $(WRITE_DIR)web/dist/* $(DOCKER_WRITE_DIR)web
 	$(DOCKER_COMPOSE) build write
 
-## write-dev: 启动博客后台接口服务
-write-dev:
-	cd $(WRITE_DIR) && make serve
-
-## write-web-dev: 启动博客后台前端服务
-write-web-dev:
-	cd $(WRITE_DIR) && make serve-web
-
 ## sh-write: 进入博客后台容器shell
 sh-write:
 	$(DOCKER_COMPOSE) exec write /bin/bash
@@ -64,11 +68,6 @@ re-write:
 ## build-read: 博客前台编译
 build-read:
 	cd read && npm run build
-
-
-## read-dev: 启动博客前台前端服务
-read-dev:
-	cd read && npm install && npm run serve
 
 ## sh-read: 进入博客前台容器shell
 sh-read:

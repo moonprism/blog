@@ -12,7 +12,7 @@ swag:
 
 ## serve: run local dev serve
 serve:
-	go run main.go dev
+	go run main.go --env dev
 
 ## serve-web: run local dev serve (web)
 serve-web:

@@ -1,6 +1,6 @@
 ## kicoe-blog
 
-简单的个人博客系统，PHP + Golang + Vue + ES ...
+个人博客系统，PHP + Golang + Vue + ES ...
 
 #### 目录结构
 
@@ -17,7 +17,7 @@
 |    | -  | - static
 |    | -  | -  | - js 
 |    | -  | -  | - | - main.js * 
-| - write     后台管理 (go)
+| - write     后台管理 (golang)
 |    | - api
 |    | - config
 |    | -  | - dev.ini *
@@ -33,11 +33,15 @@
 
 #### 运行
 
-首先在本地环境安装好 `docker` `docker-compose` `go` `npm`，运行：
+首先在本地环境安装好 `docker` `docker-compose` `go` `npm`
+
 ```shell
 make help
 ```
+
 查看构建帮助
+
+> Makefile 中注释了Linux下运行docker方式而采用wsl调用win外部的docker-compose.exe
 
 > 在docker目录下构建镜像的Dockerfile中有些注释代码可帮助解锁网络环境
 
@@ -47,9 +51,7 @@ make help
 
 ![](https://raw.githubusercontent.com/moonprism/cdn/master/image/f-3.png)
 
-
 ![](https://raw.githubusercontent.com/moonprism/cdn/master/image/b-2.png)
-
 
 ---
 

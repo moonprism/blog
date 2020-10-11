@@ -16,7 +16,7 @@ func CustomHTTPErrorHandler(err error, c echo.Context) {
 			// debug custom service error
 		}
 	} else {
-    	// debug
+		// debug
         httpErr.Message = err.Error()
     }
 
