@@ -11,7 +11,7 @@ CREATE TABLE `user`(
     `created_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_time` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article`(
@@ -26,7 +26,7 @@ CREATE TABLE `article`(
     `updated_time` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `deleted_at` TIMESTAMP NULL,
     PRIMARY KEY (`id`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file`(
@@ -35,7 +35,7 @@ CREATE TABLE `file`(
     `created_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `deleted_at` TIMESTAMP NULL,
     PRIMARY KEY (`id`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag`(
@@ -47,7 +47,7 @@ CREATE TABLE `tag`(
     `deleted_at` TIMESTAMP NULL,
     PRIMARY KEY (`id`),
     KEY `name` (`name`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `article_tag`;
 CREATE TABLE `article_tag`(
@@ -58,7 +58,7 @@ CREATE TABLE `article_tag`(
     PRIMARY KEY (`id`),
     KEY `art_id` (`art_id`),
     KEY `tag_id` (`tag_id`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment`(
@@ -73,7 +73,7 @@ CREATE TABLE `comment`(
     PRIMARY KEY (`id`),
     KEY `art_id` (`art_id`),
     KEY `to_id` (`to_id`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DROP TABLE IF EXISTS `code`;
 CREATE TABLE `code`(
@@ -86,12 +86,12 @@ CREATE TABLE `code`(
     `updated_time` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `deleted_at` TIMESTAMP NULL,
     PRIMARY KEY (`id`)
-)ENGINE=MyISAM DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `article` (`title`, `status`, `image`, `summary`, `content`, `html`, `created_time`, `updated_time`, `deleted_at`)
-VALUES ('Link', 3, '', '', '', '', now(), now(), NULL);
+INSERT INTO `article` (`title`, `status`, `image`, `summary`, `content`, `created_time`, `updated_time`, `deleted_at`)
+VALUES ('Link', 3, '', '', '', now(), now(), NULL);
 
-INSERT INTO `article` (`title`, `status`, `image`, `summary`, `content`, `html`, `created_time`, `updated_time`, `deleted_at`)
-VALUES ('About', 3, '', '', '', '', now(), now(), NULL);
+INSERT INTO `article` (`title`, `status`, `image`, `summary`, `content`, `created_time`, `updated_time`, `deleted_at`)
+VALUES ('About', 3, '', '', '', now(), now(), NULL);
 
 -- GRANT ALL ON blog.* TO blog@localhost IDENTIFIED BY 'blog';

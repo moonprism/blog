@@ -1,7 +1,8 @@
-# todo 未来会和持续集成整合
+# TODO 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=docker-compose.exe # sudo docker-compose
+DOCKER_COMPOSE=sudo docker-compose # docker-compose.exe
+NPM=npm
 
 help: Makefile
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
@@ -16,9 +17,23 @@ config:
 up:
 	$(DOCKER_COMPOSE) up -d
 
+down:
+	$(DOCKER_COMPOSE) down
+
+ps:
+	$(DOCKER_COMPOSE) ps
+
 ## read-dev: 启动博客前台服务
 read-dev:
-	cd read && npm install && npm run serve
+	cd read && $(NPM) install && $(NPM) run serve
+
+## read-composer-install: 博客前台 PHP vendor init
+read-composer-install:
+	cd read && $(DOCKER_COMPOSE) exec read composer install -vvv
+
+## read-npm-build: 博客前台npm run build 
+read-npm-build:
+	cd read && $(NPM) install && $(NPM) run build
 
 ## write-dev: 启动博客后台接口服务
 write-dev:
@@ -27,12 +42,6 @@ write-dev:
 ## write-web-dev: 启动博客后台web服务
 write-web-dev:
 	cd $(WRITE_DIR) && make serve-web
-
-down:
-	$(DOCKER_COMPOSE) down
-
-ps:
-	$(DOCKER_COMPOSE) ps
 
 DOCKER_DIR=./docker/
 WRITE_DIR=./write/
@@ -60,7 +69,7 @@ sh-write:
 re-write:
 	$(DOCKER_COMPOSE) stop write
 	$(DOCKER_COMPOSE) rm write
-	$(DOCKER_COMPOSE) build write
+	$(DOCKER_COMPOSE) build --no-cache write
 	$(DOCKER_COMPOSE) up -d
 
 # Read
