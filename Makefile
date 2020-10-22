@@ -23,13 +23,16 @@ down:
 ps:
 	$(DOCKER_COMPOSE) ps
 
+logs:
+	$(DOCKER_COMPOSE) logs -f
+
 ## read-dev: 启动博客前台服务
 read-dev:
 	cd read && $(NPM) install && $(NPM) run serve
 
 ## read-composer-install: 博客前台 PHP vendor init
 read-composer-install:
-	cd read && $(DOCKER_COMPOSE) exec read composer install -vvv
+	$(DOCKER_COMPOSE) run composer composer install -vvv
 
 ## read-npm-build: 博客前台npm run build 
 read-npm-build:

@@ -52,7 +52,7 @@ if ($setting && $setting['background_image']) {
                 <use xlink:href="#icontag"></use>
             </svg>
             <?php } ?>
-            <span style="border-color:<?php echo $tag['color']; ?>;color:<?php echo $tag['color']; ?>">
+            <span style="border-color:<?php echo $tag['color'] ?? 'none'; ?>;color:<?php echo $tag['color'] ?? 'none'; ?>">
             <?php foreach($article_obj->tags as $tag){ ?>
                 <?php if ($asciinema_flag != true) $asciinema_flag = (strtolower($tag['name']) === 'asciinema'); ?>
                 <?php if ($math_flag != true) $math_flag = (strtolower($tag['name']) === 'math'); ?>
