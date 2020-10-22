@@ -6,11 +6,11 @@ return [
     'article/tag'         => 'Article@tag',
     'article/id'          => 'Article@detail',
     // post
-    'comment/up'          => 'Comment@up',
+    'comment/up'          => 'CommentController@up',
     // json api
-    'comment/list'        => 'Comment@ls',
+    'comment/list'        => 'CommentController@ls',
     // fake
-    'json/comment'        => 'Comment@cat',
+    'json/comment'        => 'CommentController@cat',
 
     // page
     'page/link'           => 'Article@linkDetail',

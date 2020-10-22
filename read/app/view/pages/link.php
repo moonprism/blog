@@ -1,28 +1,23 @@
 <!DOCTYPE html>
 <html>
-<?php $setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting'); ?>
+<?php $setting = \kicoe\core\Link::make(\kicoe\core\Cache::class)->getArr('blog:setting'); ?>
+<?php $config = \kicoe\core\Link::make(\kicoe\core\Config::class) ?>
 <head>
     <meta charset="utf-8">
     <title>link | kicoe</title>
     <meta name="keywords" content="kicoe,博客,blog,留言板,友情链接">
-    <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
-    <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
+    <meta name="description" content="<?php echo $config->get('description') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/md.link.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/comment.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Noto+Sans+SC&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <style><?php
-        if ($setting && $setting['global_css']) {
-            echo $setting['global_css'];
-        }
-    ?></style>
+    <style><?php echo $setting['global_css'] ?? '' ?></style>
 </head>
 <body>
 <div class="an" style=" <?php
-$setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting');
-if ($setting && $setting['background_image']) {
+if (isset($setting['background_image'])) {
     echo 'background-image: url('.$setting['background_image'].')';
 }
 ?>"></div>
@@ -40,11 +35,11 @@ if ($setting && $setting['background_image']) {
 <div id="content">
     <div class="markdown" id="markdown"></div>
     <textarea id="text" style="display: none;">
-<?php echo trim($article_obj->content); ?> </textarea>
+<?php echo trim($article->content); ?> </textarea>
     <div class="comment">
         <span id="to_name"></span>
         <div id="com_up">
-            <input type="hidden" name="art_id" value="<?php echo $article_obj->id ?>" >
+            <input type="hidden" name="art_id" value="<?php echo $article->id ?>" >
             <input type="hidden" name="to_id" value="0" >
             <label for="name">🙎 Name:</label><input id="name" name="name" autocomplete="off" placeholder="your name." type="text" >
             <label for="email">✉️ Email:</label><input id="email" name="email" autocomplete="off" placeholder="Email" type="text" >
@@ -63,11 +58,7 @@ if ($setting && $setting['background_image']) {
 <script type="text/javascript">
     $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
 </script>
-<script><?php
-    if ($setting && $setting['global_js']) {
-        echo $setting['global_js'];
-    }
-?></script>
+<script><?php echo $setting['global_css'] ?? ''; ?></script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 </body>
 </html>

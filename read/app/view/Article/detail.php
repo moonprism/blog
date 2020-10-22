@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html>
-<?php $setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting'); ?>
+<?php $setting = \kicoe\core\Link::make(\kicoe\core\Cache::class)->getArr('blog:setting'); ?>
+<?php $config = \kicoe\core\Link::make(\kicoe\core\Config::class) ?>
 <head>
     <meta charset="utf-8">
-    <title><?php echo $article_obj->title;?></title>
-    <meta name="keywords" content="kicoe,博客,blog<?php if($article_obj->tags!==false){foreach($article_obj->tags as $tag){echo ','.$tag['name'];}} ?>">
-    <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
-    <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
+    <title><?php echo $article->title;?></title>
+    <meta name="keywords" content="kicoe,博客,blog<?php foreach($article->getTags() as $tag){ echo ','.$tag->name; } ?>">
+    <meta name="description" content="<?php echo $config->get('description') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/comment.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Noto+Sans+SC&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <style><?php
-        if ($setting && $setting['global_css']) {
-            echo $setting['global_css'];
-        }
-    ?></style>
+    <style><?php echo $setting['global_css'] ?? '' ?></style>
 </head>
 <body>
 <div class="an" style=" <?php
-$setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting');
-if ($setting && $setting['background_image']) {
+if (isset($setting['background_image'])) {
     echo 'background-image: url('.$setting['background_image'].')';
 }
 ?>"></div>
@@ -39,31 +34,29 @@ if ($setting && $setting['background_image']) {
 </div>
 <div id="content">
     <div class="article">
-        <h1> <a><?php echo $article_obj->title ?></a> </h1>
+        <h1> <a><?php echo $article->title ?></a> </h1>
         <div class="mark">
-            <?php $asciinema_flag = false ?>
             <?php $math_flag = false ?>
             <svg class="icon i-date" aria-hidden="true">
                 <use xlink:href="#icondate"></use>
             </svg>
-            <?php echo date('Y.m.d D', strtotime($article_obj->created_time)) ?>
-            <?php if($article_obj->tags){ ?> 
+            <?php echo date('Y.m.d D', strtotime($article->created_time)) ?>
+            <?php if($article->getTags()){ ?>
             <svg class="icon i-tag" aria-hidden="true">
                 <use xlink:href="#icontag"></use>
             </svg>
             <?php } ?>
-            <span style="border-color:<?php echo $tag['color'] ?? 'none'; ?>;color:<?php echo $tag['color'] ?? 'none'; ?>">
-            <?php foreach($article_obj->tags as $tag){ ?>
-                <?php if ($asciinema_flag != true) $asciinema_flag = (strtolower($tag['name']) === 'asciinema'); ?>
-                <?php if ($math_flag != true) $math_flag = (strtolower($tag['name']) === 'math'); ?>
-                <a href="/article/tag/<?php echo $tag['id'] ?>" style="background-color: <?php echo $tag['color'] ?>" class="tag"><?php echo $tag['name'] ?></a>
+            <?php foreach($article->getTags() as $tag){ ?>
+                <span style="border-color:<?php echo $tag->color ?? 'none'; ?>;color:<?php echo $tag->color ?? 'none'; ?>">
+                <?php if ($math_flag != true) $math_flag = (strtolower($tag->name) === 'math'); ?>
+                    <a href="/article/tag/<?php echo $tag->id ?>" style="background-color: <?php echo $tag->color ?>" class="tag"><?php echo $tag->name ?></a>
+                </span>
             <?php } ?>
-            </span>
         </div>
     </div>
     <div class="markdown" id="markdown"></div>
     <textarea id="text" style="display: none;">
-<?php echo trim($article_obj->content); ?> </textarea>
+<?php echo trim($article->content); ?> </textarea>
 
     <div class="agreement">
         parse by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a><br>
@@ -72,7 +65,7 @@ if ($setting && $setting['background_image']) {
     <div class="comment">
         <span id="to_name"></span>
         <div id="com_up">
-            <input type="hidden" name="art_id" value="<?php echo $article_obj->id ?>" >
+            <input type="hidden" name="art_id" value="<?php echo $article->id ?>" >
             <input type="hidden" name="to_id" value="0" >
             <label for="name">Name:</label><input id="name" name="name" autocomplete="off" placeholder="your name." type="text" >
             <label for="email">Email:</label><input id="email" name="email" autocomplete="off" placeholder="Email" type="text" >
@@ -93,21 +86,13 @@ if ($setting && $setting['background_image']) {
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 <script src="//at.alicdn.com/t/font_1747613_gq90x707awu.js"></script>
 <script src="//at.alicdn.com/t/font_1922445_olfo3nycsle.js"></script>
-<?php if ($asciinema_flag) { ?>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/css/asciinema-player.css">
-    <script src="https://cdn.jsdelivr.net/npm/asciinema-player@2.6.1/resources/public/js/asciinema-player.min.js"></script>
-<?php } ?>
 <?php if ($math_flag) { ?>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <?php } ?>
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();bg();</script>
-<script><?php
-    if ($setting && $setting['global_js']) {
-        echo $setting['global_js'];
-    }
-?></script>
+<script><?php echo $setting['global_css'] ?? ''; ?></script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/gruvbox-dark.min.css">
 </body>
 </html>

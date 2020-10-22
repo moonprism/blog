@@ -39,9 +39,9 @@ function comment_list(total){
         var m_data = {};
     } else {
         more_a.style.display = 'none';
-        var m_url = "/comment/list";
-        var m_type = "POST";
-        var m_data = { art_id: com_inputs[0].value };
+        var m_url = "/comment/list/"+com_inputs[0].value;
+        var m_type = "GET";
+        var m_data = {};
     }
     f.ajax({
         url: m_url,
@@ -61,14 +61,10 @@ function comment_list(total){
                     responsejson[i]['text'] = replace_sym(responsejson[i]['text']);
                     var src = '';
                     // 邮箱后缀与头像获取
-                    if (responsejson[i]['email'][0] == 'q') {
-                        src = 'https://q1.qlogo.cn/g?b=qq&nk='+responsejson[i]['email'][1]+'&s=640';
-                    } else {
-                        src = 'https://cdn.v2ex.com/gravatar/'+responsejson[i]['email'][1];
-                    }
+                    src = 'https://cdn.v2ex.com/gravatar/'+responsejson[i]['email'];
                     var dateDiff = getDateDiff(responsejson[i]['created_time']);
                     let h = null;
-                    if(responsejson[i]['to_id'] === "0"){
+                    if(responsejson[i]['to_id'] === 0){
                         // 一层
                         var com = document.createElement('div');
                         com.className = 'com';

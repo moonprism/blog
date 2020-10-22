@@ -33,7 +33,7 @@ services:
     networks:
       - app
   mysql:
-    build: ./docker/read
+    build: ./docker/mysql
     ports:
       - "3306:3306"
     environment:
@@ -44,7 +44,6 @@ services:
     networks:
       - app
   elastic:
-    hostname: elasticsearch
     build: ./docker/elastic
     ports:
       - "9200:9200"

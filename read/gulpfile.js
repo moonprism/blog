@@ -60,7 +60,7 @@ gulp.task('default', gulp.series('build'))
 
 gulp.task('browser', function(done) {
     browserSync.init({
-        proxy: "127.0.0.1:8081",
+        proxy: "127.0.0.1:80",
         port: 2000
     })
     done()

@@ -1,7 +1,7 @@
 # TODO 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=sudo docker-compose # docker-compose.exe
+DOCKER_COMPOSE=docker-compose.exe
 NPM=npm
 
 help: Makefile
@@ -25,6 +25,9 @@ ps:
 
 logs:
 	$(DOCKER_COMPOSE) logs -f
+
+build:
+	$(DOCKER_COMPOSE) build
 
 ## read-dev: 启动博客前台服务
 read-dev:

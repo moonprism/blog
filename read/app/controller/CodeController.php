@@ -6,10 +6,14 @@ use Elasticsearch\ClientBuilder;
 use kicoe\core\Controller;
 use kicoe\core\Response;
 use kicoe\core\Config;
-use app\model\Code as CodeModel;
+use app\model\Code;
 
-class Code extends Controller
+class CodeController
 {
+    /**
+     * @param Response $response
+     * @param $text
+     */
     public function search(Response $response, $text)
     {
         $elasticConf = Config::prpr('elastic');
@@ -58,15 +62,22 @@ class Code extends Controller
         return $res;
     }
 
-    public function index($page = 1)
+    /**
+     * @route get /page/code
+     * @route get /page/code/{page}
+     * @param Response $response
+     * @param int $page
+     * @return Response
+     */
+    public function index(Response $response, $page = 1)
     {
         $limit = 10;
-        $whereSet = [['deleted_at', 'is null']];
-        $codeModel = New CodeModel();
-        $codeList = $codeModel->getCodeList($page, $limit, $whereSet);
-        $this->assign('code_list', $codeList);
-        $this->assign('next_page', count($codeList) == 10 ? $page+1 : 0);
-        $this->show('Page/code');
+        $code_list = Code::where('deleted_at is null')
+            ->orderBy('updated_time', 'desc')
+            ->limit(($page-1)*$limit, $limit)
+            ->get();
+        $next_page = count($code_list) == 10 ? $page+1 : 0;
+        return $response->view('pages/code', compact('code_list', 'next_page'));
     }
 
     public function preview($lang = 'md', $code = '', $title = '', $tags = '')
