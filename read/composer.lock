@@ -4,25 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d04d9a0f81c295c2981faf3aaf38c90",
+    "content-hash": "1fced20f64c1815a7f6e90286df9fcc3",
     "packages": [
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v5.0.0",
+            "version": "v5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elastic/elasticsearch-php.git",
-                "reference": "30be1c0367c865eec5ca0a9c09ce293869da7665"
+                "reference": "48b8a90e2b97b4d69ce42851c1b9e59f8054661a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/30be1c0367c865eec5ca0a9c09ce293869da7665",
-                "reference": "30be1c0367c865eec5ca0a9c09ce293869da7665",
+                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/48b8a90e2b97b4d69ce42851c1b9e59f8054661a",
+                "reference": "48b8a90e2b97b4d69ce42851c1b9e59f8054661a",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/ringphp": "~1.0",
-                "php": "^5.6.6|^7.0",
+                "php": "^5.6|^7.0",
                 "psr/log": "~1.0"
             },
             "require-dev": {
@@ -59,7 +59,7 @@
                 "elasticsearch",
                 "search"
             ],
-            "time": "2016-10-26T14:35:32+00:00"
+            "time": "2019-07-18T15:11:30+00:00"
         },
         {
             "name": "guzzlehttp/ringphp",
@@ -166,16 +166,16 @@
         },
         {
             "name": "kicoephp/src",
-            "version": "dev-lite",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moonprism/kicoephp-src.git",
-                "reference": "e2fcb05c9dc990ab567cc93b4cec3ffc4f882841"
+                "reference": "948fd3b31620f521955ec180edb72fa4eb44cc9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/e2fcb05c9dc990ab567cc93b4cec3ffc4f882841",
-                "reference": "e2fcb05c9dc990ab567cc93b4cec3ffc4f882841",
+                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/948fd3b31620f521955ec180edb72fa4eb44cc9a",
+                "reference": "948fd3b31620f521955ec180edb72fa4eb44cc9a",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 }
             ],
             "description": "a simple web framework.",
-            "time": "2020-10-22T03:45:49+00:00"
+            "time": "2020-10-23T14:48:04+00:00"
         },
         {
             "name": "psr/log",

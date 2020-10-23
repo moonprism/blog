@@ -1,25 +1,26 @@
 <?php
 
 return [
-    'db' => [
-        'hostname'    => 'mysql',
-        'database'    => 'blog',
-        'username'    => 'root',
-        'password'    => '123456'
-    ],
-    'elastic' => [
-        'host'  => 'elastic',
-    ],
     'redis' => [
-        'host'  => 'redis',
+        'host' => 'redis',
+        'port' => 6379
     ],
-    'route' => include 'route.php',
-    'route_cache' => 'redis',
-    'cp'    => 'cache',
-    'test'  => true,
+    'mysql' => [
+        'host' => 'mysql',
+        'port' => 3306,
+        'db' => 'blog',
+        'user' => 'root',
+        'passwd' => '123456',
+        'charset' => 'utf8mb4',
+    ],
+    'space' => [
+        // view 路径
+        'view' => getcwd().'/../app/view/',
+    ],
     'description' => 'dd',
-    'cache_comment_prefix' => 'blog-comment-',
-    'elastic_code_index' => 'elastic-code-index',
-    'elastic_code_type' => 'elastic-code-type',
-    'image_cdn' => 'http://127.0.0.1:2999/static/',
+    'es' => [
+        'host' => 'elastic',
+        'code_index' => 'elastic-code-index',
+        'code_type' => 'elastic-code-type'
+    ],
 ];

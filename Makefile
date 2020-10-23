@@ -95,3 +95,6 @@ sh-redis:
 ## sh-mysql: 进入mysql容器shell
 sh-mysql:
 	$(DOCKER_COMPOSE) exec mysql /bin/bash
+
+sh-composer:
+	$(DOCKER_COMPOSE) exec composer /bin/bash

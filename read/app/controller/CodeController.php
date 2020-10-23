@@ -3,7 +3,6 @@
 namespace app\controller;
 
 use Elasticsearch\ClientBuilder;
-use kicoe\core\Controller;
 use kicoe\core\Response;
 use kicoe\core\Config;
 use app\model\Code;
@@ -11,16 +10,21 @@ use app\model\Code;
 class CodeController
 {
     /**
+     * @route get /code/search/{text}
+     * @param Config $config
      * @param Response $response
      * @param $text
      */
-    public function search(Response $response, $text)
+    public function search(Config $config, Response $response, string $text)
     {
-        $elasticConf = Config::prpr('elastic');
-        $client = ClientBuilder::create()->setSSLVerification(false) ->setHosts(["{$elasticConf['host']}:9200"])->build();
+        $client = ClientBuilder::create()
+            ->setSSLVerification(false)
+            ->setHosts(["{$config->get('es.host')}:9200"])
+            ->build();
+
         $searchParams = [
-            'index' => Config::prpr('elastic_code_index'),
-            'type'  => Config::prpr('elastic_code_type'),
+            'index' => $config->get('es.code_index'),
+            'type'  => $config->get('es.code_type'),
             'body' => [
                 'query' => [
                     'multi_match' => [

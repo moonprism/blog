@@ -36,7 +36,7 @@ func RunSendEmail() {
 	defer f.Close()
 	for ;; {
 		// todo log
-		commentID, err := utils.NewRedisClient().BLPop(20*time.Second, "comment_message").Result()
+		commentID, err := utils.NewRedisClient().BLPop(20*time.Second, "aqua:comment_message").Result()
 		if err != nil {
 			continue;
 		}
