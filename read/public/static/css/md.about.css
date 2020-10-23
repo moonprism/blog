@@ -3,15 +3,31 @@
     padding: 0 10px;
 }
 .markdown h1 {
-    text-align: center;
+    display: flex;
+    justify-content: center;
     margin-bottom: 18px;
+    cursor: default;
 }
-.markdown h1 img {
+.markdown h1 i {
     height: 67px;
     width: 67px;
     border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+.markdown h1 img {
+    width: 100%;
+    height: 100%;
     padding: 0;
     margin: 0;
+    transition: all 0.4s;
+}
+.markdown h1 i:hover img{
+    transform: scale(1.2);
+}
+.markdown h1 i:hover {
+    box-shadow: 0 0 4px #c55781;
 }
 .markdown h2::before {
     position: initial;
@@ -65,22 +81,26 @@
 .markdown blockquote.ab-icon {
     background-color: #fff;
     border-left: none;
-    text-align: center;
+}
+.markdown blockquote.ab-icon p {
+    display: flex;
+    justify-content: center;
+}
+.markdown blockquote.ab-icon p a {
+    transition: all 0.2s;
+}
+.markdown blockquote.ab-icon a:hover {
+    transform: translateY(-3px);
 }
 .markdown blockquote.ab-icon img {
     height: 31px;
     width: 31px;
-    margin: 0 4px !important;
+    margin: 0 9px !important;
     border: none;
     box-shadow: none;
     opacity:0.8;
     transition: .3s;
     position: relative;
-}
-.markdown blockquote.ab-icon img:hover {
-    opacity: 1;
-    transition: .4s;
-    bottom: 2px;
 }
 .markdown blockquote a {
     font-weight: 100;

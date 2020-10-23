@@ -1,8 +1,16 @@
 <?php
-define('PUB_PATH', __DIR__);
-// app path
-define('APP_PATH', __DIR__ . '/../app/');
-// autoload
+
 require __DIR__ . '/../vendor/autoload.php';
-// link-start 
-kicoe\core\Load::link_start();
+
+use kicoe\core\Link;
+
+$config = include '../app/config.php';
+
+$link = new Link($config);
+
+\kicoe\core\Route::parseAnnotation(\app\controller\ArticleController::class);
+\kicoe\core\Route::parseAnnotation(\app\controller\CommentController::class);
+\kicoe\core\Route::parseAnnotation(\app\controller\CodeController::class);
+\kicoe\core\Route::parseAnnotation(\app\controller\ApiController::class);
+
+$link->start();

@@ -1,70 +1,99 @@
 <?php
+
 namespace app\model;
 
 use kicoe\core\Model;
+use kicoe\core\DB;
 
 class Article extends Model
 {
+    public int $id;
+    public string $title;
+    public int $status;
+    public string $image;
+    public string $summary;
+    public string $content;
+    public string $updated_time;
+    public string $created_time;
+    // public ?string $deleted_at;
+
+    protected array $tags;
+
     const STATUS_DRAFT = 1;
     const STATUS_PUBLISH = 2;
 
-    /**
-     * 获取文章列表
-     * @param int $page 要获取的页数
-     * @param int $limit 每页数量
-     * @return array 该页的数据集
-     * @throws \kicoe\core\Exception
-     */
-    public function getArticleList($page, $limit, $whereSet)
+    public function getList()
     {
-        return $this->set($whereSet)
-            ->limit(($page-1)*$limit, $limit)
-            ->order('created_time', 'desc')
-            ->select('id,title,image,summary,created_time', 'id');
+        return $this->removeColumns('content')->get();
     }
-
-    public function getIdGroupByDate()
-    {
-        return $this->order('created_time', 'desc')
-            ->set([['status', self::STATUS_PUBLISH], ['deleted_at', 'is null']])
-            ->select("id, date_format(created_time, '%Y-%m') as date, title");
-    }
-
-    private $count = 0;
 
     /**
-     * 获取文章总页数
-     * @param int $limit 每页数量
-     * @return int 总页数
-     * @throws \kicoe\core\Exception
+     * @param int $tag_id
+     * @param int $page
+     * @param int $limit
+     * @return Model|self
      */
-    public function getTotalPage($limit, $whereSet)
+    public static function listByTagId(int $tag_id, int $page, int $limit)
     {
-        $pages = $this->set($whereSet)->select('count(id) as total')[0]["total"];
-        $this->count = $pages;
-        return ceil($pages/number_format($limit, 1));
+        return (self::list($page, $limit))
+            ->join('article_tag at', 'article.id = at.art_id and at.tag_id = ?', $tag_id);
     }
 
-    public function getTotal()
+    /**
+     * @param int $page
+     * @param int $limit
+     * @return Model|self
+     */
+    public static function list(int $page, int $limit)
     {
-        return $this->count;
+        return (new self())
+            ->where('status = ?', self::STATUS_PUBLISH)
+            ->where('deleted_at is null')
+            ->orderBy('created_time', 'desc')
+            ->limit(($page-1)*$limit, $limit);
     }
 
-    public function getArticleListByTagId($tagId, $page, $limit, $whereSql)
+    public function setTags(...$tags)
     {
-        $start = ($page-1)*$limit;
-        // todo 框架里的 build sql 方法都应该抽出来
-        return $this->query("select a.id, a.title, a.image, a.summary, a.created_time 
-            from article as a 
-            inner join article_tag as at 
-            on a.id = at.art_id and at.tag_id = ? where 
-            {$whereSql} order by created_time desc limit {$start}, {$limit}", [$tagId]);
+        $this->tags = $tags;
     }
 
-    public function getTotalPageByTagId($tagId, $limit, $whereSql)
+    public function getTags()
     {
-        $pages = $this->query("select count(a.id) as total from article as a inner join article_tag as at on a.id = at.art_id and at.tag_id = ?", [$tagId])[0]["total"];
-        $this->count = $pages;
-        return ceil($pages/number_format($limit, 1));
+        return $this->tags ?? [];
+    }
+
+    /**
+     * 和 Model 无关的设置全体tags方法
+     * @param array $art_list
+     */
+    public static function setTagsByList(array $art_list)
+    {
+        // php7
+        $ids = array_column($art_list, 'id');
+        // 获取集合中的所有文章id
+        $tag_list = DB::select('
+            select 
+            at.art_id, at.tag_id id, t.color, t.name 
+            from tag t 
+            inner join article_tag at 
+            on t.id = at.tag_id and at.art_id in (?)
+        ', $ids);
+        // 多对多关联的处理
+        $tag_map = [];
+        foreach ($tag_list as $tag) {
+            if (isset($tag_map[$tag->art_id])) {
+                $tag_map[$tag->art_id][] = $tag;
+            } else {
+                $tag_map[$tag->art_id] = [$tag];
+            }
+            unset($tag->art_id);
+        }
+        /** @var Article $art */
+        foreach ($art_list as $art) {
+            if ($tags = $tag_map[$art->id] ?? false) {
+                $art->setTags(...$tags);
+            }
+        }
     }
 }

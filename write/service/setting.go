@@ -7,7 +7,7 @@ import (
 )
 
 func GetSetting() (setting *model.Setting, err error) {
-	data, err := utils.NewRedisClient().Get("blog:setting").Result()
+	data, err := utils.NewRedisClient().Get("aqua:blog:setting").Result()
 	if err != nil {
 		return
 	}
@@ -20,6 +20,6 @@ func SetSetting(setting *model.Setting) (err error) {
 	if err != nil {
 		return
 	}
-	err = utils.NewRedisClient().Set("blog:setting", data, 0).Err()
+	err = utils.NewRedisClient().Set("aqua:blog:setting", data, 0).Err()
 	return
 }

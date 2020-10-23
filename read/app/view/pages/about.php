@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <html>
-<?php $setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting'); ?>
+<?php $setting = \kicoe\core\Link::make(\kicoe\core\Cache::class)->getArr('blog:setting'); ?>
+<?php $config = \kicoe\core\Link::make(\kicoe\core\Config::class) ?>
 <head>
     <meta charset="utf-8">
     <title>about | kicoe</title>
     <meta name="keywords" content="kicoe,博客,blog,代码,code,游戏,game,about,关于">
-    <meta name="description" content="<?php echo  kicoe\core\Config::prpr('description') ?>">
-    <!--[if lt IE 9]><script>window.location.href="/page/hack.html";</script><![endif]-->
+    <meta name="description" content="<?php echo $config->get('description') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/main.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/md.about.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Noto+Sans+SC&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <style><?php
-        if ($setting && $setting['global_css']) {
-            echo $setting['global_css'];
-        }
-    ?></style>
+    <style><?php echo $setting['global_css'] ?? '' ?></style>
 </head>
 <body>
 <div class="an" style=" <?php
-$setting = kicoe\core\cache\Factory::getInstance('redis')->read('blog:setting');
-if ($setting && $setting['background_image']) {
+if (isset($setting['background_image'])) {
     echo 'background-image: url('.$setting['background_image'].')';
 }
 ?>"></div>
@@ -39,7 +34,7 @@ if ($setting && $setting['background_image']) {
 <div id="content" style="min-height: 0">
     <div class="markdown" id="markdown"></div>
     <textarea id="text" style="display: none;">
-<?php echo trim($article_obj->content); ?> </textarea>
+<?php echo trim($article->content); ?> </textarea>
 </div>
 <br>
 </body>
@@ -48,9 +43,5 @@ if ($setting && $setting['background_image']) {
 <script type="text/javascript">
     $('markdown').innerHTML = replace_sym(markdown($('text').value, main_markdown_config));
 </script>
-<script><?php
-    if ($setting && $setting['global_js']) {
-        echo $setting['global_js'];
-    }
-?></script>
+<script><?php echo $setting['global_css'] ?? ''; ?></script>
 </html>

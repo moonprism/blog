@@ -17,3 +17,10 @@
 /write/static/
 /write/main
 /write/log/*.log
+
+# read
+
+/read/vendor
+/read/node_modules
+/read/package-lock.json
+/read/public/dist

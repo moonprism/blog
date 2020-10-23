@@ -1,58 +1,66 @@
-version: '2'
+version: "3.1"
 
 services:
-  read:
-    build: ./docker/read/
+  web:
+    image: nginx
     ports:
       - "8081:80"
     volumes:
-      - "./read:/www"
-      - "./log/nginx:/var/log/nginx"
-    working_dir: /www
-    links:
-      - mysql
-      - redis
-      - elastic
-
+      - ./read:/var/www/html/read
+      - ./docker/web/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./log/nginx:/var/log/nginx
+    networks:
+      - app
+  read:
+    build: ./docker/read
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./read:/var/www/html/read
+    networks:
+      - app
   write:
     build: ./docker/write/
     ports:
       - "3000:2999"
     volumes:
-      - "./data/write/static:/www/static"
-      - "./log/write:/www/log"
-    links:
-      - mysql
-      - elastic
-      - redis  
-
+      - ./data/write/static:/www/static
+      - ./log/write:/www/log
+    networks:
+      - app
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app
   mysql:
-    hostname: mysql
     build: ./docker/mysql
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 123456
     volumes:
-      - "./data/mysql:/var/lib/mysql"
-      - "./log/mysql:/var/log/mysql"
-
-  redis:
-    hostname: redis
-    image: redis:5.0
-    ports:
-      - "6379:6379"
-    volumes:
-      - "./log/redis:/var/log"
-      - "./data/redis:/data"
-
+      - ./data/mysql:/var/lib/mysql
+      - ./log/mysql:/var/log/mysql
+    networks:
+      - app
   elastic:
-    hostname: elasticsearch
     build: ./docker/elastic
     ports:
       - "9200:9200"
       - "9300:9300"
     environment:
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms300m -Xmx300m"
     volumes:
-      - "./data/elasticsearch:/usr/share/elasticsearch/data"
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    networks:
+      - app
+  composer:
+    image: composer
+    tty: true
+    entrypoint: /bin/sh
+    volumes:
+      - ./read:/app
+networks:
+  app:

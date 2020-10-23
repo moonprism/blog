@@ -41,8 +41,6 @@ make help
 
 查看构建帮助
 
-> Makefile 中注释了Linux下运行docker方式而采用wsl调用win外部的docker-compose.exe
-
 > 在docker目录下构建镜像的Dockerfile中有些注释代码可帮助解锁网络环境
 
 #### 设计
