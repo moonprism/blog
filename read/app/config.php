@@ -23,4 +23,7 @@ return [
         'code_index' => 'elastic-code-index',
         'code_type' => 'elastic-code-type'
     ],
+    'cas' => [
+        'login_url' => 'http://127.0.0.1:3000/login',
+    ]
 ];

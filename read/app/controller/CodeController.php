@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use Elasticsearch\ClientBuilder;
+use kicoe\core\Cache;
 use kicoe\core\Request;
 use kicoe\core\Response;
 use kicoe\core\Config;
@@ -86,15 +87,23 @@ class CodeController
     }
 
     /**
-     * @route get /page/preview
-     * @route get /page/preview/{lang}
+     * @route get /code/preview
+     * @route get /code/preview/{lang}
      * @param Response $response
      * @param Request $request
      * @param string $lang
      * @return Response
      */
-    public function preview(Response $response, Request $request, $lang = 'md')
+    public function preview(Response $response, Request $request, Config $config, $lang = 'md')
     {
+        if (!isset($_SESSION['user'])) {
+            $query = [
+                'callback' => urlencode($request->url())
+            ];
+            var_dump($config->get('cas.login_url').'?'.http_build_query($query));
+            //return $response->redirect($config->get('cas.url'));
+        }
+        return '';
         $code = new Code();
         $code->lang = htmlspecialchars($lang);
         $code->description = htmlspecialchars(urldecode($request->query('description')));

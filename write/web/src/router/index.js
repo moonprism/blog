@@ -88,6 +88,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     let token = store.getters['auth/token']
     if (!token && to.path != '/login') {
+        // after => to.path
         next('/login')
     } else if (token && to.path == '/login') {
         next('/')
