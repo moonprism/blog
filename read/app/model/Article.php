@@ -24,7 +24,7 @@ class Article extends Model
 
     public function getList()
     {
-        return $this->removeColumns('content')->get();
+        return self::setTagsByList($this->removeColumns('content')->get());
     }
 
     /**
@@ -66,11 +66,13 @@ class Article extends Model
     /**
      * 和 Model 无关的设置全体tags方法
      * @param array $art_list
+     * @return array
      */
     public static function setTagsByList(array $art_list)
     {
         // php7
         $ids = array_column($art_list, 'id');
+
         // 获取集合中的所有文章id
         $tag_list = DB::select('
             select 
@@ -79,6 +81,7 @@ class Article extends Model
             inner join article_tag at 
             on t.id = at.tag_id and at.art_id in (?)
         ', $ids);
+
         // 多对多关联的处理
         $tag_map = [];
         foreach ($tag_list as $tag) {
@@ -89,11 +92,14 @@ class Article extends Model
             }
             unset($tag->art_id);
         }
+
         /** @var Article $art */
         foreach ($art_list as $art) {
             if ($tags = $tag_map[$art->id] ?? false) {
                 $art->setTags(...$tags);
             }
         }
+
+        return $art_list;
     }
 }

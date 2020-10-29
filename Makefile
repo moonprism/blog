@@ -1,7 +1,7 @@
 # TODO 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=docker-compose.exe
+DOCKER_COMPOSE=sudo docker-compose
 NPM=npm
 
 help: Makefile

@@ -22,6 +22,8 @@ class CommentController
         $comment->email = htmlspecialchars($request->input('email'));
         $comment->text = htmlspecialchars($request->input('comment'));
         $comment->save();
+
+        // 邮件推送队列
         if ($comment->to_id) {
             /** @var Cache $cache */
             $cache = Link::make(Cache::class);
@@ -37,6 +39,8 @@ class CommentController
     public function list(int $art_id)
     {
         $comments = Comment::where('art_id', $art_id)->orderBy('id', 'desc')->get();
+
+        // 邮箱加密
         /** @var Comment $comment */
         foreach ($comments as &$comment) {
             $comment->email = md5($comment->email);
@@ -57,6 +61,7 @@ class CommentController
             ->orderBy('id', 'desc')
             ->get();
         $id_list = array_column($comments, 'id');
+
         // 循环获取其中需要的to_id
         /** @var Comment $comment */
         foreach ($comments as $comment) {
@@ -67,16 +72,19 @@ class CommentController
                 }
             }
         }
+
         // 根据id倒序排序，否则js会出问题
         $reverse_id_sort = function($a, $b) {
             if ($a->id === $b->id) return 0;
             return intval($a->id) < intval($b->id) ? 1 : -1;
         };
         usort($comments, $reverse_id_sort);
+
         // 邮箱加密
         foreach ($comments as &$comment) {
             $comment->email = md5($comment->email);
         }
+
         return $comments;
     }
 }

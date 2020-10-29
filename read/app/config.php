@@ -17,7 +17,7 @@ return [
         // view 路径
         'view' => getcwd().'/../app/view/',
     ],
-    'description' => 'dd',
+    'description' => 'aqua',
     'es' => [
         'host' => 'elastic',
         'code_index' => 'elastic-code-index',

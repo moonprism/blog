@@ -170,12 +170,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/moonprism/kicoephp-src.git",
-                "reference": "948fd3b31620f521955ec180edb72fa4eb44cc9a"
+                "reference": "a62bdfa0f225293473d01907ef8277d3bad839df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/948fd3b31620f521955ec180edb72fa4eb44cc9a",
-                "reference": "948fd3b31620f521955ec180edb72fa4eb44cc9a",
+                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/a62bdfa0f225293473d01907ef8277d3bad839df",
+                "reference": "a62bdfa0f225293473d01907ef8277d3bad839df",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 }
             ],
             "description": "a simple web framework.",
-            "time": "2020-10-23T14:48:04+00:00"
+            "time": "2020-10-23T15:37:53+00:00"
         },
         {
             "name": "psr/log",

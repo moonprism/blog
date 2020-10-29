@@ -87,11 +87,11 @@
             },
             previewLink() {
                 this.$props.code.content = this.$refs.codeEdit.getContent()
-                return 'https://www.kicoe.com/code/preview/'+
-                    this.$props.code.lang+
-                    '/'+btoa(encodeURIComponent(this.$props.code.content))+
-                    '/'+encodeURIComponent(this.$props.code.description)+
-                    '/'+encodeURIComponent(this.$props.code.tags);
+                return process.env.VUE_APP_READ_ORIGIN+
+                    '/code/preview/'+ this.$props.code.lang+
+                    '?content='+btoa(encodeURIComponent(this.$props.code.content))+
+                    '&description='+encodeURIComponent(this.$props.code.description)+
+                    '&tags='+encodeURIComponent(this.$props.code.tags);
             },
             handleTagClose(tag) {
                 let tags = this.tags
