@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\model\response\ViewResponse;
 use Elasticsearch\ClientBuilder;
+use GuzzleHttp\Client;
 use kicoe\core\Request;
 use kicoe\core\Response;
 use kicoe\core\Config;
@@ -89,23 +90,18 @@ class CodeController
     /**
      * @route get /code/preview
      * @route get /code/preview/{lang}
-     * @param Response $response
+     * @param ViewResponse $response
      * @param Request $request
      * @param Config $config
      * @param string $lang
      * @return Response
      */
-    public function preview(Response $response, Request $request, Config $config, $lang = 'md')
+    public function preview(ViewResponse $response, Request $request, Config $config, $lang = 'md')
     {
-        // todo cas client
+        session_start();
         if (!isset($_SESSION['user'])) {
-            $query = [
-                'callback' => urlencode($request->url())
-            ];
-            var_dump($config->get('cas.login_url').'?'.http_build_query($query));
-            //return $response->redirect($config->get('cas.url'));
+            return $response->redirect($config->get('cas.login_url').urlencode($request->url()));
         }
-        return '';
         $code = new Code();
         $code->lang = htmlspecialchars($lang);
         $code->description = htmlspecialchars(urldecode($request->query('description')));
@@ -114,5 +110,34 @@ class CodeController
         $code_list = [$code];
         $next_page = -1;
         return $response->view('pages/code', compact('code_list', 'next_page'));
+    }
+
+    /**
+     * cas login, 学习用, 登录安全性不太重要
+     * 本地请求 -
+     *         | - 后台vue页面 jwt 判断,
+     *         | - 生成 key 跳转该 login ( 暂且不重要所以直接用前端 key )
+     *                                                                | - 请求后端go服务器验证key
+     *  验证成功跳转 redirect
+     * @route get /login
+     * @param Request $request
+     * @param Response $response
+     * @param Config $config
+     * @return Response
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function login(Request $request, Response $response, Config $config)
+    {
+        $redirect = $request->query('redirect');
+        $key = $request->query('key');
+        $client = new Client();
+        $res = $client->get($config->get('cas.auth_url'), [
+            'query' => ['key' => $key]
+        ]);
+        if ((string)$res->getBody() === 'success') {
+            session_start();
+            $_SESSION['user'] = $key;
+        }
+        return $response->redirect('http://'.$redirect);
     }
 }

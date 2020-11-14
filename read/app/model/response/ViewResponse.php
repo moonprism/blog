@@ -18,6 +18,9 @@ class ViewResponse extends Response
 
     public function send()
     {
+        if (!isset($this->view_file)) {
+            parent::send();
+        }
         $view_file = $this->view_path.$this->view_file.'.php';
         if (!file_exists($view_file)) {
             throw new \Exception(sprintf('view file "%s" not exists', $view_file));

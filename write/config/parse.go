@@ -47,6 +47,10 @@ type (
 		Pass	string	`ini:"pass"`
 		Host	string	`ini:"host"`
 	}
+
+	CASConf struct {
+		Key	string	`ini:"key"`
+	}
 )
 
 var (
@@ -57,6 +61,7 @@ var (
 	Oss = new(OssConf)
 	Redis = new(RedisConf)
 	SMTP = new(SMTPConf)
+	CAS = new (CASConf)
 	sectionMap = map[string]interface{}{
 		"auth":	Auth,
 		"mysql":	Mysql,
@@ -65,6 +70,7 @@ var (
 		"oss":	Oss,
 		"redis": Redis,
 		"smtp": SMTP,
+		"cas": CAS,
 	}
 
 	once sync.Once

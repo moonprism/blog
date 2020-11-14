@@ -92,6 +92,12 @@ const router = new Router({
                         },
                     ]
                 },
+                {
+                    path: "cas/:url",
+                    name: "cas",
+                    component: (resolve) =>
+                        require(["@/views/cas/index"], resolve),
+                },
             ],
         },
     ],

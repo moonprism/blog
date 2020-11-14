@@ -7,6 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"net/http"
 )
 
 func Routers() *echo.Echo {
@@ -35,6 +36,12 @@ func Routers() *echo.Echo {
 	// router
 	v1 := e.Group("/api/v1")
 	{
+		v1.GET("/cas/auth", func (c echo.Context) error {
+			if c.QueryParam("key") == config.CAS.Key {
+				return c.String(http.StatusOK, "success")
+			}
+			return c.String(http.StatusUnauthorized, "401")
+		})
 
 		authG := v1.Group("/auth")
 		{
