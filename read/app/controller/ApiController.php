@@ -43,6 +43,6 @@ class ApiController
         if ($article->status == Article::STATUS_PUBLISH) {
             return $response->text($article->content);
         }
-        return  $response;
+        return $response;
     }
 }

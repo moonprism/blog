@@ -80,6 +80,24 @@ const router = new Router({
                     component: (resolve) =>
                         require(["@/views/file/index"], resolve),
                 },
+                {
+                    path: "comment",
+                    name: "comment",
+                    component: (resolve) =>
+                        require(["@/views/comment/index"], resolve),
+                    children: [
+                        {
+                            path: "comment/:page",
+                            name: "comment_list",
+                        },
+                    ]
+                },
+                {
+                    path: "cas/:url",
+                    name: "cas",
+                    component: (resolve) =>
+                        require(["@/views/cas/index"], resolve),
+                },
             ],
         },
     ],

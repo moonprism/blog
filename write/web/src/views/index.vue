@@ -5,7 +5,7 @@
             <el-menu class="sideMenu" :collapse="true">
                 <router-link to="/setting">
                     <el-menu-item index="4">
-                        <i class="el-icon-setting"></i>
+                        <i class="el-icon-discover"></i>
                     </el-menu-item>
                 </router-link>
                 <router-link to="/article">
@@ -13,14 +13,19 @@
                         <i class="el-icon-document"></i>
                     </el-menu-item>
                 </router-link>
+                <router-link to="/code">
+                    <el-menu-item index="2">
+                        <i class="el-icon-star-off"></i>
+                    </el-menu-item>
+                </router-link>
+                <router-link to="/comment">
+                    <el-menu-item index="6">
+                        <i class="el-icon-chat-line-square"></i>
+                    </el-menu-item>
+                </router-link>
                 <router-link to="/tag">
                     <el-menu-item index="3">
                         <i class="el-icon-collection-tag"></i>
-                    </el-menu-item>
-                </router-link>
-                <router-link to="/code">
-                    <el-menu-item index="2">
-                        <i class="el-icon-postcard"></i>
                     </el-menu-item>
                 </router-link>
                 <router-link to="/file">

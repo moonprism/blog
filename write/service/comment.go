@@ -13,7 +13,7 @@ func GetPaginateComments(page, pageSize int) (comments []*model.Comment, paginat
 	)
 
 	comments, err = model.FetchComments(offset, pageSize, whereField)
-	count, err := model.CountCode(whereField)
+	count, err := model.CountComment(whereField)
 	pagination = utils.GeneratePagination(page, pageSize, count)
 	return
 }
@@ -27,10 +27,5 @@ func DeleteComment(id int64) (err error) {
 		err = errors.ServiceResourceNotFoundError
 		return
 	}
-	return
-}
-
-func FlashCommentCache(id int64) (err error) {
-	// todo delete article comments cache
 	return
 }
