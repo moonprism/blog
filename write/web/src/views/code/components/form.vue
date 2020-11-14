@@ -88,7 +88,7 @@
             previewLink() {
                 this.$props.code.content = this.$refs.codeEdit.getContent()
                 return process.env.VUE_APP_READ_ORIGIN+
-                    '/code/preview/'+ this.$props.code.lang+
+                    'code/preview/'+ this.$props.code.lang+
                     '?content='+btoa(encodeURIComponent(this.$props.code.content))+
                     '&description='+encodeURIComponent(this.$props.code.description)+
                     '&tags='+encodeURIComponent(this.$props.code.tags);

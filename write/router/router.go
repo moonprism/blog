@@ -79,6 +79,12 @@ func Routers() *echo.Echo {
 			sysG.GET("", api.SettingDetail)
 			sysG.PUT("", api.UpdateSetting)
 		}
+
+		commentG := v1.Group("/comment", jwtMiddle)
+		{
+			commentG.GET("", api.CommentList)
+			commentG.DELETE("/:id", api.DeleteComment)
+		}
 	}
 
 	return e
