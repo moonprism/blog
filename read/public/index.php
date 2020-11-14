@@ -3,14 +3,15 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use kicoe\core\Link;
+use kicoe\core\Route;
 
 $config = include '../app/config.php';
 
 $link = new Link($config);
 
-\kicoe\core\Route::parseAnnotation(\app\controller\ArticleController::class);
-\kicoe\core\Route::parseAnnotation(\app\controller\CommentController::class);
-\kicoe\core\Route::parseAnnotation(\app\controller\CodeController::class);
-\kicoe\core\Route::parseAnnotation(\app\controller\ApiController::class);
+Route::parseAnnotation(\app\controller\ArticleController::class);
+Route::parseAnnotation(\app\controller\CommentController::class);
+Route::parseAnnotation(\app\controller\CodeController::class);
+Route::parseAnnotation(\app\controller\ApiController::class);
 
 $link->start();

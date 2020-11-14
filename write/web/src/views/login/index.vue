@@ -46,7 +46,7 @@
         left: 0;
         height: 100%;
         width: 100%;
-        background-image: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/gFjsJhJcSZCsIyBGbLVL.jpg);
+        /* background-image: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/gFjsJhJcSZCsIyBGbLVL.jpg); */
         background-repeat: no-repeat;
         /* background-size: cover; */
     }

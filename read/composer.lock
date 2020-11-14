@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fced20f64c1815a7f6e90286df9fcc3",
+    "content-hash": "5a5c0bf039809855d896164849a1aa7a",
     "packages": [
         {
             "name": "elasticsearch/elasticsearch",
@@ -166,16 +166,16 @@
         },
         {
             "name": "kicoephp/src",
-            "version": "dev-master",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moonprism/kicoephp-src.git",
-                "reference": "948fd3b31620f521955ec180edb72fa4eb44cc9a"
+                "reference": "6a469a0a26a9e2f4840eb7bede4b2339e8db0b81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/948fd3b31620f521955ec180edb72fa4eb44cc9a",
-                "reference": "948fd3b31620f521955ec180edb72fa4eb44cc9a",
+                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/6a469a0a26a9e2f4840eb7bede4b2339e8db0b81",
+                "reference": "6a469a0a26a9e2f4840eb7bede4b2339e8db0b81",
                 "shasum": ""
             },
             "require": {
@@ -196,7 +196,7 @@
                 }
             ],
             "description": "a simple web framework.",
-            "time": "2020-10-23T14:48:04+00:00"
+            "time": "2020-11-14T11:29:03+00:00"
         },
         {
             "name": "psr/log",
@@ -295,9 +295,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kicoephp/src": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
