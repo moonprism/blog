@@ -1,7 +1,7 @@
 # TODO 未来会和持续集成整合
 
 DOCKER=docker
-DOCKER_COMPOSE=sudo docker-compose
+DOCKER_COMPOSE=docker-compose.exe
 NPM=npm
 
 help: Makefile
@@ -35,7 +35,10 @@ read-dev:
 
 ## read-composer-install: 博客前台 PHP vendor init
 read-composer-install:
-	$(DOCKER_COMPOSE) run composer composer install -vvv
+	$(DOCKER_COMPOSE) exec composer composer install -vvv
+
+read-composer-update:
+	$(DOCKER_COMPOSE) exec composer composer update
 
 ## read-npm-build: 博客前台npm run build 
 read-npm-build:

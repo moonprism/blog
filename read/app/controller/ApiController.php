@@ -39,7 +39,6 @@ class ApiController
      */
     public function article(Response $response, $id)
     {
-        /** @var Article $article */
         $article = Article::fetchById($id);
         if ($article->status == Article::STATUS_PUBLISH) {
             return $response->text($article->content);

@@ -2,8 +2,8 @@
 
 namespace app\controller;
 
+use app\model\response\ViewResponse;
 use Elasticsearch\ClientBuilder;
-use kicoe\core\Cache;
 use kicoe\core\Request;
 use kicoe\core\Response;
 use kicoe\core\Config;
@@ -15,8 +15,8 @@ class CodeController
      * @route get /code/search/{text}
      * @param Config $config
      * @param Response $response
-     * @param $text
-     * @return array
+     * @param string $text
+     * @return Response
      */
     public function search(Config $config, Response $response, string $text)
     {
@@ -56,7 +56,7 @@ class CodeController
                     'content' => htmlspecialchars($hit['_source']['content']),
                 ] + $this->mergeEsHitHighlightFields($hit, ['description', 'tags']);
         }
-        return $res;
+        return $response->json($res);
     }
 
     private function mergeEsHitHighlightFields(&$hit, $fields)
@@ -71,11 +71,11 @@ class CodeController
     /**
      * @route get /page/code
      * @route get /page/code/{page}
-     * @param Response $response
+     * @param ViewResponse $response
      * @param int $page
      * @return Response
      */
-    public function index(Response $response, $page = 1)
+    public function index(ViewResponse $response, int $page = 1)
     {
         $limit = 10;
         $code_list = Code::where('deleted_at is null')
@@ -91,11 +91,13 @@ class CodeController
      * @route get /code/preview/{lang}
      * @param Response $response
      * @param Request $request
+     * @param Config $config
      * @param string $lang
      * @return Response
      */
     public function preview(Response $response, Request $request, Config $config, $lang = 'md')
     {
+        // todo cas client
         if (!isset($_SESSION['user'])) {
             $query = [
                 'callback' => urlencode($request->url())

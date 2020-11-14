@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\model\Article;
+use app\model\response\ViewResponse;
 use kicoe\core\DB;
 use kicoe\core\Response;
 
@@ -12,11 +13,11 @@ class ArticleController
     /**
      * @route get /
      * @route get /article/page/{page}
-     * @param Response $response
+     * @param ViewResponse $response
      * @param int $page
      * @return Response
      */
-    public function list(Response $response, int $page = 1)
+    public function list(ViewResponse $response, int $page = 1)
     {
         $page_size = 10;
         $art = Article::list($page, $page_size);
@@ -35,12 +36,12 @@ class ArticleController
     /**
      * @route get /article/tag/{tag_id}
      * @route get /article/tag/{tag_id}/page/{page}
-     * @param Response $response
+     * @param ViewResponse $response
      * @param int $tag_id
      * @param int $page
      * @return Response
      */
-    public function tag(Response $response, int $tag_id, int $page = 1)
+    public function tag(ViewResponse $response, int $tag_id, int $page = 1)
     {
         $page_size = 10;
         $art = Article::listByTagId($tag_id, $page, $page_size);
@@ -62,11 +63,11 @@ class ArticleController
 
     /**
      * @route get /article/id/{id}
-     * @param Response $response
+     * @param ViewResponse $response
      * @param int $id
      * @return Response
      */
-    public function detail(Response $response, int $id)
+    public function detail(ViewResponse $response, int $id)
     {
         $article = Article::fetchById($id);
         if ($article->status == Article::STATUS_DRAFT) {
@@ -80,10 +81,10 @@ class ArticleController
 
     /**
      * @route get /page/link
-     * @param Response $response
+     * @param ViewResponse $response
      * @return Response
      */
-    public function linkDetail(Response $response)
+    public function linkDetail(ViewResponse $response)
     {
         $article = Article::fetchById(1);
         return $response->view('pages/link', compact('article'));
@@ -91,10 +92,10 @@ class ArticleController
 
     /**
      * @route get /page/about
-     * @param Response $response
+     * @param ViewResponse $response
      * @return Response
      */
-    public function aboutDetail(Response $response)
+    public function aboutDetail(ViewResponse $response)
     {
         $article = Article::fetchById(2);
         return $response->view('pages/about', compact('article'));
