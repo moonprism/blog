@@ -597,3 +597,7 @@ body {
     opacity: 0;
   }
 }
+/** fix */
+button {
+    font: 400 13.3333px Arial;
+}
