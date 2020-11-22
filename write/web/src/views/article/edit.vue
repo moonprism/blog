@@ -217,13 +217,13 @@
         z-index: 2;
     }
     .edit-header .close, .edit-header .select {
-        font-size: 28px;
+        font-size: 25px;
         margin: 0 0 0 15px;
         position: relative;
         top: 7px;
         transition: all .2s linear;
         cursor: pointer;
-	display: block;
+        display: block;
     }
     .edit-header .close:hover {
         color: #f56c6c;
@@ -235,9 +235,9 @@
     }
     .cm-s-material {
         font-family: "Space Mono",yuan;
-        width: 93%;
+        width: 83%;
         margin: 0 auto 30px;
-        font-size: 21px;
+        font-size: 18px;
         padding: 10px;
     }
     .cm-s-material.CodeMirror {

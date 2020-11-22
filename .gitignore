@@ -14,7 +14,7 @@
 
 # write
 
-/write/static/
+/write/static/*.jpg
 /write/main
 /write/log/*.log
 
