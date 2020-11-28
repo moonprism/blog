@@ -113,12 +113,14 @@ class CodeController
     }
 
     /**
-     * cas login, 学习用, 登录安全性不太重要
-     * 本地请求 -
-     *         | - 后台vue页面 jwt 判断,
-     *         | - 生成 key 跳转该 login ( 暂且不重要所以直接用前端 key )
-     *                                                                | - 请求后端go服务器验证key
-     *  验证成功跳转 redirect
+     * cas login
+     * 本地请求 | -  php前台服务                                  golang后台服务
+     *               | - 通过上面的函数未登录则跳转后台系统
+     *                                                             | - 登录后台拿到key,再次跳转前台到当前函数
+     *               | - 当前函数通过guzzle传递拿到的key去后台系统验证
+     *                                                             | - 后台验证key通过，返回success
+     *               | - 登录成功
+     *  跳转 redirect
      * @route get /login
      * @param Request $request
      * @param Response $response

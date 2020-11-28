@@ -250,11 +250,9 @@
     }
     .cm-s-material .cm-header-2 {
         color: #fe346e;
-        font-size: 22px;
     }
     .cm-s-material .cm-header-3 {
         color: #4cbbb9;
-        font-size: 22px;
     }
     .cm-s-material .cm-comment {
         color: #fb7b6b;

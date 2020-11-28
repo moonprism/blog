@@ -19,7 +19,6 @@ var doc = `{
         "description": "{{.Description}}",
         "title": "{{.Title}}",
         "contact": {},
-        "license": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -253,6 +252,28 @@ var doc = `{
                 }
             }
         },
+        "/auth/info": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "deprecated",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.infoResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/auth/login": {
             "post": {
                 "consumes": [
@@ -285,6 +306,113 @@ var doc = `{
                     },
                     "401": {
                         "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/regist": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "deprecated",
+                "parameters": [
+                    {
+                        "description": " ",
+                        "name": "loginData",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/service.AuthBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.authResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/cas/auth": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cas"
+                ],
+                "summary": "check cas key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "cas key",
+                        "name": "key",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/cas/key": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cas"
+                ],
+                "summary": "get cas key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.casAuthorization"
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthenticated",
                         "schema": {
                             "$ref": "#/definitions/errors.HTTPError"
                         }
@@ -493,6 +621,94 @@ var doc = `{
                     {
                         "type": "integer",
                         "description": "code id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthenticated",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "NotFound",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/comment": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "get comment list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "current page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.commentListResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/comment/{id}": {
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "delete comment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "comment id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -746,7 +962,10 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.TagList"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Tag"
+                            }
                         }
                     },
                     "403": {
@@ -912,7 +1131,6 @@ var doc = `{
                     }
                 },
                 "pagination": {
-                    "type": "object",
                     "$ref": "#/definitions/utils.Pagination"
                 }
             }
@@ -921,6 +1139,14 @@ var doc = `{
             "type": "object",
             "properties": {
                 "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.casAuthorization": {
+            "type": "object",
+            "properties": {
+                "cas_key": {
                     "type": "string"
                 }
             }
@@ -935,7 +1161,20 @@ var doc = `{
                     }
                 },
                 "pagination": {
-                    "type": "object",
+                    "$ref": "#/definitions/utils.Pagination"
+                }
+            }
+        },
+        "api.commentListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Comment"
+                    }
+                },
+                "pagination": {
                     "$ref": "#/definitions/utils.Pagination"
                 }
             }
@@ -948,6 +1187,17 @@ var doc = `{
                     "items": {
                         "$ref": "#/definitions/model.File"
                     }
+                }
+            }
+        },
+        "api.infoResponse": {
+            "type": "object",
+            "properties": {
+                "background_image": {
+                    "type": "string"
+                },
+                "is_register": {
+                    "type": "boolean"
                 }
             }
         },
@@ -1078,6 +1328,32 @@ var doc = `{
                 }
             }
         },
+        "model.Comment": {
+            "type": "object",
+            "properties": {
+                "art_id": {
+                    "type": "integer"
+                },
+                "created_time": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "to_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.File": {
             "type": "object",
             "properties": {
@@ -1132,12 +1408,6 @@ var doc = `{
                 "updated_time": {
                     "type": "string"
                 }
-            }
-        },
-        "model.TagList": {
-            "type": "array",
-            "items": {
-                "$ref": "#/definitions/model.Tag"
             }
         },
         "model.TagMeta": {

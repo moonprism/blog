@@ -3,35 +3,38 @@
 namespace app\controller;
 
 use app\model\Comment;
+use app\model\request\CommentRequest;
+use app\model\response\ApiResponse;
 use kicoe\core\Cache;
 use kicoe\core\Link;
-use kicoe\core\Request;
 
 class CommentController
 {
     /**
      * @route post /comment/up
-     * @param Request $request
+     * @param CommentRequest $request
+     * @param ApiResponse $response
+     * @return ApiResponse
      */
-    public function up(Request $request)
+    public function up(CommentRequest $request, ApiResponse $response)
     {
-        $comment = new Comment();
-        $comment->art_id = $request->input('art_id');
-        $comment->to_id = $request->input('to_id');
-        $comment->name = htmlspecialchars($request->input('name'));
-        $comment->email = htmlspecialchars($request->input('email'));
-        $comment->text = htmlspecialchars($request->input('comment'));
+        if ($err = $request->filter()) {
+            return $response->setBodyStatus(422, 'ValidationError: '.$err);
+        }
+        $comment = Comment::createByOther($request);
         $comment->save();
-
+        $response->data = $comment;
         // 邮件推送队列
         if ($comment->to_id) {
             /** @var Cache $cache */
             $cache = Link::make(Cache::class);
             $cache->lPush('comment_message', $comment->id);
         }
+        return $response;
     }
 
     /**
+     * 下面历史代码就不用新的 api response 了
      * @route get /comment/list/{art_id}
      * @param $art_id
      * @return array

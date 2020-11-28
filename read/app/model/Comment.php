@@ -13,4 +13,17 @@ class Comment extends Model
     public string $email;
     public string $text;
     public string $created_time;
+
+    /**
+     * 属性融合
+     * @param object $obj
+     * @return self
+     */
+    public static function createByOther(object $obj) {
+        $comment = new self();
+        foreach (get_object_vars($obj) as $k => $v) {
+            $comment->$k = $v;
+        }
+        return $comment;
+    }
 }

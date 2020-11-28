@@ -44,6 +44,7 @@ func main() {
 	if env == "prod" {
 		app.Debug = false
 		app.Use(middleware.Recover())
+		os.MkdirAll("log", os.ModePerm)
 		f, err := os.OpenFile("log/app.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
 		if err != nil {
 			log.Fatalf("error opening file: %v", err)
@@ -55,8 +56,8 @@ func main() {
 	} else {
 		app.Use(middlewares.Test)
 		app.Use(middleware.Logger())
+		app.GET("/swagger/*", echoSwagger.WrapHandler)
 	}
 
-	app.GET("/swagger/*", echoSwagger.WrapHandler)
 	app.Logger.Fatal(app.Start(":" + config.App.Port))
 }

@@ -3,15 +3,17 @@
 namespace app\controller;
 
 use app\model\Article;
+use app\model\response\ApiResponse;
 use kicoe\core\Response;
 
 class ApiController
 {
     /**
      * @route get api/articles
-     * @return array
+     * @param ApiResponse $response
+     * @return ApiResponse
      */
-    public function articleList()
+    public function articleList(ApiResponse $response)
     {
         $list = Article::where('status', Article::STATUS_PUBLISH)
             ->where('deleted_at is null')
@@ -28,21 +30,23 @@ class ApiController
                 'title' => $i->title
             ];
         }
-        return $result;
+        $response->data = $result;
+        return $response;
     }
 
     /**
      * @route get api/article/{id}
-     * @param Response $response
+     * @param ApiResponse $response
      * @param $id
      * @return Response
      */
-    public function article(Response $response, $id)
+    public function article(ApiResponse $response, $id)
     {
         $article = Article::fetchById($id);
         if ($article->status == Article::STATUS_PUBLISH) {
-            return $response->text($article->content);
+            $response->data = $article->content;
+            return $response;
         }
-        return $response;
+        return $response->setBodyStatus(404, $id.'. article not found');
     }
 }

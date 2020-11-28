@@ -8,11 +8,15 @@ definitions:
         type: array
       pagination:
         $ref: '#/definitions/utils.Pagination'
-        type: object
     type: object
   api.authResponse:
     properties:
       token:
+        type: string
+    type: object
+  api.casAuthorization:
+    properties:
+      cas_key:
         type: string
     type: object
   api.codeListResponse:
@@ -23,7 +27,15 @@ definitions:
         type: array
       pagination:
         $ref: '#/definitions/utils.Pagination'
-        type: object
+    type: object
+  api.commentListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.Comment'
+        type: array
+      pagination:
+        $ref: '#/definitions/utils.Pagination'
     type: object
   api.fileListResponse:
     properties:
@@ -31,6 +43,13 @@ definitions:
         items:
           $ref: '#/definitions/model.File'
         type: array
+    type: object
+  api.infoResponse:
+    properties:
+      background_image:
+        type: string
+      is_register:
+        type: boolean
     type: object
   errors.HTTPError:
     properties:
@@ -115,6 +134,23 @@ definitions:
       updated_time:
         type: string
     type: object
+  model.Comment:
+    properties:
+      art_id:
+        type: integer
+      created_time:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      text:
+        type: string
+      to_id:
+        type: integer
+    type: object
   model.File:
     properties:
       created_time:
@@ -151,10 +187,6 @@ definitions:
       updated_time:
         type: string
     type: object
-  model.TagList:
-    items:
-      $ref: '#/definitions/model.Tag'
-    type: array
   model.TagMeta:
     properties:
       color:
@@ -223,7 +255,6 @@ definitions:
 info:
   contact: {}
   description: 'This is blog api test server. jwt token prefix: Bearer'
-  license: {}
   title: Kicoe Blog API
   version: "1.0"
 paths:
@@ -378,6 +409,20 @@ paths:
       summary: update article
       tags:
       - Article
+  /auth/info:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.infoResponse'
+      summary: deprecated
+      tags:
+      - Auth
   /auth/login:
     post:
       consumes:
@@ -403,6 +448,75 @@ paths:
       summary: admin login (jwt)
       tags:
       - Auth
+  /auth/regist:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: ' '
+        in: body
+        name: loginData
+        required: true
+        schema:
+          $ref: '#/definitions/service.AuthBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.authResponse'
+      summary: deprecated
+      tags:
+      - Auth
+  /cas/auth:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: cas key
+        in: query
+        name: key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: check cas key
+      tags:
+      - Cas
+  /cas/key:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.casAuthorization'
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get cas key
+      tags:
+      - Cas
   /code:
     get:
       parameters:
@@ -554,6 +668,64 @@ paths:
       summary: update code
       tags:
       - Code
+  /comment:
+    get:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: current page
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.commentListResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get comment list
+      tags:
+      - Comment
+  /comment/{id}:
+    delete:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: comment id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Unauthenticated
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: delete comment
+      tags:
+      - Comment
   /file/image:
     get:
       parameters:
@@ -702,7 +874,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.TagList'
+            items:
+              $ref: '#/definitions/model.Tag'
+            type: array
         "403":
           description: Forbidden
           schema:

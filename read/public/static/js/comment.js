@@ -109,41 +109,38 @@ function comment_list(total){
     });
 }
 function getDateDiff(date){
-    let commentData = new Date(date);
-    let dateTimeStamp = commentData.getTime();
-    var minute = 1000 * 60;
-    var hour = minute * 60;
-    var day = hour * 24;
-    var halfamonth = day * 15;
-    var month = day * 30;
-    var now = new Date().getTime();
-    var diffValue = now - dateTimeStamp;
+    const commentData = new Date(date);
+    const dateTimeStamp = commentData.getTime();
+    const minute = 1000 * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
+    const month = day * 30;
+    const now = new Date().getTime();
+    const diffValue = now - dateTimeStamp;
     if(diffValue < 0){return;}
-    var monthC =diffValue/month;
-    var weekC =diffValue/(7*day);
-    var dayC =diffValue/day;
-    var hourC =diffValue/hour;
-    var minC =diffValue/minute;
-    let result = ''
+    const monthC = diffValue/month;
+    const weekC = diffValue/(7*day);
+    const dayC = diffValue/day;
+    const hourC = diffValue/hour;
+    const minC = diffValue/minute;
+    const rtf = new Intl.RelativeTimeFormat('zh', {
+        numeric: 'auto'
+    });
     if (monthC>12) {
-        result="" + parseInt(monthC/12) + "年前";
+        return rtf.format(-parseInt(monthC/12), 'year');
     }else if(monthC>=1 && monthC<=12){
-        result="" + parseInt(monthC) + "个月前";
+        return rtf.format(-parseInt(monthC), 'month');
+    } else if(weekC>=1){
+        return rtf.format(-parseInt(monthC), 'week');
+    } else if(dayC>=1){
+        return rtf.format(-parseInt(dayC), 'day');
+    } else if(hourC>=1){
+        return rtf.format(-parseInt(hourC), 'hour');
+    } else if(minC>=1){
+        return rtf.format(-parseInt(minC), 'minute');
+    } else {
+        return '刚刚';
     }
-    else if(weekC>=1){
-        result="" + parseInt(weekC) + "周前";
-    }
-    else if(dayC>=1){
-        result=""+ parseInt(dayC) +"天前";
-    }
-    else if(hourC>=1){
-        result=""+ parseInt(hourC) +"小时前";
-    }
-    else if(minC>=1){
-        result=""+ parseInt(minC) +"分钟前";
-    }else
-    result="刚刚";
-    return result;
 }
 comment_list(10);
 // 回复某人
@@ -177,7 +174,7 @@ f.addEve(com_inputs[4], 'click', function(){
         f.ajax({
             url: "/comment/up",
             type: "POST",
-            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, comment: comment_text},
+            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, text: comment_text},
             dataType: "json",
             success: function (response, xml) {
                 com_inputs[1].value = '0';
