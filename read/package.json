@@ -21,6 +21,6 @@
     "gulp-watch": "^5.0.1"
   },
   "dependencies": {
-    "moonprism-markdown": "^2.4.7"
+    "moonprism-markdown": "^2.4.12"
   }
 }

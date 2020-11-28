@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4aa7198f3fe01a3d4d9a06f777f8c5de",
+    "content-hash": "5c0a95bf1d93c9fd1d484d1a14b93002",
     "packages": [
         {
             "name": "elasticsearch/elasticsearch",
@@ -410,16 +410,16 @@
         },
         {
             "name": "kicoephp/src",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moonprism/kicoephp-src.git",
-                "reference": "dcb500a54be79404ded0890a111caa5a9d22cd65"
+                "reference": "7ba49deadc05bcc3dc607d436a1b39f6048e8697"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/dcb500a54be79404ded0890a111caa5a9d22cd65",
-                "reference": "dcb500a54be79404ded0890a111caa5a9d22cd65",
+                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/7ba49deadc05bcc3dc607d436a1b39f6048e8697",
+                "reference": "7ba49deadc05bcc3dc607d436a1b39f6048e8697",
                 "shasum": ""
             },
             "require": {
@@ -441,9 +441,9 @@
             ],
             "description": "a simple web framework.",
             "support": {
-                "source": "https://github.com/moonprism/kicoephp-src/tree/2.2.0"
+                "source": "https://github.com/moonprism/kicoephp-src/tree/2.3.0"
             },
-            "time": "2020-11-22T10:44:05+00:00"
+            "time": "2020-11-28T08:42:44+00:00"
         },
         {
             "name": "psr/http-client",

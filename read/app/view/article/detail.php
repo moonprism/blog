@@ -59,7 +59,7 @@ if (isset($setting['background_image'])) {
 <?php echo trim($article->content); ?> </textarea>
 
     <div class="agreement">
-        parse by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a><br>
+        powered by <a target="_blank" href="https://github.com/moonprism/kicoephp-src">kicoephp</a><br>
     </div>
 
     <div class="comment">
