@@ -3,12 +3,16 @@
 </template>
 
 <script>
+    import casApi from "@/api/cas"
+
     export default {
-        mounted() {
+        async mounted() {
+            const res = await casApi.key()
+            const cas_key = res.data.cas_key
             this.$nextTick(() => {
                 window.location.href = process.env.VUE_APP_READ_ORIGIN+'login?redirect='
                     + encodeURI(this.$route.params.url)+'&'
-                    + 'key=' + process.env.VUE_APP_CAS_KEY
+                    + 'key=' + cas_key
             })
         }
     }

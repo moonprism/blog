@@ -49,6 +49,7 @@ type infoResponse struct {
 	IsRegister	bool	`json:"is_register"`
 	BackgroundImage	string	`json:"background_image"`
 }
+// @Summary deprecated
 // @bolg system info
 // @Tags Auth
 // @Accept  json
@@ -59,6 +60,7 @@ func Info(c echo.Context) error {
 	return nil
 }
 
+// @Summary deprecated
 // @admin regist (jwt)
 // @Tags Auth
 // @Accept  json

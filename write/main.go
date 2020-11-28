@@ -56,8 +56,8 @@ func main() {
 	} else {
 		app.Use(middlewares.Test)
 		app.Use(middleware.Logger())
+		app.GET("/swagger/*", echoSwagger.WrapHandler)
 	}
 
-	app.GET("/swagger/*", echoSwagger.WrapHandler)
 	app.Logger.Fatal(app.Start(":" + config.App.Port))
 }
