@@ -9,7 +9,6 @@ use kicoe\core\Response;
 
 class ArticleController
 {
-
     /**
      * @route get /
      * @route get /article/page/{page}

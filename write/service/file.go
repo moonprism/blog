@@ -11,6 +11,7 @@ import (
 
 func CreateFile(file multipart.File) (fileModel *model.File, err error) {
 	key := utils.RandStringBytes(20) + ".jpg"
+	os.MkdirAll("static", os.ModePerm)
 	filePath := "./static/" + key
 	if err = utils.FileCopy(file, filePath); err != nil {
 		return

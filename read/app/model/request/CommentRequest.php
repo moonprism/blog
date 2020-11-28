@@ -19,7 +19,6 @@ class CommentRequest extends Request
     {
         $this->name = htmlspecialchars($this->name);
         $this->email = htmlspecialchars($this->email);
-        $this->text = htmlspecialchars($this->text);
         if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/', $this->email)) {
             return 'email 格式错误';
         }

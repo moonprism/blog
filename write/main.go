@@ -44,6 +44,7 @@ func main() {
 	if env == "prod" {
 		app.Debug = false
 		app.Use(middleware.Recover())
+		os.MkdirAll("log", os.ModePerm)
 		f, err := os.OpenFile("log/app.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
 		if err != nil {
 			log.Fatalf("error opening file: %v", err)

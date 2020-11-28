@@ -17,4 +17,10 @@ class ApiResponse extends Response
         $this->message = $message;
         return $this;
     }
+
+    public function send()
+    {
+        $this->jsonHeader();
+        parent::send();
+    }
 }
