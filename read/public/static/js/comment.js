@@ -177,7 +177,7 @@ f.addEve(com_inputs[4], 'click', function(){
         f.ajax({
             url: "/comment/up",
             type: "POST",
-            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, comment: comment_text},
+            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, text: comment_text},
             dataType: "json",
             success: function (response, xml) {
                 com_inputs[1].value = '0';
