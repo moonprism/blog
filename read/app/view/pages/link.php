@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>link | kicoe</title>
+    <link rel="shortcut icon" href="/favicon.png">
     <meta name="keywords" content="kicoe,博客,blog,留言板,友情链接">
     <meta name="description" content="<?php echo $config->get('description') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
