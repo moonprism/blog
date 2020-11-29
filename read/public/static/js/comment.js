@@ -131,7 +131,7 @@ function getDateDiff(date){
     }else if(monthC>=1 && monthC<=12){
         return rtf.format(-parseInt(monthC), 'month');
     } else if(weekC>=1){
-        return rtf.format(-parseInt(monthC), 'week');
+        return rtf.format(-parseInt(weekC), 'week');
     } else if(dayC>=1){
         return rtf.format(-parseInt(dayC), 'day');
     } else if(hourC>=1){
