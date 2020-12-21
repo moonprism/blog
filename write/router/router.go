@@ -90,6 +90,11 @@ func Routers() *echo.Echo {
 			commentG.GET("", api.CommentList)
 			commentG.DELETE("/:id", api.DeleteComment)
 		}
+
+		//searchG := v1.Group("/search")
+		//{
+		//	searchG.GET("/code", api.SearchCode)
+		//}
 	}
 
 	return e

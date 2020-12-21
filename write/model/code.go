@@ -24,6 +24,12 @@ type CodeDetail struct {
 	*Code
 }
 
+func FetchCodesByIds(ids []int64) (codes []*Code, err error) {
+	codes = make([]*Code, 0)
+	err = db.MysqlXEngine.Table("code").In("id", ids).Find(&codes)
+	return
+}
+
 func FetchCodeMetas(offset, limit int, whereField interface{}) (codeMetas []*CodeMeta, err error) {
 	codeMetas = make([]*CodeMeta, 0)
 	engine := db.MysqlXEngine.Table("code").Limit(limit, offset).Desc("updated_time")

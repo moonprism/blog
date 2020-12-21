@@ -26,5 +26,9 @@ return [
     'cas' => [
         'login_url' => 'http://127.0.0.1:8080/#/cas/',
         'auth_url' => 'http://192.168.0.108:2999/api/v1/cas/auth'
+    ],
+    'grpc' => [
+        'host' => '172.18.0.1',
+        'port' => 2333
     ]
 ];

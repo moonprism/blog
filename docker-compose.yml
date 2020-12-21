@@ -7,7 +7,7 @@ services:
       - "8081:80"
     volumes:
       - ./read:/var/www/html/read
-      - ./docker/web/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/web/nginx.conf:/etc/nginx/nginx.conf
       - ./log/nginx:/var/log/nginx
     networks:
       - app
@@ -17,6 +17,7 @@ services:
       - "9000:9000"
     volumes:
       - ./read:/var/www/html/read
+    working_dir: /var/www/html/read
     networks:
       - app
   write:
@@ -25,6 +26,7 @@ services:
       - "3000:2999"
     volumes:
       - ./data/write/static:/www/static
+      - ./data/write/riot-index:/www/data/riot-index
       - ./log/write:/www/log
     networks:
       - app
@@ -45,22 +47,5 @@ services:
       - ./log/mysql:/var/log/mysql
     networks:
       - app
-  elastic:
-    build: ./docker/elastic
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      - "ES_JAVA_OPTS=-Xms300m -Xmx300m"
-    volumes:
-      - ./data/elasticsearch:/usr/share/elasticsearch/data
-    networks:
-      - app
-  composer:
-    image: composer
-    tty: true
-    entrypoint: /bin/sh
-    volumes:
-      - ./read:/app
 networks:
   app:

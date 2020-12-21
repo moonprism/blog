@@ -19,6 +19,15 @@ definitions:
       cas_key:
         type: string
     type: object
+  api.codeDetailListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/model.Code'
+        type: array
+      pagination:
+        $ref: '#/definitions/utils.Pagination'
+    type: object
   api.codeListResponse:
     properties:
       data:
@@ -98,6 +107,23 @@ definitions:
           $ref: '#/definitions/model.TagMeta'
         type: array
       title:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  model.Code:
+    properties:
+      content:
+        type: string
+      created_time:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      lang:
+        type: string
+      tags:
         type: string
       updated_time:
         type: string
@@ -811,6 +837,28 @@ paths:
       summary: delete file
       tags:
       - File
+  /search/code:
+    get:
+      parameters:
+      - description: search text
+        in: query
+        name: text
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.codeDetailListResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: search by text
+      tags:
+      - Search
   /setting:
     get:
       parameters:
@@ -832,7 +880,7 @@ paths:
             $ref: '#/definitions/errors.HTTPError'
       summary: get setting
       tags:
-      - setting
+      - Setting
     put:
       parameters:
       - description: Authorization
@@ -859,7 +907,7 @@ paths:
             $ref: '#/definitions/errors.HTTPError'
       summary: set setting
       tags:
-      - setting
+      - Setting
   /tag:
     get:
       parameters:

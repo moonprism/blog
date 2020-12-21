@@ -8,7 +8,7 @@ import (
 )
 
 // @Summary get setting
-// @Tags setting
+// @Tags Setting
 // @Produce  json
 // @param Authorization header string true "Authorization"
 // @Success 200 {object} model.Setting
@@ -20,7 +20,7 @@ func SettingDetail(c echo.Context) error {
 }
 
 // @Summary set setting
-// @Tags setting
+// @Tags Setting
 // @Produce  json
 // @param Authorization header string true "Authorization"
 // @Param settingInfo body model.Setting true " "

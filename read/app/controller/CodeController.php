@@ -3,68 +3,43 @@
 namespace app\controller;
 
 use app\model\response\ViewResponse;
-use Elasticsearch\ClientBuilder;
 use GuzzleHttp\Client;
 use kicoe\core\Request;
 use kicoe\core\Response;
 use kicoe\core\Config;
 use app\model\Code;
+use Protodata\CodeClient;
+use Protodata\CodeDetail;
+use Protodata\SearchRequest;
 
 class CodeController
 {
     /**
      * @route get /code/search/{text}
      * @param Config $config
-     * @param Response $response
      * @param string $text
-     * @return Response
+     * @return array
      */
-    public function search(Config $config, Response $response, string $text)
+    public function search(Config $config, string $text)
     {
-        $client = ClientBuilder::create()
-            ->setSSLVerification(false)
-            ->setHosts(["{$config->get('es.host')}:9200"])
-            ->build();
-
-        $options = [
-            'index' => $config->get('es.code_index'),
-            'type'  => $config->get('es.code_type'),
-            'body' => [
-                'query' => [
-                    'multi_match' => [
-                        'query' => $text,
-                        'fields' => ['description', 'lang', 'tags'],
-                    ]
-                ],
-                'from' => 0,
-                'size' => 10,
-                "_source" => ['description', 'lang', 'tags', 'content'],
-                'highlight' => [
-                    'fields' => [
-                        'description' => new \stdClass(),
-                        'lang' => new \stdClass(),
-                        'tags' => new \stdClass(),
-                    ]
-                ]
-            ]
-        ];
-
+        $client = new CodeClient($config->get('grpc.host').':'.$config->get('grpc.port'), [
+            'credentials' => \Grpc\ChannelCredentials::createInsecure(),
+        ]);
+        $request = new SearchRequest();
+        $request->setText($text);
+        list($response, $status) = $client->Search($request)->wait();
         $res = [];
-        foreach ($client->search($options)['hits']['hits'] as $hit) {
-            $res[] = [
-                    'id' => $hit['_id'],
-                    'lang' => htmlspecialchars($hit['_source']['lang']),
-                    'content' => htmlspecialchars($hit['_source']['content']),
-                ] + $this->mergeEsHitHighlightFields($hit, ['description', 'tags']);
-        }
-        return $response->json($res);
-    }
-
-    private function mergeEsHitHighlightFields(&$hit, $fields)
-    {
-        $res = [];
-        foreach ($fields as $field) {
-            $res[$field] = isset($hit['highlight'][$field]) ? $hit['highlight'][$field][0] : $hit['_source'][$field];
+        if ($status->code === 0) {
+            /** @var CodeDetail $data */
+            foreach ($response->getData() as $data) {
+                $res[] = [
+                    'id' => $data->getId(),
+                    'lang' => $data->getLang(),
+                    'content' => $data->getContent(),
+                    'description' => $data->getTitle(),
+                    'tags' => $data->getTags(),
+                ];
+            }
         }
         return $res;
     }
@@ -74,7 +49,7 @@ class CodeController
      * @route get /page/code/{page}
      * @param ViewResponse $response
      * @param int $page
-     * @return Response
+     * @return ViewResponse
      */
     public function index(ViewResponse $response, int $page = 1)
     {
@@ -94,7 +69,7 @@ class CodeController
      * @param Request $request
      * @param Config $config
      * @param string $lang
-     * @return Response
+     * @return ViewResponse
      */
     public function preview(ViewResponse $response, Request $request, Config $config, $lang = 'md')
     {
@@ -125,7 +100,7 @@ class CodeController
      * @param Request $request
      * @param Response $response
      * @param Config $config
-     * @return Response
+     * @return Response|string
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function login(Request $request, Response $response, Config $config)

@@ -865,13 +865,47 @@ var doc = `{
                 }
             }
         },
+        "/search/code": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Search"
+                ],
+                "summary": "search by text",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "search text",
+                        "name": "text",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.codeDetailListResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/setting": {
             "get": {
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "setting"
+                    "Setting"
                 ],
                 "summary": "get setting",
                 "parameters": [
@@ -903,7 +937,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "setting"
+                    "Setting"
                 ],
                 "summary": "set setting",
                 "parameters": [
@@ -1151,6 +1185,20 @@ var doc = `{
                 }
             }
         },
+        "api.codeDetailListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Code"
+                    }
+                },
+                "pagination": {
+                    "$ref": "#/definitions/utils.Pagination"
+                }
+            }
+        },
         "api.codeListResponse": {
             "type": "object",
             "properties": {
@@ -1272,6 +1320,32 @@ var doc = `{
                     }
                 },
                 "title": {
+                    "type": "string"
+                },
+                "updated_time": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Code": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "created_time": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lang": {
+                    "type": "string"
+                },
+                "tags": {
                     "type": "string"
                 },
                 "updated_time": {
