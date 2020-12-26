@@ -13,5 +13,6 @@ Route::parseAnnotation(\app\controller\ArticleController::class);
 Route::parseAnnotation(\app\controller\CommentController::class);
 Route::parseAnnotation(\app\controller\CodeController::class);
 Route::parseAnnotation(\app\controller\ApiController::class);
+Route::parseAnnotation(\app\controller\GoAccessController::class);
 
 $link->start();

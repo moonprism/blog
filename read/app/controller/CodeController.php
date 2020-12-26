@@ -3,16 +3,14 @@
 namespace app\controller;
 
 use app\model\response\ViewResponse;
-use GuzzleHttp\Client;
 use kicoe\core\Request;
-use kicoe\core\Response;
 use kicoe\core\Config;
 use app\model\Code;
 use Protodata\CodeClient;
 use Protodata\CodeDetail;
 use Protodata\SearchRequest;
 
-class CodeController
+class CodeController extends AuthController
 {
     /**
      * @route get /code/search/{text}
@@ -71,11 +69,10 @@ class CodeController
      * @param string $lang
      * @return ViewResponse
      */
-    public function preview(ViewResponse $response, Request $request, Config $config, $lang = 'md')
+    public function preview(ViewResponse $response, Request $request, $lang = 'md')
     {
-        session_start();
-        if (!isset($_SESSION['user'])) {
-            return $response->redirect($config->get('cas.login_url').urlencode($request->url()));
+        if (!$this->isLogin()) {
+            return $this->login($request, $response);
         }
         $code = new Code();
         $code->lang = htmlspecialchars($lang);
@@ -85,36 +82,5 @@ class CodeController
         $code_list = [$code];
         $next_page = -1;
         return $response->view('pages/code', compact('code_list', 'next_page'));
-    }
-
-    /**
-     * cas login
-     * 本地请求 | -  php前台服务                                  golang后台服务
-     *               | - 通过上面的函数未登录则跳转后台系统
-     *                                                             | - 登录后台拿到key,再次跳转前台到当前函数
-     *               | - 当前函数通过guzzle传递拿到的key去后台系统验证
-     *                                                             | - 后台验证key通过，返回success
-     *               | - 登录成功
-     *  跳转 redirect
-     * @route get /login
-     * @param Request $request
-     * @param Response $response
-     * @param Config $config
-     * @return Response|string
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     */
-    public function login(Request $request, Response $response, Config $config)
-    {
-        $redirect = $request->query('redirect');
-        $key = $request->query('key');
-        $client = new Client();
-        $res = $client->get($config->get('cas.auth_url'), [
-            'query' => ['key' => $key]
-        ]);
-        if ((string)$res->getBody() === 'success') {
-            session_start();
-            $_SESSION['user'] = $key;
-        }
-        return $response->redirect('http://'.$redirect);
     }
 }

@@ -47,5 +47,11 @@ services:
       - ./log/mysql:/var/log/mysql
     networks:
       - app
+  goaccess:
+    build: ./docker/goaccess
+    volumes:
+      - ./log/nginx:/var/log/nginx
+      - ./log/goaccess:/var/log/goaccess
+      - ./read/app/view/goaccess:/www
 networks:
   app:
