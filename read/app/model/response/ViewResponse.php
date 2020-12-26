@@ -39,7 +39,7 @@ class ViewResponse extends Response
         extract((array)$this, EXTR_SKIP);
         extract($this->view_vars, EXTR_SKIP);
 
-        $this->_body = include $view_file;
+        include $view_file;
         parent::send();
     }
 
