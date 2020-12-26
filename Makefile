@@ -1,5 +1,5 @@
 DOCKER=docker
-DOCKER_COMPOSE=sudo docker-compose#.exe
+DOCKER_COMPOSE=docker-compose#.exe
 NPM=npm
 
 help: Makefile
