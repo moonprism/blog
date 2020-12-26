@@ -1,10 +1,10 @@
 import axios from 'axios'
 import store from '@/store'
-import { MessageBox, Message, Loading } from 'element-ui'
+import { MessageBox, Loading } from 'element-ui'
 
 var instance = axios.create({
     baseURL: process.env.VUE_APP_BASE_API,
-    timeout: 3000
+    timeout: 5000
 })
 
 let loading
@@ -68,17 +68,27 @@ instance.interceptors.response.use(
                         store.dispatch('auth/reset').then(() => {
                             location.reload()
                         })
+                    }).catch(() => {
+                        loading.close()
                     })
                     break
                 default:
-                    Message({
-                        message: data.message,
-                        type: 'error',
-                        duration: 3 * 1000
+                    MessageBox.alert(data.message, 'response error:', {
+                        confirmButtonText: '确认',
+                        callback: () => {
+                            loading.close()
+                        }
                     })
                     break
 
             }
+        } else {
+            MessageBox.alert(error, 'server error:', {
+                confirmButtonText: '确认',
+                callback: () => {
+                    loading.close()
+                }
+            })
         }
     }
 )
