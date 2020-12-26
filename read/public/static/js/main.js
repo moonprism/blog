@@ -56,19 +56,7 @@ var up_index = 50;
 var main = $('content');
 up_but.style.display = 'none';
 function up(){
-    var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
     window.scrollTo(0, 0);
-    // var sup = setInterval(function(){
-    //     up_index += 3;
-    //     scrollTop -= up_index;
-    //     if (scrollTop>0) {
-    //         window.scrollTo(0, scrollTop);
-    //     } else {
-    //         window.scrollTo(0, 0);
-    //         up_index = 50;
-    //         clearInterval(sup);
-    //     }   
-    // },20);
 }
 var timer = null;
 window.onscroll = function(){
@@ -123,7 +111,7 @@ f.ajax = function(options) {
         }
     }
     if (options.type == "GET") {
-        xhr.open("GET", options.url + "?" + params, true);
+        xhr.open("GET", options.url, true);
         xhr.send(null);
     } else if (options.type == "POST") {
         xhr.open("POST", options.url, true);
@@ -163,8 +151,3 @@ function bg() {
         })
     })
 }
-// // 4.4
-// if (new Date() < new Date('2020/4/5 00:00:00')) {
-//     // html {filter: grayscale(1)}
-//     document.documentElement.style.filter = 'grayscale(1)'
-// }

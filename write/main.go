@@ -32,7 +32,7 @@ import (
 // @BasePath /api/v1
 var (
 	env string
-    re bool
+	re  bool
 )
 
 func init() {
@@ -48,13 +48,13 @@ func main() {
 	database.InitMysqlEngine()
 	utils.InitRiot()
 
-	if (len(os.Args) > 1 && os.Args[1] == "reindex") {
+	if len(os.Args) > 1 && os.Args[1] == "reindex" {
 		// 重建查询索引
 		reindex()
 		return
-    } else if re {
-        reindex()
-    }
+	} else if re {
+		reindex()
+	}
 
 	// todo check serve health
 
@@ -67,7 +67,7 @@ func main() {
 		app.Debug = false
 		app.Use(middleware.Recover())
 		os.MkdirAll("log", os.ModePerm)
-		f, err := os.OpenFile("log/app.log", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+		f, err := os.OpenFile("log/app.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 		if err != nil {
 			log.Fatalf("error opening file: %v", err)
 		}
@@ -113,10 +113,10 @@ func (s *grpcS) Search(ctx context.Context, request *protodata.SearchRequest) (*
 	result := &protodata.SearchResponse{}
 	for _, code := range codes {
 		result.Data = append(result.Data, &protodata.CodeDetail{
-			Id: code.ID,
-			Title: code.Description,
-			Lang: code.Lang,
-			Tags: code.Tags,
+			Id:      code.ID,
+			Title:   code.Description,
+			Lang:    code.Lang,
+			Tags:    code.Tags,
 			Content: code.Content,
 		})
 	}

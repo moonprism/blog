@@ -13,13 +13,14 @@ use Protodata\SearchRequest;
 class CodeController extends AuthController
 {
     /**
-     * @route get /code/search/{text}
+     * @route get /code/search
      * @param Config $config
      * @param string $text
      * @return array
      */
-    public function search(Config $config, string $text)
+    public function search(Request $request, Config $config)
     {
+        $text = $request->query('text');
         $client = new CodeClient($config->get('grpc.host').':'.$config->get('grpc.port'), [
             'credentials' => \Grpc\ChannelCredentials::createInsecure(),
         ]);

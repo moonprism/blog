@@ -21,7 +21,7 @@ f.addEve($('searchInput'), 'input', () => {
                    loading = f.addNode($('load'), 'div', '', {class: 'loading'});
                 }
                 f.ajax({
-                    url: "/code/search/" + searchText,
+                    url: "/code/search?text=" + searchText,
                     type: "GET",
                     dataType: "json",
                     success: function (response) {
