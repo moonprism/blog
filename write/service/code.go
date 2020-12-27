@@ -1,11 +1,13 @@
 package service
 
 import (
-	"context"
+	"bytes"
+	"strconv"
+	"strings"
+
 	"git.kicoe.com/blog/write/errors"
 	"git.kicoe.com/blog/write/model"
 	"git.kicoe.com/blog/write/utils"
-	"strconv"
 )
 
 func GetPaginateCodes(page, pageSize int) (codes []*model.CodeMeta, pagination *utils.Pagination, err error) {
@@ -36,91 +38,17 @@ func GetCodeDetail(id int64) (codeDetail *model.CodeDetail, err error) {
 	return
 }
 
-// ------------- es　随便写下 ---------------
-type ElasticCode struct {
-	Description	string	`json:"description"`
-	Lang	string	`json:"lang"`
-	Tags	string	`json:"tags"`
-	Content	string	`json:"content"`
+func UpsertDoc(code *model.Code){
+	utils.InsertOrUpdateDoc(strconv.FormatInt(code.ID, 10), strings.Join([]string{
+		code.Description,
+		code.Lang,
+		code.Tags,
+		code.Content,
+	}, "\n"))
 }
 
-const ElasticCodeMapping = `
-{
-	"mappings": {
-		"elastic-code-type": {
-			"properties": {
-				"description": {
-					"type": "text",
-					"analyzer": "ik_max_word",
-					"search_analyzer": "ik_max_word"
-				},
-				"lang": {
-					"type": "keyword"
-				},
-				"tags": {
-					"type": "string",
-					"analyzer": "ik_max_word",
-					"search_analyzer": "ik_max_word"
-				}
-			}
-		}
-	}
-}
-`
-const (
-	ElasticCodeIndex = "elastic-code-index"
-	ElasticCodeType = "elastic-code-type"
-)
-
-func CreateElasticCode(ctx context.Context, esCode *ElasticCode, id string) (err error) {
-	client := utils.NewESClient()
-	exists, err := client.IndexExists(ElasticCodeIndex).Do(ctx)
-	if err != nil {
-		return
-	}
-	if !exists {
-		createIndex, err := client.CreateIndex(ElasticCodeIndex).BodyString(ElasticCodeMapping).Do(ctx)
-		if err != nil {
-			return err
-		}
-		if !createIndex.Acknowledged {
-			// Not acknowledged
-			return errors.NewServiceError(10, "create failed")
-		}
-	}
-	_, err = client.Index().
-		Index(ElasticCodeIndex).
-		Type(ElasticCodeType).
-		Id(id).
-		BodyJson(esCode).
-		Do(ctx)
-	return
-}
-
-func UpdateElasticCode(ctx context.Context, esCode *ElasticCode, id string) (err error) {
-	client := utils.NewESClient()
-	_, err = client.Update().
-		Index(ElasticCodeIndex).
-		Type(ElasticCodeType).
-		Id(id).
-		Doc(map[string]interface{}{
-			"description": esCode.Description,
-			"lang":	esCode.Lang,
-			"content": esCode.Content,
-			"tags": esCode.Tags,
-		}).
-		Do(ctx)
-	return
-}
-
-func DeleteElasticCode(ctx context.Context, id string) (err error) {
-	client := utils.NewESClient()
-	_, err = client.Delete().
-		Index(ElasticCodeIndex).
-		Type(ElasticCodeType).
-		Id(id).
-		Do(ctx)
-	return
+func deleteDoc(id string) {
+	utils.RemoveDoc(id)
 }
 
 type CodeUpdateBody struct {
@@ -142,13 +70,8 @@ func CreateCode(codeUp *CodeUpdateBody) (err error) {
 		err = errors.ServiceResourceNotFoundError
 		return
 	}
+	UpsertDoc(code)
 
-	err = CreateElasticCode(context.Background(), &ElasticCode{
-		Description: code.Description,
-		Lang:        code.Lang,
-		Tags:        code.Tags,
-		Content:     code.Content,
-	}, strconv.FormatInt(code.ID, 10))
 	return
 }
 
@@ -166,13 +89,8 @@ func UpdateCode(id int64, codeUp *CodeUpdateBody) (err error) {
 		err = errors.ServiceResourceNotFoundError
 		return
 	}
+	UpsertDoc(code)
 
-	err = UpdateElasticCode(context.Background(), &ElasticCode{
-		Description: code.Description,
-		Lang:        code.Lang,
-		Tags:        code.Tags,
-		Content:     code.Content,
-	}, strconv.FormatInt(code.ID, 10))
 	return
 }
 
@@ -185,6 +103,29 @@ func DeleteCode(id int64) (err error) {
 		err = errors.ServiceResourceNotFoundError
 		return
 	}
-	err = DeleteElasticCode(context.Background(), strconv.FormatInt(id, 10))
+	deleteDoc(strconv.FormatInt(id, 10))
+
+	return
+}
+
+func SearchDoc(text string, page, limit int) (codes []*model.Code, pagination *utils.Pagination, err error) {
+	ids, result, count := utils.SearchDoc(text, (page-1)*limit, limit)
+	pagination = utils.GeneratePagination(page, limit, int64(count))
+	// codes, err = model.FetchCodesByIds(ids)
+	if err != nil {
+		return
+	}
+	for _, id := range ids {
+		code := &model.Code{ CodeMeta: &model.CodeMeta{} }
+		resultSlice := bytes.SplitN(result[id], []byte{'\n'}, 4)
+		code.ID = id
+		code.Description = string(resultSlice[0])
+		code.Lang = string(resultSlice[1])
+		code.Tags = string(resultSlice[2])
+		if len(resultSlice) > 3 {
+			code.Content = string(resultSlice[3])
+		}
+		codes = append(codes, code)
+	}
 	return
 }

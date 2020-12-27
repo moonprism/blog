@@ -9,12 +9,15 @@
     ],
     "require": {
         "kicoephp/src": "2.3.0",
-        "elasticsearch/elasticsearch": "~5.0",
-        "guzzlehttp/guzzle": "^7.2"
+        "guzzlehttp/guzzle": "^7.2",
+        "grpc/grpc": "^1.34",
+        "google/protobuf": "^3.14"
     },
     "autoload": {
         "psr-4": {
-            "app\\": "app/"
+          "app\\": "app/",
+          "Protodata\\": "app/model/protobuf/Protodata",
+          "GPBMetadata\\": "app/model/protobuf/GPBMetadata"
         }
     }
 }

@@ -78,7 +78,9 @@ if (isset($setting['background_image'])) {
 <script src="//at.alicdn.com/t/font_1747613_gq90x707awu.js"></script>
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script><?php echo $setting['global_css'] ?? ''; ?></script>
+<script>
+<?php echo $setting['global_js'] ?? ''; ?>
+</script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/hopscotch.min.css">
 </body>
 </html>

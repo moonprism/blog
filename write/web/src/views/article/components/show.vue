@@ -8,16 +8,14 @@
     import '@/style/markdown.css'
 
     import hljs from 'highlight.js/lib/highlight'
-    import javascript from 'highlight.js/lib/languages/javascript'
-    import go from 'highlight.js/lib/languages/go'
-    import php from 'highlight.js/lib/languages/php'
-    import shell from 'highlight.js/lib/languages/shell'
-    import json from 'highlight.js/lib/languages/json'
-    hljs.registerLanguage('javascript', javascript)
-    hljs.registerLanguage('go', go)
-    hljs.registerLanguage('php', php)
-    hljs.registerLanguage('shell', shell)
-    hljs.registerLanguage('json', json)
+    /* import javascript from 'highlight.js/lib/languages/javascript' */
+    /* import go from 'highlight.js/lib/languages/go'                 */
+    /* import php from 'highlight.js/lib/languages/php'               */
+    /* import shell from 'highlight.js/lib/languages/shell'           */
+    /* hljs.registerLanguage('javascript', javascript)                */
+    /* hljs.registerLanguage('go', go)                                */
+    /* hljs.registerLanguage('php', php)                              */
+    /* hljs.registerLanguage('shell', shell)                          */
 
     import 'highlight.js/styles/gruvbox-dark.css'
 

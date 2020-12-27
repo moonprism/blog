@@ -9,4 +9,4 @@ RUN echo 'Asia/Shanghai' >/etc/timezone
 
 WORKDIR /www
 
-ENTRYPOINT ["./main", "--env", "prod"]
+ENTRYPOINT ["./main", "--env", "prod", "--reindex"]

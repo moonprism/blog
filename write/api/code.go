@@ -23,7 +23,7 @@ type codeListResponse struct {
 // @Router /code [get]
 func CodeList(c echo.Context) error {
 	var (
-		page int
+		page = 1
 		pageSize = 10
 		err error
 	)
@@ -39,6 +39,38 @@ func CodeList(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, &codeListResponse{
+		Pagination: pagination,
+		Data: codes,
+	})
+}
+
+type codeDetailListResponse struct {
+	Pagination	*utils.Pagination `json:"pagination"`
+	Data		[]*model.Code     `json:"data"`
+}
+// @Summary search by text
+// @Tags Search
+// @Produce  json
+// @Param text query string true "search text"
+// @Success 200 {object} codeDetailListResponse
+// @Failure 403 {object} errors.HTTPError
+// @Router /search/code [get]
+func SearchCode(c echo.Context) error {
+	var (
+		page = 1
+		pageSize = 30
+		err error
+		searchText string
+	)
+
+	searchText = c.QueryParam("text")
+
+	codes, pagination, err := service.SearchDoc(searchText, page, pageSize)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, &codeDetailListResponse{
 		Pagination: pagination,
 		Data: codes,
 	})

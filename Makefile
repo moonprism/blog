@@ -1,7 +1,5 @@
-# TODO 未来会和持续集成整合
-
 DOCKER=docker
-DOCKER_COMPOSE=sudo docker-compose#.exe
+DOCKER_COMPOSE=docker-compose#.exe
 NPM=npm
 
 help: Makefile
@@ -59,15 +57,21 @@ DOCKER_WRITE_DIR=$(DOCKER_DIR)write/
 init:
 	cd $(WRITE_DIR)config && cp test.ini prod.ini
 
+protobuf: $(wildcard *.proto)
+	protoc --go_out=plugins=grpc:write/protodata code.proto
+	#protoc --php_out=read/app/model/protobuf --plugin=protoc-gen-grpc=/usr/games/grpc_php_plugin code.proto
+	protoc --php_out=read/app/model/protobuf  code.proto
+
 # Write
 
 ## build-write: 博客后台容器打包编译
-build-write:
+build-write: #protobuf
 	cd $(WRITE_DIR) && make build
 	cd $(WRITE_DIR) && make build-web
 	mv $(WRITE_DIR)main $(DOCKER_WRITE_DIR)
 	mkdir -p $(DOCKER_WRITE_DIR)config && cp -r $(WRITE_DIR)config/*.ini $(DOCKER_WRITE_DIR)config
 	mkdir -p $(DOCKER_WRITE_DIR)web && cp -r $(WRITE_DIR)web/dist/* $(DOCKER_WRITE_DIR)web
+	mkdir -p $(DOCKER_WRITE_DIR)data && cp -r $(WRITE_DIR)data/*.txt $(DOCKER_WRITE_DIR)data
 	$(DOCKER_COMPOSE) build write
 
 ## sh-write: 进入博客后台容器shell

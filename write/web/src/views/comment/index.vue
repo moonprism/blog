@@ -19,6 +19,10 @@
                                 <el-col :span="4"><span>to:</span></el-col>
                                 <el-col :span="16"><div>{{ scope.row.to_id }}</div></el-col>
                             </el-row>
+                            <el-row :gutter="20" class="exp">
+                                <el-col :span="4"><span>time:</span></el-col>
+                                <el-col :span="16"><div>{{ scope.row.created_time }}</div></el-col>
+                            </el-row>
                         </template>
                     </el-table-column>
                     <el-table-column

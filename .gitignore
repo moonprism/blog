@@ -1,26 +1,25 @@
-/data
-/log
+data
+log
 
 .idea
 
 # docker
 
-/docker/write/main
-/docker/write/write
-/docker/write/web/
-/docker/write/config/
-
-/docker/elastic/*.zip
+docker/write/main
+docker/write/write
+docker/write/web/
+docker/write/config/
 
 # write
 
-/write/static
-/write/main
-/write/log
+write/static
+write/main
+write/log
+write/data
 
 # read
 
-/read/vendor
-/read/node_modules
-/read/package-lock.json
-/read/public/dist
+read/vendor
+read/node_modules
+read/package-lock.json
+read/public/dist

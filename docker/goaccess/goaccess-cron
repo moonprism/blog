@@ -1,0 +1,1 @@
+*/10 * * * * goaccess -d -f /var/log/nginx/read_access.log -p /goaccess.conf -o /www/index.html >> /var/log/goaccess/cron.log 2>&1

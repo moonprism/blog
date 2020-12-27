@@ -93,7 +93,9 @@ if (isset($setting['background_image'])) {
 <?php } ?>
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();bg();</script>
-<script><?php echo $setting['global_css'] ?? ''; ?></script>
+<script>
+<?php echo $setting['global_js'] ?? ''; ?>
+</script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/gruvbox-dark.min.css">
 </body>
 </html>

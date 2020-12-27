@@ -44,5 +44,7 @@ if (isset($setting['background_image'])) {
 <script type="text/javascript">
     $('markdown').innerHTML = replace_sym(markdown($('text').value, main_markdown_config));
 </script>
-<script><?php echo $setting['global_css'] ?? ''; ?></script>
+<script>
+<?php echo $setting['global_js'] ?? ''; ?>
+</script>
 </html>

@@ -1,16 +1,16 @@
 ## kicoe-blog
 
-个人博客系统，PHP + Golang + Vue + ES ...
+个人博客系统，PHP + Golang + Vue ...
 
 #### 目录结构
 
 ```
 | - data      数据
-| - docker    各容器的编译目录
+| - docker    各容器编译目录
 | -  | - mysql
 | -  | -  | - blog.sql
 | - log       日志
-| - read      前端展示 (php)
+| - read      前台展示 (php)
 |    | - app
 |    | -  | - config.php *
 |    | - public
@@ -35,13 +35,30 @@
 
 首先在本地环境安装好 `docker` `docker-compose` `go` `npm`
 
+查看构建帮助:
+
 ```shell
 make help
 ```
 
-查看构建帮助
+如果使用 tmux, 以下脚本可跑开发环境
 
-> 在docker目录下构建镜像的Dockerfile中有些注释代码可帮助解锁网络环境
+```shell
+tmux new-session -s blog-dev -d
+tmux send-keys -t blog-dev 'make up' C-m
+tmux send-keys -t blog-dev 'make read-dev' C-m
+
+tmux split-window -v -t blog-dev
+tmux send-key -t blog-dev 'make write-web-dev' C-m
+
+tmux split-window -h -t blog-dev
+tmux send-keys -t blog-dev 'cd write' C-m
+tmux send-keys -t blog-dev 'make serve-reindex' C-m
+
+tmux a -t blog-dev
+```
+
+> 在 docker 目录下构建镜像的 Dockerfile 中有些注释代码可帮助解锁网络环境
 
 #### 设计
 

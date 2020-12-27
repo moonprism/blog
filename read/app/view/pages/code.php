@@ -55,7 +55,9 @@ if (isset($setting['background_image'])) {
 </body>
 <script src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
-<script><?php echo $setting['global_css'] ?? ''; ?></script>
+<script>
+<?php echo $setting['global_js'] ?? ''; ?>
+</script>
 <script src="//at.alicdn.com/t/font_1747612_imjmg02wt19.js"></script>
 <script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/github-gist.min.css">

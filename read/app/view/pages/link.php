@@ -59,7 +59,9 @@ if (isset($setting['background_image'])) {
 <script type="text/javascript">
     $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
 </script>
-<script><?php echo $setting['global_css'] ?? ''; ?></script>
+<script>
+<?php echo $setting['global_js'] ?? ''; ?>
+</script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 </body>
 </html>

@@ -51,6 +51,10 @@ type (
 	CASConf struct {
 		Key	string	`ini:"key"`
 	}
+
+	RPCConf struct {
+		Port	string	`ini:"port"`
+	}
 )
 
 var (
@@ -61,7 +65,8 @@ var (
 	Oss = new(OssConf)
 	Redis = new(RedisConf)
 	SMTP = new(SMTPConf)
-	CAS = new (CASConf)
+	CAS = new(CASConf)
+	RPC = new(RPCConf)
 	sectionMap = map[string]interface{}{
 		"auth":	Auth,
 		"mysql":	Mysql,
@@ -71,6 +76,7 @@ var (
 		"redis": Redis,
 		"smtp": SMTP,
 		"cas": CAS,
+		"rpc": RPC,
 	}
 
 	once sync.Once
