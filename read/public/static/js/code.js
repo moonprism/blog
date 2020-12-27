@@ -27,7 +27,7 @@ f.addEve($('searchInput'), 'input', () => {
                     success: function (response) {
                         if ($('searchInput').value == '') {
                             $('searchResult').innerHTML = backupHTML;
-                            hoverMarkdown();
+                            hoverMarkdown(true);
                             highlight();
                             return;
                         }
@@ -57,7 +57,7 @@ f.addEve($('searchInput'), 'input', () => {
     } else  {
         // 清空处理
         $('searchResult').innerHTML = backupHTML;
-        hoverMarkdown()
+        hoverMarkdown(true)
         highlight();
         setTimeout(function () {$('load').innerHTML = '';}, 100)
     }
