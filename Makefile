@@ -65,14 +65,14 @@ protobuf: $(wildcard *.proto)
 # Write
 
 ## build-write: 博客后台容器打包编译
-build-write: protobuf
+build-write: #protobuf
 	cd $(WRITE_DIR) && make build
 	cd $(WRITE_DIR) && make build-web
 	mv $(WRITE_DIR)main $(DOCKER_WRITE_DIR)
 	mkdir -p $(DOCKER_WRITE_DIR)config && cp -r $(WRITE_DIR)config/*.ini $(DOCKER_WRITE_DIR)config
 	mkdir -p $(DOCKER_WRITE_DIR)web && cp -r $(WRITE_DIR)web/dist/* $(DOCKER_WRITE_DIR)web
+	mkdir -p $(DOCKER_WRITE_DIR)data && cp -r $(WRITE_DIR)data/*.txt $(DOCKER_WRITE_DIR)data
 	$(DOCKER_COMPOSE) build write
-	sudo mkdir -p $(DOCKER_WRITE_DIR)data && cp -r $(WRITE_DIR)data/dict.txt $(DOCKER_WRITE_DIR)data
 
 ## sh-write: 进入博客后台容器shell
 sh-write:
