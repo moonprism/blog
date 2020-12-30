@@ -9,8 +9,17 @@
     margin: 0 2px;
     font-size: .93em;
 }
-.markdown h1, .markdown h2, .markdown h3, .markdown h4{
+.markdown h1, .markdown h2, .markdown h3{
     color: #555;
+}
+.markdown h4 {
+    color: #777;
+    background-color: #dadada;
+    display: inline-block;
+    padding: 0px 5px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 .markdown h1{
     padding: 7px 7px;
