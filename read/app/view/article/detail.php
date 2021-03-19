@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<?php $setting = \kicoe\core\Link::make(\kicoe\core\Cache::class)->getArr('blog:setting'); ?>
 <?php $config = \kicoe\core\Link::make(\kicoe\core\Config::class) ?>
 <head>
     <meta charset="utf-8">
@@ -33,7 +32,7 @@ if (isset($setting['background_image'])) {
         </ul>
     </div>
 </div>
-<div id="content">
+<div id="content" class="article-block">
     <div class="article">
         <h1> <a><?php echo $article->title ?></a> </h1>
         <div class="mark">

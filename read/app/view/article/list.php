@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<?php $setting = \kicoe\core\Link::make(\kicoe\core\Cache::class)->getArr('blog:setting'); ?>
 <?php $config = \kicoe\core\Link::make(\kicoe\core\Config::class) ?>
 <head>
     <meta charset="utf-8">
@@ -31,7 +30,7 @@ if (isset($setting['background_image'])) {
         </ul>
     </div>
 </div>
-<div id="content">
+<div id="content" class="article-block">
     <?php if($tag){ ?>
         <div style="border-color: <?php echo $tag->color ?>"><div class="tag-banner">当前标签<span class="t" style="background-color: <?php echo $tag->color; ?>"><?php echo $tag->name; ?></span>, 文章数<span class="c"><?php echo $tag->count; ?><span></div></div>
     <?php } ?>
@@ -51,7 +50,7 @@ if (isset($setting['background_image'])) {
                     <?php } ?>
                     <?php foreach($article->getTags() as $t) { ?>
                         <span style="border-color:<?php echo $t->color; ?>;color:<?php echo $t->color; ?>">
-            <a href="/article/tag/<?php echo $t->id ?>" style="<?php if ($tag && $t->id == $tag->id) echo 'background-color: #fff;color: inherit;border-color: inherit'; else echo 'background-color: '.$t->color; ?>" class="tag">
+            <a href="/article/tag/<?php echo $t->id ?>" style="<?php if ($tag && $t->id == $tag->id) echo 'background-color: inherit;color: inherit;border-color: inherit'; else echo 'background-color: '.$t->color; ?>" class="tag">
                     <?php echo $t->name ?>
                 </a>
             </span>

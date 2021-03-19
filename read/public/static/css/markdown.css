@@ -13,25 +13,25 @@
     color: #555;
 }
 .markdown h4 {
-    color: #777;
-    background-color: #dadada;
+    color: #78d71c;
+    border-bottom: 2px solid #78d71c;
     display: inline-block;
     padding: 0px 5px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 4px;
 }
 .markdown h1{
     padding: 7px 7px;
     border-bottom: 1px solid #e7e7e7;
-    margin-bottom: 13px;
+    margin: 15px 0 15px;
     font-size: 19px;
     cursor: pointer;
 }
 .markdown h2{
     padding: 5px 4px;
     font-size: 18px;
-    margin: 10px 0 15px;
+    margin: 20px 0 10px;
     color: #111;
     font-weight: 400;
     position: relative;
@@ -48,7 +48,7 @@
 .markdown h3{
     padding: 4px 12px;
     font-size: 18px;
-    margin: 10px 0 12px;
+    margin: 15px 0 10px;
     color: #222;
     font-weight: 400;
     position: relative;
@@ -93,7 +93,7 @@
 .markdown b {
     padding: 0 2px;
     color: #555;
-    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei Light,SimSun,sans-serif;
+    font-size: 15px;
 }
 .markdown>p{
     font-size: 17px;

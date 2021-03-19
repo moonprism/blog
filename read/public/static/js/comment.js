@@ -149,7 +149,7 @@ function repl(to_id, name){
     com_inputs[1].value = to_id;
     to_name.innerHTML = '';
     f.addNode(to_name, 'span', '@', {style: 'font-family:none;margin-right:3px'});
-    f.addNode(to_name, 'span', name, {style: 'color: #233;'});
+    f.addNode(to_name, 'span', name, {class: 'c-name'});
     com_inputs[4].value = '回复';
     to_name.innerHTML += '<a href="javascript:de_repl()"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></a>';
 }

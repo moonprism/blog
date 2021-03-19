@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<?php $setting = \kicoe\core\Link::make(\kicoe\core\Cache::class)->getArr('blog:setting'); ?>
 <?php $config = \kicoe\core\Link::make(\kicoe\core\Config::class) ?>
 <head>
     <meta charset="utf-8">
@@ -32,7 +31,7 @@ if (isset($setting['background_image'])) {
         </ul>
     </div>
 </div>
-<div id="content" style="min-height: 0">
+<div id="content" class="about-block" style="min-height: 0">
     <div class="markdown" id="markdown"></div>
     <textarea id="text" style="display: none;">
 <?php echo trim($article->content); ?> </textarea>

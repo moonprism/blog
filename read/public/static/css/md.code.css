@@ -1,6 +1,5 @@
 .markdown li, .markdown p {
     margin: 0;
-    font-family: 'Roboto Mono',Helvetica Neue,Helvetica, Microsoft YaHei,SimSun,sans-serif !important;
 }
 .icon-code {
     font-size: 20px;
@@ -35,7 +34,7 @@
     text-align: center;
 }
 .search-result .next a {
-    
+    color: #3d00bf;
 }
 .search-result .search-item {
     margin: 5px 0 22px;
@@ -129,6 +128,9 @@
 .markdown>p {
     font-size: 15px;
     margin: 10px 5px;
+    word-break: break-word;
+    white-space: pre-line;
+    line-height: 120%;
 }
 .markdown a {
     font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;

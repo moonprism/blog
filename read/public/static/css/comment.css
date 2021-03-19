@@ -158,7 +158,7 @@
     margin: 35px auto 0;
     width: 80px;
     text-align: center;
-    color: #a5a5a5
+    color: #3d00bf !important;
 }
 .more_a:hover{
     text-decoration: underline;
@@ -168,6 +168,9 @@
 }
 .more_a::before{
     content: '\00a0'
+}
+.c-name {
+    color: #233;
 }
 @media screen and (max-width: 750px){
     .comment label{
