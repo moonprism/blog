@@ -67,10 +67,11 @@ function render(searchItem) {
     let html = '';
     if (searchItem.lang === 'md') {
         content = searchItem.content.replaceAll('<em>', '').replaceAll('</em>', '');
-        html = markdown(searchItem.content)
+        html = markdown(searchItem.content);
     }
+    var real_lang = searchItem.lang.replaceAll('<em>', '').replaceAll('</em>', '');
     $('searchResult').innerHTML += '<div class="search-item">\n'+
-        '<blockquote><svg class="icon icon-code" aria-hidden="true"><use xlink:href="#icon-'+searchItem.lang+'"></use></svg> '+
+        '<blockquote><svg class="icon icon-code" aria-hidden="true"><use xlink:href="#icon-'+real_lang+'"></use></svg> '+
         searchItem.description+'<span>.'+searchItem.lang+'</span></blockquote>\n'+
         (searchItem.tags?('<div class="tags">'+searchItem.tags+'</div>\n'):'')+
         '<pre class="c-'+searchItem.lang+'"><code class="'+searchItem.lang+'">'+content+

@@ -41,20 +41,24 @@ if (isset($setting['background_image'])) {
         <div id="com_up">
             <input type="hidden" name="art_id" value="<?php echo $article->id ?>" >
             <input type="hidden" name="to_id" value="0" >
-            <label for="name">🙎 Name:</label><input id="name" name="name" autocomplete="off" placeholder="your name." type="text" >
-            <label for="email">✉️ Email:</label><input id="email" name="email" autocomplete="off" placeholder="Email" type="text" >
+            <label for="name"><svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-shiliangzhinengduixiang"></use>
+</svg> Name:</label><input id="name" name="name" autocomplete="off" placeholder="your name." type="text" >
+            <label for="email"><svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-Email"></use>
+</svg> Email:</label><input id="email" name="email" autocomplete="off" placeholder="Email" type="text" >
             <div class="exp-p" id="exp_p" style="display: none;"></div>
             <textarea name="content"></textarea>
             <button id="exp" class="exp">(｡・`ω´･)</button>
             <input type="submit" class="submit" value="留言" >
         </div>
         <div class="com-list" id="com_list"></div>
-        <a href="javascript:comment_list()" class="more_a" id="more_a">更多评论</a>
+        <a href="javascript:comment_list()" class="more_a" id="more_a">all</a>
     </div>
 </div>
 <script type="text/javascript" src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
-<script src="//at.alicdn.com/t/font_1922445_olfo3nycsle.js"></script>
+<script src="//at.alicdn.com/t/font_1922445_kmgc1s3rvap.js"></script>
 <script type="text/javascript">
     $('markdown').innerHTML = markdown($('text').value, main_markdown_config);
 </script>

@@ -2,14 +2,20 @@
 
 #header, 
 #content, 
-.tag:hover, 
 .markdown table tr,
 html, body, input, textarea, select, button {
     background-color: #181a1b !important;
     color: #c8dae2
 }
+.tag:hover {
+    background-color: #181a1b !important;
+}
 .an {
     position: unset;
+}
+
+#header {
+    margin-bottom: -17px;
 }
 
 #header .nav ul li a,
@@ -90,6 +96,10 @@ html, body, input, textarea, select, button {
     border-bottom-color: initial;
     border-left-color: initial;
     border-top-color: rgb(55, 59, 62);
+}
+
+.markdown code {
+    background-color: inherit;
 }
 
 .article-block .markdown pre {
@@ -193,6 +203,16 @@ html, body, input, textarea, select, button {
 .search-item .hljs-number {
     color: rgb(86, 177, 255) !important;
 }
+.search-result .next a {
+    color: rgb(129, 70, 255) !important;
+}
+.more_a {
+    color: rgb(129, 70, 255) !important;
+}
+
+.search-input input:focus, .search-result em {
+    border-color: #ff005c;
+}
 
 /** link **/
 
@@ -232,25 +252,44 @@ html, body, input, textarea, select, button {
 .about-block .markdown h3 {
     color: rgb(243, 88, 138);
 }
+.about-block .markdown blockquote {
+    background-color: #181a1b !important;
+    color: #888;
+}
 .about-block .markdown blockquote.info {
     border-color: rgb(217, 0, 217);
-    background-color: #1d2021;
-}
-.about-block .markdown blockquote {
-    color: rgb(189, 183, 175);
+    background-color: #1d2021 !important;
 }
 
-.about-block .markdown blockquote.ab-icon {
-    background-color: #777;
-    margin-top: 30px;
-    padding: 2px;
-}
+/* .about-block .markdown blockquote.ab-icon { */
+/*     background-color: #777;                 */
+/*     margin-top: 30px;                       */
+/*     padding: 2px;                           */
+/* }                                           */
+
 .about-block .markdown h1 {
-    border-bottom-color: #888;
-    margin: auto 40px;
+    border-bottom-color: #393e40;
+    margin: auto 37px;
+    padding-bottom: 13px;
 }
+
 #up a {
     /* border-color: rgb(134, 125, 110); */
     box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 2px;
     color: rgb(232, 230, 227);
+}
+
+::selection {
+    background: #fff;
+    color: #111
+}
+
+::-moz-selection {
+    background: #fff;
+    color: #111
+}
+
+::-webkit-selection {
+    background: #fff;
+    color: #111
 }

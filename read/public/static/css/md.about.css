@@ -81,6 +81,7 @@
 .markdown blockquote.ab-icon {
     background-color: #fff;
     border-left: none;
+    margin-top: 26px;
 }
 .markdown blockquote.ab-icon p {
     display: flex;
@@ -92,7 +93,8 @@
 .markdown blockquote.ab-icon a:hover {
     transform: translateY(-3px);
 }
-.markdown blockquote.ab-icon img {
+.markdown blockquote.ab-icon svg {
+    font-size: 20px;
     height: 31px;
     width: 31px;
     margin: 0 9px !important;

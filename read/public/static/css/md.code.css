@@ -74,6 +74,7 @@
     font: 15px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
 }
 .search-result em {
+    display: inline-block;
     border-bottom: 2px solid aqua;
     margin: 0 2px;
     padding: 0 4px;
@@ -130,7 +131,7 @@
     margin: 10px 5px;
     word-break: break-word;
     white-space: pre-line;
-    line-height: 120%;
+    line-height: 130%;
 }
 .markdown a {
     font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;

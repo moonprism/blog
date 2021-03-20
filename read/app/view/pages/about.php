@@ -46,4 +46,5 @@ if (isset($setting['background_image'])) {
 <script>
 <?php echo $setting['global_js'] ?? ''; ?>
 </script>
+<script type="text/javascript" src="//at.alicdn.com/t/font_2433958_0geqbql8k41k.js"></script>
 </html>

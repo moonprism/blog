@@ -85,7 +85,7 @@ if (isset($setting['background_image'])) {
 </script>
 <script type="text/javascript" src="/dist/js/comment.min.js"></script>
 <script src="//at.alicdn.com/t/font_1747613_gq90x707awu.js"></script>
-<script src="//at.alicdn.com/t/font_1922445_olfo3nycsle.js"></script>
+<script src="//at.alicdn.com/t/font_1922445_kmgc1s3rvap.js"></script>
 <?php if ($math_flag) { ?>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
