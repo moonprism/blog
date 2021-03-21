@@ -30,6 +30,11 @@ for (var i = exp_i.length - 1; i >= 0; i--) {
 // 显示评论列表
 var more_a = $('more_a');
 function comment_list(total){
+    // 啊这...
+    com_inputs[1].value = '0';
+    com_inputs[4].value = '留言';
+    cancel_repl();
+
     com_list.innerHTML = '';
     let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
     // 加载缓存
@@ -61,7 +66,7 @@ function comment_list(total){
                     responsejson[i]['text'] = replace_sym(responsejson[i]['text']);
                     var src = '';
                     // 邮箱后缀与头像获取
-                    src = 'https://cdn.v2ex.com/gravatar/'+responsejson[i]['email'];
+                    src = 'https://gravatar.cat.net/avatar/'+responsejson[i]['email'];
                     var dateDiff = getDateDiff(responsejson[i]['created_time']);
                     let h = null;
                     if(responsejson[i]['to_id'] === 0){
@@ -71,10 +76,19 @@ function comment_list(total){
                         com_list.insertBefore(com, last_node);
                         last_node = com;
                         f.addNode(com, 'img', '', {src:src});
-                        f.addNode(com, 'a', responsejson[i]['name'], {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")'});
+                        f.addNode(com, 'a', responsejson[i]['name'], {
+                            'class': 'repl_name',
+                            onclick: 'repl(this)',
+                            'data-id': responsejson[i]['id'],
+                        });
                         f.addNode(com, 'span', dateDiff);
                         f.addNode(com, 'p', responsejson[i]['text']);
-                        h = f.addNode(com, 'a', '', {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")','class':'repl'});
+                        h = f.addNode(com, 'a', '', {
+                            onclick: 'repl(this)',
+                            'data-id': responsejson[i]['id'],
+                            'data-name': responsejson[i]['name'],
+                            'class': 'repl',
+                        })
                         index_tree[responsejson[i]['id']] = com;
                     } else {
                         // 二层
@@ -85,10 +99,19 @@ function comment_list(total){
                         }  
                         var com = f.addNode(in_node, 'div', '', {'class':'com'});
                         f.addNode(com, 'img', '', {src:src});
-                        f.addNode(com, 'a', responsejson[i]['name']+' @ '+responsejson[index_id[responsejson[i]['to_id']]]['name'], {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")'});
+                        f.addNode(com, 'a', responsejson[i]['name']+' @ '+responsejson[index_id[responsejson[i]['to_id']]]['name'], {
+                            'class': 'repl_name',
+                            onclick: 'repl(this)',
+                            'data-id': responsejson[i]['id'],
+                        });
                         f.addNode(com, 'span', dateDiff);
                         f.addNode(com, 'p', responsejson[i]['text']);
-                        h = f.addNode(com, 'a', '', {href:'javascript:repl('+responsejson[i]['id']+',"'+responsejson[i]['name']+'")','class':'repl'});
+                        h = f.addNode(com, 'a', '', {
+                            onclick: 'repl(this)',
+                            'data-id': responsejson[i]['id'],
+                            'data-name': responsejson[i]['name'],
+                            'class': 'repl'
+                        })
                         index_tree[responsejson[i]['id']] = in_node;
                     }
                     h.innerHTML = '<svg class="icon" aria-hidden="true"><use xlink:href="#icon-icon-test"></use></svg>';
@@ -144,19 +167,55 @@ function getDateDiff(date){
 }
 comment_list(10);
 // 回复某人
-function repl(to_id, name){
+function repl(el){
+    let data_id = el.getAttribute('data-id');
+
+    $('repl_line').style.visibility = 'visible';
+
+    let names = document.getElementsByClassName('repl_name');
+    let name_el
+    [].slice.call(names).forEach(nel => {
+        if (nel.getAttribute('data-id') == data_id) {
+            // 用留言的用户名位置来定位准确点
+            name_el = nel;
+            name_el.style.color = '#d92027';
+        } else {
+            nel.style.color = '';
+        }
+    });
+    // let index = [].slice.call(repls).findIndex(repl => repl.getAttribute('data-id') == data_id);
+
+    let re_el = $('re');
+    re_el.style['border-color'] = '#e2e2e2';
+
+    console.log(name_el.offsetTop);
+
+    let pos = re_el.offsetLeft + re_el.clientWidth / 2;
+    $('repl_line').style.left = pos+'px';
+
+    let height = name_el.offsetTop - re_el.offsetTop - 28;
+    $('repl_line').style.height = height+'px';
+
     window.scrollTo(0, $('markdown').offsetHeight+100);
-    com_inputs[1].value = to_id;
-    to_name.innerHTML = '';
-    f.addNode(to_name, 'span', '@', {style: 'font-family:none;margin-right:3px'});
-    f.addNode(to_name, 'span', name, {class: 'c-name'});
+    com_inputs[1].value = data_id;
+    // to_name.innerHTML = '';
+    // f.addNode(to_name, 'span', '@', {style: 'font-family:none;margin-right:3px'});
+    // f.addNode(to_name, 'span', name, {class: 'c-name'});
     com_inputs[4].value = '回复';
-    to_name.innerHTML += '<a href="javascript:de_repl()"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></a>';
+    // to_name.innerHTML += '<a href="javascript:de_repl()"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></a>';
 }
-function de_repl(){
+function cancel_repl(){
+    $('repl_line').style.visibility = 'hidden';
+    $('repl_line').style.height = '0px';
     com_inputs[1].value = "0";
     com_inputs[4].value = '留言';
-    to_name.innerHTML = '';
+    let names = document.getElementsByClassName('repl_name');
+    [].slice.call(names).forEach(nel => {
+        nel.style.color = '';
+    });
+    let re_el = $('re');
+    re_el.style['border-color'] = '';
+    // to_name.innerHTML = '';
 }
 f.addEve(com_inputs[4], 'click', function(){
     if (com_inputs[2].value.length > 10 || com_inputs[2].value.length === 0) {
@@ -185,6 +244,7 @@ f.addEve(com_inputs[4], 'click', function(){
                 to_name.innerHTML = '';
                 com_list.innerHTML = '';
                 comment_list(10);
+                cancel_repl();
             },
             fail: function (status) {
                 loading.parentNode.removeChild(loading);

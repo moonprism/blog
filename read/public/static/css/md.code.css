@@ -126,12 +126,15 @@
     padding: 10px 12px;
     display: none;
 }
-.markdown>p {
+.markdown > p {
     font-size: 15px;
-    margin: 10px 5px;
+    margin: 2px 5px 10px;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
     word-break: break-word;
-    white-space: pre-line;
-    line-height: 130%;
+    line-height: 135%;
 }
 .markdown a {
     font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
@@ -174,7 +177,7 @@
 .markdown ul li,.markdown ol li{
     margin-bottom: 7px;
     padding-left: 5px;
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
 }
 .markdown ul li{
     list-style-type: disc !important;

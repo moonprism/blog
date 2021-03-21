@@ -233,7 +233,7 @@ html, body, input, textarea, select, button {
 .link-block .markdown h3 {
     color: rgb(157, 148, 136);
 }
-.link-block a {
+.link-block .repl_name {
     outline-color: initial;
     color: rgb(54, 205, 255);
     text-decoration-color: initial;

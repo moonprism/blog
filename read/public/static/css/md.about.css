@@ -54,6 +54,21 @@
 .markdown h2 i, .markdown h3 i {
     font-size: 19px;
 }
+/* 新标题 */
+.markdown h4 {
+    display: block;
+    position: relative;
+    padding: 5px 4px;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    color: #111;
+    padding-left: 12px;
+    font-size: 18px;
+    border: none;
+    font-weight: normal;
+}
+.markdown h4::before {
+}
 .markdown>p {
     margin: 2px 28px;
 }
@@ -108,4 +123,7 @@
     font-weight: 100;
     font-size: 17px;
     margin-left: 3px;
+}
+a {
+    color: #16c79a;
 }

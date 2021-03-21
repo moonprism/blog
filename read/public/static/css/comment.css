@@ -53,7 +53,7 @@
     transition: border-color .3s;
 }
 .comment #name:focus, .comment #email:focus, .comment textarea:focus {
-    border-color: aqua;
+    border-color: #fbaccc;
 }
 .comment .exp-p{
     width: 44%;
@@ -131,7 +131,7 @@
 .com a{
     margin-top: 4px;
     height: 18px;
-    display: block;
+    display: inline-block;
     letter-spacing: 1px;
     font-size: 14px;
     color: #393939
@@ -171,6 +171,21 @@
 }
 .c-name {
     color: #233;
+}
+.repl_line {
+    width: 1px;
+    height: 1px;
+    background: #e2e2e2;
+    position: absolute;
+    visibility: hidden;
+    transition: height 0.5s;
+    -webkit-transition: height 0.5s;
+}
+.repl_line a {
+    position: absolute;
+    bottom: -18px;
+    right: -9px;
+    color: #ff005c;
 }
 @media screen and (max-width: 750px){
     .comment label{

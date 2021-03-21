@@ -70,8 +70,16 @@ class CommentController
         foreach ($comments as $comment) {
             if (!in_array($comment->to_id, $id_list)) {
                 $id_list[] = $comment->to_id;
-                if ($reply_comment = Comment::fetchById($comment->to_id)) {
+                $to_id = $comment->to_id;
+                // 啊这...
+                hoho:
+                if ($reply_comment = Comment::fetchById($to_id)) {
                     $comments[] = $reply_comment;
+                    if ($to_id = $reply_comment->to_id) {
+                        if (array_search($to_id, array_column($comments, 'id')) === false) {
+                            goto hoho;
+                        }
+                    }
                 }
             }
         }

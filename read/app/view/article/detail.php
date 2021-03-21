@@ -72,10 +72,13 @@ if (isset($setting['background_image'])) {
             <div class="exp-p" id="exp_p" style="display: none;"></div>
             <textarea name="content"></textarea>
             <button id="exp" class="exp">(｡・`ω´･)</button>
-            <input type="submit" class="submit" value="留言" >
+            <input type="submit" class="submit" value="留言" id="re">
+            <div id="repl_line" class='repl_line'><a onclick="cancel_repl()"><svg class="icon" aria-hidden="true">
+    <use xlink:href="#icon-close"></use>
+</svg></a></div>
         </div>
         <div class="com-list" id="com_list"></div>
-        <a href="javascript:comment_list()" class="more_a" id="more_a">更多评论</a>
+        <a href="javascript:comment_list()" class="more_a" id="more_a">all</a>
     </div>
 </div>
 <script type="text/javascript" src="/dist/js/main.min.js"></script>

@@ -18,17 +18,12 @@ return [
         'view' => getcwd().'/../app/view/',
     ],
     'description' => 'aqua',
-    'es' => [
-        'host' => 'elastic',
-        'code_index' => 'elastic-code-index',
-        'code_type' => 'elastic-code-type'
-    ],
     'cas' => [
         'login_url' => 'http://127.0.0.1:8080/#/cas/',
         'auth_url' => 'http://192.168.80.1:2999/api/v1/cas/auth'
     ],
     'grpc' => [
-        'host' => '192.168.80.1',
+        'host' => '172.22.0.1',
         'port' => 2333
     ]
 ];

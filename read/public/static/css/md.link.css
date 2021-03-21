@@ -24,12 +24,12 @@
 }
 .markdown h3 {
     font-size:17px;
-    padding: 5px 20px 0;
+    padding: 5px 18px 0;
     color: #777;
     margin: 0;
 }
 .markdown h3:before {
-    left: -4px;
+    content: '';
 }
 .markdown blockquote {
     font-size: 1.24em;
@@ -97,7 +97,6 @@
 .comment .exp {
     margin-left: 77% !important;
 }
-.repl{display:none !important}
 .comment{margin:20px 0 40px !important}
 .com-list{width: 100% !important}
 #com_up {
@@ -107,7 +106,7 @@
     color: #000;
 }
 .com a::after {
-    content: '💬 ';
+    content: '';
 }
 .comment label {
     width: 14% !important;
