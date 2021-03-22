@@ -66,7 +66,7 @@ function comment_list(total){
                     responsejson[i]['text'] = replace_sym(responsejson[i]['text']);
                     var src = '';
                     // 邮箱后缀与头像获取
-                    src = 'https://gravatar.cat.net/avatar/'+responsejson[i]['email'];
+                    src = 'https://cdn.v2ex.com/gravatar/'+responsejson[i]['email'];
                     var dateDiff = getDateDiff(responsejson[i]['created_time']);
                     let h = null;
                     if(responsejson[i]['to_id'] === 0){
@@ -226,10 +226,11 @@ f.addEve(com_inputs[4], 'click', function(){
         alert('没什么想说的吗 ,,Ծ‸Ծ,,');
     } else {
         let comment_text = com_text.value;
-        com_text.value = '';
         com_list.innerHTML = '';
         let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
         $('more_a').style.display = 'none';
+        $('repl_line').style.visibility = 'hidden';
+        com_inputs[4].value = '留言';
         f.ajax({
             url: "/comment/up",
             type: "POST",
@@ -237,7 +238,6 @@ f.addEve(com_inputs[4], 'click', function(){
             dataType: "json",
             success: function (response, xml) {
                 com_inputs[1].value = '0';
-                com_inputs[4].value = '留言';
                 com_inputs[2].value = '';
                 com_inputs[3].value = '';
                 com_text.value = '';
