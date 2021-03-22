@@ -15,7 +15,7 @@ var (
 
 func InitMysqlEngine() {
 	once.Do(func() {
-		dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&loc=Local",
+		dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&loc=Local",
 			config.Mysql.User,
 			config.Mysql.Password,
 			config.Mysql.Host,
