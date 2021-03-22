@@ -74,6 +74,9 @@ class CommentController
                 // 啊这...
                 hoho:
                 if ($reply_comment = Comment::fetchById($to_id)) {
+                    if (array_search($to_id, array_column($comments, 'id')) !== false) {
+                        continue;
+                    }
                     $comments[] = $reply_comment;
                     if ($to_id = $reply_comment->to_id) {
                         if (array_search($to_id, array_column($comments, 'id')) === false) {

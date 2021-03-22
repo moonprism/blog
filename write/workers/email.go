@@ -60,9 +60,13 @@ func RunSendEmail() {
 		if err != nil || !has {
 			lo.Printf("select article id:%d, %v\n", comment.ArtID, err)
 		}
+		link := "https://www.kicoe.com/article/id/"+strconv.FormatInt(article.ID, 10);
+		if article.ID == 1 {
+			link = "https://www.kicoe.com/page/link/#com_list";
+		}
 		data := CommentMessage {
 			Name: messageComment.Name,
-			ArtLink: "https://www.kicoe.com/article/id/"+strconv.FormatInt(article.ID, 10),
+			ArtLink: link,
 			ArtTitle: article.Title,
 			Text: comment.Text,
 			ReplyName: comment.Name,
