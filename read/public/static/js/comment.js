@@ -218,38 +218,34 @@ function cancel_repl(){
     // to_name.innerHTML = '';
 }
 f.addEve(com_inputs[4], 'click', function(){
-    if (com_inputs[2].value.length > 10 || com_inputs[2].value.length === 0) {
-        alert('昵称长度  (´・ω・)ﾉ');
-    } else if(com_inputs[3].value.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/ ) === null){
-        alert('邮箱格式  ( ・◇・)？');
-    }else if(com_text.value === ''){
-        alert('没什么想说的吗 ,,Ծ‸Ծ,,');
-    } else {
-        let comment_text = com_text.value;
-        com_list.innerHTML = '';
-        let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
-        $('more_a').style.display = 'none';
-        $('repl_line').style.visibility = 'hidden';
-        com_inputs[4].value = '留言';
-        f.ajax({
-            url: "/comment/up",
-            type: "POST",
-            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, text: comment_text},
-            dataType: "json",
-            success: function (response, xml) {
+    let comment_text = com_text.value;
+    com_list.innerHTML = '';
+    let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
+    $('more_a').style.display = 'none';
+    let to_id = com_inputs[1].value;
+    cancel_repl();
+    f.ajax({
+        url: "/comment/up",
+        type: "POST",
+        data: { art_id: com_inputs[0].value, to_id, name: com_inputs[2].value, email: com_inputs[3].value, text: comment_text},
+        dataType: "json",
+        success: function (response, xml) {
+            var responsejson = JSON.parse(response);
+            if (responsejson.code !== 200) {
+                alert(responsejson.message)
+            } else {
                 com_inputs[1].value = '0';
                 com_inputs[2].value = '';
                 com_inputs[3].value = '';
                 com_text.value = '';
-                to_name.innerHTML = '';
-                com_list.innerHTML = '';
-                comment_list(10);
-                cancel_repl();
-            },
-            fail: function (status) {
-                loading.parentNode.removeChild(loading);
-                alert(status);
+                // to_name.innerHTML = '';
             }
-        });
-    }
+            com_list.innerHTML = '';
+            comment_list(10);
+        },
+        fail: function (status) {
+            loading.parentNode.removeChild(loading);
+            alert(status);
+        }
+    });
 });
