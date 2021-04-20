@@ -12,7 +12,10 @@
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/md.about.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Noto+Sans+SC&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <style><?php echo $setting['global_css'] ?? '' ?></style>
+    <style>
+<?php echo $setting['global_css'] ?? '' ?>
+
+    </style>
 </head>
 <body>
 <div class="an" style=" <?php
@@ -34,9 +37,10 @@ if (isset($setting['background_image'])) {
 <div id="content" class="about-block" style="min-height: 0">
     <div class="markdown" id="markdown"></div>
     <textarea id="text" style="display: none;">
-<?php echo trim($article->content); ?> </textarea>
+<?php echo trim($article->content); ?>
+
+    </textarea>
 </div>
-<br>
 </body>
 <script src="/dist/js/main.min.js"></script>
 <script type="text/javascript" src="/dist/js/markdown.min.js"></script>
@@ -45,6 +49,7 @@ if (isset($setting['background_image'])) {
 </script>
 <script>
 <?php echo $setting['global_js'] ?? ''; ?>
+
 </script>
 <script type="text/javascript" src="//at.alicdn.com/t/font_2433958_d446yfk76h8.js"></script>
 </html>

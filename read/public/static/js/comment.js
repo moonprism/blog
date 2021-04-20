@@ -4,7 +4,7 @@ var to_name = $('to_name');
 var com_list = $('com_list');
 
 //表情
-var exp_i = ["(泣)", "(汗)", "(笑)", "_(:3」∠)_", "（#-_-)┯━┯", "(╯°口°)╯(┴—┴", "ヽ(`Д´)ﾉ", "(￣ε(#￣) Σ", "（￣へ￣）", "(-_-#)", "(´･_･`)", "ε=ε=(ノ≧∇≦)ノ", "(●￣(ｴ)￣●)", "(｡･ω･｡)", "(^・ω・^ )", "（/TДT)/", "(´；ω；`)", "Σ( ￣□￣||)", "Σ(ﾟдﾟ;)", "(ﾟДﾟ≡ﾟдﾟ)!?", "(\"▔□▔)/", "(;¬_¬)", "(>_>)", "(<_<)", "→_→", "←_←", "( ´_ゝ｀)", "╮(￣▽￣)╭", "(￣3￣)", "(°∀°)ﾉ", "(･∀･)", "(〜￣△￣)〜", "(｀・ω・´)", "(=・ω・=)", "（￣▽￣）", "(｡・`ω´･)"];
+var exp_i = ["(泣)", "(汗)", "(笑)", "∑(O_O；)", "(T_T)", "(๑❛ᴗ❛๑)", "^_^", "(๑＞ ＜)☆", "(*゜ロ゜)ノ ", "(・ω< )★", "_(:3」∠)_", "(｡･ω･｡)", "(^・ω・^ )", "( ˃᷄˶˶̫˶˂᷅ )", "(๑Ő௰Ő๑)", "(ﾟДﾟ≡ﾟдﾟ)!?", "(\"▔□▔)/", "(๑˙ー˙๑)", "（︶︿︶）", "✧( ु•⌄• )◞◟( •⌄• ू )✧", "ฅ^•ﻌ•^ฅ", "╮(｡>口<｡)╭", "<(｀^´)>", "╮(￣▽￣)╭", "๑乛◡乛๑", "(⁄ ⁄•⁄ω⁄•⁄ ⁄)", "Ծ‸Ծ", "(๑¯◡¯๑)", "(｀・ω・´)", "(=・ω・=)", "（￣▽￣）", "(｡・`ω´･)"];
 // 表情绑定
 var exp = $('exp');
 var exp_p = $('exp_p');
@@ -66,7 +66,7 @@ function comment_list(total){
                     responsejson[i]['text'] = replace_sym(responsejson[i]['text']);
                     var src = '';
                     // 邮箱后缀与头像获取
-                    src = 'https://cdn.v2ex.com/gravatar/'+responsejson[i]['email'];
+                    src = 'https://gravatar.cat.net/avatar/'+responsejson[i]['email'];
                     var dateDiff = getDateDiff(responsejson[i]['created_time']);
                     let h = null;
                     if(responsejson[i]['to_id'] === 0){
@@ -218,38 +218,34 @@ function cancel_repl(){
     // to_name.innerHTML = '';
 }
 f.addEve(com_inputs[4], 'click', function(){
-    if (com_inputs[2].value.length > 10 || com_inputs[2].value.length === 0) {
-        alert('昵称长度  (´・ω・)ﾉ');
-    } else if(com_inputs[3].value.match(/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/ ) === null){
-        alert('邮箱格式  ( ・◇・)？');
-    }else if(com_text.value === ''){
-        alert('没什么想说的吗 ,,Ծ‸Ծ,,');
-    } else {
-        let comment_text = com_text.value;
-        com_list.innerHTML = '';
-        let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
-        $('more_a').style.display = 'none';
-        $('repl_line').style.visibility = 'hidden';
-        com_inputs[4].value = '留言';
-        f.ajax({
-            url: "/comment/up",
-            type: "POST",
-            data: { art_id: com_inputs[0].value, to_id: com_inputs[1].value, name: com_inputs[2].value, email: com_inputs[3].value, text: comment_text},
-            dataType: "json",
-            success: function (response, xml) {
+    let comment_text = com_text.value;
+    com_list.innerHTML = '';
+    let loading = f.addNode(com_list, 'div', '', {class: 'loading'});
+    $('more_a').style.display = 'none';
+    let to_id = com_inputs[1].value;
+    cancel_repl();
+    f.ajax({
+        url: "/comment/up",
+        type: "POST",
+        data: { art_id: com_inputs[0].value, to_id, name: com_inputs[2].value, email: com_inputs[3].value, text: comment_text},
+        dataType: "json",
+        success: function (response, xml) {
+            var responsejson = JSON.parse(response);
+            if (responsejson.code !== 200) {
+                alert(responsejson.message)
+            } else {
                 com_inputs[1].value = '0';
                 com_inputs[2].value = '';
                 com_inputs[3].value = '';
                 com_text.value = '';
-                to_name.innerHTML = '';
-                com_list.innerHTML = '';
-                comment_list(10);
-                cancel_repl();
-            },
-            fail: function (status) {
-                loading.parentNode.removeChild(loading);
-                alert(status);
+                // to_name.innerHTML = '';
             }
-        });
-    }
+            com_list.innerHTML = '';
+            comment_list(10);
+        },
+        fail: function (status) {
+            loading.parentNode.removeChild(loading);
+            alert(status);
+        }
+    });
 });

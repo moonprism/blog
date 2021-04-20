@@ -12,7 +12,10 @@
     <link rel="stylesheet" type="text/css" href="/dist/css/markdown.min.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/comment.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Noto+Sans+SC&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <style><?php echo $setting['global_css'] ?? '' ?></style>
+    <style>
+<?php echo $setting['global_css'] ?? '' ?>
+
+    </style>
 </head>
 <body>
 <div class="an" style=" <?php
@@ -34,34 +37,33 @@ if (isset($setting['background_image'])) {
 </div>
 <div id="content" class="article-block">
     <div class="article">
-        <h1> <a><?php echo $article->title ?></a> </h1>
+        <h1><a><?php echo $article->title ?></a></h1>
         <div class="mark">
-            <?php $math_flag = false ?>
+<?php $math_flag = false ?>
             <svg class="icon i-date" aria-hidden="true">
                 <use xlink:href="#icondate"></use>
             </svg>
             <?php echo date('Y.m.d D', strtotime($article->created_time)) ?>
-            <?php if($article->getTags()){ ?>
+
+<?php if($article->getTags()){ ?>
             <svg class="icon i-tag" aria-hidden="true">
                 <use xlink:href="#icontag"></use>
             </svg>
-            <?php } ?>
-            <?php foreach($article->getTags() as $tag){ ?>
-                <span style="border-color:<?php echo $tag->color ?? 'none'; ?>;color:<?php echo $tag->color ?? 'none'; ?>">
-                <?php if ($math_flag != true) $math_flag = (strtolower($tag->name) === 'math'); ?>
-                    <a href="/article/tag/<?php echo $tag->id ?>" style="background-color: <?php echo $tag->color ?>" class="tag"><?php echo $tag->name ?></a>
-                </span>
-            <?php } ?>
+<?php } ?>
+<?php foreach($article->getTags() as $tag){ ?>
+           <span style="border-color:<?php echo $tag->color ?? 'none'; ?>;color:<?php echo $tag->color ?? 'none'; ?>">
+<?php if ($math_flag != true) $math_flag = (strtolower($tag->name) === 'math'); ?>
+               <a href="/article/tag/<?php echo $tag->id ?>" style="background-color: <?php echo $tag->color ?>" class="tag"><?php echo $tag->name ?></a>
+           </span>
+<?php } ?>
         </div>
     </div>
     <div class="markdown" id="markdown"></div>
     <textarea id="text" style="display: none;">
-<?php echo trim($article->content); ?> </textarea>
+<?php echo trim($article->content); ?>
 
-    <div class="agreement">
-        powered by <a target="_blank" href="https://github.com/moonprism/kicoephp-src">kicoephp</a><br>
-    </div>
-
+    </textarea>
+    <div class="agreement" id="agreement">powered by <a target="_blank" href="https://github.com/moonprism/kicoephp-src">kicoephp</a><br></div>
     <div class="comment">
         <span id="to_name"></span>
         <div id="com_up">
@@ -73,9 +75,11 @@ if (isset($setting['background_image'])) {
             <textarea name="content"></textarea>
             <button id="exp" class="exp">(｡・`ω´･)</button>
             <input type="submit" class="submit" value="留言" id="re">
-            <div id="repl_line" class='repl_line'><a onclick="cancel_repl()"><svg class="icon" aria-hidden="true">
-    <use xlink:href="#icon-close"></use>
-</svg></a></div>
+            <div id="repl_line" class='repl_line'>
+                <a onclick="cancel_repl()">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg>
+                </a>
+            </div>
         </div>
         <div class="com-list" id="com_list"></div>
         <a href="javascript:comment_list()" class="more_a" id="more_a">all</a>
@@ -97,6 +101,7 @@ if (isset($setting['background_image'])) {
 <script>hljs.initHighlightingOnLoad();bg();</script>
 <script>
 <?php echo $setting['global_js'] ?? ''; ?>
+
 </script>
 <link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/gruvbox-dark.min.css">
 </body>

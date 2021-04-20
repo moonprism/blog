@@ -19,7 +19,8 @@ class CommentController
     public function up(CommentRequest $request, ApiResponse $response)
     {
         if ($err = $request->filter()) {
-            return $response->setBodyStatus(422, 'ValidationError: '.$err);
+            // $response->status(422); 以前的js写不太行, 还是通过200返回吧
+            return $response->setBodyStatus(422, $err);
         }
         $comment = Comment::createByOther($request);
         $comment->save();

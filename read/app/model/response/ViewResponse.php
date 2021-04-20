@@ -42,7 +42,7 @@ class ViewResponse extends Response
         // 啊这...
         if (preg_match('/\*\* auto \*\*/', $this->view_vars['setting']['global_css'])) {
             $hour = intval(date('H')); 
-            if ($hour <= 9 || $hour >= 21) {
+            if ($hour <= 8 || $hour >= 23) {
                 $this->view_vars['setting']['global_css'] .= '</style>
                     <link rel="stylesheet" type="text/css" href="/dist/css/dark.min.css">
                     <style>#content { margin-bottom: 40px !important;}';

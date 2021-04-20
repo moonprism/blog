@@ -27,6 +27,7 @@
     display: inline-block;
     width: 10%;
     font-size: 15px;
+    margin-left: 3px;
 }
 .comment #name{
     width: 20%;
@@ -56,21 +57,22 @@
     border-color: #fbaccc;
 }
 .comment .exp-p{
-    width: 44%;
-    height: 100px;
+    width: 665px;
+    height: 113px;
     position: absolute;
     padding: 14px 6px 7px;
     background-color: rgba(255,255,255,0.9);
 }
 .comment .exp-p a{
     margin: 4px 6px;
-    padding: 1px;
     display: inline-block;
-    color: #888;
-    font-family: google
+    color: #393232;
+    font-family: 'Roboto Mono';
+    font-size: 13px;
+    line-height: 20px;
 }
 .comment .exp-p a:hover{
-    color: #333;
+    color: #16c79a;
     font-weight: 400;
 }
 .comment textarea{
@@ -78,11 +80,12 @@
     height: 111px;
     margin-top: 10px;
     padding: 5px 11px;
-    color: #555;
+    color: #444;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 3px;
-    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    font-family: 'Roboto Mono';
 }
 .comment .submit , .comment .exp{
     font-family: "Microsoft YaHei Light";

@@ -170,14 +170,14 @@
 }
 .markdown ul, .markdown ol{
     margin: 13px 0;
-    font-size: 16px;
-    color: #2b2c25;
+    font-size: 15px;
+    color: #494949;
     padding-left: 1.7em;
 }
 .markdown ul li,.markdown ol li{
     margin-bottom: 7px;
     padding-left: 5px;
-    font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
+    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif;
 }
 .markdown ul li{
     list-style-type: disc !important;
