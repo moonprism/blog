@@ -66,7 +66,7 @@ function comment_list(total){
                     responsejson[i]['text'] = replace_sym(responsejson[i]['text']);
                     var src = '';
                     // 邮箱后缀与头像获取
-                    src = 'https://cdn.v2ex.com/gravatar/'+responsejson[i]['email'];
+                    src = 'https://gravatar.cat.net/avatar/'+responsejson[i]['email'];
                     var dateDiff = getDateDiff(responsejson[i]['created_time']);
                     let h = null;
                     if(responsejson[i]['to_id'] === 0){
