@@ -2,6 +2,7 @@ var backupHTML = $('searchResult').innerHTML;
 var searchResult = {};
 f.addEve($('searchInput'), 'input', () => {
     let searchText = $('searchInput').value;
+    window.history.pushState({}, 0, "#!/"+searchText);
     $('searchResult').innerHTML = '';
     if (searchText) {
         if (searchResult[searchText]) {
@@ -57,6 +58,7 @@ f.addEve($('searchInput'), 'input', () => {
     } else  {
         // 清空处理
         $('searchResult').innerHTML = backupHTML;
+        window.history.pushState({}, 0, "/page/code/");
         hoverMarkdown(true)
         highlight();
         setTimeout(function () {$('load').innerHTML = '';}, 100)
@@ -124,3 +126,10 @@ function hoverMarkdown(flash = false) {
 }
 hoverMarkdown(true);
 highlight();
+
+let lo = window.location.href.split("#!/");
+if (lo.length > 1) {
+    $('searchInput').value = decodeURI(lo[1]);
+    let event = new InputEvent('input');
+    $('searchInput').dispatchEvent(event);
+}
