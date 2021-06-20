@@ -23,3 +23,4 @@ read/vendor
 read/node_modules
 read/package-lock.json
 read/public/dist
+read/app/view/dist

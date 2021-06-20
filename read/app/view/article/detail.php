@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
-<?php $config = \kicoe\core\Link::make(\kicoe\core\Config::class) ?>
+<?php
+/** @var \app\model\Article $article */
+$article;
+/** @var \kicoe\core\Config $config */
+$config = \kicoe\core\Link::make(\kicoe\core\Config::class);
+?>
 <head>
     <meta charset="utf-8">
     <title><?php echo $article->title;?></title>

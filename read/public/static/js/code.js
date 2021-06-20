@@ -21,6 +21,18 @@ f.addEve($('searchInput'), 'input', () => {
                 if ($('load').innerHTML === '') {
                    loading = f.addNode($('load'), 'div', '', {class: 'loading'});
                 }
+                var myHeaders = new Headers();
+                myHeaders.append("kicoe-fetch-type", "json");
+
+                var myInit = { method: 'GET',
+                    headers: myHeaders,
+                    mode: 'cors',
+                    cache: 'default' };
+
+                var myRequest = new Request("/code/search?text=" + searchText, myInit);
+                fetch(myRequest).then();
+                return;
+
                 f.ajax({
                     url: "/code/search?text=" + searchText,
                     type: "GET",

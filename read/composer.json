@@ -8,10 +8,12 @@
         }
     ],
     "require": {
-        "kicoephp/src": "2.3.0",
+        "kicoephp/src": "2.3.1",
         "guzzlehttp/guzzle": "^7.2",
         "grpc/grpc": "^1.34",
-        "google/protobuf": "^3.14"
+        "google/protobuf": "^3.14",
+        "filp/whoops": "^2.13",
+        "monolog/monolog": "^2.2"
     },
     "autoload": {
         "psr-4": {

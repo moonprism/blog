@@ -69,11 +69,14 @@ class ArticleController
     public function detail(ViewResponse $response, int $id)
     {
         $article = Article::fetchById($id);
-        if ($article->status == Article::STATUS_DRAFT) {
+        if (!$article) {
+            throw new \Exception('文章不存在', 404);
+        } else if ($article->status == Article::STATUS_DRAFT) {
             $article->title = '*****';
             $article->content = ">[danger] 这篇文章还没发布呢 ~~";
+        } else {
+            Article::setTagsByList([$article]);
         }
-        Article::setTagsByList([$article]);
 
         return $response->view('article/detail', compact('article'));
     }

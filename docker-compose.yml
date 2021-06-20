@@ -17,6 +17,7 @@ services:
       - "9000:9000"
     volumes:
       - ./read:/var/www/html/read
+      - ./log/read:/var/www/html/log
     working_dir: /var/www/html/read
     networks:
       - app
