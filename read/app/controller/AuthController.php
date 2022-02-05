@@ -10,26 +10,18 @@ use kicoe\core\Response;
 
 /**
  * Class AuthController
- * CAS 服务基础类, 使用示例：
- * if (!$this->isLogin()) return $this->login($request, $response)
  * @package app\controller
  */
 class AuthController
 {
-    // 正常页面不会用到session
-    private bool $is_session_start = false;
 
-    public function sessionStart()
+    public function __construct()
     {
-        if (!$this->is_session_start) {
-            session_start();
-            $this->is_session_start = true;
-        }
+        session_start();
     }
 
     public function isLogin()
     {
-        $this->sessionStart();
         return isset($_SESSION['user']);
     }
 
@@ -53,16 +45,13 @@ class AuthController
     {
         $redirect = $request->query('redirect');
         $key = $request->query('key');
-        $client = new Client();
+        $client = new Client(['timeout' => 3]);
         $res = $client->get($config->get('cas.auth_url'), [
             'query' => ['key' => $key]
         ]);
         if ((string)$res->getBody() === 'success') {
-            $this->sessionStart();
             $_SESSION['user'] = $key;
             return $response->redirect('http://'.$redirect);
-        } else {
-            return 'login failed';
         }
     }
 
@@ -75,5 +64,34 @@ class AuthController
     {
         $config = Link::make(Config::class);
         return $response->redirect($config->get('cas.login_url').urlencode($request->url()));
+    }
+
+    /**
+     * @route get /preview
+     * @route get /preview/{type}
+     * @param ViewResponse $response
+     * @param Request $request
+     * @param Config $config
+     * @param string $lang
+     * @return ViewResponse
+     */
+    public function preview(ViewResponse $response, Request $request, $type = 'code')
+    {
+        if (!$this->isLogin()) {
+            return $this->login($request, $response);
+        }
+        if ($type == 'code') {
+            $code = new Code();
+            $code->lang = $request->query('lang');
+            $code->description = urldecode($request->query('description'));
+            $code->tags = urldecode($request->query('tags'));
+            $code->content = urldecode(base64_decode($request->query('content')));
+            return $response->view('pages/code', [
+                'code_list' => [$code],
+                'next_page' => -1,
+            ]);
+        } else if ($type == 'article') {
+
+        }
     }
 }

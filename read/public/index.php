@@ -49,11 +49,12 @@ Link::bind('log', $log);
 
 $link = new Link($config);
 
-Route::parseAnnotation(\app\controller\ArticleController::class);
-Route::parseAnnotation(\app\controller\CommentController::class);
+// Route::parseAnnotation(\app\controller\ArticleController::class);
+// Route::parseAnnotation(\app\controller\CommentController::class);
 Route::parseAnnotation(\app\controller\CodeController::class);
-Route::parseAnnotation(\app\controller\ApiController::class);
-Route::parseAnnotation(\app\controller\GoAccessController::class);
+// Route::parseAnnotation(\app\controller\ApiController::class);
+// Route::parseAnnotation(\app\controller\GoAccessController::class);
+Route::parseAnnotation(\app\controller\AuthController::class);
 
 try {
     $link->start();
@@ -63,5 +64,5 @@ try {
         $response->handleException($e);
     } else {
     }
-    //throw $e;
+    throw $e;
 }

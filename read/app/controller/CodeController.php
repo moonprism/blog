@@ -10,7 +10,7 @@ use Protodata\CodeClient;
 use Protodata\CodeDetail;
 use Protodata\SearchRequest;
 
-class CodeController extends AuthController
+class CodeController
 {
     /**
      * @route get /code/search
@@ -58,30 +58,6 @@ class CodeController extends AuthController
             ->limit(($page-1)*$limit, $limit)
             ->get();
         $next_page = count($code_list) == 10 ? $page+1 : 0;
-        return $response->view('pages/code', compact('code_list', 'next_page'));
-    }
-
-    /**
-     * @route get /code/preview
-     * @route get /code/preview/{lang}
-     * @param ViewResponse $response
-     * @param Request $request
-     * @param Config $config
-     * @param string $lang
-     * @return ViewResponse
-     */
-    public function preview(ViewResponse $response, Request $request, $lang = 'md')
-    {
-        if (!$this->isLogin()) {
-            return $this->login($request, $response);
-        }
-        $code = new Code();
-        $code->lang = htmlspecialchars($lang);
-        $code->description = htmlspecialchars(urldecode($request->query('description')));
-        $code->tags = htmlspecialchars(urldecode($request->query('tags')));
-        $code->content = htmlspecialchars(urldecode(base64_decode($request->query('content'))));
-        $code_list = [$code];
-        $next_page = -1;
         return $response->view('pages/code', compact('code_list', 'next_page'));
     }
 }

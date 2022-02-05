@@ -5,6 +5,7 @@ log
 
 # docker
 
+password.txt
 docker/write/main
 docker/write/write
 docker/write/web/
@@ -12,10 +13,13 @@ docker/write/config/
 
 # write
 
-write/static
 write/main
+write/linux_amd64_api
+write/mod
+write/static
 write/log
 write/data
+write/options/prod.ini
 
 # read
 
