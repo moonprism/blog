@@ -4,6 +4,8 @@ namespace app\controller;
 
 use app\model\Article;
 use app\model\response\ApiResponse;
+use app\model\Link;
+use app\model\request\LinkRequest;
 use kicoe\core\Response;
 
 class ApiController
@@ -48,5 +50,19 @@ class ApiController
             return $response;
         }
         return $response->setBodyStatus(404, $id.'. article not found');
+    }
+
+    /**
+     * @route post api/link
+     * @param LinkRequest $request
+     * @param ApiResponse $response
+     * @return Response
+     */
+    public function link(LinkRequest $request, ApiResponse $response)
+    {
+        $request->check();
+        $link = Link::createByOther($request);
+        $link->save();
+        return $response;
     }
 }

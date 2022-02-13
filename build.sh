@@ -1,14 +1,14 @@
 #!/bin/bash
 
 W_OPT_DIR=./write/options/
-cp ${W_OPT_DIR}/test.ini ${W_OPT_DIR}/prod.ini
+cp ${W_OPT_DIR}/test.ini ${W_OPT_DIR}/.ini
 
 read -s -p "Enter your password:" password
 echo
 
 echo "$password" > password.txt
 vim ./read/app/config.php -c "/mysql" -c "/passwd" -c ":norm \$ciW'$password'," -c ":wq"
-vim ./write/options/prod.ini -c "/mysql" -c "/password" -c ":norm \$ciw$password" -c ":wq"
+vim ./write/options/.ini -c "/mysql" -c "/password" -c ":norm \$ciw$password" -c ":wq"
 
 echo 
 

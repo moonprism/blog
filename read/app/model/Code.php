@@ -2,9 +2,7 @@
 
 namespace app\model;
 
-use kicoe\core\Model;
-
-class Code extends Model
+class Code extends BaseModel
 {
     public int $id;
     public string $description;

@@ -15,8 +15,8 @@ func Upsert(auth *AuthBody) error {
 	session := db.MysqlXEngine.NewSession()
 	defer session.Close()
 	if err := session.Begin(); err != nil {
-        return err
-    }
+		return err
+	}
 
 	model := models.NewUser(session)
 	has, err := model.ExistUserById(1)

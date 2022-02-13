@@ -34,7 +34,7 @@ func NewEmail(to []string, subject, body string) *Email {
 
 func (e *Email) Parse() []byte {
 	to := "To: " + strings.Join(e.to, ",") + "\n"
-	from := "From: "+setting.SMTP.From+"\n"
+	from := "From: " + setting.SMTP.From + "\n"
 	subject := "Subject: " + e.subject + "\n"
 	mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
 	return []byte(to + from + subject + mime + e.body)

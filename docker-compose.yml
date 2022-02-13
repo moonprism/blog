@@ -9,7 +9,7 @@ services:
     volumes:
       - ./read:/var/www/html/read
       - ./write/web/public:/var/www/html/write
-      - ./docker/web/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./log/nginx:/var/log/nginx
     networks:
       - app
@@ -28,16 +28,17 @@ services:
     ports:
       - "8044:8044"
     volumes:
-      - ./write/options:/www/options
       - ./data/write/static:/www/static
-      - ./data/write/riot-index:/www/data/riot-index
       - ./log/write:/www/log
     networks:
       - app
   redis:
     image: redis
+    command: ["redis-server", "--appendonly", "yes"]
     ports:
       - "6380:6379"
+    volumes:
+      - ./data/redis:/data
     networks:
       - app
   mysql:
@@ -51,6 +52,14 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./log/mysql:/var/log/mysql
+    networks:
+      - app
+  meilisearch:
+    image: getmeili/meilisearch
+    ports:
+      - "7700:7700"
+    volumes:
+      - ./data/meilisearch:/data.ms
     networks:
       - app
 

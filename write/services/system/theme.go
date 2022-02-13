@@ -6,7 +6,6 @@ import (
 	"git.kicoe.com/blog/write/modules/redis"
 )
 
-
 func GetTheme() (setting models.Theme, err error) {
 	data, err := redis.Client.Get("aqua:blog:setting").Result()
 	if err != nil {

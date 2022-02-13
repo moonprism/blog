@@ -33,9 +33,13 @@ func RunCommentReplyNotice() {
 			continue
 		}
 		commentId, _ := strconv.ParseInt(commentIdStr, 10, 64)
-		replyDetail, _ := comment.GetDetail(commentId)
-		sendComment, _ := comment.GetDetail(replyDetail.ToID)
-		artDetail, _ := article.GetDetail(replyDetail.ArtID)
+		detail, _ := comment.GetDetail(commentId)
+		if detail.ToID == 0 {
+			continue //todo
+		}
+
+		sendComment, _ := comment.GetDetail(detail.ToID)
+		artDetail, _ := article.GetDetail(detail.ArtID)
 
 		link := "https://www.kicoe.com"
 		if artDetail.ID == 1 {
@@ -48,11 +52,11 @@ func RunCommentReplyNotice() {
 			Name:      sendComment.Name,
 			ArtLink:   link,
 			ArtTitle:  artDetail.Title,
-			Text:      replyDetail.Text,
-			ReplyName: replyDetail.Name,
+			Text:      detail.Text,
+			ReplyName: detail.Name,
 		}
 
-		sendReplyEmail(replyDetail.Email, &data)
+		sendReplyEmail(detail.Email, &data)
 	}
 }
 

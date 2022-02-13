@@ -13,13 +13,14 @@ use Protodata\SearchRequest;
 class CodeController
 {
     /**
-     * @route get /code/search
+     * @route get /api/code
+     * @param Request $request
      * @param Config $config
-     * @param string $text
      * @return array
      */
     public function search(Request $request, Config $config)
     {
+        error_reporting(E_ALL & ~E_DEPRECATED);
         $text = $request->query('text');
         $client = new CodeClient($config->get('grpc.host').':'.$config->get('grpc.port'), [
             'credentials' => \Grpc\ChannelCredentials::createInsecure(),
@@ -44,20 +45,20 @@ class CodeController
     }
 
     /**
-     * @route get /page/code
-     * @route get /page/code/{page}
+     * @route get /code
+     * @param Request $request
      * @param ViewResponse $response
-     * @param int $page
      * @return ViewResponse
      */
-    public function index(ViewResponse $response, int $page = 1)
+    public function index(Request $request, ViewResponse $response)
     {
+        $page = intval($request->query('page', 1));
         $limit = 10;
         $code_list = Code::where('deleted_at is null')
             ->orderBy('updated_time', 'desc')
             ->limit(($page-1)*$limit, $limit)
             ->get();
-        $next_page = count($code_list) == 10 ? $page+1 : 0;
+        $next_page = count($code_list) == $limit ? $page+1 : 0;
         return $response->view('pages/code', compact('code_list', 'next_page'));
     }
 }

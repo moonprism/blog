@@ -9,28 +9,28 @@ import (
 )
 
 type Captcha struct {
-	index int;
-	gg *gg.Context;
+	index int
+	gg    *gg.Context
 }
 
 func NewCaptcha() *Captcha {
 	return &Captcha{
 		index: 0,
-		gg: gg.NewContext(100, 20),
+		gg:    gg.NewContext(100, 20),
 	}
 }
 
 func (c *Captcha) Dot() {
-	x := float64((c.index * 20)+5)
-	y := float64(utils.Rand(5)+10)
+	x := float64((c.index * 20) + 5)
+	y := float64(utils.Rand(5) + 10)
 	c.gg.DrawCircle(x, y, float64(utils.Rand(3)+2))
 	c.gg.SetRGB255(utils.Rand(255), utils.Rand(255), utils.Rand(255))
 	c.gg.Fill()
 }
 
 func (c *Captcha) Dash() {
-	x := (c.index * 20)+5
-	y := utils.Rand(5)+1
+	x := (c.index * 20) + 5
+	y := utils.Rand(5) + 1
 	c.gg.DrawLine(float64(utils.RandR(x, x+20)), float64(utils.RandR(y, y+10)), float64(utils.RandR(x+10, x+20)), float64(utils.RandR(y, y+20)))
 	c.gg.SetRGB255(utils.Rand(255), utils.Rand(255), utils.Rand(255))
 	c.gg.Stroke()
@@ -45,9 +45,9 @@ var CaptchaCode atomic.Value
 
 func (c *Captcha) Generate() *bytes.Buffer {
 	var code []byte
-	for i:=0; i<4; i++ {
+	for i := 0; i < 4; i++ {
 		r := utils.Rand(2)
-		if r== 0 {
+		if r == 0 {
 			c.Dot()
 			code = append(code, '.')
 		} else {

@@ -1,7 +1,6 @@
 package setting
 
 import (
-	"fmt"
 	"gopkg.in/ini.v1"
 )
 
@@ -11,13 +10,13 @@ var (
 	}
 
 	App = struct {
-		Debug   bool   `ini:"debug"`
+		Debug        bool   `ini:"debug"`
 		EnableStatic bool   `ini:"enable_static"`
 		Port         string `ini:"port"`
 	}{
-		Debug: true,
+		Debug:        true,
 		EnableStatic: true,
-		Port: "80",
+		Port:         "80",
 	}
 
 	Mysql = struct {
@@ -58,19 +57,28 @@ var (
 		Port string `ini:"port"`
 	}
 
+	Meili = struct {
+		Host string `ini:"host"`
+		Port string `ini:"port"`
+	}{
+		Host: "127.0.0.1",
+		Port: "7700",
+	}
+
 	sectionMap = map[string]interface{}{
-		"auth":    &Auth,
-		"mysql":   &Mysql,
-		"app":     &App,
-		"oss":     &Oss,
-		"redis":   &Redis,
-		"smtp":    &SMTP,
-		"rpc":     &RPC,
+		"auth":  &Auth,
+		"mysql": &Mysql,
+		"app":   &App,
+		"oss":   &Oss,
+		"redis": &Redis,
+		"smtp":  &SMTP,
+		"rpc":   &RPC,
+		"meili": &Meili,
 	}
 )
 
-func Init(env string) {
-	cfg, err := ini.ShadowLoad(fmt.Sprintf("options/%s.ini", env))
+func Init() {
+	cfg, err := ini.ShadowLoad("options/.ini")
 	if err != nil {
 		panic(err)
 	}

@@ -9,10 +9,9 @@ import (
 )
 
 type SystemInfoResponse struct {
-	Theme models.Theme `json:"theme"`
-	Captcha bool `json:"captcha"`
+	Theme   models.Theme `json:"theme"`
+	Captcha bool         `json:"captcha"`
 }
-
 
 // @Summary get setting
 // @Tags Setting
@@ -23,7 +22,7 @@ type SystemInfoResponse struct {
 func GetSystemInfo(c echo.Context) error {
 	theme, _ := system.GetTheme()
 	return c.JSON(http.StatusOK, SystemInfoResponse{
-		Theme: theme,
+		Theme:   theme,
 		Captcha: !system.LL.State(),
 	})
 }

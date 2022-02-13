@@ -9,7 +9,16 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
+var CmdAuth = cli.Command{
+	Name:        "passwd",
+	Usage:       "resert admin login name&password",
+	Description: "",
+	Action:      upsertUser,
+}
+
 func upsertUser(ctx *cli.Context) error {
+	Init()
+
 	var name, passwd string
 	color.Println("please input username:")
 	fmt.Scanf("%s", &name)

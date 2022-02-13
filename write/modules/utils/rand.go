@@ -24,7 +24,7 @@ func Rand(n int) int {
 }
 
 func RandR(min, max int) int {
-	return Rand(max-min)+min
+	return Rand(max-min) + min
 }
 
 func RandByte() byte {

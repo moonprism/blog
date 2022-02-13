@@ -1,8 +1,9 @@
 package tag
 
 import (
-	"git.kicoe.com/blog/write/modules/err/errors"
 	"git.kicoe.com/blog/write/models"
+	"git.kicoe.com/blog/write/modules/db"
+	"git.kicoe.com/blog/write/modules/err/errors"
 )
 
 func GetInfos() (tags []*models.TagInfo, err error) {
@@ -49,16 +50,26 @@ func Update(id int64, tag *models.TagMeta) (err error) {
 }
 
 func Delete(id int64) (err error) {
-	affected, err := models.DeleteTag(id)
+	session := db.MysqlXEngine.NewSession()
+	defer session.Close()
+
+	affected, err := session.Id(id).Delete(new(models.Tag))
 
 	if affected == 0 {
 		err = errors.ServiceResourceNotFoundError
+		session.Rollback()
 		return
 	}
 	if err != nil {
+		session.Rollback()
 		return
 	}
 
-	err = models.DeleteAllArticleTags(id)
+	_, err = session.Where("tag_id = ?", id).Delete(new(models.ArticleTag))
+	if err != nil {
+		session.Rollback()
+		return
+	}
+	session.Commit()
 	return
 }

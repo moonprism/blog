@@ -49,7 +49,7 @@ class Article extends Model
         return (new self())
             ->where('status = ?', self::STATUS_PUBLISH)
             ->where('deleted_at is null')
-            ->orderBy('created_time', 'desc')
+            ->orderBy('id', 'desc')
             ->limit(($page-1)*$limit, $limit);
     }
 
@@ -72,6 +72,9 @@ class Article extends Model
     {
         // php7
         $ids = array_column($art_list, 'id');
+        if (!$ids) {
+            return $art_list;
+        }
 
         // 获取集合中的所有文章id
         $tag_list = DB::select('

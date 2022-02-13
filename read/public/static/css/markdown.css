@@ -177,10 +177,10 @@
     word-wrap:break-word;
     font: .9em Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,Hiragino Sans GB,Microsoft YaHei, monospace;
     padding: .2em .4em .1em;
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0,0,0,0.04);
     border-radius: 3px;
     margin: 0 .2em;
-    color: #ff4301;
+    color: #f04a62;
 }
 .markdown pre{
     overflow: auto;

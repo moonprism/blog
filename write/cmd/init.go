@@ -4,12 +4,14 @@ import (
 	"git.kicoe.com/blog/write/modules/db"
 	"git.kicoe.com/blog/write/modules/logs"
 	"git.kicoe.com/blog/write/modules/redis"
+	"git.kicoe.com/blog/write/modules/search"
 	"git.kicoe.com/blog/write/modules/setting"
 )
 
-func Init(env string) {
-	setting.Init(env)
+func Init() {
+	setting.Init()
 	logs.Init()
 	db.Init()
 	redis.Init()
+	search.Init()
 }

@@ -1,8 +1,8 @@
 package err
 
 import (
-	"github.com/labstack/echo/v4"
 	"git.kicoe.com/blog/write/modules/err/errors"
+	"github.com/labstack/echo/v4"
 )
 
 func CustomHTTPErrorHandler(err error, c echo.Context) {

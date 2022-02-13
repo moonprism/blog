@@ -10,7 +10,7 @@ const (
 
 var (
 	HTTPErrorUnauthorized    = NewHTTPError(http.StatusUnauthorized, "Unauthorized", "认证失败")
-	HTTPErrorCaptchaFailed    = NewHTTPError(http.StatusUnauthorized, "CaptchaFailed", "验证码错误")
+	HTTPErrorCaptchaFailed   = NewHTTPError(http.StatusUnauthorized, "CaptchaFailed", "验证码错误")
 	HTTPErrorUnauthenticated = NewHTTPError(http.StatusForbidden, "Unauthenticated", "未授权的访问")
 	HTTPErrorNotFound        = NewHTTPError(http.StatusNotFound, "NotFound", "资源不存在")
 	HTTPErrorBadRequest      = NewHTTPError(http.StatusBadRequest, "BadRequest", "参数错误")

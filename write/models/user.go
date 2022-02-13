@@ -27,17 +27,17 @@ func NewUser(xi xorm.Interface) *UserEngine {
 	}
 }
 
-func (u *UserEngine)Insert() (affected int64, err error) {
+func (u *UserEngine) Insert() (affected int64, err error) {
 	affected, err = u.db.Insert(&u.User)
 	return
 }
 
-func (u *UserEngine)Update(id int64) (affected int64, err error) {
+func (u *UserEngine) Update(id int64) (affected int64, err error) {
 	affected, err = u.db.ID(id).Update(&u.User)
 	return
 }
 
-func (u *UserEngine)GetByName(name string) (user *User, err error) {
+func (u *UserEngine) GetByName(name string) (user *User, err error) {
 	u.Name = name
 	has, err := u.db.Get(&u.User)
 	if err != nil {
@@ -50,13 +50,13 @@ func (u *UserEngine)GetByName(name string) (user *User, err error) {
 	return
 }
 
-func (u *UserEngine)ExistUser() (has bool, err error) {
+func (u *UserEngine) ExistUser() (has bool, err error) {
 	count, err := u.CountUser()
 	has = count > 0
 	return
 }
 
-func (u *UserEngine)ExistUserById(id int64) (has bool, err error) {
+func (u *UserEngine) ExistUserById(id int64) (has bool, err error) {
 	user := &User{
 		ID: id,
 	}
@@ -64,6 +64,6 @@ func (u *UserEngine)ExistUserById(id int64) (has bool, err error) {
 	return
 }
 
-func (u *UserEngine)CountUser() (count int64, err error) {
+func (u *UserEngine) CountUser() (count int64, err error) {
 	return u.db.Count(&u.User)
 }

@@ -6,14 +6,14 @@ import (
 )
 
 var LL = &LoginLimiter{
-	Date: time.Now().Format("2006-01-02"),
+	Date:  time.Now().Format("2006-01-02"),
 	Count: 0,
 	mutex: &sync.RWMutex{},
 }
 
 type LoginLimiter struct {
-	Date string `json:"date"`
-	Count uint `json:"count"`
+	Date  string `json:"date"`
+	Count uint   `json:"count"`
 	mutex *sync.RWMutex
 }
 

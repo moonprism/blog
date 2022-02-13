@@ -15,14 +15,13 @@ import (
 // @BasePath /api/v1
 func main() {
 	app := &cli.App{
-		Name: "write",
+		Name:  "write",
 		Usage: "blog admin api",
 		Commands: []*cli.Command{
 			&cmd.CmdWeb,
+			&cmd.CmdAuth,
+			&cmd.CmdSE,
 		},
-	}
-	app.Commands = []*cli.Command{
-		&cmd.CmdWeb,
 	}
 
 	err := app.Run(os.Args)

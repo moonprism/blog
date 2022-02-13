@@ -1,13 +1,11 @@
 package code
 
 import (
-	"bytes"
 	"strconv"
-	"strings"
 
 	"git.kicoe.com/blog/write/models"
 	"git.kicoe.com/blog/write/modules/err/errors"
-	"git.kicoe.com/blog/write/modules/se"
+	"git.kicoe.com/blog/write/modules/search"
 	"git.kicoe.com/blog/write/modules/utils"
 )
 
@@ -39,13 +37,16 @@ func GetDetail(id int64) (codeDetail *models.CodeDetail, err error) {
 	return
 }
 
-func convertParams(code *models.Code) (string, string) {
-	return strconv.FormatInt(code.ID, 10), strings.Join([]string{
-		code.Description,
-		code.Lang,
-		code.Tags,
-		code.Content,
-	}, "\n")
+func ToDoc(code *models.Code) []map[string]interface{} {
+	return []map[string]interface{}{
+		{
+			"id":      code.ID,
+			"desc":    code.Description,
+			"lang":    code.Lang,
+			"tags":    code.Tags,
+			"content": code.Content,
+		},
+	}
 }
 
 type UpdateBody struct {
@@ -68,8 +69,11 @@ func Create(codeUp *UpdateBody) (err error) {
 		err = errors.ServiceResourceNotFoundError
 		return
 	}
-	se.InsertDoc(convertParams(code))
-
+	// todo transaction
+	err = search.NewIndex("code").Insert(ToDoc(code))
+	if err != nil {
+		return
+	}
 	return
 }
 
@@ -78,7 +82,8 @@ func Update(id int64, codeUp *UpdateBody) (err error) {
 		CodeMeta: codeUp.CodeMeta,
 		Content:  codeUp.Content,
 	}
-	affected, err := models.DeleteCode(id)
+
+	affected, err := models.UpdateCode(id, code, []string{"tags"})
 	if err != nil {
 		return
 	}
@@ -86,22 +91,21 @@ func Update(id int64, codeUp *UpdateBody) (err error) {
 		err = errors.ServiceResourceNotFoundError
 		return
 	}
-	se.RemoveDoc(strconv.FormatInt(id, 10))
 
-	affected, err = models.InsertCode(code)
+	code.ID = id
+	err = search.NewIndex("code").Update(ToDoc(code))
 	if err != nil {
 		return
 	}
-	if affected == 0 {
-		err = errors.ServiceResourceNotFoundError
-		return
-	}
-	se.InsertDoc(convertParams(code))
-
 	return
 }
 
 func Delete(id int64) (err error) {
+	err = search.NewIndex("code").Delete(strconv.FormatInt(id, 10))
+	if err != nil {
+		return
+	}
+
 	affected, err := models.DeleteCode(id)
 	if err != nil {
 		return
@@ -110,41 +114,24 @@ func Delete(id int64) (err error) {
 		err = errors.ServiceResourceNotFoundError
 		return
 	}
-	se.RemoveDoc(strconv.FormatInt(id, 10))
-
 	return
 }
 
 func SearchDoc(text string, page, limit int) (codes []*models.Code, pagination *utils.Pagination, err error) {
-	ids, result, count := se.SearchDoc(text, (page-1)*limit, limit)
-	pagination = utils.GeneratePagination(page, limit, int64(count))
+	result, count := search.NewIndex("code").Search(text, (page-1)*limit, limit)
+	pagination = utils.GeneratePagination(page, limit, count)
 	// codes, err = model.FetchCodesByIds(ids)
 	if err != nil {
 		return
 	}
-	for _, id := range ids {
+	for _, re := range result {
 		code := &models.Code{CodeMeta: &models.CodeMeta{}}
-		resultSlice := bytes.SplitN(result[id], []byte{'\n'}, 4)
-		code.ID = id
-		code.Description = string(resultSlice[0])
-		code.Lang = string(resultSlice[1])
-		code.Tags = string(resultSlice[2])
-		if len(resultSlice) > 3 {
-			code.Content = string(resultSlice[3])
-		}
+		code.ID, _ = strconv.ParseInt(re["id"].(string), 10, 64)
+		code.Description = re["desc"].(string)
+		code.Lang = re["lang"].(string)
+		code.Tags = re["tags"].(string)
+		code.Content = re["content"].(string)
 		codes = append(codes, code)
 	}
 	return
-}
-
-func Reindex() {
-	for i := 0; ; i++ {
-		codes, _, _ := GetList(i, 100)
-		for _, code := range codes {
-			se.InsertDoc(convertParams(&models.Code{CodeMeta:code}))
-		}
-		if len(codes) < 100 {
-			break
-		}
-	}
 }

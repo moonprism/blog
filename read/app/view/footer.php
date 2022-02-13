@@ -1,8 +1,10 @@
+</body>
+<script src="/dist/js/markdown.min.js"></script>
 <script src="/dist/js/app.min.js"></script>
 <script>
     <?php echo $setting['global_js'] ?? ''; ?>
 
 </script>
-<link rel="stylesheet" type="text/css" href="//cdn.staticfile.org/highlight.js/9.18.1/styles/hopscotch.min.css">
-</body>
+<script src="//cdn.staticfile.org/highlight.js/9.18.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
 </html>

@@ -8,7 +8,7 @@ return [
     ],
     'redis' => [
         'host' => 'redis',
-        'port' => 6380
+        'port' => 6379
     ],
     'mysql' => [
         'host' => 'mysql',
@@ -24,10 +24,10 @@ return [
     ],
     'cas' => [
         'login_url' => 'http://127.0.0.1:8080/#/cas/',
-        'auth_url' => 'http://host.docker.internal:8034/api/v1/cas/auth'
+        'auth_url' => 'http://write-api:8044/api/v1/cas/auth'
     ],
     'grpc' => [
-        'host' => 'host.docker.internal',
+        'host' => 'write-api',
         'port' => 2333
     ]
 ];

@@ -1,9 +1,9 @@
 package routers
 
 import (
-	"git.kicoe.com/blog/write/web/api"
-	"git.kicoe.com/blog/write/modules/setting"
 	"git.kicoe.com/blog/write/modules/err"
+	"git.kicoe.com/blog/write/modules/setting"
+	"git.kicoe.com/blog/write/web/api"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -87,6 +87,12 @@ func Routers() *echo.Echo {
 		{
 			commentG.GET("", api.CommentList)
 			commentG.DELETE("/:id", api.DeleteComment)
+		}
+
+		linkG := v1.Group("/link", jwtMiddle)
+		{
+			linkG.GET("", api.LinkList)
+			linkG.PUT("/:id", api.UpdateLink)
 		}
 
 		searchG := v1.Group("/search")

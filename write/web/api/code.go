@@ -2,15 +2,15 @@ package api
 
 import (
 	"git.kicoe.com/blog/write/models"
-	"git.kicoe.com/blog/write/services/code"
 	"git.kicoe.com/blog/write/modules/utils"
+	"git.kicoe.com/blog/write/services/code"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
 )
 
 type CodeListResponse struct {
-	Pagination *utils.Pagination `json:"pagination"`
+	Pagination *utils.Pagination  `json:"pagination"`
 	Data       []*models.CodeMeta `json:"data"`
 }
 
@@ -29,9 +29,11 @@ func CodeList(c echo.Context) error {
 		err      error
 	)
 
-	page, err = strconv.Atoi(c.QueryParam("page"))
-	if err != nil {
-		return err
+	if c.QueryParam("page") != "" {
+		page, err = strconv.Atoi(c.QueryParam("page"))
+		if err != nil {
+			return err
+		}
 	}
 
 	codes, pagination, err := code.GetList(page, pageSize)
@@ -47,7 +49,7 @@ func CodeList(c echo.Context) error {
 
 type CodeDetailListResponse struct {
 	Pagination *utils.Pagination `json:"pagination"`
-	Data       []*models.Code     `json:"data"`
+	Data       []*models.Code    `json:"data"`
 }
 
 // @Summary search by text
@@ -82,7 +84,7 @@ func SearchCode(c echo.Context) error {
 // @Tags Code
 // @Produce  json
 // @param Authorization header string true "Authorization"
-// @Param codeMeta body service.CodeUpdateBody true " "
+// @Param codeMeta body code.UpdateBody true " "
 // @Success 200 {string} string "ok"
 // @Failure 403 {object} errors.HTTPError
 // @Router /code [post]
@@ -105,7 +107,7 @@ func CreateCode(c echo.Context) error {
 // @Produce  json
 // @param Authorization header string true "Authorization"
 // @Param id path int true "code id"
-// @Param codeUpdateBody body service.CodeUpdateBody true " "
+// @Param codeUpdateBody body code.UpdateBody true " "
 // @Success 200 {string} string "ok"
 // @Failure 403 {object} errors.HTTPError "Unauthenticated"
 // @Failure 404 {object} errors.HTTPError "NotFound"

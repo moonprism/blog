@@ -8,7 +8,8 @@
                 <el-button @click="handleWrite" type="primary" plain>Write</el-button>
 		-->
                 <a @click="handleClose" class="close"><i class="el-icon-circle-close"></i></a>
-                <a @click="handleSelect" class="select"><i class="el-icon-picture-outline-round"></i></a>
+                <a @click="handleSelect" class="select"><i class="el-icon-picture-outline"></i></a>
+                <a @click="handlePreview" class="preview"><i class="el-icon-printer"></i></a>
             </div>
         </el-header>
         <el-main style="padding:0">
@@ -170,6 +171,10 @@
             handleSelect() {
                 this.waterfallDialog.visible = true
             },
+            async handlePreview() {
+                await this.save()
+                window.open(process.env.VUE_APP_READ_ORIGIN+'preview/article?id='+this.article.id,'_blank')
+            },
             handleUpload() {
                 this.show()
             },
@@ -216,7 +221,7 @@
         right: 10px;
         z-index: 2;
     }
-    .edit-header .close, .edit-header .select {
+    .edit-header .close, .edit-header .select, .edit-header .preview {
         font-size: 25px;
         margin: 0 0 0 15px;
         position: relative;
@@ -226,18 +231,22 @@
         display: block;
     }
     .edit-header .close:hover {
-        color: #f56c6c;
-        transition: all .2s linear;
+        color: #eb3f79;
+        transition: all .1s linear;
     }
     .edit-header .select:hover {
-        color: #91d18b;
-        transition: all .2s linear;
+        color: #7c55bf;
+        transition: all .1s linear;
+    }
+    .edit-header .preview:hover {
+        color: #1FAB89;
+        transition: all .1s linear;
     }
     .cm-s-material {
         font-family: "Space Mono",yuan;
         width: 83%;
         margin: 0 auto 30px;
-        font-size: 18px;
+        font-size: 16px;
         padding: 10px;
     }
     .cm-s-material.CodeMirror {

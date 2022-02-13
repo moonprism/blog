@@ -19,9 +19,6 @@ type grpcS struct {
 }
 
 func RunRpc(ctx *cli.Context) error {
-	if ctx.Bool("reindex") {
-		code.Reindex()
-	}
 	listener, err := net.Listen("tcp", ":"+setting.RPC.Port)
 	if err != nil {
 		log.Fatalf("error start rpc server: %v", err)

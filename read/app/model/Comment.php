@@ -2,28 +2,24 @@
 
 namespace app\model;
 
-use kicoe\core\Model;
-
-class Comment extends Model
+class Comment extends BaseModel
 {
     public int $id;
     public int $art_id;
+    public int $top_id;
     public int $to_id;
     public string $name;
     public string $email;
     public string $text;
     public string $created_time;
+    public ?string $deleted_at;
 
-    /**
-     * 属性融合
-     * @param object $obj
-     * @return self
-     */
-    public static function createByOther(object $obj) {
-        $comment = new self();
-        foreach (get_object_vars($obj) as $k => $v) {
-            $comment->$k = $v;
-        }
-        return $comment;
+    public static function cWhere(int $art_id, int $top_id)
+    {
+        return (new self)->columns('id', 'to_id', 'name', 'email', 'text', 'created_time', 'l.link')
+            ->leftJoin('link l', 'l.email = comment.email')
+            ->where('art_id', $art_id)
+            ->where('top_id', $top_id)
+            ->where('comment.deleted_at is null');
     }
 }

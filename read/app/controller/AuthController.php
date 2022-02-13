@@ -5,8 +5,11 @@ namespace app\controller;
 use GuzzleHttp\Client;
 use kicoe\core\Config;
 use kicoe\core\Link;
+use app\model\Code;
 use kicoe\core\Request;
 use kicoe\core\Response;
+use app\model\Article;
+use app\model\response\ViewResponse;
 
 /**
  * Class AuthController
@@ -43,7 +46,7 @@ class AuthController
      */
     public function auth(Request $request, Response $response, Config $config)
     {
-        $redirect = $request->query('redirect');
+        $redirect = base64_decode($request->query('redirect'));
         $key = $request->query('key');
         $client = new Client(['timeout' => 3]);
         $res = $client->get($config->get('cas.auth_url'), [
@@ -51,34 +54,33 @@ class AuthController
         ]);
         if ((string)$res->getBody() === 'success') {
             $_SESSION['user'] = $key;
-            return $response->redirect('http://'.$redirect);
+            return $response->redirect('http://'.urldecode($redirect));
         }
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
-     * @return Response
+     * @param $url
+     * @return void
      */
-    public function login(Request $request, Response $response)
+    public function login($url)
     {
         $config = Link::make(Config::class);
-        return $response->redirect($config->get('cas.login_url').urlencode($request->url()));
+        header("Location: ".$config->get('cas.login_url').urlencode($url));
+        die();
     }
 
     /**
      * @route get /preview
      * @route get /preview/{type}
-     * @param ViewResponse $response
      * @param Request $request
-     * @param Config $config
-     * @param string $lang
+     * @param ViewResponse $response
+     * @param string $type
      * @return ViewResponse
      */
-    public function preview(ViewResponse $response, Request $request, $type = 'code')
+    public function preview(Request $request, ViewResponse $response, $type = 'code')
     {
         if (!$this->isLogin()) {
-            return $this->login($request, $response);
+            $this->login($request->url());
         }
         if ($type == 'code') {
             $code = new Code();
@@ -91,7 +93,8 @@ class AuthController
                 'next_page' => -1,
             ]);
         } else if ($type == 'article') {
-
+            $article = Article::fetchById($request->query('id'));
+            return $response->view('article/detail', compact('article'));
         }
     }
 }

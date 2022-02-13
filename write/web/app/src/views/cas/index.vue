@@ -11,7 +11,7 @@
             const cas_key = res.data.cas_key
             this.$nextTick(() => {
                 window.location.href = process.env.VUE_APP_READ_ORIGIN+'cas/auth?redirect='
-                    + encodeURI(this.$route.params.url)+'&'
+                    + btoa(encodeURIComponent(this.$route.params.url))+'&'
                     + 'key=' + cas_key
             })
         }

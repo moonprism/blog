@@ -6,7 +6,7 @@ use kicoe\core\Request;
 
 class CommentRequest extends Request
 {
-    public int $art_id;
+    public int $top_id = 0;
     public int $to_id = 0;
     public string $name;
     public string $email;

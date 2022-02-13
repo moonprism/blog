@@ -11,7 +11,7 @@ import (
 )
 
 type ArticleListResponse struct {
-	Pagination *utils.Pagination    `json:"pagination"`
+	Pagination *utils.Pagination     `json:"pagination"`
 	Data       []*models.ArticleInfo `json:"data"`
 }
 
@@ -25,14 +25,16 @@ type ArticleListResponse struct {
 // @Router /article [get]
 func ArticleList(c echo.Context) error {
 	var (
-		page     int
+		page     = 1
 		pageSize = 10
 		err      error
 	)
 
-	page, err = strconv.Atoi(c.QueryParam("page"))
-	if err != nil {
-		return err
+	if c.QueryParam("page") != "" {
+		page, err = strconv.Atoi(c.QueryParam("page"))
+		if err != nil {
+			return err
+		}
 	}
 
 	articles, pagination, err := article.GetList(page, pageSize)

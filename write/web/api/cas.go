@@ -43,7 +43,7 @@ func CasKey(c echo.Context) error {
 // @Router /cas/auth [get]
 func CasAuth(c echo.Context) error {
 	casValue := casKey.Load()
-	if casValue == nil  || c.QueryParam("key") != fmt.Sprintf("%x", md5.Sum(casValue.([]byte))) {
+	if casValue == nil || c.QueryParam("key") != fmt.Sprintf("%x", md5.Sum(casValue.([]byte))) {
 		return c.String(http.StatusUnauthorized, "401")
 	}
 	return c.String(http.StatusOK, "success")

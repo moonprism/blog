@@ -19,7 +19,7 @@ write/mod
 write/static
 write/log
 write/data
-write/options/prod.ini
+write/options/.ini
 
 # read
 
@@ -27,4 +27,5 @@ read/vendor
 read/node_modules
 read/package-lock.json
 read/public/dist
+read/public/adminer.php
 read/app/view/dist

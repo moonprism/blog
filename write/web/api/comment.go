@@ -2,8 +2,8 @@ package api
 
 import (
 	"git.kicoe.com/blog/write/models"
-	"git.kicoe.com/blog/write/services/comment"
 	"git.kicoe.com/blog/write/modules/utils"
+	"git.kicoe.com/blog/write/services/comment"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
@@ -11,7 +11,7 @@ import (
 
 type CommentListResponse struct {
 	Pagination *utils.Pagination `json:"pagination"`
-	Data       []*models.Comment  `json:"data"`
+	Data       []*models.Comment `json:"data"`
 }
 
 // @Summary get comment list
@@ -24,14 +24,16 @@ type CommentListResponse struct {
 // @Router /comment [get]
 func CommentList(c echo.Context) error {
 	var (
-		page     int
+		page     = 1
 		pageSize = 10
 		err      error
 	)
 
-	page, err = strconv.Atoi(c.QueryParam("page"))
-	if err != nil {
-		return err
+	if c.QueryParam("page") != "" {
+		page, err = strconv.Atoi(c.QueryParam("page"))
+		if err != nil {
+			return err
+		}
 	}
 
 	comments, pagination, err := comment.GetList(page, pageSize)

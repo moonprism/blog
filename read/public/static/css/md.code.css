@@ -1,4 +1,4 @@
-.markdown li, .markdown p {
+.m-c .m-cc li, .m-c .m-cc p {
     margin: 0;
 }
 .icon-code {
@@ -71,48 +71,44 @@
     tab-size: 4;
 }
 .search-result pre code {
-    font: 15px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
+    font: 15px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace !important;
 }
 .search-result em {
-    display: inline-block;
     border-bottom: 2px solid aqua;
-    margin: 0 2px;
-    padding: 0 4px;
     border-radius: 2px;
     font-style: normal;
 }
 
-.hljs {
+.m-c .hljs {
     border: 0;
     font-size: 12px;
     display: block;
-    padding: 1px;
     margin: 0;
     width: 100%;
     font-weight: 200;
     white-space: pre-wrap;
     background-color: inherit !important;
 }
-.hljs ol {
+.m-c .hljs ol {
     list-style: decimal;
     margin: 0 0 0 27px !important;
     padding: 0;
 }
-.c-md .hljs ol {
+.m-c .c-md .hljs ol {
     margin: 0 !important;
 }
-.hljs ol li {
+.m-c .hljs ol li {
     padding: 2px 7px!important;
     margin: 0 !important;
     white-space: pre;
     color: rgba(27,31,35,.3);
 }
 
-.hljs ol li .cl {
+.m-c .hljs ol li .cl {
     color: #555;
 }
 
-.c-md:hover {
+.m-c .c-md:hover {
     cursor: pointer;
     border: 1px solid #bbb;
     border-radius: 5px;
@@ -122,11 +118,11 @@
     text-decoration: underline;
 }
 
-.markdown {
+.m-c .m-cc {
     padding: 10px 12px;
     display: none;
 }
-.markdown > p {
+.m-c .m-cc > p {
     font-size: 15px;
     margin: 2px 5px 10px;
     white-space: pre-wrap;
@@ -136,23 +132,23 @@
     word-break: break-word;
     line-height: 135%;
 }
-.markdown a {
+.m-c .m-cc a {
     font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
 }
-.markdown h1:before{
+.m-c .m-cc h1:before{
     content: '#';
     margin-right: 6px;
     font-size: 19px;
     color: #888;
 }
-.markdown h1{
+.m-c .m-cc h1{
     padding: 5px 4px;
     font-size: 18px;
     margin-bottom: 10px;
     color: #111;
     font-weight: 400;
 }
-.markdown h3{
+.m-c .m-cc h3{
     padding: 4px 12px;
     font-size: 16px;
     margin-bottom: 10px;
@@ -160,7 +156,7 @@
     font-weight: 400;
     position: relative;
 }
-.markdown h3:before{
+.m-c .m-cc h3:before{
     content: '@';
     font-size: 19px;
     color: #9b45e4;
@@ -168,36 +164,36 @@
     top: 3px;
     left: -5px;
 }
-.markdown ul, .markdown ol{
+.m-c .m-cc ul, .m-c .m-cc ol{
     margin: 13px 0;
     font-size: 15px;
     color: #494949;
     padding-left: 1.7em;
 }
-.markdown ul li,.markdown ol li{
+.m-c .m-cc ul li,.m-c .m-cc ol li{
     margin-bottom: 7px;
     padding-left: 5px;
     font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif;
 }
-.markdown ul li{
+.m-c .m-cc ul li{
     list-style-type: disc !important;
 }
-.markdown ol li{
+.m-c .m-cc ol li{
     list-style-type: decimal !important;
 }
-.markdown ul ul li, .markdown ol ul li {
+.m-c .m-cc ul ul li, .m-c .m-cc ol ul li {
     list-style-type: circle !important;
 }
-.markdown ol ol li {
+.m-c .m-cc ol ol li {
     list-style-type: lower-alpha !important;
 }
-.markdown ul ol li {
+.m-c .m-cc ul ol li {
     list-style-type: lower-roman !important;
 }
-.markdown ul ul ul li {
+.m-c .m-cc ul ul ul li {
     list-style-type: square !important;
 }
-.markdown blockquote{
+.m-c .m-cc blockquote{
     margin: 11px 3px;
     padding: 8px 13px;
     border-radius: 4px;
@@ -208,10 +204,10 @@
     background-color: #eee;
     color: #000;
 }
-.markdown blockquote blockquote {
+.m-c .m-cc blockquote blockquote {
     margin: 3px 0;
 }
-.markdown blockquote.book {
+.m-c .m-cc blockquote.book {
     border: 0;
     padding: 7px 10px;
     font-size: 15px;
@@ -221,50 +217,50 @@
     background-color: #fff;
     text-decoration: underline;
 }
-.markdown .success {
+.m-c .m-cc .success {
     background-color: #f0f9eb;
     color: #67c23a;
 }
-.markdown .warning {
+.m-c .m-cc .warning {
     background-color: #fdf6ec;
     color: #e6a23c;
 }
-.markdown .danger {
+.m-c .m-cc .danger {
     color: #f56c6c;
     background-color: #fef0f0;
 }
-.markdown .info {
+.m-c .m-cc .info {
     background-color: #f4f4f5;
     color: #909399;
 }
 
-.markdown hr{
+.m-c .m-cc hr{
     margin-bottom: 10px;
     height: 0.15em;
     background-color: #e7e7e7;
     border: 0;
 }
-.markdown br{
+.m-c .m-cc br{
     margin-bottom: 3px;
 }
-.markdown img{
+.m-c .m-cc img{
     max-width: 100%;
     padding-top: 4px;
     border-radius: 6px;
 }
-.markdown pre{
+.m-c .m-cc pre{
     margin: 5px .2em 10px;
 }
-.markdown ul pre, .markdown ol pre {
+.m-c .m-cc ul pre, .m-c .m-cc ol pre {
     margin-left: -13px;
     margin-top: 12px;
 }
-.markdown pre code{
+.m-c .m-cc pre code{
     background-color: #fff !important;
     display: block;
     padding: 0;
 }
-.markdown code{
+.m-c .m-cc code{
     overflow: auto;
     word-wrap:break-word;
     font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;

@@ -49,11 +49,10 @@ Link::bind('log', $log);
 
 $link = new Link($config);
 
-// Route::parseAnnotation(\app\controller\ArticleController::class);
-// Route::parseAnnotation(\app\controller\CommentController::class);
+Route::parseAnnotation(\app\controller\ArticleController::class);
+Route::parseAnnotation(\app\controller\CommentController::class);
 Route::parseAnnotation(\app\controller\CodeController::class);
-// Route::parseAnnotation(\app\controller\ApiController::class);
-// Route::parseAnnotation(\app\controller\GoAccessController::class);
+Route::parseAnnotation(\app\controller\ApiController::class);
 Route::parseAnnotation(\app\controller\AuthController::class);
 
 try {
@@ -62,7 +61,6 @@ try {
     $response = Link::make(\kicoe\core\Response::class);
     if ($response instanceof \app\model\response\ViewResponse) {
         $response->handleException($e);
-    } else {
     }
     throw $e;
 }
