@@ -1,13 +1,12 @@
 ## read
 
-博客前台，原生PHP+JS+CSS
+博客前台
 
-#### 设计
+功能:
 
-![](https://raw.githubusercontent.com/moonprism/cdn/master/image/f-1.png)
+- 展示文章
+- 展示代码笔记与搜索结果(grpc前端)
+- 预览后台未发布的内容(通过后台进行CAS认证)
+- 评论系统
 
-![](https://raw.githubusercontent.com/moonprism/cdn/master/image/f-2.png)
-
-![](https://raw.githubusercontent.com/moonprism/cdn/master/image/f-3.png)
-
-![](https://raw.githubusercontent.com/moonprism/cdn/master/image/f-4.png)
+> 前端代码大都是五六年前写的，好乱

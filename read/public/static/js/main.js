@@ -1,5 +1,11 @@
-var emoji_parse = function (str) {
-    return str.replace(/\:bread\:/g, '🍞')
+// markdown
+var main_markdown_config = {
+    linkTargetBlank: true,
+    debug: false,
+    imageCDN: 'http://localhost:8033/static/'
+}
+function markd(md) {
+    return markdown(md, main_markdown_config).replace(/\:bread\:/g, '🍞')
         .replace(/\:heart\:/g, '❤️')
         .replace(/\:sparkling_heart\:/g, '💖')
         .replace(/\:zap\:/g, '⚡️')
@@ -38,39 +44,57 @@ var emoji_parse = function (str) {
         .replace(/\:maple_leaf\:/g, '🍁')
         .replace(/\:evergreen_tree\:/g, '🌲')
         .replace(/\:octocat\:/g, '<img title=":octocat:" alt=":octocat:" src="https://github.githubassets.com/images/icons/emoji/octocat.png" height="20" width="20" align="absmiddle">')
-        .replace(/\:cherries\:/g, '🍒');
+        .replace(/\:cherries\:/g, '🍒')
 }
-var main_markdown_config = {
-    inlineParse: emoji_parse,
-    codeParse: emoji_parse,
-    linkTargetBlank: true,
-    debug: false,
-    imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
-};
-function replace_sym(re_str) {
-    return re_str.replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
-}
-var $ = function(id){return document.getElementById(id);};
-var up_but = $('up');
-var up_index = 50;
-var main = $('content');
-up_but.style.display = 'none';
-function up(){
-    window.scrollTo(0, 0);
-}
-var timer = null;
-window.onscroll = function(){
-    if (timer) {
-        clearTimeout(timer)
-    }
-    timer = setTimeout(function(){
-        if (document.documentElement.scrollTop||document.body.scrollTop >500 && up_but.style.display=='none') {
-            up_but.style.display='block';
-        } else if(document.documentElement.scrollTop||document.body.scrollTop <500 && up_but.style.display=='block'){
-            up_but.style.display='none';
+
+document.querySelectorAll('.markdown > .md').forEach((md) => {
+    md.parentNode.innerHTML = markd(md.innerText)
+})
+
+var $ = (id) => document.getElementById(id)
+
+// 回到顶部 #up
+var upButton = $('up')
+if (upButton) {
+    upButton.innerHTML = '<a><b>^</b></a>';
+    upButton.style.display = 'none';
+    var timer = null;
+    window.onscroll = () => {
+        if (timer) {
+            clearTimeout(timer)
         }
-    },80);
+        timer = setTimeout(function(){
+            if (document.documentElement.scrollTop||document.body.scrollTop > 500 && upButton.style.display == 'none') {
+                upButton.style.display='block';
+            } else if(document.documentElement.scrollTop||document.body.scrollTop < 500 && upButton.style.display == 'block'){
+                upButton.style.display='none';
+            }
+        },80);
+    }
+    upButton.onclick = () => {
+        window.scrollTo(0, 0)
+    }
 }
+
+// 预览图片 #curtain .preview
+var curtain = $('curtain')
+if (curtain) {
+    curtain.onclick = () => {
+        curtain.style.display = 'none'
+    }
+    document.querySelectorAll('img').forEach((p) => {
+        p.style.cursor = 'pointer'
+        p.onclick = (i) => {
+            let wh = document.documentElement.clientHeight || document.body.clientHeight
+            let h = (wh - i.srcElement.naturalHeight) / 2.1
+            let paddingHeigh = h > 0 ? h : 15
+            $('curtain').style.display = 'block'
+            $('curtain').innerHTML = '<img style="margin: '+paddingHeigh+'px auto" src="'+ i.srcElement.currentSrc +'">'
+        }
+    })
+}
+
+// six years ago
 var f = {};
 // 绑定事件
 f.addEve = function(node, even, fun){
@@ -82,41 +106,6 @@ f.addEve = function(node, even, fun){
         node.attachEvent('on'+even, function(e){
             fun(e);
         });
-    }
-}
-// ajax获取
-f.ajax = function(options) {
-    options = options || {};
-    options.type = (options.type || "GET").toUpperCase();
-    options.dataType = options.dataType || "json";
-    var arr = [];
-    for (var name in options.data) {
-        arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(options.data[name]));
-    }
-    arr.push(("v=" + Math.random()).replace(".",""));
-    var params = arr.join("&");
-    if (window.XMLHttpRequest) {
-        var xhr = new XMLHttpRequest();
-    } else {
-        var xhr = new ActiveXObject('Microsoft.XMLHTTP');
-    }
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            var status = xhr.status;
-            if (status >= 200 && status < 300) {
-                options.success && options.success(xhr.responseText, xhr.responseXML);
-            } else {
-                options.fail && options.fail(status);
-            }
-        }
-    }
-    if (options.type == "GET") {
-        xhr.open("GET", options.url, true);
-        xhr.send(null);
-    } else if (options.type == "POST") {
-        xhr.open("POST", options.url, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send(params);
     }
 }
 // 添加节点与属性
@@ -134,20 +123,27 @@ f.addNode = function(parent_n, child_s, string, attr){
     return child_n;
 }
 
-function bg() {
-    let imgEl = document.getElementsByTagName('img');
-    let imgList = Array.prototype.slice.call(imgEl);
-    f.addEve($('bg'), 'click', (i) => {
-        $('bg').style.display = 'none';
-    })
-    imgList.forEach((img) => {
-        img.className = 'cl-bg';
-        f.addEve(img, 'click', (i) => {
-            let wh = document.documentElement.clientHeight || document.body.clientHeight;
-            let h = (wh - i.srcElement.naturalHeight) / 2.1;
-            let paddingHeigh = h > 0 ? h : 15;
-            $('bg').style.display = 'block';
-            $('bg').innerHTML = '<img style="margin: '+paddingHeigh+'px auto" src="'+ i.srcElement.currentSrc +'">';
+// 请求(重写ajax)
+f.fetch = async (url, options) => {
+    let response
+    if (options.method == 'GET') {
+        response = await fetch(url)
+    } else {
+        let params = []
+        for (var i in options.data) {
+            params.push(i+"="+encodeURIComponent(options.data[i]))
+        }
+        response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+            },
+            body: params.join('&')
         })
-    })
+    }
+    if (response.ok) {
+        options.success(await response.json())
+    } else {
+        options.fail(response.status)
+    }
 }

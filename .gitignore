@@ -5,6 +5,7 @@ log
 
 # docker
 
+password.txt
 docker/write/main
 docker/write/write
 docker/write/web/
@@ -12,10 +13,13 @@ docker/write/config/
 
 # write
 
-write/static
 write/main
+write/linux_amd64_api
+write/mod
+write/static
 write/log
 write/data
+write/options/.ini
 
 # read
 
@@ -23,3 +27,5 @@ read/vendor
 read/node_modules
 read/package-lock.json
 read/public/dist
+read/public/adminer.php
+read/app/view/dist

@@ -3,103 +3,126 @@
 namespace app\controller;
 
 use app\model\Comment;
+use app\model\Link as LinkModel;
+use app\model\Article;
 use app\model\request\CommentRequest;
 use app\model\response\ApiResponse;
+use kicoe\core\DB;
+use kicoe\core\Request;
 use kicoe\core\Cache;
 use kicoe\core\Link;
 
 class CommentController
 {
     /**
-     * @route post /comment/up
+     * @route post /comment/{art_id}
      * @param CommentRequest $request
      * @param ApiResponse $response
+     * @param int $art_id
      * @return ApiResponse
+     * @throws \Exception
      */
-    public function up(CommentRequest $request, ApiResponse $response)
+    public function post(CommentRequest $request, ApiResponse $response, int $art_id)
     {
+        // 两种错误处理
         if ($err = $request->filter()) {
-            // $response->status(422); 以前的js写不太行, 还是通过200返回吧
             return $response->setBodyStatus(422, $err);
         }
+        if (!Article::fetchById($art_id)) {
+            throw new \Exception("文章不存在");
+        }
+        /** @var Cache $cache */
+        $cache = Link::make(Cache::class);
         $comment = Comment::createByOther($request);
-        $comment->save();
-        $response->data = $comment;
-        // 邮件推送队列
-        if ($comment->to_id) {
-            /** @var Cache $cache */
-            $cache = Link::make(Cache::class);
-            $cache->lPush('comment_message', $comment->id);
+        DB::transaction(function() use ($comment, $art_id, $cache) {
+            if ($comment->to_id) {
+                $to_comment = Comment::fetchById($comment->to_id);
+                if (!$to_comment || $to_comment->deleted_at != null || $to_comment->art_id != $art_id) {
+                    throw new \Exception("数据错误");
+                }
+                $comment->top_id = $to_comment->top_id ?: $to_comment->id;
+            }
+            $comment->art_id = $art_id;
+            $comment->save();
+            $cache->del('comment_preview:'.$art_id);
+        });
+        $cache->lPush('comment_message', $comment->id);
+        return $response;
+    }
+
+    /**
+     * @route get /comment/{art_id}
+     * @param Request $request
+     * @param ApiResponse $response
+     * @param int $art_id
+     * @return ApiResponse
+     */
+    public function list(Request $request, ApiResponse $response, int $art_id): ApiResponse
+    {
+        /** @var Cache $cache */
+        $cache = Link::make(Cache::class);
+        $cache_key = 'comment_preview:'.$art_id;
+        $before_id = intval($request->query('before_id', 0));
+        $page_size = intval($request->query('page_size', 2));
+        if ($page_size > 10) {
+            $page_size = 10;
+        }
+        if ($before_id == 0 && $data = $cache->get($cache_key)) {
+            $response->data = json_decode($data);
+            return $response;
+        }
+        $seg = Comment::cWhere($art_id, 0)
+            ->limit($page_size)
+            ->orderBy('id', 'desc');
+
+        if ($before_id > 0) {
+            $seg = $seg->where('comment.id < ?', $before_id);
+        }
+
+        $comments = $seg->get();
+        /** @var Comment $comment */
+        foreach ($comments as &$comment) {
+            $comment->email = md5($comment->email);
+            $comment->sub_comments = Comment::cWhere($art_id, $comment->id)
+                ->limit(20)
+                ->orderBy('id', 'asc')
+                ->get();
+            foreach ($comment->sub_comments as &$sub) {
+                $sub->email = md5($sub->email);
+            }
+        }
+        $response->data = [
+            'count' => $seg->count(),
+            'comments' => $comments,
+        ];
+        if ($before_id == 0 && $comments) {
+            $cache->set($cache_key, json_encode($response->data));
+            $cache->expire($cache_key, 3 * 3600);
         }
         return $response;
     }
 
     /**
-     * 下面历史代码就不用新的 api response 了
-     * @route get /comment/list/{art_id}
-     * @param $art_id
-     * @return array
+     * @route get /subcomment/{top_id}/{art_id}
+     * @param Request $request
+     * @param ApiResponse $response
+     * @param int $top_id
+     * @param int $art_id
+     * @return ApiResponse
      */
-    public function list(int $art_id)
+    public function subList(Request $request, ApiResponse $response, int $top_id, int $art_id)
     {
-        $comments = Comment::where('art_id', $art_id)->orderBy('id', 'desc')->get();
-
-        // 邮箱加密
-        /** @var Comment $comment */
-        foreach ($comments as &$comment) {
-            $comment->email = md5($comment->email);
-        }
-        return $comments;
-    }
-
-    /**
-     * @route get /json/comment/{art_id}
-     * @param $art_id
-     * @return array
-     */
-    public function preview(int $art_id)
-    {
-        $limit = 7;
-        $comments = Comment::where('art_id', $art_id)
-            ->limit(0, $limit)
-            ->orderBy('id', 'desc')
-            ->get();
-        $id_list = array_column($comments, 'id');
-
-        // 循环获取其中需要的to_id
-        /** @var Comment $comment */
-        foreach ($comments as $comment) {
-            if (!in_array($comment->to_id, $id_list)) {
-                $id_list[] = $comment->to_id;
-                $to_id = $comment->to_id;
-                // 啊这...
-                hoho:
-                if ($reply_comment = Comment::fetchById($to_id)) {
-                    if (array_search($to_id, array_column($comments, 'id')) !== false) {
-                        continue;
-                    }
-                    $comments[] = $reply_comment;
-                    if ($to_id = $reply_comment->to_id) {
-                        if (array_search($to_id, array_column($comments, 'id')) === false) {
-                            goto hoho;
-                        }
-                    }
-                }
-            }
-        }
-
-        // 根据id倒序排序，否则js会出问题
-        $reverse_id_sort = function($a, $b) {
-            if ($a->id === $b->id) return 0;
-            return intval($a->id) < intval($b->id) ? 1 : -1;
-        };
-        usort($comments, $reverse_id_sort);
-
-        // 邮箱加密
-        foreach ($comments as &$comment) {
-            $comment->email = md5($comment->email);
-        }
-
-        return $comments;
+        $page_size = 5;
+        $page = intval($request->query('page', 1));
+        $seg = Comment::cWhere($art_id, $top_id)
+            ->limit(($page-1)*$page_size, $page_size)
+            ->orderBy('id', 'desc');
+        $response->data = [
+            'page' => $page,
+            'page_size' => $page_size,
+            'count' => $seg->count(),
+            'comments' => $seg->get(),
+        ];
+        return $response;
     }
 }

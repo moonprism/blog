@@ -25,9 +25,11 @@
 }
 .comment label{
     display: inline-block;
-    width: 10%;
     font-size: 15px;
     margin-left: 3px;
+}
+.m-l .comment label{
+    width: 11%;
 }
 .comment #name{
     width: 20%;
@@ -54,7 +56,7 @@
     transition: border-color .3s;
 }
 .comment #name:focus, .comment #email:focus, .comment textarea:focus {
-    border-color: #fbaccc;
+    border-color: #ff1493;
 }
 .comment .exp-p{
     width: 665px;
@@ -72,7 +74,7 @@
     line-height: 20px;
 }
 .comment .exp-p a:hover{
-    color: #16c79a;
+    color: #ff1493;
     font-weight: 400;
 }
 .comment textarea{
@@ -97,7 +99,8 @@
     transition: 0.3s
 }
 .comment .submit:hover{
-    background-color: #555;
+    background-color: #ff5c8d;
+    border-color: #ff5c8d;
     color: #fff;
 }
 .comment .submit{
@@ -111,9 +114,9 @@
     margin-left: 66%;
 }
 .comment .exp:hover{
-    background-color: #bbb;
+    background-color: #777;
+    border-color: #777;
     color: #fff;
-    border-color: #bbb;
 }
 .com-list{
     width: 92%;

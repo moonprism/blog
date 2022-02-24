@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'debug' => true,
+    'log' => [
+        'level' => \Monolog\Logger::DEBUG,
+        'path' => getcwd().'/../../log/app-'.date('Y-m-d').'.log',
+    ],
     'redis' => [
         'host' => 'redis',
         'port' => 6379
@@ -17,13 +22,12 @@ return [
         // view 路径
         'view' => getcwd().'/../app/view/',
     ],
-    'description' => 'aqua',
     'cas' => [
-        'login_url' => 'http://127.0.0.1:8080/#/cas/',
-        'auth_url' => 'http://192.168.80.1:2999/api/v1/cas/auth'
+        'login_url' => 'http://localhost:8033/#/cas/',
+        'auth_url' => 'http://write-api:8044/api/v1/cas/auth'
     ],
     'grpc' => [
-        'host' => '172.22.0.1',
+        'host' => 'write-api',
         'port' => 2333
     ]
 ];
