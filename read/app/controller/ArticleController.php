@@ -58,6 +58,11 @@ class ArticleController
             $article->title = '*****';
             $article->content = ">[danger] 这篇文章还没发布呢 ~~";
         } else {
+            if ($id == 1) {
+                return $this->linkDetail($response);
+            } else if ($id == 2) {
+                return $this->aboutDetail($response);
+            }
             Article::setTagsByList([$article]);
         }
 

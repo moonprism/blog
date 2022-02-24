@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	/// "git.kicoe.com/blog/write/email"
 	"git.kicoe.com/blog/write/modules/setting"
+	"git.kicoe.com/blog/write/services/comment"
 	"git.kicoe.com/blog/write/web/middlewares"
 	"git.kicoe.com/blog/write/web/routers"
 	"github.com/labstack/echo/v4/middleware"
@@ -30,7 +30,7 @@ func runWeb(ctx *cli.Context) error {
 
 	go RunRpc(ctx)
 
-	// go email.RunCommentReplyNotice()
+	go comment.RunNoticServer()
 
 	app.Logger.Fatal(app.Start(":" + setting.App.Port))
 

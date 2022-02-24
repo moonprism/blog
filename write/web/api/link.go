@@ -3,7 +3,7 @@ package api
 import (
 	"git.kicoe.com/blog/write/models"
 	"git.kicoe.com/blog/write/modules/utils"
-	"git.kicoe.com/blog/write/services/comment"
+	"git.kicoe.com/blog/write/services/link"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
@@ -34,7 +34,7 @@ func LinkList(c echo.Context) error {
 		}
 	}
 
-	links, pagination, err := comment.GetLinkList(page, pageSize)
+	links, pagination, err := link.GetList(page, pageSize)
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func UpdateLink(c echo.Context) error {
 		return err
 	}
 
-	if err := comment.UpdateLink(id, l.Status); err != nil {
+	if err := link.Update(id, l.Status); err != nil {
 		return err
 	}
 

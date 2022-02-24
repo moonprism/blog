@@ -1,4 +1,4 @@
-package search
+package se
 
 import (
 	"git.kicoe.com/blog/write/modules/setting"

@@ -8,13 +8,15 @@ export default {
             global_css: '',
             global_js: '',
             captcha: false,
+            notice: false,
         }
     },
     getters: {
         backgroundImage: state => state.setting.background_image,
         globalJS: state => state.setting.global_js,
         globalCSS: state => state.setting.global_css,
-        captcha: state => state.setting.captcha
+        captcha: state => state.setting.captcha,
+        notice: state => state.setting.notice
     },
     mutations: {
         setBackgroundImage(state, image) {
@@ -34,6 +36,7 @@ export default {
                 if (response.data != null) {
                     state.setting = response.data.theme
                     state.setting.captcha = response.data.captcha
+                    state.setting.notice = response.data.notice
                 }
             })
         }

@@ -5,8 +5,11 @@ const setting = {
         return request.get('/system/info')
     },
     update(data) {
-        return request.put('/system/info', data)
+        return request.put('/system/info/theme', data)
     },
+    updateEmail(data) {
+        return request.put('/system/info/notice', data)
+    }
 }
 
 export default setting

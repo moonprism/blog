@@ -2,7 +2,7 @@
 var main_markdown_config = {
     linkTargetBlank: true,
     debug: false,
-    imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
+    imageCDN: 'http://localhost:8033/static/'
 }
 function markd(md) {
     return markdown(md, main_markdown_config).replace(/\:bread\:/g, '🍞')

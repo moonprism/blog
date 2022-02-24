@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"git.kicoe.com/blog/write/email"
+	"git.kicoe.com/blog/write/modules/email"
 	"git.kicoe.com/blog/write/modules/setting"
 	"git.kicoe.com/blog/write/web/middlewares"
 	"github.com/sirupsen/logrus"

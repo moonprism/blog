@@ -1,7 +1,7 @@
 // ===================
 //   Search Engine
 // ===================
-package search
+package se
 
 // import (
 // 	"sort"

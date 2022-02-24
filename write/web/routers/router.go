@@ -80,7 +80,8 @@ func Routers() *echo.Echo {
 		sysG := v1.Group("/system/info")
 		{
 			sysG.GET("", api.GetSystemInfo)
-			sysG.PUT("", api.UpdateSystemInfo, jwtMiddle)
+			sysG.PUT("/theme", api.UpdateSystemTheme, jwtMiddle)
+			sysG.PUT("/notice", api.UpdateSystemNotice, jwtMiddle)
 		}
 
 		commentG := v1.Group("/comment", jwtMiddle)

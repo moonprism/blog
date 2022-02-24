@@ -23,7 +23,7 @@ return [
         'view' => getcwd().'/../app/view/',
     ],
     'cas' => [
-        'login_url' => 'http://127.0.0.1:8080/#/cas/',
+        'login_url' => 'http://localhost:8033/#/cas/',
         'auth_url' => 'http://write-api:8044/api/v1/cas/auth'
     ],
     'grpc' => [

@@ -15,7 +15,7 @@ type Comment struct {
 	Email       string    `json:"email"`
 	Text        string    `json:"text"`
 	CreatedTime time.Time `xorm:"created 'created_time'" json:"created_time"`
-	DeletedAt    time.Time `xorm:"deleted" json:"-"`
+	DeletedAt   time.Time `xorm:"deleted" json:"-"`
 }
 
 func FetchComments(offset, limit int, whereField interface{}) (comments []*Comment, err error) {
@@ -58,7 +58,7 @@ func DeleteComment(id int64) (affected int64, err error) {
 	}
 
 	ids := []int64{id}
-	for _, c := range(comments) {
+	for _, c := range comments {
 		ids = append(ids, c.ID)
 	}
 

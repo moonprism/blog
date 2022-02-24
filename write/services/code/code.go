@@ -5,7 +5,7 @@ import (
 
 	"git.kicoe.com/blog/write/models"
 	"git.kicoe.com/blog/write/modules/err/errors"
-	"git.kicoe.com/blog/write/modules/search"
+	"git.kicoe.com/blog/write/modules/se"
 	"git.kicoe.com/blog/write/modules/utils"
 )
 
@@ -70,7 +70,7 @@ func Create(codeUp *UpdateBody) (err error) {
 		return
 	}
 	// todo transaction
-	err = search.NewIndex("code").Insert(ToDoc(code))
+	err = se.NewIndex("code").Insert(ToDoc(code))
 	if err != nil {
 		return
 	}
@@ -93,7 +93,7 @@ func Update(id int64, codeUp *UpdateBody) (err error) {
 	}
 
 	code.ID = id
-	err = search.NewIndex("code").Update(ToDoc(code))
+	err = se.NewIndex("code").Update(ToDoc(code))
 	if err != nil {
 		return
 	}
@@ -101,7 +101,7 @@ func Update(id int64, codeUp *UpdateBody) (err error) {
 }
 
 func Delete(id int64) (err error) {
-	err = search.NewIndex("code").Delete(strconv.FormatInt(id, 10))
+	err = se.NewIndex("code").Delete(strconv.FormatInt(id, 10))
 	if err != nil {
 		return
 	}
@@ -118,7 +118,7 @@ func Delete(id int64) (err error) {
 }
 
 func SearchDoc(text string, page, limit int) (codes []*models.Code, pagination *utils.Pagination, err error) {
-	result, count := search.NewIndex("code").Search(text, (page-1)*limit, limit)
+	result, count := se.NewIndex("code").Search(text, (page-1)*limit, limit)
 	pagination = utils.GeneratePagination(page, limit, count)
 	// codes, err = model.FetchCodesByIds(ids)
 	if err != nil {

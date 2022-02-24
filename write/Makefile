@@ -20,7 +20,7 @@ fmt:
 	gofmt -s -w .
 
 reindex:
-	$(GO) run main.go reindex
+	$(GO) run main.go se reindex
 
 data/dict.txt: $(DICT_TXT)
 	mkdir -p data

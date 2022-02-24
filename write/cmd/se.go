@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"git.kicoe.com/blog/write/modules/search"
+	"git.kicoe.com/blog/write/modules/se"
 	"git.kicoe.com/blog/write/services/code"
 	"github.com/gookit/color"
 	"github.com/urfave/cli/v2"
@@ -28,7 +28,7 @@ func seReIndex(ctx *cli.Context) error {
 		for _, c := range codes {
 			color.Println("<green>" + c.Description + "</>")
 			codeDetail, _ := code.GetDetail(c.ID)
-			search.NewIndex("code").Insert(code.ToDoc(codeDetail.Code))
+			se.NewIndex("code").Insert(code.ToDoc(codeDetail.Code))
 		}
 		if len(codes) < 100 {
 			break

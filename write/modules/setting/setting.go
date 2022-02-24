@@ -50,7 +50,6 @@ var (
 		Port string `ini:"port"`
 		Pass string `ini:"pass"`
 		Host string `ini:"host"`
-		From string `ini:"from"`
 	}
 
 	RPC struct {
