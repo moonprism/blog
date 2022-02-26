@@ -53,15 +53,12 @@ write-web-dev:
 DOCKER_DIR=./docker/
 WRITE_DIR=./write/
 
-init:
-	cd $(WRITE_DIR)config; cp test.ini prod.ini
-
 protobuf: $(wildcard *.proto)
 	protoc --go_out=plugins=grpc:write/protodata code.proto
 	#protoc --php_out=read/app/model/protobuf --plugin=protoc-gen-grpc=/usr/games/grpc_php_plugin code.proto
 	protoc --php_out=read/app/model/protobuf  code.proto
 
-# Write
+# ======= Write =======
 
 ## build-write-api: 后台api容器打包编译
 build-write-api: #protobuf
@@ -72,26 +69,30 @@ build-write-api: #protobuf
 build-write-web:
 	cd $(WRITE_DIR); make docker-build-web
 
+## admin-passwd: 设置后台登录用户名&密码
+admin-passwd:
+	$(DOCKER_COMPOSE) exec write-api /www/linux_amd64_api passwd
+
+## meili-init: 从数据库初始化查询引擎
+meili-init:
+	$(DOCKER_COMPOSE) exec write-api /www/linux_amd64_api se reindex
+
 ## sh-write: 进入后台容器shell
 sh-write:
 	$(DOCKER_COMPOSE) exec write-api /bin/sh
 
-## re-write: 重编译后台服务
-re-write:
-	$(DOCKER_COMPOSE) stop write
-	$(DOCKER_COMPOSE) rm write
-	$(DOCKER_COMPOSE) build --no-cache write
-	$(DOCKER_COMPOSE) up -d
-
-# Read
+# ======= Read =======
 
 # build-php: 使用当前系统代理编译php镜像
-build-php:
-	cd $(DOCKER_DIR)php; docker build --network host .
+# build-php:
+# 	cd $(DOCKER_DIR)php; docker build --network host .
+
+build-php-after:
+	$(DOCKER_COMPOSE) up -d ; $(DOCKER_COMPOSE) exec php composer install
 
 ## build-read: 前台编译
 build-read:
-	cd read; npm run build
+	cd read; $(DOCKER_COMPOSE) -f build.yml run web
 
 ## sh-php: 进入前台容器shell
 sh-php:
