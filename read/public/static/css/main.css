@@ -36,7 +36,7 @@ a {
 html {
     font-size: 14px;
     background: #fff;
-    color: #233;
+    color: #222;
     height:100%;
 }
 html, body {
@@ -130,7 +130,7 @@ body {
     font-size: 16px;
     font-weight: 200;
     color: #333;
-    transition: 0.5s
+    transition: color 0.5s
 }
 
 #header .nav ul li a::before {
@@ -190,14 +190,14 @@ body {
 #content .article h1 a {
     color: #333;
     text-shadow: 0 1px 1px rgba(0,0,0,.2);
-    font-size: 20px;
+    font-size: 19px;
     padding: 1px 5px;
-    transition: 0.16s;
+    transition: color 0.16s;
 }
 
 #content .article h1 a:hover{
     color: #B667F1;
-    transition: 0.25s;
+    transition: color 0.25s;
 }
 
 #content .article h1 a i{
@@ -270,10 +270,6 @@ body {
 .summary {
     word-wrap: break-word;
 }
-
-.summary.markdown>p {
-    font-size: 16px;
-}
 .summary.markdown p {
     padding: 0;
     margin: 0;
@@ -289,7 +285,6 @@ body {
     width: 100%;
     margin: 5px;
     font-size: 15px;
-    
 }
 .summary.markdown table td {
     padding: 5px 15px;
@@ -311,7 +306,7 @@ body {
     color: #111;
     font-size: 16px;
     padding-bottom: 25px;
-    border-bottom: 1.4px solid #eee;
+    border-bottom: 1.4px solid rgba(50,50,50,.06);
 }
 .article-list .article:last-child .summary {
     border-bottom: 0!important;
@@ -338,18 +333,18 @@ body {
     text-align: center;
     margin: 63px 76px 0 36px;
     padding: 13px 0 13px;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    border-top: 1px solid rgba(50,50,50,.07);
+    border-bottom: 1px solid rgba(50,50,50,.07);
     color: #000;
     font-family: 'Space Mono', monospace;
 }
 #content .agreement a {
-    transition: .2s;
+    transition: color .2s;
 }
 #content .agreement a:hover {
     color: #7900FF;
     text-decoration: underline;
-    transition: .4s;
+    transition: color .4s;
 }
 .page {
     padding: 20px 0 5px;
@@ -367,7 +362,7 @@ body {
     height: 28px;
     width: 28px;
     border-radius: 50%;
-    transition: 0.5s;
+    transition: color 0.5s;
     color: #464646
 }
 
@@ -451,7 +446,7 @@ body {
     border-radius: 50%;
     display: inline-block;
     box-shadow: rgba(0,0,0,0.4) 0 1px 2px;
-    transition: 0.4s;
+    transition: color 0.4s;
     color: #000;
 }
 

@@ -8,7 +8,7 @@
 .m-l .markdown h1 {
     font-size: 18px;
     padding: 15px 12px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1.2px solid rgba(50,50,50,.05);
     margin-bottom: 17px;
     color: #233;
 }
@@ -32,7 +32,7 @@
     content: '';
 }
 .m-l .markdown blockquote {
-    font-size: 1.24em;
+    font-size: 16px;
     color: #444;
     list-style: none;
     padding: 5px 10px 12px;

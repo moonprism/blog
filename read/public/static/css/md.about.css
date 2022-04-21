@@ -5,12 +5,14 @@
 .m-a .markdown h1 {
     display: flex;
     justify-content: center;
-    margin-bottom: 18px;
+    margin: 15px 28px 18px;
+    padding-bottom: 10px;
     cursor: default;
+    border-bottom: 1.2px solid rgba(50, 50, 50, 0.08);
 }
 .m-a .markdown h1 i {
-    height: 67px;
-    width: 67px;
+    height: 65px;
+    width: 65px;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
