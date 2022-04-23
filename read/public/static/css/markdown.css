@@ -39,10 +39,10 @@
 .markdown h2:before{
     content: '#';
     font-size: 17px;
-    color: #eb5055;
+    color: rgb(235 80 85 / 85%);;
     font-weight: 600;
     position: absolute;
-    top: 6px;
+    top: 7px;
     left: -13px;
 }
 .markdown h3{

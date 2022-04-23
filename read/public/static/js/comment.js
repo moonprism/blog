@@ -1,6 +1,6 @@
 var comment = $('comment')
 if (comment) {
-    let emoticons = ['(｡・`ω´･)', '("▔□▔)/', '(*゜ロ゜)'];
+    let emoticons = ['("▔□▔)/']; //'(｡・`ω´･)', '(*゜ロ゜)'];
     comment.innerHTML = `
     <div class="comment">
         <span id="to_name"></span>
@@ -125,7 +125,6 @@ if (comment) {
                     })
                     currentBeferId = co['id']
                 })
-                console.log(response.data.comments.length, currentPageSize)
                 if (response.data.comments.length == currentPageSize) {
                     more_a.style.display='block';
                 } else {

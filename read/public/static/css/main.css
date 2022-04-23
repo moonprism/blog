@@ -167,7 +167,7 @@ body {
 
 #content {
     width: 766px;
-    margin: 30px auto 280px;
+    margin: 30px auto 150px;
     background-color: #fff;
     padding: 23px 47px 20px;
     border-radius: 3px;
@@ -332,10 +332,11 @@ body {
 #content .agreement {
     text-align: center;
     margin: 63px 76px 0 36px;
-    padding: 13px 0 13px;
+    padding: 12px 0;
     border-top: 1px solid rgba(50,50,50,.07);
     border-bottom: 1px solid rgba(50,50,50,.07);
-    color: #000;
+    color: #444;
+    font-size: 13px;
     font-family: 'Space Mono', monospace;
 }
 #content .agreement a {
@@ -601,4 +602,34 @@ body {
 /** fix */
 button {
     font: 400 13.3333px Arial;
+}
+.fav {
+    transition: max-height .33s;
+    max-height: 30px;
+    overflow: hidden;
+    margin: 0 24px 15px !important;
+    padding: 5px 2px !important;
+    border: 1px solid #ccc !important;
+    background-color: #fff !important;
+    border-radius: 5px;
+    overflow: hidden;
+    color: #000;
+}
+.fav>p {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+.fav>p:before {
+    content: attr(data-content);
+    /* content: "▸" */
+    /* content: "▾" */
+}
+.fav blockquote {
+    background-color: #fff !important;
+    margin: 2px 15px !important;
+    padding: 0 !important;
+    border: 0 !important;
 }

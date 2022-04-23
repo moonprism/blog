@@ -46,12 +46,8 @@
     line-height: 20px;
     color: #555;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(100, 100, 100, 0.3);
     border-radius: 3px;
-    outline: none;
-    transition: border-color .3s;
-}
-.comment textarea {
     outline: none;
     transition: border-color .3s;
 }
@@ -63,7 +59,7 @@
     height: 113px;
     position: absolute;
     padding: 14px 6px 7px;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255, 255, 255, .9);
 }
 .comment .exp-p a{
     margin: 4px 6px;
@@ -78,20 +74,23 @@
     font-weight: 400;
 }
 .comment textarea{
+    outline: none;
+    transition: border-color .3s;
     width: 81%;
     height: 111px;
     margin-top: 10px;
     padding: 5px 11px;
     color: #444;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(100, 100, 100, .3);
     border-radius: 3px;
     font-size: 14px;
     font-family: 'Roboto Mono';
 }
 .comment .submit , .comment .exp{
     font-family: "Microsoft YaHei Light";
-    border: 1px solid #555;
+    border: 1px solid #999;
+    color: #333;
     border-radius: 3px;
     margin-top: 2px;
     cursor: pointer;
@@ -99,8 +98,8 @@
     transition: 0.3s
 }
 .comment .submit:hover{
-    background-color: #ff5c8d;
-    border-color: #ff5c8d;
+    background-color: #000;
+    border-color: #000;
     color: #fff;
 }
 .comment .submit{
@@ -114,8 +113,8 @@
     margin-left: 66%;
 }
 .comment .exp:hover{
-    background-color: #777;
-    border-color: #777;
+    background-color: #555;
+    border-color: #555;
     color: #fff;
 }
 .com-list{
@@ -125,7 +124,7 @@
 .com {
     padding: 10px 5px 1px;
     margin-top: 30px;
-    border-top: 1px solid #e2e2e2;
+    border-top: 1px solid rgba(100, 100, 100,.11);
 }
 .com img{
     width: 40px;
@@ -154,7 +153,7 @@
     color: #acacac
 }
 .com p{
-    padding: 10px 5px;
+    padding: 10px 5px 0;
 }
 .com > .com{
     margin-left: 33px;
@@ -181,7 +180,7 @@
 .repl_line {
     width: 1px;
     height: 1px;
-    background: #e2e2e2;
+    background: rgba(100, 100, 100, .15);
     position: absolute;
     visibility: hidden;
     transition: height 0.5s;
