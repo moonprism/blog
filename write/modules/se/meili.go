@@ -2,7 +2,6 @@ package se
 
 import (
 	"git.kicoe.com/blog/write/modules/setting"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/meilisearch/meilisearch-go"
 )
 
@@ -57,7 +56,6 @@ func (i *Index) Search(text string, offset, limit int) (result []map[string]inte
 		Offset:                int64(offset),
 		AttributesToHighlight: []string{"*"},
 	})
-	spew.Dump(searchRaw)
 	if err != nil {
 		return
 	}
