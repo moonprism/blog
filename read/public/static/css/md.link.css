@@ -91,7 +91,9 @@
 }
 
 .m-l .markdown>p {
-    font-size: 16px;
+    font-size: 15px;
+    color: #3a3a3a;
+    padding: 0 10px;
 }
 
 .m-l{
@@ -122,4 +124,11 @@
 }
 .m-l .comment label {
     width: 14% !important;
+}
+.m-l .info {
+    font-size: 14px !important;
+    border: 0 !important;
+    border-left: 3px solid rgba(100,100,100,.18) !important;
+    border-radius: 0 !important;
+    padding: 2px 10px !important;
 }
