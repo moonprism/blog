@@ -60,7 +60,9 @@ class ApiController
      */
     public function link(LinkRequest $request, ApiResponse $response)
     {
-        $request->check();
+        if ($err = $request->check()) {
+            return $response->setBodyStatus(422, $err);
+        }
         $link = Link::createByOther($request);
         $link->save();
         return $response;

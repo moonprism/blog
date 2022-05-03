@@ -132,3 +132,15 @@
     border-radius: 0 !important;
     padding: 2px 10px !important;
 }
+.m-l .info code{
+    font-size: 14px !important;
+    float: none !important;
+    line-height: normal !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    letter-spacing: 0!important;
+}
+.m-l .info a{
+    display: inline!important;
+    letter-spacing: 0!important;
+}
