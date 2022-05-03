@@ -42,7 +42,7 @@
     color: rgb(235 80 85 / 85%);;
     font-weight: 600;
     position: absolute;
-    top: 7px;
+    top: 6px;
     left: -13px;
 }
 .markdown h3{
@@ -58,7 +58,7 @@
     font-size: 21px;
     color: #9b45e4;
     position: absolute;
-    top: 5px;
+    top: 4px;
     left: -5px;
 }
 @keyframes anchorTarget {
@@ -135,30 +135,30 @@
     box-shadow: rgba(0,0,0,0.2) 0 1px 1px;
 }
 .markdown blockquote{
-    margin: 15px 4px;
-    padding: 16px 15px;
-    border-left: 3px solid #409EFF;
+    margin: 15px 2px;
+    padding: 12px 15px;
+    border-left: 3px solid rgba(81,91,212,1);
+    background-color: rgba(81,91,212,.05);
     word-wrap: break-word;
     font-size: 15px;
     line-height: 1.6;
-    background-color: #f1f8ff;
     letter-spacing: .05em;
 }
 .markdown .success {
-    border-left-color: #67C23A;
-    background-color: #f2faee;
+    border-left-color: rgba(150,193,32,1);
+    background-color: rgba(150,193,32,.05);
 }
 .markdown .warning {
-    border-left-color: #E6A23C;
-    background-color: #fcf5ea;
+    border-left-color: rgba(255,217,114,1);
+    background-color: rgba(255,217,114,.05)
 }
 .markdown .danger {
-    border-left-color: #F56C6C;
-    background-color: #feeded;
+    border-left-color: rgba(221,42,123,1);
+    background-color: rgba(221,42,123,.05);
 }
 .markdown .info {
-    border-left-color: #909399;
-    background-color: #f6f6f7;
+    border-left-color: rgba(129,52,175,1);
+    background-color: rgba(129,52,175,.05);
 }
 
 .markdown hr{
