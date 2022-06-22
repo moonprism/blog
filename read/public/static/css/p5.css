@@ -37,7 +37,7 @@
 }
 
 .p5-st .p5-form {
-    width: 766px;
+    width: 699px;
     margin: 50px auto;
     background-color: #fff;
     padding: 10px 47px 10px;
@@ -106,7 +106,7 @@
 /* }                              */
 
 .p5-st .p5-form .p5-f-i {
-    margin: 15px 30px;
+    margin: 15px 20px;
     padding: 10px 20px;
     border: 1px solid #fff;
 }
@@ -134,7 +134,7 @@
     border: none;
     color: inherit;
     line-height: 40px;
-    width: 500px;
+    width: 444px;
 }
 .p5-st .p5-form input:empty {
     /* background: inherit; */

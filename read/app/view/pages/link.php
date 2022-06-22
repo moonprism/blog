@@ -24,7 +24,7 @@
 		</div>
 		<div class="p5-f-i">
 			<label for="p5-f-icon" style="margin-left:3px">IC<span>ON</span></label>
-			<input id="p5-f-icon" name="p5-f-icon" autocomplete="off" placeholder="https://gravatar.cat.net/avatar/*.jpg" type="text">
+			<input id="p5-f-icon" name="p5-f-icon" autocomplete="off" placeholder="https://gravatar/avatar/*.jpg" type="text">
 		</div>
 		<div class="p5-f-i">
 			<label for="p5-f-url" style="margin-left:10px">UR<span>L</span></label>

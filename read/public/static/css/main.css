@@ -36,7 +36,7 @@ a {
 html {
     font-size: 14px;
     background: #fff;
-    color: #222;
+    color: #333;
     height:100%;
 }
 html, body {
@@ -95,11 +95,11 @@ body {
     height: 44px;
     background-color: #fff;
     box-shadow: rgba(0,0,0,0.1) 0 1px 2px;
-    width: 766px;
+    width: 699px;
     margin: 44px auto 39px;
     padding: 2px 47px;
     border-radius: 3px;
-    color: #222;
+    color: #333;
     z-index: 99;
     font-family: 'Space Mono', monospace;
 }
@@ -166,7 +166,7 @@ body {
 }
 
 #content {
-    width: 766px;
+    width: 699px;
     margin: 30px auto 500px;
     background-color: #fff;
     padding: 23px 47px 20px;

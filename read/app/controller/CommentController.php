@@ -59,17 +59,10 @@ class CommentController
      */
     public function list(Request $request, ApiResponse $response, int $art_id): ApiResponse
     {
-        /** @var Cache $cache */
-        $cache = Link::make(Cache::class);
-        $cache_key = 'comment_preview:'.$art_id;
         $before_id = intval($request->query('before_id', 0));
         $page_size = intval($request->query('page_size', 2));
         if ($page_size > 10) {
             $page_size = 10;
-        }
-        if ($before_id == 0 && $data = $cache->get($cache_key)) {
-            $response->data = json_decode($data);
-            return $response;
         }
         $seg = Comment::cWhere($art_id, 0)
             ->limit($page_size)
@@ -95,10 +88,6 @@ class CommentController
             'count' => $seg->count(),
             'comments' => $comments,
         ];
-        if ($before_id == 0 && $comments) {
-            $cache->set($cache_key, json_encode($response->data));
-            $cache->expire($cache_key, 3 * 3600);
-        }
         return $response;
     }
 

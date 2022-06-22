@@ -65,7 +65,7 @@ if (comment) {
     }
     // 显示评论列表
     var currentBeferId = 0;
-    var currentPageSize = 2;
+    var currentPageSize = 3;
     var more_a = $('more_a');
     function comment_list(){
         // 啊这...
