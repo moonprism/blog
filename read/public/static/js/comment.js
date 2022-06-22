@@ -34,7 +34,7 @@ if (comment) {
             </div>
         </div>
         <div class="com-list" id="com_list"></div>
-        <a class="more_a" id="more_a">all</a>
+        <a class="more_a" id="more_a">查看更多...</a>
     </div>
     `;
 
@@ -67,7 +67,12 @@ if (comment) {
     var currentBeferId = 0;
     var currentPageSize = 3;
     var more_a = $('more_a');
+    var lastCom = null
     function comment_list(){
+        if (lastCom !== null) {
+            lastCom.style.height = 'auto'
+            lastCom.style.overflow = 'inherit'
+        }
         // 啊这...
         commentInputs[1].value = '0';
         commentInputs[4].value = '留言';
@@ -126,11 +131,21 @@ if (comment) {
                     currentBeferId = co['id']
                 })
                 if (response.data.comments.length == currentPageSize) {
+                    // 需要隐藏的留言
+                    lastCom = document.querySelectorAll('.com-list > .com:last-child')[0]
+                    console.log(lastCom)
+                    document.querySelectorAll('.com-list > .com:last-child').forEach((com) => {
+                        com.style.height = '72px'
+                        com.style.overflow = 'hidden'
+                    })
+                    // 展示显示更多按钮
                     more_a.style.display='block';
+                    commentList.style.marginBottom = '-25px'
                 } else {
-                    if (currentPageSize != 2) {
-                        commentList.style.paddingBottom = '25px'
-                    }
+                    // if (currentPageSize != 3) {
+                    //     commentList.style.paddingBottom = '25px'
+                    // }
+                    commentList.style.marginBottom = '0'
                 }
                 loading.parentNode.removeChild(loading);
             },
@@ -175,7 +190,7 @@ if (comment) {
     }
     comment_list();
     more_a.onclick = () => {
-        currentPageSize += 1
+        //currentPageSize += 1
         comment_list()
     }
 
@@ -249,7 +264,7 @@ if (comment) {
                     // commentToName.innerHTML = '';
                 }
                 commentList.innerHTML = '';
-                currentPageSize = 2;
+                currentPageSize = 3;
                 currentBeferId = 0;
                 comment_list(1);
             },
