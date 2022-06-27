@@ -7,5 +7,4 @@
         </textarea>
     </div>
 </div>
-<script type="text/javascript" src="//at.alicdn.com/t/font_2433958_d446yfk76h8.js"></script>
 <?php $_temp_footer(); ?>

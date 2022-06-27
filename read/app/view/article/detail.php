@@ -6,13 +6,13 @@
         <div class="mark">
 <?php $math_flag = false ?>
             <svg class="icon i-date" aria-hidden="true">
-                <use xlink:href="#icondate"></use>
+                <use xlink:href="#icon-date"></use>
             </svg>
             <?php echo date('Y.m.d D', strtotime($article->created_time)) ?>
 
 <?php if($article->getTags()){ ?>
             <svg class="icon i-tag" aria-hidden="true">
-                <use xlink:href="#icontag"></use>
+                <use xlink:href="#icon-tag"></use>
             </svg>
 <?php } ?>
 <?php foreach($article->getTags() as $tag){ ?>
@@ -32,8 +32,6 @@
     <div class="agreement" id="agreement">parsed by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a><br></div>
     <div id="comment" data-id="<?php echo $article->id ?>"></div>
 </div>
-<script src="//at.alicdn.com/t/font_1747613_gq90x707awu.js"></script>
-<script src="//at.alicdn.com/t/font_1922445_kmgc1s3rvap.js"></script>
 <?php if ($math_flag) { ?>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>

@@ -22,7 +22,6 @@
 
     </div>
 </div>
-<script src="//at.alicdn.com/t/font_1747612_imjmg02wt19.js"></script>
 
 <?php $_temp_footer(); ?>
 

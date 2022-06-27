@@ -35,7 +35,7 @@
 			<input id="p5-f-emoji" name="p5-f-emoji" autocomplete="off" placeholder="⭐️" type="text">
 		</div>
         <div class="markdown" id="p5-link"><blockquote><p><a target="_blank" rel="noopener" href="https://kicoe.com"><img src="https://gravatar.cat.net/avatar/7c6d3737a25a9ec47b5439ec123bd1df">kicoe's Blog<code>⭐️<i>joker.</i></code></a></p></blockquote></div>
-        <div style="height:300px"><canvas id="p5-talk" width="860" height="250"></canvas><div contenteditable="true" id="p5-talk-msg"></div></div>
+        <div style="height:300px"><canvas id="p5-talk" width="814" height="250"></canvas><div contenteditable="true" id="p5-talk-msg"></div></div>
         <div class="p5-post"><canvas id="p5-post" width="250" height="80"></div>
         <div id="p5-post-message" class="markdown"></div>
 	</div>
@@ -43,6 +43,4 @@
     <div class="p5-load" id="p5-load"></div>
     <div id="comment" data-id="<?php echo $article->id ?>"></div>
 </div>
-<script src="//at.alicdn.com/t/font_2434616_fos6fvq6jgf.js"></script>
-<script src="//at.alicdn.com/t/font_1922445_kmgc1s3rvap.js"></script>
 <?php $_temp_footer(); ?>
