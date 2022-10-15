@@ -144,3 +144,12 @@
     display: inline!important;
     letter-spacing: 0!important;
 }
+.m-l .seed {
+    font-size: 14px;
+    text-align: center;
+    color: green;
+    letter-spacing: 0;
+    margin: 20px auto 13px;
+}
+.m-l .seed span{
+}

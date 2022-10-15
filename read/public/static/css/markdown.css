@@ -91,9 +91,11 @@
     padding-top: 120px;
 } */
 .markdown b {
-    padding: 0 2px;
+    padding: 0 1px;
     color: #555;
-    font-size: 15px;
+    font-size: 14px;
+    position: relative;
+    top: -1px;
 }
 .markdown>p{
     font-size: 16px;
@@ -216,7 +218,7 @@
 }
 .markdown table th,
 .markdown table td {
-    padding: 8px 14px;
+    padding: 9px 25px;
     border: 1px solid #dfe2e5;
 }
 

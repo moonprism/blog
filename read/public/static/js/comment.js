@@ -133,7 +133,6 @@ if (comment) {
                 if (response.data.comments.length == currentPageSize) {
                     // 需要隐藏的留言
                     lastCom = document.querySelectorAll('.com-list > .com:last-child')[0]
-                    console.log(lastCom)
                     document.querySelectorAll('.com-list > .com:last-child').forEach((com) => {
                         com.style.height = '72px'
                         com.style.overflow = 'hidden'

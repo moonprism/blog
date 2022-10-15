@@ -1,11 +1,13 @@
 <?php $_temp_header(); ?>
 <div id="content" class="link-block m-l">
     <div class="markdown">
-        <textarea class="md" style="display: none;">
+        <textarea class="md" style="display: none;" id="mb">
 <?php echo trim($article->content); ?>
 
         </textarea>
     </div>
+
+<!-- Take Your Heart -->
 <div class="p5-st" id="p5-st">
 	<div style="text-align:right"></div>
     <div class="p5-form">
@@ -43,4 +45,28 @@
     <div class="p5-load" id="p5-load"></div>
     <div id="comment" data-id="<?php echo $article->id ?>"></div>
 </div>
+
+<script>
+// 简单写下 随机排序的处理
+const url = window.location.href
+var seed
+if (url.indexOf("?") != -1) {
+    seed = parseInt(url.split('?')[1])
+} else {
+    seed = Math.round(Math.random() * 8999999) + 1000000
+}
+var linkText = document.getElementById('mb').innerHTML
+var ll = linkText.match(/\n@@@[\s\S]*?\n@@@/)[0].split('\n\n')
+ll.shift();ll.pop()
+ll.map((v, i) => {
+    let r = seed / v.split('').map(v => v.charCodeAt()).reduce((c, sum) => sum + c)
+    r = Math.floor(r) % ll.length;
+    [ll[i], ll[r]] = [ll[r], ll[i]]
+})
+linkText = linkText.replace(/\n@@@[\s\S]*?\n@@@/, ll.join("\n\n")+
+    '\n\n<div class="seed"> 🌱 random seed: <span>'+seed+'<span></div>')
+document.getElementById('mb').innerHTML = linkText
+window.history.pushState({}, 0, "?"+seed)
+</script>
+
 <?php $_temp_footer(); ?>
