@@ -13,7 +13,7 @@ if (comment) {
                 </svg>
                 Name:
             </label>
-            <input id="name" name="name" autocomplete="off" placeholder="your name." type="text" >
+            <input id="name" name="name" autocomplete="off" placeholder="[Your name](🔗)" type="text" >
             <label for="email">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-Email"></use>
@@ -93,11 +93,7 @@ if (comment) {
                     com.className = 'com';
                     commentList.insertBefore(com, null);
                     f.addNode(com, 'img', '', {src:'https://gravatar.cat.net/avatar/'+co['email']});
-                    f.addNode(com, 'a', co['name'], {
-                        'class': 'repl_name',
-                        onclick: 'repl(this)',
-                        'data-id': co['id'],
-                    });
+                    parseLink(com, co['name'], '', co['id'])
                     f.addNode(com, 'span', getDateDiff(co['created_time']));
                     f.addNode(com, 'p', co['text']);
                     let h = f.addNode(com, 'a', '', {
@@ -113,11 +109,7 @@ if (comment) {
                         indexX[subCo['id']] = subCo
                         let subCom = f.addNode(com, 'div', '', {'class':'com'});
                         f.addNode(subCom, 'img', '', {src:'https://gravatar.cat.net/avatar/'+subCo['email']});
-                        f.addNode(subCom, 'a', subCo['name']+'@'+indexX[subCo['to_id']]['name'], {
-                            'class': 'repl_name',
-                            onclick: 'repl(this)',
-                            'data-id': subCo['id'],
-                        });
+                        parseLink(subCom, subCo['name'], indexX[subCo['to_id']]['name'], subCo['id'])
                         f.addNode(subCom, 'span', getDateDiff(subCo['created_time']));
                         f.addNode(subCom, 'p', subCo['text']);
                         let h = f.addNode(subCom, 'a', '', {
@@ -152,6 +144,33 @@ if (comment) {
 
             }
         });
+    }
+    function parseLink(node, name, replName, id) {
+        parseLinkText(node, name, id)
+        if (replName != '') {
+            f.addNode(node, 'b', '@')
+            parseLinkText(node, replName, -1)
+        }
+    }
+    function parseLinkText(node, text, id) {
+        let result = text.match(/^\[(.+?)\]\((.+?)\)/)
+        let name = '';
+        let params = {
+            'target': '_blank',
+        }
+        if (id != -1) {
+            params['data-id'] = id
+            params['class'] = 'repl_name'
+        }
+        if (result) {
+            name = result[1]
+            if (id != -1) {
+                params['href'] = result[2].startsWith('http') ? result[2] : ('http://'+result[2])
+            }
+        } else {
+            name = text
+        }
+        f.addNode(node, 'a', name, params)
     }
     function getDateDiff(date){
         const commentData = new Date(date);

@@ -88,9 +88,10 @@
     margin: 17px 25px;
     font-size: 17px;
     color: #fff;
+    background-color: #232323;
 }
 .m-a .markdown pre code {
-    color: #dddddd
+    color: #eee
 }
 .m-a .markdown blockquote {
     padding: 13px 20px;

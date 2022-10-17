@@ -34,7 +34,6 @@
 .comment #name{
     width: 20%;
     margin-right: 3%;
-    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
 }
 .comment #email{
     width: 30%;
@@ -122,8 +121,8 @@
     margin-top: 30px;
 }
 .com {
-    padding: 10px 5px 1px;
-    margin-top: 30px;
+    padding: 20px 5px 1px;
+    margin-top: 28px;
     border-top: 1px solid rgba(100, 100, 100,.11);
 }
 .com img{
@@ -139,7 +138,16 @@
     display: inline-block;
     letter-spacing: 1px;
     font-size: 13px;
-    color: #000
+    color: #777;
+}
+.com b {
+    font-weight: normal;
+    font-family: 'Space Mono',monospace;
+    margin: 0 2px 0 6px;
+    color: #777;
+}
+.com .repl_name {
+    color: #333;
 }
 .com .repl{
     float: right;
@@ -153,6 +161,7 @@
     color: #acacac
 }
 .com p{
+    margin-right: 30px;
     padding: 10px 5px 0;
 }
 .com > .com{
