@@ -1,6 +1,7 @@
 DOCKER=docker
 DOCKER_COMPOSE=docker-compose#.exe
 NPM=npm
+PASSWORD=$(shell cat ./password.txt)
 
 help: Makefile
 	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
@@ -104,4 +105,8 @@ sh-redis:
 
 ## sh-mysql: 进入mysql容器shell
 sh-mysql:
-	$(DOCKER_COMPOSE) exec mysql mysql -u root -p
+	$(DOCKER_COMPOSE) exec mysql mysql -u root -p$(PASSWORD)
+
+## back-sql: 备份sql
+back-sql:
+	$(DOCKER_COMPOSE) exec mysql mysqldump -uroot -p$(PASSWORD) --databases blog --tables article article_tag code comment file tag > ./data/$(shell date +%Y%m%d)_blog.sql
