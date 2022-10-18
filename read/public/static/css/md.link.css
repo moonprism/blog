@@ -155,3 +155,9 @@
 }
 .m-l .seed span{
 }
+
+@media screen and (max-width: 750px) {
+    .m-l .comment .exp {
+        margin-left: 60%!important;
+    }
+}

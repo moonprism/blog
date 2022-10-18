@@ -501,14 +501,14 @@ body {
 
 @media screen and (max-width: 750px) {
     #header {
-        width: 96%;
+        width: 100%;
         padding: 0;
         margin: 30px auto 10px;
     }
     #content {
-        width: 96% !important;
+        width: 98% !important;
         margin: 0 auto;
-        padding: 10px 0;
+        padding: 10px 0 20px;
     }
     .article h1 a {
         font-size: 18px !important;

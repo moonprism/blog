@@ -131,3 +131,9 @@
     font-size: 17px;
     margin-left: 3px;
 }
+
+@media screen and (max-width: 750px) {
+    #content {
+        width: 100% !important;
+    }
+}
