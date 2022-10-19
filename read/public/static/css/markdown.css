@@ -218,7 +218,7 @@
 }
 .markdown table th,
 .markdown table td {
-    padding: 9px 25px;
+    padding: 9px 25px 8px;
     border: 1px solid #dfe2e5;
 }
 

@@ -20,7 +20,7 @@ if (comment) {
                 </svg> 
                 Email:
             </label>
-            <input id="email" name="email" autocomplete="off" placeholder="Email" type="text" >
+            <input id="email" name="email" autocomplete="off" placeholder="✉️" type="text" >
             <div class="exp-p" id="exp_p" style="display: none;"></div>
             <textarea name="content"></textarea>
             <button id="exp" class="exp">`+emoticons[Math.floor((Math.random()*emoticons.length))]+`</button>
@@ -34,7 +34,7 @@ if (comment) {
             </div>
         </div>
         <div class="com-list" id="com_list"></div>
-        <a class="more_a" id="more_a">查看更多...</a>
+        <a class="more_a" id="more_a">加载更多...</a>
     </div>
     `;
 
