@@ -23,13 +23,17 @@ var CmdSE = cli.Command{
 func seReIndex(ctx *cli.Context) error {
 	Init()
 
+	ind := se.NewIndex("code")
 	for i := 0; ; i++ {
 		codes, _, _ := code.GetList(i, 100)
+		codeSlice := []map[string]interface{}{}
 		for _, c := range codes {
 			color.Println("<green>" + c.Description + "</>")
 			codeDetail, _ := code.GetDetail(c.ID)
-			se.NewIndex("code").Insert(code.ToDoc(codeDetail.Code))
+			color.Println("<yellow>" + codeDetail.Content + "</>")
+			codeSlice = append(codeSlice, code.ToDoc(codeDetail.Code))
 		}
+		ind.Insert(codeSlice)
 		if len(codes) < 100 {
 			break
 		}

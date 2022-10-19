@@ -62,6 +62,6 @@ func (i *Index) Search(text string, offset, limit int) (result []map[string]inte
 	for _, r := range searchRaw.Hits {
 		result = append(result, r.(map[string]interface{})["_formatted"].(map[string]interface{}))
 	}
-	count = searchRaw.NbHits
+	count = searchRaw.EstimatedTotalHits
 	return
 }

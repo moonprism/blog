@@ -37,16 +37,18 @@ func GetDetail(id int64) (codeDetail *models.CodeDetail, err error) {
 	return
 }
 
-func ToDoc(code *models.Code) []map[string]interface{} {
-	return []map[string]interface{}{
-		{
+func ToDoc(code *models.Code) map[string]interface{} {
+	return map[string]interface{}{
 			"id":      code.ID,
 			"desc":    code.Description,
 			"lang":    code.Lang,
 			"tags":    code.Tags,
 			"content": code.Content,
-		},
 	}
+}
+
+func ToDocs(code *models.Code) []map[string]interface{} {
+	return []map[string]interface{}{ToDoc(code)}
 }
 
 type UpdateBody struct {
@@ -70,7 +72,7 @@ func Create(codeUp *UpdateBody) (err error) {
 		return
 	}
 	// todo transaction
-	err = se.NewIndex("code").Insert(ToDoc(code))
+	err = se.NewIndex("code").Insert(ToDocs(code))
 	if err != nil {
 		return
 	}
@@ -93,7 +95,7 @@ func Update(id int64, codeUp *UpdateBody) (err error) {
 	}
 
 	code.ID = id
-	err = se.NewIndex("code").Update(ToDoc(code))
+	err = se.NewIndex("code").Update(ToDocs(code))
 	if err != nil {
 		return
 	}

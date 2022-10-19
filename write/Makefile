@@ -46,6 +46,7 @@ build: #data/dict.txt data/stop_tokens.txt
 build-web:
 	cd $(WEB_DIR); npm install; npm run build
 
+## docker-build-api: docker build xx
 docker-build-api:
 	docker-compose -f build.yml run api
 
