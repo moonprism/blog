@@ -9,6 +9,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/go-ego/riot"
 	"github.com/go-ego/riot/types"
@@ -42,9 +43,13 @@ func (r *RiotSE) Init() *RiotSE {
 	return r
 }
 
+var once sync.Once
+
 // todo 兼容ES
 func InitRiot() {
-	Engine = NewRiotSE().Init()
+	once.Do(func() {
+		Engine = NewRiotSE().Init()
+	})
 }
 
 func (r *RiotSE) Insert(index string, id int64, data interface{}) error {

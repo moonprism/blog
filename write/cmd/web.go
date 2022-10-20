@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"git.kicoe.com/blog/write/modules/se"
 	"git.kicoe.com/blog/write/modules/setting"
 	"git.kicoe.com/blog/write/services/comment"
 	"git.kicoe.com/blog/write/web/middlewares"
@@ -14,10 +15,22 @@ var CmdWeb = cli.Command{
 	Usage:       "start web server",
 	Description: "web server need run",
 	Action:      runWeb,
+	Flags: []cli.Flag{
+		&cli.BoolFlag{
+			Name:   "reindex",
+			Usage:  "reindex from db",
+		},
+	},
 }
 
 func runWeb(ctx *cli.Context) error {
 	Init()
+	se.InitRiot()
+
+	if (ctx.Bool("reindex")) {
+		seReIndex(ctx)
+	}
+
 	app := routers.Routers()
 	app.HideBanner = true
 
