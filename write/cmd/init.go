@@ -13,5 +13,5 @@ func Init() {
 	logs.Init()
 	db.Init()
 	redis.Init()
-	se.Init()
+	se.InitRiot()
 }

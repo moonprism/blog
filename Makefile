@@ -63,7 +63,7 @@ protobuf: $(wildcard *.proto)
 
 ## build-write-api: 后台api容器打包编译
 build-write-api: #protobuf
-	cd $(WRITE_DIR); make docker-build-api; make build-api-after
+	cd $(WRITE_DIR); make build-api-before; make docker-build-api;
 	$(DOCKER_COMPOSE) build write-api
 
 ## build-write-web: 后台web编译

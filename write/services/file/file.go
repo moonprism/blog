@@ -37,8 +37,8 @@ func Create(file multipart.File) (m *models.File, err error) {
 			return nil, err
 		}
 		//go func() {
-			err = bucket.PutObjectFromFile(key, filePath)
-			// todo chan接收err处理
+		err = bucket.PutObjectFromFile(key, filePath)
+		// todo chan接收err处理
 		//}()
 		if err != nil {
 			return nil, err

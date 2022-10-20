@@ -31,6 +31,9 @@ services:
     build: ./write
     ports:
       - "8044:8044"
+    depends_on:
+      - mysql
+      - redis
     environment:
       TZ: "Asia/Shanghai"
     volumes:
@@ -60,14 +63,6 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./log/mysql:/var/log/mysql
-    networks:
-      - app
-  meilisearch:
-    image: getmeili/meilisearch
-    ports:
-      - "7700:7700"
-    volumes:
-      - ./data/meilisearch:/data.ms
     networks:
       - app
 

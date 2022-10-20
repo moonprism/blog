@@ -56,14 +56,6 @@ var (
 		Port string `ini:"port"`
 	}
 
-	Meili = struct {
-		Host string `ini:"host"`
-		Port string `ini:"port"`
-	}{
-		Host: "127.0.0.1",
-		Port: "7700",
-	}
-
 	sectionMap = map[string]interface{}{
 		"auth":  &Auth,
 		"mysql": &Mysql,
@@ -72,7 +64,6 @@ var (
 		"redis": &Redis,
 		"smtp":  &SMTP,
 		"rpc":   &RPC,
-		"meili": &Meili,
 	}
 )
 
