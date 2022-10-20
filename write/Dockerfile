@@ -4,8 +4,8 @@ WORKDIR /www
 
 COPY linux_amd64_api .
 
-RUN mkdir ./data
-COPY data/*.text ./data/
+CMD mkdir data
+COPY data/*.txt ./data/
 
 COPY options/.ini ./options/
 

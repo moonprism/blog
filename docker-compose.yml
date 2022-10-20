@@ -6,6 +6,9 @@ services:
     ports:
       - "8023:8023"
       - "8033:8033"
+    depends_on:
+      - write-api
+      - php
     volumes:
       - ./read:/var/www/html/read
       - ./write/web/app/dist:/var/www/html/write
