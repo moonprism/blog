@@ -231,8 +231,7 @@ body {
 }
 
 #content .article h1 a {
-    color: #292929;
-    text-shadow: 0 1px 1px rgba(0,0,0,.1);
+    color: #222;
     font-size: 19px;
     padding: 1px 5px;
     transition: color 0.16s;

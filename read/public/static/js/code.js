@@ -18,13 +18,12 @@ if (searchResult) {
                 highlight();
                 setTimeout(function () {$('load').innerHTML = '';}, 100)
             } else {
+                if ($('load').innerHTML === '') {
+                    f.addNode($('load'), 'div', '', {class: 'loading'});
+                }
                 setTimeout(function () {
                     if ($('searchInput').value != searchText) {
                         return;
-                    }
-
-                    if ($('load').innerHTML === '') {
-                        f.addNode($('load'), 'div', '', {class: 'loading'});
                     }
 
                     f.fetch("/api/code?text=" + searchText, {
