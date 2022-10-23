@@ -1,7 +1,7 @@
 package code
 
 import (
-	"strconv"
+	"strings"
 
 	"git.kicoe.com/blog/write/models"
 	"git.kicoe.com/blog/write/modules/err/errors"
@@ -37,16 +37,26 @@ func GetDetail(id int64) (codeDetail *models.CodeDetail, err error) {
 	return
 }
 
-func ToDoc(code *models.Code) []map[string]interface{} {
-	return []map[string]interface{}{
-		{
-			"id":      code.ID,
-			"desc":    code.Description,
-			"lang":    code.Lang,
-			"tags":    code.Tags,
-			"content": code.Content,
-		},
-	}
+// func ToSearchDoc(code *models.Code) models.SearchCodeParams {
+// 	return models.SearchCodeParams{
+// 		Description:    code.Description,
+// 		Lang:    code.Lang,
+// 		Tags:    code.Tags,
+// 		Content: code.Content,
+// 	}
+// }
+
+func ToSearchDoc(code *models.Code) string {
+	return strings.Join([]string{
+		code.Description,
+		code.Lang,
+		code.Tags,
+		code.Content,
+	}, "\n\n\n\n") //...
+}
+
+func ParseFromDoc(string) {
+
 }
 
 type UpdateBody struct {
@@ -70,7 +80,7 @@ func Create(codeUp *UpdateBody) (err error) {
 		return
 	}
 	// todo transaction
-	err = se.NewIndex("code").Insert(ToDoc(code))
+	err = se.Engine.Insert("code", code.ID, ToSearchDoc(code))
 	if err != nil {
 		return
 	}
@@ -93,7 +103,7 @@ func Update(id int64, codeUp *UpdateBody) (err error) {
 	}
 
 	code.ID = id
-	err = se.NewIndex("code").Update(ToDoc(code))
+	err = se.Engine.Update("code", code.ID, ToSearchDoc(code))
 	if err != nil {
 		return
 	}
@@ -101,7 +111,7 @@ func Update(id int64, codeUp *UpdateBody) (err error) {
 }
 
 func Delete(id int64) (err error) {
-	err = se.NewIndex("code").Delete(strconv.FormatInt(id, 10))
+	err = se.Engine.Delete("code", id)
 	if err != nil {
 		return
 	}
@@ -118,19 +128,15 @@ func Delete(id int64) (err error) {
 }
 
 func SearchDoc(text string, page, limit int) (codes []*models.Code, pagination *utils.Pagination, err error) {
-	result, count := se.NewIndex("code").Search(text, (page-1)*limit, limit)
+	result, count, err := se.Engine.Search("code", text, (page-1)*limit, limit)
 	pagination = utils.GeneratePagination(page, limit, count)
-	// codes, err = model.FetchCodesByIds(ids)
-	if err != nil {
-		return
-	}
-	for _, re := range result {
+	for _, r := range result {
+		rs := strings.SplitN(string(r.([]byte)), "\n\n\n\n", 4)
 		code := &models.Code{CodeMeta: &models.CodeMeta{}}
-		code.ID, _ = strconv.ParseInt(re["id"].(string), 10, 64)
-		code.Description = re["desc"].(string)
-		code.Lang = re["lang"].(string)
-		code.Tags = re["tags"].(string)
-		code.Content = re["content"].(string)
+		code.Description = rs[0]
+		code.Lang = rs[1]
+		code.Tags = rs[2]
+		code.Content = rs[3]
 		codes = append(codes, code)
 	}
 	return

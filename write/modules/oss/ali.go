@@ -29,7 +29,3 @@ func OssBlogBucket() (*aliyunoss.Bucket, error) {
 	}
 	return bucket, nil
 }
-
-func InitOss() {
-	NewOssClient()
-}

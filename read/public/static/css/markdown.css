@@ -1,65 +1,65 @@
 .markdown{
     font-size: 15px;
     margin-top: 26px;
+    letter-spacing: .01em;
 }
 .markdown a:hover{
     text-decoration: underline;
 }
 .markdown a {
     margin: 0 2px;
-    font-size: .93em;
 }
 .markdown h1, .markdown h2, .markdown h3{
     color: #555;
 }
 .markdown h4 {
-    color: #78d71c;
-    border-bottom: 2px solid #78d71c;
+    color: #444;
+    border-bottom: 1.5px solid #555;
     display: inline-block;
     padding: 0px 5px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 }
 .markdown h1{
     padding: 7px 7px;
     border-bottom: 1px solid #e7e7e7;
     margin: 15px 0 15px;
-    font-size: 19px;
+    font-size: 18px;
     cursor: pointer;
 }
 .markdown h2{
     padding: 5px 4px;
-    font-size: 18px;
+    font-size: 17px;
     margin: 20px 0 10px;
-    color: #111;
+    color: #050505;
     font-weight: 400;
     position: relative;
 }
 .markdown h2:before{
     content: '#';
-    font-size: 18px;
-    color: #eb5055;
+    font-size: 17px;
+    color: rgb(235 80 85 / 85%);;
     font-weight: 600;
     position: absolute;
-    top: 5px;
-    left: -15px;
+    top: 6px;
+    left: -13px;
 }
 .markdown h3{
     padding: 4px 12px;
-    font-size: 18px;
+    font-size: 16px;
     margin: 15px 0 10px;
-    color: #222;
+    color: #181818;
     font-weight: 400;
     position: relative;
 }
 .markdown h3:before{
-    content: '@';
-    font-size: 19px;
+    content: '*';
+    font-size: 21px;
     color: #9b45e4;
     position: absolute;
-    top: 5px;
-    left: -7px;
+    top: 4px;
+    left: -5px;
 }
 @keyframes anchorTarget {
     0%{
@@ -91,24 +91,25 @@
     padding-top: 120px;
 } */
 .markdown b {
-    padding: 0 2px;
+    padding: 0 1px;
     color: #555;
-    font-size: 15px;
+    font-size: 14px;
+    position: relative;
+    top: -1px;
 }
 .markdown>p{
-    font-size: 17px;
-    line-height: 1.75;
-    color: #233;
+    font-size: 16px;
+    line-height: 1.77;
+    color: #333;
     margin-bottom: 19px;
 }
 .markdown ul, .markdown ol{
     margin: 18px 0;
-    font-size: 17px;
-    color: #2b2c25;
+    font-size: 16px;
     padding-left: 2em;
 }
 .markdown ul li,.markdown ol li{
-    margin-bottom: 8px;
+    margin-bottom: 7px;
     padding-left: 5px;
 }
 .markdown ul li{
@@ -136,38 +137,37 @@
     box-shadow: rgba(0,0,0,0.2) 0 1px 1px;
 }
 .markdown blockquote{
-    margin: 15px 4px;
-    padding: 16px 15px;
-    color: #444;
-    border-left: 3px solid #409EFF;
+    margin: 15px 2px;
+    padding: 12px 15px;
+    border-left: 3px solid rgba(81,91,212,1);
+    background-color: rgba(81,91,212,.05);
     word-wrap: break-word;
     font-size: 15px;
     line-height: 1.6;
-    background-color: #f1f8ff;
     letter-spacing: .05em;
 }
 .markdown .success {
-    border-left-color: #67C23A;
-    background-color: #f2faee;
+    border-left-color: rgba(150,193,32,1);
+    background-color: rgba(150,193,32,.05);
 }
 .markdown .warning {
-    border-left-color: #E6A23C;
-    background-color: #fcf5ea;
+    border-left-color: rgba(255,217,114,1);
+    background-color: rgba(255,217,114,.05)
 }
 .markdown .danger {
-    border-left-color: #F56C6C;
-    background-color: #feeded;
+    border-left-color: rgba(221,42,123,1);
+    background-color: rgba(221,42,123,.05);
 }
 .markdown .info {
-    border-left-color: #909399;
-    background-color: #f6f6f7;
+    border-left-color: rgba(129,52,175,1);
+    background-color: rgba(129,52,175,.05);
 }
 
 .markdown hr{
     margin-bottom: 15px;
     height: 0;
     border: none;
-    border-top: 1.8px solid #e7e7e7;
+    border-top: 1.5px solid rgba(50, 50, 50, 0.07);
 }
 .markdown br{
     margin-bottom: 3px;
@@ -205,7 +205,7 @@
 }
 .markdown pre code{
     font: 16px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
-    padding-bottom: 12px;
+    padding-bottom: 7px;
 }
 .markdown table{
     margin: 20px 7px 22px;
@@ -218,7 +218,7 @@
 }
 .markdown table th,
 .markdown table td {
-    padding: 8px 14px;
+    padding: 9px 25px 8px;
     border: 1px solid #dfe2e5;
 }
 

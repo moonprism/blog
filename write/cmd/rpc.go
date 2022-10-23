@@ -8,6 +8,7 @@ import (
 	"git.kicoe.com/blog/write/models/protodata"
 	"git.kicoe.com/blog/write/modules/setting"
 	"git.kicoe.com/blog/write/services/code"
+	"git.kicoe.com/blog/write/modules/se"
 	"github.com/gookit/color"
 	"github.com/urfave/cli/v2"
 	"google.golang.org/grpc"
@@ -23,6 +24,9 @@ func RunRpc(ctx *cli.Context) error {
 	if err != nil {
 		log.Fatalf("error start rpc server: %v", err)
 	}
+
+	se.InitRiot()
+	// reindex
 
 	s := grpc.NewServer()
 	reflection.Register(s)

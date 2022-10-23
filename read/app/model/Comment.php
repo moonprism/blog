@@ -16,8 +16,7 @@ class Comment extends BaseModel
 
     public static function cWhere(int $art_id, int $top_id)
     {
-        return (new self)->columns('id', 'to_id', 'name', 'email', 'text', 'created_time', 'l.link')
-            ->leftJoin('link l', 'l.email = comment.email')
+        return (new self)->columns('id', 'to_id', 'name', 'email', 'text', 'created_time')
             ->where('art_id', $art_id)
             ->where('top_id', $top_id)
             ->where('comment.deleted_at is null');

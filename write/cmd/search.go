@@ -9,7 +9,7 @@ import (
 
 var CmdSE = cli.Command{
 	Name:        "se",
-	Usage:       "== Search Engine ==, meilisearch",
+	Usage:       "== Search Engine ==",
 	Description: "",
 	Subcommands: []*cli.Command{
 		{
@@ -22,17 +22,19 @@ var CmdSE = cli.Command{
 
 func seReIndex(ctx *cli.Context) error {
 	Init()
+	se.InitRiot()
 
 	for i := 0; ; i++ {
 		codes, _, _ := code.GetList(i, 100)
 		for _, c := range codes {
 			color.Println("<green>" + c.Description + "</>")
 			codeDetail, _ := code.GetDetail(c.ID)
-			se.NewIndex("code").Insert(code.ToDoc(codeDetail.Code))
+			se.Engine.Insert("code", codeDetail.ID, code.ToSearchDoc(codeDetail.Code))
 		}
 		if len(codes) < 100 {
 			break
 		}
 	}
+
 	return nil
 }

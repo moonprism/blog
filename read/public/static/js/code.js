@@ -18,20 +18,13 @@ if (searchResult) {
                 highlight();
                 setTimeout(function () {$('load').innerHTML = '';}, 100)
             } else {
+                if ($('load').innerHTML === '') {
+                    f.addNode($('load'), 'div', '', {class: 'loading'});
+                }
                 setTimeout(function () {
-                    if ($('load').innerHTML === '') {
-                        f.addNode($('load'), 'div', '', {class: 'loading'});
+                    if ($('searchInput').value != searchText) {
+                        return;
                     }
-                    // var myHeaders = new Headers();
-                    // myHeaders.append("kicoe-fetch-type", "json");
-                    // 
-                    // var myInit = { method: 'GET',
-                    //     headers: myHeaders,
-                    //     mode: 'cors',
-                    //     cache: 'default' };
-                    // 
-                    // var myRequest = new Request("/code/search?text=" + searchText, myInit);
-                    // fetch(myRequest).then();
 
                     f.fetch("/api/code?text=" + searchText, {
                         method: "GET",
@@ -40,9 +33,6 @@ if (searchResult) {
                                 $('searchResult').innerHTML = backupHTML;
                                 hoverMarkdown(true);
                                 highlight();
-                                return;
-                            }
-                            if ($('searchInput').value != searchText) {
                                 return;
                             }
                             searchResult[searchText] = response;
@@ -62,7 +52,7 @@ if (searchResult) {
                             setTimeout(function () {$('load').innerHTML = '';}, 100)
                         }
                     });
-                }, 50)
+                }, 500)
             }
         } else  {
             // 清空处理

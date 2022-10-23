@@ -24,6 +24,13 @@ type CodeDetail struct {
 	*Code
 }
 
+type SearchCodeParams struct {
+	Description string `json:"desc"`
+	Content     string `json:"content"`
+	Lang        string `json:"lang"`
+	Tags        string `json:"tags"`
+}
+
 func FetchCodesByIds(ids []int64) (codes []*Code, err error) {
 	codes = make([]*Code, 0)
 	err = db.MysqlXEngine.Table("code").In("id", ids).Find(&codes)

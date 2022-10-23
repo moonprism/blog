@@ -19,19 +19,20 @@ swag:
 fmt:
 	gofmt -s -w .
 
-reindex:
+data/dictionary.txt:
+	mkdir -p data
+	wget https://raw.githubusercontent.com/go-ego/gse/v0.66.0/data/dict/dictionary.txt -O ./data/dictionary.txt
+
+data/stop_tokens.txt:
+	mkdir -p data
+	wget https://raw.githubusercontent.com/go-ego/riot/master/data/dict/stop_tokens.txt -O ./data/stop_tokens.txt
+
+## reindex: reindex
+reindex: data/dictionary.txt data/stop_tokens.txt
 	$(GO) run main.go se reindex
 
-data/dict.txt: $(DICT_TXT)
-	mkdir -p data
-	cp $(DICT_TXT) ./data/dict.txt
-
-data/stop_tokens.txt: $(STOP_TOKENS_TXT)
-	mkdir -p data
-	cp $(STOP_TOKENS_TXT) ./data/stop_tokens.txt
-
 ## serve: run local dev serve
-serve: #data/dict.txt data/stop_tokens.txt
+serve: data/dictionary.txt data/stop_tokens.txt
 	$(GO) run main.go web
 
 ## serve-web: run local dev serve (web)
@@ -39,18 +40,18 @@ serve-web:
 	cd $(WEB_DIR); npm run dev
 
 ## build: build binary "main"
-build: #data/dict.txt data/stop_tokens.txt
+build:
 	CGO_ENABLED=0 GOOS=$(GOOS) GOARCH=$(GOARCH) $(GO) build -o $(BINARY) -v
 
 ## build-web: build frontend dist dir
 build-web:
 	cd $(WEB_DIR); npm install; npm run build
 
+## docker-build-api: docker build xx
 docker-build-api:
 	docker-compose -f build.yml run api
 
-build-api-after: #data/dict.txt data/stop_tokens.txt
-
+build-api-before: data/dictionary.txt data/stop_tokens.txt
 
 docker-build-web:
 	docker-compose -f build.yml run web

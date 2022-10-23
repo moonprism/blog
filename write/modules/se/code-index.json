@@ -1,0 +1,42 @@
+{
+    "name": "code",
+    "storage_type": "disk",
+    "shard_num": 1,
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "default": {
+                    "type": "gse_search"
+                }
+            }
+        }
+    },
+    "mappings": {
+        "properties": {
+            "desc": {
+                "type": "text",
+                "index": true,
+                "store": true,
+                "highlightable": true
+            },
+            "lang": {
+                "type": "keyword",
+                "index": true,
+                "store": true,
+                "highlightable": true
+            },
+            "tags": {
+                "type": "text",
+                "index": true,
+                "store": true,
+                "highlightable": true
+            },
+            "content": {
+                "type": "text",
+                "index": true,
+                "store": true,
+                "highlightable": true
+            }
+        }
+    }
+}

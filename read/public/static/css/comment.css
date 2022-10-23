@@ -34,7 +34,6 @@
 .comment #name{
     width: 20%;
     margin-right: 3%;
-    font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif;
 }
 .comment #email{
     width: 30%;
@@ -46,12 +45,8 @@
     line-height: 20px;
     color: #555;
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(100, 100, 100, 0.3);
     border-radius: 3px;
-    outline: none;
-    transition: border-color .3s;
-}
-.comment textarea {
     outline: none;
     transition: border-color .3s;
 }
@@ -63,7 +58,7 @@
     height: 113px;
     position: absolute;
     padding: 14px 6px 7px;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255, 255, 255, .9);
 }
 .comment .exp-p a{
     margin: 4px 6px;
@@ -78,20 +73,23 @@
     font-weight: 400;
 }
 .comment textarea{
-    width: 81%;
+    outline: none;
+    transition: border-color .3s;
+    width: 83%;
     height: 111px;
     margin-top: 10px;
     padding: 5px 11px;
     color: #444;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(100, 100, 100, .3);
     border-radius: 3px;
     font-size: 14px;
     font-family: 'Roboto Mono';
 }
 .comment .submit , .comment .exp{
     font-family: "Microsoft YaHei Light";
-    border: 1px solid #555;
+    border: 1px solid #999;
+    color: #333;
     border-radius: 3px;
     margin-top: 2px;
     cursor: pointer;
@@ -99,8 +97,8 @@
     transition: 0.3s
 }
 .comment .submit:hover{
-    background-color: #ff5c8d;
-    border-color: #ff5c8d;
+    background-color: #000;
+    border-color: #000;
     color: #fff;
 }
 .comment .submit{
@@ -114,8 +112,8 @@
     margin-left: 66%;
 }
 .comment .exp:hover{
-    background-color: #777;
-    border-color: #777;
+    background-color: #555;
+    border-color: #555;
     color: #fff;
 }
 .com-list{
@@ -123,9 +121,9 @@
     margin-top: 30px;
 }
 .com {
-    padding: 10px 5px 1px;
-    margin-top: 30px;
-    border-top: 1px solid #e2e2e2;
+    padding: 20px 5px 1px;
+    margin-top: 28px;
+    border-top: 1px solid rgba(100, 100, 100,.11);
 }
 .com img{
     width: 40px;
@@ -139,8 +137,17 @@
     height: 18px;
     display: inline-block;
     letter-spacing: 1px;
-    font-size: 14px;
-    color: #393939
+    font-size: 13px;
+    color: #777;
+}
+.com b {
+    font-weight: normal;
+    font-family: 'Space Mono',monospace;
+    margin: 0 2px 0 6px;
+    color: #777;
+}
+.com .repl_name {
+    color: #333;
 }
 .com .repl{
     float: right;
@@ -154,17 +161,20 @@
     color: #acacac
 }
 .com p{
-    padding: 10px 5px;
+    margin-right: 30px;
+    padding: 10px 5px 0;
 }
 .com > .com{
     margin-left: 33px;
 }
 .more_a{
     display: none;
-    margin: 35px auto 0;
-    width: 80px;
+    position: relative;
+    background: hsla(0,0%,100%,.9);
+    padding: 5px;
     text-align: center;
-    color: #3d00bf !important;
+    color: #555;
+    font-size: 13px;
 }
 .more_a:hover{
     text-decoration: underline;
@@ -181,7 +191,7 @@
 .repl_line {
     width: 1px;
     height: 1px;
-    background: #e2e2e2;
+    background: rgba(100, 100, 100, .15);
     position: absolute;
     visibility: hidden;
     transition: height 0.5s;

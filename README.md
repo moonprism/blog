@@ -1,36 +1,60 @@
-博客系统, Golang + PHP + Vue ...
+博客系统
 
-目录结构:
+PHP + Golang
+
+## Features
+
+* 简单，快速
+* markdown
+* 设计清楚、可爱
+* 轻量的的全文搜索
+* 评论系统
+* 基于 codemirror 的后台 vim 编辑器
+
+## Directory
 
 ```
-| - data      数据
 | - docker    各容器编译目录
 | -  | - mysql
 | -  | -  | - blog.sql
-| - log       日志
 | - read      前台展示 (php)
 |    | - app
 |    | -  | - config.php *
 |    | - public
 |    | -  | - static
-|    | -  | -  | - js 
-|    | -  | -  | - | - main.js * 
+|    | -  | -   | - js 
+|    | -  | -   | -  | - main.js * 
 | - write     后台管理 (golang)
-|    | - api
 |    | - config
 |    | -  | - prod.ini *
 |    | - web
 |    | -  | - app  管理界面 (vue)
 |    | -  | -  | - .env.product *
-| - docker-compose.yml *
-(标*为可手动配置文件)
+| - docker-compose.yml
+> *为可配置文件
 ```
 
-查看构建帮助:
+## Usage
+
+先安装好 `docker` `docker-compose`，查看构建帮助:
 
 ```shell
 make help
 ```
 
-> 编译脚本 ./build.sh, 依赖 `docker-compose`、`vi`
+## Tech Stack
 
+* PHP
+  - [kicoephp](https://github.com/moonprism/kicoephp-src)
+* Golang
+  - echo
+  - riot
+* JS
+  - [markdown.js](https://github.com/moonprism/markdown.js)
+  - vue
+  - element-ui
+  - gulp
+
+## Preview
+
+![](https://github.com/moonprism/cdn/blob/master/image/f-1.png?raw=true)

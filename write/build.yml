@@ -11,7 +11,7 @@ services:
     command: /bin/sh -c "npm install ; npm run build"
 
   api:
-    image: golang:1.16-alpine #golang:1.18beta2-alpine
+    image: golang:1.19.2-alpine
     volumes:
       - ./:/app
       # - ./mod:/go/pkg/mod

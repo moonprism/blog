@@ -9,13 +9,13 @@
             <h1><a href="/article/<?php echo $article->id ?>"><?php echo stripslashes($article->title) ?></a></h1>
                 <div class="mark">
                     <svg class="icon i-date" aria-hidden="true">
-                        <use xlink:href="#icondate"></use>
+                        <use xlink:href="#icon-date"></use>
                     </svg>
                     <?php echo date('Y.m.d D', strtotime($article->created_time)) ?>
 
 <?php if($article->getTags()){ ?>
                     <svg class="icon i-tag" aria-hidden="true">
-                        <use xlink:href="#icontag"></use>
+                        <use xlink:href="#icon-tag"></use>
                     </svg>
 <?php } ?>
 <?php foreach($article->getTags() as $t) { ?>
@@ -32,6 +32,5 @@
     </div>
 <?php include(dirname(__DIR__).'/article/page.php') ?>
 </div>
-<script src="//at.alicdn.com/t/font_1747613_gq90x707awu.js"></script>
 <?php $_temp_footer(); ?>
 <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/monokai.min.css">

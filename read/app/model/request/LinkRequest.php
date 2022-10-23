@@ -17,6 +17,8 @@ class LinkRequest extends Request
 
     public function check()
     {
-
+        if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/', $this->email) && !$this->data) {
+            return '(*゜ロ゜)ノ 真没什么想说的吗?';
+        }
     }
 }

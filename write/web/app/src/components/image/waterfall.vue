@@ -1,5 +1,13 @@
 <template>
     <div class="image-list-wrapper">
+    <div class="picker">
+        <el-date-picker
+           v-model="mon"
+           type="month"
+           @change="createList()"
+           placeholder="选择月">
+        </el-date-picker>
+    </div>
         <Waterfall :list="list" :gutter="15" :width="waterfallItemWidth" :phoneCol="2" ref="waterfall">
             <template slot="item" slot-scope="props">
                 <el-card :body-style="{padding:'0px'}">
@@ -27,6 +35,7 @@
     export default {
         data () {
             return {
+                mon: '',
                 list: [],
                 selectedItem: {},
                 startFetchLimit: 25,
@@ -39,7 +48,20 @@
         },
         methods: {
             async createList(limit) {
-                const res = await fileApi.imageList({size: limit})
+                let maxDate = new Date()
+                if (this.mon) {
+                    maxDate = new Date(this.mon)
+                }
+                if (maxDate.getMonth() == 11) {
+                    maxDate = new Date(maxDate.getFullYear() + 1, 0, 1);
+                } else {
+                    maxDate = new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 1);
+                }
+                let max_time = dateFormat(maxDate, 'yyyy-MM-dd hh:mm:ss')
+                const res = await fileApi.imageList({
+                    max_time,
+                    size: limit
+                })
                 this.list = res.data.data
 
                 this.list.map(function (item) {
@@ -117,5 +139,8 @@
     .fetchMore {
         text-align: center;
         margin-top: 50px;
+    }
+    .picker {
+        margin-left: 15px;
     }
 </style>

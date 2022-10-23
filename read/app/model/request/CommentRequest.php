@@ -25,7 +25,7 @@ class CommentRequest extends Request
         if ($name_len === 0) {
             return '(,,Ծ‸Ծ,,) 不想告诉我名字吗';
         }
-        if ($name_len > 15) {
+        if ($name_len > 200) {
             return ' (ಥ_ಥ) 名字不要取得太长啦';
         }
         if (!preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/', $this->email)) {

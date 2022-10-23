@@ -1,16 +1,17 @@
 .m-a .markdown {
     margin: 0 auto;
-    padding: 0 10px;
 }
 .m-a .markdown h1 {
     display: flex;
     justify-content: center;
-    margin-bottom: 18px;
+    margin: 15px 20px 18px;
+    padding-bottom: 10px;
     cursor: default;
+    border-bottom: 1.2px solid rgba(50, 50, 50, 0.08);
 }
 .m-a .markdown h1 i {
-    height: 67px;
-    width: 67px;
+    height: 65px;
+    width: 65px;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
@@ -42,7 +43,7 @@
 }
 .m-a .markdown ul {
     padding-left: 2.7em;
-    margin: 15px 0;
+    margin: 12px 0;
 }
 .m-a .markdown ul li {
     line-height: 1.65em;
@@ -87,9 +88,10 @@
     margin: 17px 25px;
     font-size: 17px;
     color: #fff;
+    background-color: #232323;
 }
 .m-a .markdown pre code {
-    color: #dddddd
+    color: #eee
 }
 .m-a .markdown blockquote {
     padding: 13px 20px;
@@ -128,4 +130,10 @@
     font-weight: 100;
     font-size: 17px;
     margin-left: 3px;
+}
+
+@media screen and (max-width: 750px) {
+    #content {
+        width: 100% !important;
+    }
 }

@@ -2,11 +2,6 @@
 
 博客前台
 
-功能:
+* PHP 7.4+
 
-- 展示文章
-- 展示代码笔记与搜索结果(grpc前端)
-- 预览后台未发布的内容(通过后台进行CAS认证)
-- 评论系统
-
-> 前端代码大都是五六年前写的，好乱
+> powered by [kicoephp](https://github.com/moonprism/kicoephp-src)

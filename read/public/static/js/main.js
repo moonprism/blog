@@ -2,10 +2,11 @@
 var main_markdown_config = {
     linkTargetBlank: true,
     debug: false,
-    imageCDN: 'http://localhost:8033/static/'
+    imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
 }
 function markd(md) {
-    return markdown(md, main_markdown_config).replace(/\:bread\:/g, '🍞')
+    let text = md.replace(/\nxxx\n([\s\S]*?)\nxxx/g, '') // 自定义隐藏
+    return markdown(text, main_markdown_config).replace(/\:bread\:/g, '🍞')
         .replace(/\:heart\:/g, '❤️')
         .replace(/\:sparkling_heart\:/g, '💖')
         .replace(/\:zap\:/g, '⚡️')
@@ -49,6 +50,21 @@ function markd(md) {
 
 document.querySelectorAll('.markdown > .md').forEach((md) => {
     md.parentNode.innerHTML = markd(md.innerText)
+})
+
+document.querySelectorAll('.markdown > .fav').forEach((fav) => {
+    let favP = fav.firstChild
+    favP.dataset.content = "▸"
+    let favL = fav.lastChild
+    favP.onclick = () => {
+        if (favP.dataset.content == "▸") {
+            fav.style.maxHeight = favL.clientHeight+40+'px'
+            favP.setAttribute('data-content', "▾");
+        } else {
+            fav.style.maxHeight = '30px'
+            favP.setAttribute('data-content', "▸");
+        }
+    }
 })
 
 var $ = (id) => document.getElementById(id)
