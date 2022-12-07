@@ -13,7 +13,7 @@ require (
 	github.com/go-xorm/xorm v0.7.9
 	github.com/golang/protobuf v1.5.2
 	github.com/gookit/color v1.5.0
-	github.com/labstack/echo/v4 v4.6.3
+	github.com/labstack/echo/v4 v4.9.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/swaggo/swag v1.7.9
 	github.com/urfave/cli/v2 v2.3.0
