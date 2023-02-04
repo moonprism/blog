@@ -117,11 +117,19 @@ if (butCanvas) {
         let icon = $('p5-f-icon').value
         let url = $('p5-f-url').value
         let emoji = $('p5-f-emoji').value
-        if (icon) {
-            $('p5-link').innerHTML = '<blockquote><p><a target="_blank" rel="noopener" href="'+url+'"><img onerror="" src="'+icon+'">'+name+'<code>'+emoji+'<i>'+intro+'</i></code></a></p></blockquote>'
-        } else {
-            $('p5-link').innerHTML = '<blockquote><p><a target="_blank" rel="noopener" href="'+url+'"><img onerror="" src="https://gravatar.cat.net/avatar/123">'+name+'<code>'+emoji+'<i>'+intro+'</i></code></a></p></blockquote>'
+        if (!icon) {
+            icon = avatar_cdn+'7c6d3737a25a9ec47b5439ec123bd1df'
         }
+        if (!emoji) {
+            emoji = '⭐️'
+        }
+        if (!name) {
+            name = 'kicoe\'s Blog'
+        }
+        if (!intro) {
+            intro = 'joker.'
+        }
+        $('p5-link').innerHTML = '<blockquote><p><a target="_blank" rel="noopener" href="'+url+'"><img onerror="" src="'+icon+'">'+name+'<code>'+emoji+'<i>'+intro+'</i></code></a></p></blockquote>'
     }
     [].slice.call(inputs).forEach(i => {
         if (i.id == 'p5-f-icon') {

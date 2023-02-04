@@ -165,7 +165,7 @@
     cursor: text;
 }
 #p5-talk-msg:empty:before{ 
-    content: '只玩过p5s，非常喜欢p5s的音乐和设计。\A有什么想说的可以直接点击这里留言哦, 不交换友链也没关系~'; 
+    content: '有什么想说的可以直接点击这里留言哦~\A心之怪盗团 敬上'; 
     white-space: pre;
     color: gray; 
 } 

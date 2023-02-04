@@ -92,7 +92,7 @@ if (comment) {
                     var com = document.createElement('div');
                     com.className = 'com';
                     commentList.insertBefore(com, null);
-                    f.addNode(com, 'img', '', {src:'https://gravatar.cat.net/avatar/'+co['email']});
+                    f.addNode(com, 'img', '', {src:avatar_cdn+co['email']});
                     parseLink(com, co['name'], '', co['id'])
                     f.addNode(com, 'span', getDateDiff(co['created_time']));
                     f.addNode(com, 'p', co['text']);
@@ -108,7 +108,7 @@ if (comment) {
                     co.sub_comments.forEach(subCo => {
                         indexX[subCo['id']] = subCo
                         let subCom = f.addNode(com, 'div', '', {'class':'com'});
-                        f.addNode(subCom, 'img', '', {src:'https://gravatar.cat.net/avatar/'+subCo['email']});
+                        f.addNode(subCom, 'img', '', {src:avatar_cdn+subCo['email']});
                         parseLink(subCom, subCo['name'], indexX[subCo['to_id']]['name'], subCo['id'])
                         f.addNode(subCom, 'span', getDateDiff(subCo['created_time']));
                         f.addNode(subCom, 'p', subCo['text']);
