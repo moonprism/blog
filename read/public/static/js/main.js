@@ -4,7 +4,7 @@ var main_markdown_config = {
     debug: false,
     imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
 }
-var avatar_cdn = 'https://dn-qiniu-avatar.qbox.me/avatar/'
+var avatar_cdn = 'https://cravatar.cn/avatar/'
 function markd(md) {
     let text = md.replace(/\nxxx\n([\s\S]*?)\nxxx/g, '') // 自定义隐藏
     return markdown(text, main_markdown_config).replace(/\:bread\:/g, '🍞')

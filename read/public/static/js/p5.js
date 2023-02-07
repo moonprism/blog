@@ -62,16 +62,17 @@ if (butCanvas) {
         butCtx.font = "bold 18px 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif";
         butCtx.fillStyle="#fff";
 
+        butCtx.rotate(-1 * Math.PI/180)
         if (shadow) {
             butCtx.shadowOffsetX = 1
             butCtx.shadowOffsetY = 1
             butCtx.shadowBlur = 2
             butCtx.shadowColor = "#000"
             butCtx.strokeStyle = '#000'
-            butCtx.strokeText("申 请 友 链", 78, 40)
+            butCtx.strokeText("申 请 友 链", 78, 41)
         }
-
-        butCtx.fillText("申 请 友 链", 78, 40)
+        butCtx.fillText("申 请 友 链", 78, 41)
+        butCtx.rotate(1 * Math.PI/180)
 
         butCtx.shadowOffsetX = 0
         butCtx.shadowOffsetY = 0
@@ -103,9 +104,20 @@ if (butCanvas) {
     }
 
     butCanvas.onclick = (e) => {
+        document.body.style.overflowY = 'hidden'
+        $('p5-load').style.width = '100%'
         window.scrollTo(0, 0)
-        $("p5-st").style.display = "block"
-        inputs[0].focus()
+        setTimeout(() => {
+            $('p5-load').style.left = '100%'
+            $('p5-load').style.width = '0%'
+            $("p5-st").style.display = "block"
+            inputs[0].focus()
+        }, 1000)
+        document.body.style.overflowY = 'auto'
+        setTimeout(() => {
+            $('p5-load').style.left = '0'
+
+        }, 2000)
     }
 
     // todo 前端的双向绑定实现，有时间研究下
@@ -406,6 +418,7 @@ if (butCanvas) {
                     $('p5-load').style.left = '100%'
                     $('p5-load').style.width = '0%'
                     if (response.code == 200) {
+                        $('p5-post-message').innerHTML = '<code style="color:green">{code:200, message:"以上请求已收到"}</code>';
                         $('p5-st').style.display = 'none'
                     }
                 }, 1000)
