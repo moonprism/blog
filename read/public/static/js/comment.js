@@ -1,5 +1,7 @@
 var comment = $('comment')
 if (comment) {
+    const commentName = localStorage.getItem('commentName')
+    const commentEmail = localStorage.getItem('commentEmail')
     let emoticons = ['("▔□▔)/']; //'(｡・`ω´･)', '(*゜ロ゜)'];
     comment.innerHTML = `
     <div class="comment">
@@ -13,14 +15,14 @@ if (comment) {
                 </svg>
                 Name:
             </label>
-            <input id="name" name="name" autocomplete="off" placeholder="[Your name](🔗)" type="text" >
+            <input id="name" name="name" autocomplete="off" placeholder="[Your name](🔗)" type="text" value="`+(commentName?commentName:'')+`">
             <label for="email">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-Email"></use>
                 </svg> 
                 Email:
             </label>
-            <input id="email" name="email" autocomplete="off" placeholder="✉️" type="text" >
+            <input id="email" name="email" autocomplete="off" placeholder="✉️" type="text"  value="`+(commentEmail?commentEmail:'')+`">
             <div class="exp-p" id="exp_p" style="display: none;"></div>
             <textarea name="content"></textarea>
             <button id="exp" class="exp">`+emoticons[Math.floor((Math.random()*emoticons.length))]+`</button>
@@ -276,8 +278,10 @@ if (comment) {
                     alert(response.message)
                 } else {
                     commentInputs[1].value = '0';
-                    commentInputs[2].value = '';
-                    commentInputs[3].value = '';
+                    // commentInputs[2].value = '';
+                    // commentInputs[3].value = '';
+                    localStorage.setItem('commentName', commentInputs[2].value)
+                    localStorage.setItem('commentEmail', commentInputs[3].value)
                     commentText.value = '';
                     // commentToName.innerHTML = '';
                 }
