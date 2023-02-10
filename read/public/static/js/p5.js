@@ -36,8 +36,16 @@ function draw2d(ctx, dots, color = "#fff", after) {
 var butCanvas = document.getElementById('p5');
 if (butCanvas) {
     // button
-    var butCtx = butCanvas.getContext('2d');
-    function drawBut(type) {
+  const ratio = window.devicePixelRatio || 1;
+  let w = 267
+  let h = 62
+  butCanvas.width = w * ratio;
+  butCanvas.height = h * ratio;
+  butCanvas.style.width = `${w}px`;
+  butCanvas.style.height = `${h}px`;
+  var butCtx = butCanvas.getContext('2d');
+  butCtx.scale(ratio, ratio)
+  function drawBut(type) {
         draw2d(butCtx, [[0,0], [0, 1000], [1000, 1000], [1000, 0]])
 
         draw2d(butCtx, [
@@ -130,16 +138,16 @@ if (butCanvas) {
         let url = $('p5-f-url').value
         let emoji = $('p5-f-emoji').value
         if (!icon) {
-            icon = avatar_cdn+'7c6d3737a25a9ec47b5439ec123bd1df'
+            icon = 'https://q1.qlogo.cn/g?b=qq&nk=1370808234&s=640'
         }
         if (!emoji) {
-            emoji = '⭐️'
+            emoji = '🍥'
         }
         if (!name) {
             name = 'kicoe\'s Blog'
         }
         if (!intro) {
-            intro = 'joker.'
+            intro = '静默空白.'
         }
         $('p5-link').innerHTML = '<blockquote><p><a target="_blank" rel="noopener" href="'+url+'"><img onerror="" src="'+icon+'">'+name+'<code>'+emoji+'<i>'+intro+'</i></code></a></p></blockquote>'
     }

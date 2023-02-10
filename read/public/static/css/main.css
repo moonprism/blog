@@ -583,6 +583,31 @@ body {
     }
 }
 
+/* 2kx2 */
+@media (max-width: 1300px){
+    #content, #header {
+        transform: scale(0.9);
+        transform-origin: center top;
+    }
+    /* todo js calc */
+    #content {
+        margin: 27px auto 315px
+    }
+    #header {
+        margin: 39.6px auto 30px
+    }
+    #header .nav {
+        height: 40px;
+        line-height: 40px
+    }
+    .m-l .markdown blockquote, .comment textarea, .comment #email, .comment #name, .comment .exp, .comment .submit, 
+    .search-input input, .search-result .tags, .search-result pre,
+    .fav
+    {
+        border-width: 0.9px !important;
+    }
+}
+
 ::selection {
     background: #222;
     color: #fff
@@ -651,7 +676,7 @@ button {
     overflow: hidden;
     margin: 0 24px 15px !important;
     padding: 6px 2px !important;
-    border: 1px solid #ccc !important;
+    border: 0.9px solid #ccc !important;
     background-color: #fff !important;
     border-radius: 5px;
     overflow: hidden;

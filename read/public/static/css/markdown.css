@@ -58,7 +58,7 @@
     font-size: 21px;
     color: #9b45e4;
     position: absolute;
-    top: 4px;
+    top: 1.5px;
     left: -5px;
 }
 @keyframes anchorTarget {
@@ -91,11 +91,9 @@
     padding-top: 120px;
 } */
 .markdown b {
-    padding: 0 1px;
+    padding: 0 2px;
     color: #555;
-    font-size: 14px;
-    position: relative;
-    top: -1px;
+    font-size: 15px;
 }
 .markdown>p{
     font-size: 16px;

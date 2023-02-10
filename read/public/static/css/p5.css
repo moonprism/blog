@@ -33,7 +33,7 @@
     overflow: auto;
     margin: 0;
     display: none;
-    background-color: rgba(0,0,0,.85);
+    background-color: red
 }
 
 .p5-st .p5-form {
@@ -200,7 +200,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #000;
+    background-color: black;
     width: 0%;
     transition: .5s;
     height: 100%;
