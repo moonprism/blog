@@ -33,18 +33,21 @@ function draw2d(ctx, dots, color = "#fff", after) {
     ctx.shadowBlur = 0
 }
 
+function getHDContext(canvas, w, h) {
+    const ratio = window.devicePixelRatio || 1;
+    canvas.width = w * ratio;
+    canvas.height = h * ratio;
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(ratio, ratio)
+    return ctx
+}
+
 var butCanvas = document.getElementById('p5');
 if (butCanvas) {
     // button
-  const ratio = window.devicePixelRatio || 1;
-  let w = 267
-  let h = 62
-  butCanvas.width = w * ratio;
-  butCanvas.height = h * ratio;
-  butCanvas.style.width = `${w}px`;
-  butCanvas.style.height = `${h}px`;
-  var butCtx = butCanvas.getContext('2d');
-  butCtx.scale(ratio, ratio)
+  const butCtx = getHDContext(butCanvas, 267, 62)
   function drawBut(type) {
         draw2d(butCtx, [[0,0], [0, 1000], [1000, 1000], [1000, 0]])
 
@@ -169,7 +172,7 @@ if (butCanvas) {
 
     // close
     var closeCanvas = document.getElementById('p5-close');
-    var closeCtx = closeCanvas.getContext('2d');
+    const closeCtx = getHDContext(closeCanvas, 64, 62)
 
     function drawClose(hover = false) {
         draw2d(closeCtx, [[0,0], [0, 1000], [1000, 1000], [1000, 0]], '#fff')
@@ -217,7 +220,7 @@ if (butCanvas) {
     }
     
     var talkCanvas = document.getElementById('p5-talk');
-    var talkCtx = talkCanvas.getContext('2d');
+    const talkCtx = getHDContext(talkCanvas, 814, 250)
     draw2d(talkCtx, [[0,0], [0, 1000], [1000, 1000], [1000, 0]], '#000')
 
     draw2d(talkCtx, [
@@ -348,7 +351,7 @@ if (butCanvas) {
     }
 
     var postCanvas = document.getElementById('p5-post');
-    var postCtx = postCanvas.getContext('2d');
+    const postCtx = getHDContext(postCanvas, 250, 80)
     // draw2d(postCtx, [[0,0], [0, 1000], [1000, 1000], [1000, 0]], '#000')
 
     draw2d(postCtx, [
