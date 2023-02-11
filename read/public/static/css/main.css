@@ -216,6 +216,10 @@ body {
     border-radius: 3px;
 }
 
+.article-block>.markdown {
+    padding: 0 7px;
+}
+
 #content .article {
     margin-top: 19px;
     border: 1px solid #fff;
@@ -311,6 +315,9 @@ body {
 }
 .summary {
     word-wrap: break-word;
+}
+.summary.markdown {
+    padding: 0 4px;
 }
 .summary.markdown p {
     padding: 0;
@@ -519,7 +526,7 @@ body {
         font-size: 17px !important;
     }
     .markdown p {
-        font-size: 15px !important;
+        font-size: 14.5px !important;
     }
     .markdown table td {
         font-size: 14px !important;
@@ -584,7 +591,7 @@ body {
 }
 
 /* 2kx2 */
-@media (max-width: 1300px){
+@media screen and (max-width: 1300px) and (min-width: 750px){
     #content, #header {
         transform: scale(0.9);
         transform-origin: center top;

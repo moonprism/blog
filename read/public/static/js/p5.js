@@ -45,6 +45,9 @@ function getHDContext(canvas, w, h) {
 }
 
 var butCanvas = document.getElementById('p5');
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
 if (butCanvas) {
     // button
   const butCtx = getHDContext(butCanvas, 267, 62)
@@ -90,7 +93,7 @@ if (butCanvas) {
         butCtx.shadowBlur = 0
     }
 
-    drawBut()
+    sleep(1000).then(() => {drawBut()})
 
     butCanvas.onmouseover = (e) => {
         draw2d(butCtx, [
@@ -272,9 +275,11 @@ if (butCanvas) {
         talkCtx.shadowBlur = 0
     }
 
-    talkTitle('悄', 25, 38);
-    talkTitle('悄', 48, 38);
-    talkTitle('话', 72, 38, 2);
+    sleep(1000).then(() => {
+        talkTitle('悄', 25, 38);
+        talkTitle('悄', 48, 38);
+        talkTitle('话', 72, 38, 2);
+    })
 
     // draw2d(talkCtx, [
     //     [30, 115],

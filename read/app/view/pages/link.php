@@ -23,7 +23,7 @@
 			<input id="p5-f-email" name="p5-f-email" autocomplete="off" placeholder="ankicoe@gmail.com" type="text">
 		</div>
 		<div class="p5-f-i">
-			<label for="p5-f-url" style="margin-left:20px">UR<span>L</span></label>
+			<label for="p5-f-url" style="margin-left:15px">UR<span>L</span></label>
 			<input id="p5-f-url" name="p5-f-url" autocomplete="off" placeholder="https://kicoe.com" type="text">
 		</div>
 		<div class="p5-f-i">
