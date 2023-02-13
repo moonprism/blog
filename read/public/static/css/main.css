@@ -1,50 +1,8 @@
 @charset "UTF-8";
 
-/* space-mono-regular */
-@font-face {
-  font-family: 'Space Mono';
-  font-style: normal;
-  font-weight: regular;
-  src: url('//lib.baomitu.com/fonts/space-mono/space-mono-regular.eot'); /* IE9 Compat Modes */
-  src: local('Space Mono'), local('SpaceMono-Normal'),
-       url('//lib.baomitu.com/fonts/space-mono/space-mono-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/space-mono/space-mono-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/space-mono/space-mono-regular.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/space-mono/space-mono-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/space-mono/space-mono-regular.svg#SpaceMono') format('svg'); /* Legacy iOS */
-}
-
-/* noto-sans-sc-regular */
-@font-face {
-  font-family: 'Noto Sans SC';
-  font-style: normal;
-  font-weight: regular;
-  src: url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot'); /* IE9 Compat Modes */
-  src: local('Noto Sans SC'), local('NotoSans SC-Normal'),
-       url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/noto-sans-sc/noto-sans-sc-regular.svg#NotoSans SC') format('svg'); /* Legacy iOS */
-}
-
-/* roboto-mono-regular */
-@font-face {
-  font-family: 'Roboto Mono';
-  font-style: normal;
-  font-weight: regular;
-  src: url('//lib.baomitu.com/fonts/roboto-mono/roboto-mono-regular.eot'); /* IE9 Compat Modes */
-  src: local('Roboto Mono'), local('RobotoMono-Normal'),
-       url('//lib.baomitu.com/fonts/roboto-mono/roboto-mono-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('//lib.baomitu.com/fonts/roboto-mono/roboto-mono-regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('//lib.baomitu.com/fonts/roboto-mono/roboto-mono-regular.woff') format('woff'), /* Modern Browsers */
-       url('//lib.baomitu.com/fonts/roboto-mono/roboto-mono-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-       url('//lib.baomitu.com/fonts/roboto-mono/roboto-mono-regular.svg#RobotoMono') format('svg'); /* Legacy iOS */
-}
-
 body,h1,h2,h3,h4,h5,h6,p,form,blockquote {
     margin: 0;
-    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif
+    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,sans-serif
 }
 
 /* iconfont init */

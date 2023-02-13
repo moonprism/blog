@@ -8,6 +8,7 @@
     <meta name="description" content="静默空白.">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/app.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Noto+Sans+SC&family=Roboto+Mono&display=swap" rel="stylesheet">
     <style>
 <?php echo $setting['global_css'] ?? '' ?>
 
