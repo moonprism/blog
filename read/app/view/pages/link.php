@@ -31,8 +31,8 @@
 			<input id="p5-f-intro" name="p5-f-intro" autocomplete="off" placeholder="静默空白." type="text">
 		</div>
 		<div class="p5-f-i">
-			<label for="p5-f-icon" style="margin-left:3px">IC<span>ON</span></label>
-			<input id="p5-f-icon" name="p5-f-icon" autocomplete="off" placeholder="https://q1.qlogo.cn/g?b=qq&nk=1370808234&s=640" type="text">
+			<label for="p5-f-icon" style="margin-left:3px">AVA<span>TAR</span></label>
+			<input id="p5-f-icon" name="p5-f-icon" autocomplete="off" placeholder="https://cravatar.cn/avatar/7c6d3737a25a9ec47b5439ec123bd1df" type="text">
 		</div>
 		<div class="p5-f-i">
 			<label for="p5-f-emoji">EMO<span>JI</span></label>

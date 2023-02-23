@@ -93,7 +93,7 @@ if (butCanvas) {
         butCtx.shadowBlur = 0
     }
 
-    sleep(1000).then(() => {drawBut()})
+    sleep(800).then(() => {drawBut()})
 
     butCanvas.onmouseover = (e) => {
         draw2d(butCtx, [
