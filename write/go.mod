@@ -17,7 +17,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/swaggo/swag v1.7.9
 	github.com/urfave/cli/v2 v2.3.0
-	golang.org/x/crypto v0.0.0-20220214200702-86341886e292
+	golang.org/x/crypto v0.1.0
 	golang.org/x/net v0.1.0
 	google.golang.org/grpc v1.44.0
 	gopkg.in/ini.v1 v1.66.3
