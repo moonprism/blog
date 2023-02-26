@@ -48,7 +48,17 @@ var butCanvas = document.getElementById('p5');
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+function closeP5Form() {
+    $("p5-st").style.display = "none"
+    $('content').style.display = 'block'
+    $('header').style.display = 'block'
+}
+
 if (butCanvas) {
+
+    if (butCanvas.getContext !== undefined) {
+        
     // button
   const butCtx = getHDContext(butCanvas, 267, 62)
   function drawBut(type) {
@@ -117,6 +127,8 @@ if (butCanvas) {
         drawBut()
     }
 
+    }
+
     butCanvas.onclick = (e) => {
         document.body.style.overflowY = 'hidden'
         $('p5-load').style.width = '100%'
@@ -130,8 +142,9 @@ if (butCanvas) {
         document.body.style.overflowY = 'auto'
         setTimeout(() => {
             $('p5-load').style.left = '0'
-
         }, 2000)
+        $('content').style.display = 'none'
+        $('header').style.display = 'none'
     }
 
     // todo 前端的双向绑定实现，有时间研究下
@@ -155,7 +168,12 @@ if (butCanvas) {
         if (!intro) {
             intro = '静默空白.'
         }
-        $('p5-link').innerHTML = '<blockquote><p><a target="_blank" rel="noopener" href="'+url+'"><img onerror="" src="'+icon+'">'+name+'<code>'+emoji+'<i>'+intro+'</i></code></a></p></blockquote>'
+
+        if (intro.length > 26) {
+            $('p5-link').innerHTML = '<blockquote class="d"><p><a target="_blank" rel="noopener" href="'+url+'"><img onerror="" src="'+icon+'">'+name+'<code><b>'+emoji+'</b><i>'+intro+'</i></code></a></p></blockquote>'
+        } else {
+            $('p5-link').innerHTML = '<blockquote><p><a target="_blank" rel="noopener" href="'+url+'"><img onerror="" src="'+icon+'">'+name+'<code>'+emoji+'<i>'+intro+'</i></code></a></p></blockquote>'
+        }
     }
     [].slice.call(inputs).forEach(i => {
         if (i.id == 'p5-f-icon') {
@@ -172,6 +190,60 @@ if (butCanvas) {
             i.parentNode.style.color = '#000'
         }
     })
+
+    // title
+    var titleCanvas = document.getElementById('p5-title');
+    const titleCtx = getHDContext(titleCanvas, 200, 60)
+
+    function drawTitle() {
+        draw2d(titleCtx, [
+            [8, 5],
+            [9, 50],
+            [50, 49],
+            [49, 5],
+        ], '#ccc')
+        titleCtx.font = "bold 32px Microsoft YaHei,SimSun,sans-serif"
+        titleCtx.fillStyle="#333";
+        titleCtx.rotate(-3 * Math.PI/180)
+        titleCtx.fillText("申", 12, 40)
+        titleCtx.rotate(3 * Math.PI/180)
+
+        draw2d(titleCtx, [
+            [55, 10],
+            [55, 40],
+            [84, 40],
+            [84, 10],
+        ], '#222')
+        titleCtx.font = "normal 23px Microsoft YaHei,SimSun,sans-serif"
+        titleCtx.fillStyle="#eee";
+        titleCtx.rotate(1 * Math.PI/180)
+        titleCtx.fillText("请", 57, 32)
+        titleCtx.rotate(-1 * Math.PI/180)
+
+        draw2d(titleCtx, [
+            [88, 5],
+            [88, 47],
+            [117, 47],
+            [117, 5],
+        ], '#555')
+        titleCtx.font = "bold 23px 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif"
+        titleCtx.fillStyle="#eee";
+        titleCtx.fillText("友", 90, 35)
+
+        draw2d(titleCtx, [
+            [121, 9],
+            [121, 45],
+            [150, 46],
+            [150, 10],
+        ], '#aaa')
+        titleCtx.font = "normal 25px 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif"
+        titleCtx.fillStyle="#000";
+        titleCtx.rotate(1 * Math.PI/180)
+        titleCtx.fillText("链", 123, 35)
+        titleCtx.rotate(-1 * Math.PI/180)
+    }
+
+    drawTitle()
 
     // close
     var closeCanvas = document.getElementById('p5-close');
@@ -219,7 +291,7 @@ if (butCanvas) {
     }
     
     $('p5-close').onclick = (e) => {
-        $("p5-st").style.display = "none"
+        closeP5Form()
     }
     
     var talkCanvas = document.getElementById('p5-talk');
@@ -435,7 +507,7 @@ if (butCanvas) {
                     $('p5-load').style.width = '0%'
                     if (response.code == 200) {
                         $('p5-post-message').innerHTML = '<code style="color:green">{code:200, message:"以上请求已收到"}</code>';
-                        $('p5-st').style.display = 'none'
+                        closeP5Form()
                     }
                 }, 1000)
                 document.body.style.overflowY = 'auto'

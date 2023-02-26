@@ -54,6 +54,23 @@
     line-height: 43px;
     margin-right: 5px;
 }
+
+.m-l .markdown .d code {
+    display: block;
+}
+.m-l .markdown .d code b {
+    font-weight: normal;
+    display: inline-block;
+}
+.m-l .markdown .d code i {
+    font-size: 13px;
+    display: block;
+    float: right;
+    line-height: 18px;
+    max-width: 300px;
+    padding-top: 3px;
+}
+
 /* .m-l .markdown blockquote code::before {
     content: '//';
     margin-right: 3px;
@@ -80,7 +97,7 @@
     width: 30px;
     height: 30px;
     position: relative;
-    top: 6px;
+    top: 7px;
     border-radius: 50%;
     box-shadow: rgba(0,0,0,.2) 0 1px 3px;
     margin-right: 26px;

@@ -56,10 +56,11 @@ html, body {
 }
 
 body {
-    min-height:92%;
+    /* min-height:92%; */
     margin:0;
+    /* 实在没搞懂当初这几行代码的意义 */
     padding:0 0 1px;
-    position:relative;
+    /* position:relative; */
 }
 
 #curtain {

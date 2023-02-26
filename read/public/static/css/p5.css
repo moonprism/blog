@@ -20,6 +20,31 @@
 /*     top: -31px;                          */
 /* }                                        */
 
+#p5 a {
+    text-decoration: none;
+    color: red;
+    font-style:italic;
+    padding: 0 3px;
+}
+
+#p5 a:hover {
+    border-bottom: 1px solid red;
+}
+
+#p5 span {
+    background-color: red;
+    color: white;
+    padding: 1px 2px 0px 1px;
+    margin: 0 0 0 1px;
+}
+
+.p5-title {
+    float: left;
+    position: relative;
+    bottom: 36px;
+    right: 10px;
+}
+
 #p5 {
     cursor: pointer;
 }
@@ -38,7 +63,7 @@
 
 .p5-st .p5-form {
     width: 720px;
-    margin: 50px auto;
+    margin: 115px auto 110px;
     background-color: #fff;
     padding: 10px 47px 10px;
     border-radius: 3px;

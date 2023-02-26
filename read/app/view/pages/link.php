@@ -13,6 +13,7 @@
 <div class="p5-st" id="p5-st">
 	<div style="text-align:right"></div>
     <div class="p5-form">
+        <div class="p5-title"><canvas id="p5-title" width="200" height="60"></div>
         <div class="p5-close"><canvas id="p5-close" width="64" height="62"></canvas></div>
 		<div class="p5-f-i">
 			<label for="p5-f-name" style="margin-left:5px">NAM<span>E</span></label>
