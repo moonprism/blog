@@ -197,46 +197,44 @@ if (butCanvas) {
 
     function drawTitle() {
         draw2d(titleCtx, [
-            [8, 5],
-            [9, 50],
-            [50, 49],
-            [49, 5],
-        ], '#ccc')
-        titleCtx.font = "bold 32px Microsoft YaHei,SimSun,sans-serif"
-        titleCtx.fillStyle="#333";
-        titleCtx.rotate(-3 * Math.PI/180)
-        titleCtx.fillText("申", 12, 40)
-        titleCtx.rotate(3 * Math.PI/180)
+            [16, 5],
+            [17, 50],
+            [53, 49],
+            [52, 5],
+        ], '#c3c6cb')
+        titleCtx.font = "bold 32px SimSun,sans-serif"
+        titleCtx.fillStyle="#030409";
+        titleCtx.rotate(-1 * Math.PI/180)
+        titleCtx.fillText("申", 18, 39)
+        titleCtx.rotate(1 * Math.PI/180)
 
         draw2d(titleCtx, [
-            [55, 10],
-            [55, 40],
-            [84, 40],
-            [84, 10],
-        ], '#222')
-        titleCtx.font = "normal 23px Microsoft YaHei,SimSun,sans-serif"
-        titleCtx.fillStyle="#eee";
-        titleCtx.rotate(1 * Math.PI/180)
-        titleCtx.fillText("请", 57, 32)
-        titleCtx.rotate(-1 * Math.PI/180)
+            [56, 10],
+            [56, 40],
+            [85, 40],
+            [85, 10],
+        ], '#403c42')
+        titleCtx.font = "normal 22px 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif"
+        titleCtx.fillStyle="#bcbebd";
+        titleCtx.fillText("请", 58, 33)
 
         draw2d(titleCtx, [
             [88, 5],
             [88, 47],
             [117, 47],
             [117, 5],
-        ], '#555')
+        ], '#212524')
         titleCtx.font = "bold 23px 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif"
-        titleCtx.fillStyle="#eee";
-        titleCtx.fillText("友", 90, 35)
+        titleCtx.fillStyle="#c0c1c5";
+        titleCtx.fillText("友", 90, 33)
 
         draw2d(titleCtx, [
             [121, 9],
             [121, 45],
-            [150, 46],
-            [150, 10],
+            [149, 46],
+            [149, 10],
         ], '#aaa')
-        titleCtx.font = "normal 25px 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif"
+        titleCtx.font = "normal 23px SimSun,sans-serif"
         titleCtx.fillStyle="#000";
         titleCtx.rotate(1 * Math.PI/180)
         titleCtx.fillText("链", 123, 35)

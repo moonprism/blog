@@ -21,10 +21,12 @@
 /* }                                        */
 
 #p5 a {
+    font-size: 14px;
     text-decoration: none;
     color: red;
     font-style:italic;
     padding: 0 3px;
+    letter-spacing: 0;
 }
 
 #p5 a:hover {
@@ -63,7 +65,7 @@
 
 .p5-st .p5-form {
     width: 720px;
-    margin: 115px auto 110px;
+    margin: 115px auto 120px;
     background-color: #fff;
     padding: 10px 47px 10px;
     border-radius: 3px;
