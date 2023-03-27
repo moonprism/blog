@@ -28,7 +28,7 @@
     transform: scale(1.2);
 }
 .m-a .markdown h1 i:hover {
-    box-shadow: 0 0 4px #c55781;
+    box-shadow: 0 0 4px #555;
 }
 .m-a .markdown h2::before {
     position: initial;
@@ -94,8 +94,8 @@
     color: #eee
 }
 .m-a .markdown blockquote {
-    padding: 13px 20px;
-    margin: 12px 25px 24px;
+    padding: 12px 18px;
+    margin: 12px 26px 24px;
 }
 .m-a .markdown blockquote.info {
     border-color: purple;
