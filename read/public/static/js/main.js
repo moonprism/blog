@@ -4,7 +4,7 @@ var main_markdown_config = {
     debug: false,
     imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
 }
-var avatar_cdn = 'https://cravatar.cn/avatar/'
+var avatar_cdn = 'https://gravatar.loli.net/avatar/{0}?d=retro'
 function markd(md) {
     let text = md.replace(/\nxxx\n([\s\S]*?)\nxxx/g, '') // 自定义隐藏
     return markdown(text, main_markdown_config).replace(/\:bread\:/g, '🍞')
@@ -69,6 +69,14 @@ document.querySelectorAll('.markdown > .fav').forEach((fav) => {
 })
 
 var $ = (id) => document.getElementById(id)
+
+String.prototype.format = function() {
+    var formatted = this;
+    for( var arg in arguments ) {
+        formatted = formatted.replace("{" + arg + "}", arguments[arg]);
+    }
+    return formatted;
+}
 
 // 回到顶部 #up
 var upButton = $('up')
