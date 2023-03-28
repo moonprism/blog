@@ -242,7 +242,12 @@ if (comment) {
         let height = name_el.offsetTop - re_el.offsetTop - 28;
         $('repl_line').style.height = height+'px';
 
-        window.scrollTo(0, document.querySelector('.markdown').offsetHeight+100);
+        let pageHeight = document.querySelector('.markdown').offsetHeight
+        // fix main.css 2kx2
+        if (document.documentElement.clientWidth <= 1300 && document.documentElement.clientWidth >= 750) {
+            pageHeight *= 0.9
+        }
+        window.scrollTo(0, pageHeight+100);
         commentInputs[1].value = data_id;
         // commentToName.innerHTML = '';
         // f.addNode(commentToName, 'span', '@', {style: 'font-family:none;margin-right:3px'});
