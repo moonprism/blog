@@ -3,6 +3,7 @@ GOOS=linux
 GOARCH=amd64
 WEB_DIR=./web/app
 GO=go
+DOCKER_COMPOSE=docker-compose
 
 # docker build
 # DICT_TXT=./mod/github.com/go-ego/gse@v0.50.3/data/dict/dictionary.txt
@@ -49,9 +50,9 @@ build-web:
 
 ## docker-build-api: docker build xx
 docker-build-api:
-	docker-compose -f build.yml run api
+	$(DOCKER_COMPOSE) -f build.yml run api
 
 build-api-before: data/dictionary.txt data/stop_tokens.txt
 
 docker-build-web:
-	docker-compose -f build.yml run web
+	$(DOCKER_COMPOSE) -f build.yml run web

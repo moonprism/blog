@@ -16,4 +16,8 @@ services:
       - ./:/app
       # - ./mod:/go/pkg/mod
     working_dir: /app
+    # environment:
+    #   http_proxy: "http://localhost:8080"
+    #   https_proxy: "http://localhost:8080"
+    # network_mode: "host"
     command: /bin/sh -c "go mod tidy ; GOOS=linux GOARCH=amd64 go build -o linux_amd64_api -v"

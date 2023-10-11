@@ -2,6 +2,8 @@ FROM php:8.1.2-fpm-alpine
 
 RUN apk update
 
+RUN apk add wget
+
 RUN mkdir -p /usr/src/php/ext/redis
 RUN wget https://github.com/phpredis/phpredis/archive/refs/tags/5.3.6.tar.gz -O /phpredis-5.3.6.tar.gz
 RUN tar xzvf /phpredis-5.3.6.tar.gz -C /usr/src/php/ext/redis --strip 1

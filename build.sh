@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+
+set -e
 
 W_OPT_DIR=./write/options/
 cp ${W_OPT_DIR}/test.ini ${W_OPT_DIR}/.ini
