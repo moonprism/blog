@@ -39,7 +39,7 @@ read-composer-install:
 read-composer-update:
 	$(DOCKER_COMPOSE) exec composer composer update
 
-## read-npm-build: 前台npm run build 
+## read-npm-build: 前台npm run build
 read-npm-build:
 	cd read; $(NPM) install; $(NPM) run build
 
@@ -84,12 +84,11 @@ sh-write:
 
 # ======= Read =======
 
-# build-php: 使用当前系统代理编译php镜像
-# build-php:
-# 	cd $(DOCKER_DIR)php; docker build --network host .
-
-build-php-after:
-	$(DOCKER_COMPOSE) up -d ; $(DOCKER_COMPOSE) exec php composer install
+# build-php: 启动容器（关键：编译PHP容器)
+build-php:
+	$(DOCKER_COMPOSE) up -d
+	$(DOCKER_COMPOSE) exec php chown www-data:www-data /var/www/html/log
+	$(DOCKER_COMPOSE) exec php composer install
 
 ## build-read: 前台编译
 build-read:
