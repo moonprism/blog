@@ -2,6 +2,9 @@
 
 body,h1,h2,h3,h4,h5,h6,p,form,blockquote {
     margin: 0;
+}
+
+html body {
     font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,sans-serif
 }
 
@@ -130,7 +133,6 @@ body {
     padding: 2px 10px;
     display: inline-block;
     font-size: 16px;
-    font-weight: 200;
     color: #333;
     transition: color 0.5s
 }
@@ -220,7 +222,7 @@ body {
     background-color: #56c4e1;
     display: inline-block;
     margin-right: 0.25rem;
-    padding: .3rem .5em;
+    padding: .3rem .5em .28rem;
     min-width: 2.1rem;
     text-align: center;
     line-height: 1;
@@ -229,7 +231,9 @@ body {
     border-radius: 3px;
     border: 1.2px solid #fff;
     transition: 0.2s;
-    font-family: 'space mono', sans-serif;
+}
+.tag, .tag-banner .t, .tag-banner .c {
+    font-family: 'Space Mono', monospace;
 }
 .tag:hover {
     background-color: #fff !important;
@@ -262,14 +266,12 @@ body {
     font-size: 12px;
     border-radius: 3px;
     border: 1.2px solid #fff;
-    font-family: 'space mono', sans-serif;
 }
 .tag-banner .c {
     background-color: #eee;
     padding: 0 .6rem .11rem;
     border-radius: 10px;
     margin: 2px;
-    font-family: 'space mono', sans-serif;
     font-size: 12px;
 }
 .summary {
