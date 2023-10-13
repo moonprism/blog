@@ -8,11 +8,10 @@ help: Makefile
 
 # Dev
 
-## config: 配置开发环境
-config:
+## conf: 配置开发环境
+conf:
 	git config commit.template .github/.git-commit-template.txt
 
-## up: 启动docker服务
 up:password.txt
 	$(DOCKER_COMPOSE) up -d
 
@@ -25,57 +24,47 @@ ps:
 logs:
 	$(DOCKER_COMPOSE) logs -f
 
-build:
-	$(DOCKER_COMPOSE) build
-
-## read-dev: 启动前台服务
-read-dev:
+## lo-read-web-dev: 本地环境启动READ web
+lo-read-web-dev:
 	cd read; $(NPM) install; $(NPM) run serve
 
-## read-composer-install: 前台 PHP vendor init
-read-composer-install:
-	$(DOCKER_COMPOSE) exec composer composer install -vvv
-
-read-composer-update:
-	$(DOCKER_COMPOSE) exec composer composer update
-
-## read-npm-build: 前台npm run build
-read-npm-build:
+## lo-read-web-build: 本地环境编译READ web
+lo-read-web-build:
 	cd read; $(NPM) install; $(NPM) run build
 
-## write-dev: 启动后台接口服务
-write-dev:
+## lo-write-dev: 本地环境启动WRITE api
+lo-write-dev:
 	cd $(WRITE_DIR); make serve
 
-## write-web-dev: 启动后台web服务
-write-web-dev:
+## lo-write-web-dev: 本地环境启动WRITE web
+lo-write-web-dev:
 	cd $(WRITE_DIR); make serve-web
 
 DOCKER_DIR=./docker/
 WRITE_DIR=./write/
 
 protobuf: $(wildcard *.proto)
-	protoc --go_out=plugins=grpc:write/protodata code.proto
+	# protoc --go_out=plugins=grpc:write/models/protodata code.proto
 	#protoc --php_out=read/app/model/protobuf --plugin=protoc-gen-grpc=/usr/games/grpc_php_plugin code.proto
 	protoc --php_out=read/app/model/protobuf  code.proto
 
 # ======= Write =======
 
-## build-write-api: 后台api容器打包编译
+## build-write-api: 容器编译WRITE api
 build-write-api: #protobuf
-	cd $(WRITE_DIR); make build-api-before; make docker-build-api;
+	cd $(WRITE_DIR); make docker-build-api;
 	$(DOCKER_COMPOSE) build write-api
 
-## build-write-web: 后台web编译
+## build-write-web: 容器编译WRITE web
 build-write-web:
 	cd $(WRITE_DIR); make docker-build-web
 
-## admin-passwd: 设置后台登录用户名&密码
+## admin-passwd: 设置登录用户名&密码
 admin-passwd:
 	$(DOCKER_COMPOSE) exec write-api /www/linux_amd64_api passwd
 
-## meili-init: 从数据库初始化查询引擎
-meili-init:
+## se-init: 初始化查询引擎
+se-init:
 	$(DOCKER_COMPOSE) exec write-api /www/linux_amd64_api se reindex
 
 ## sh-write: 进入后台容器shell
@@ -84,17 +73,16 @@ sh-write:
 
 # ======= Read =======
 
-# build-php: 启动容器（关键：编译PHP容器)
+# build-php: 编译PHP容器后续
 build-php:
-	$(DOCKER_COMPOSE) up -d
 	$(DOCKER_COMPOSE) exec php chown www-data:www-data /var/www/html/log
 	$(DOCKER_COMPOSE) exec php composer install
 
-## build-read: 前台编译
+## build-read: 容器编译READ
 build-read:
 	cd read; $(DOCKER_COMPOSE) -f build.yml run web
 
-## sh-php: 进入前台容器shell
+## sh-php: 进入PHP容器shell
 sh-php:
 	$(DOCKER_COMPOSE) exec php /bin/sh
 
@@ -102,10 +90,10 @@ sh-php:
 sh-redis:
 	$(DOCKER_COMPOSE) exec redis redis-cli
 
-## sh-mysql: 进入mysql容器shell
+## sh-mysql: 进入mysql容器
 sh-mysql:
 	$(DOCKER_COMPOSE) exec mysql mysql -u root -p$(PASSWORD)
 
 ## back-sql: 备份sql
 back-sql:
-	$(DOCKER_COMPOSE) exec mysql mysqldump -uroot -p$(PASSWORD) --databases blog --tables article article_tag code comment file tag > ./data/$(shell date +%Y%m%d)_blog.sql
+	$(DOCKER_COMPOSE) exec mysql mysqldump --default-character-set=utf8mb4 -uroot -p$(PASSWORD) --databases blog --tables article article_tag code comment file tag > ./data/$(shell date +%Y%m%d)_blog.sql

@@ -52,7 +52,7 @@ func ArticleList(c echo.Context) error {
 // @Tags Article
 // @Produce  json
 // @param Authorization header string true "Authorization"
-// @Param articleInfo body model.ArticleInfo true " "
+// @Param articleInfo body models.ArticleInfo true " "
 // @Success 200 {string} string "ok"
 // @Failure 403 {object} errors.HTTPError
 // @Router /article [post]
@@ -75,7 +75,7 @@ func CreateArticle(c echo.Context) error {
 // @Produce  json
 // @param Authorization header string true "Authorization"
 // @Param id path int true "article id"
-// @Param articleUpdateBody body service.ArticleUpdateBody true " "
+// @Param articleUpdateBody body article.ArticleUpdateBody true " "
 // @Success 200 {string} string "ok"
 // @Failure 403 {object} errors.HTTPError "Unauthenticated"
 // @Failure 404 {object} errors.HTTPError "NotFound"
@@ -129,7 +129,7 @@ func DeleteArticle(c echo.Context) error {
 // @Produce  json
 // @param Authorization header string true "Authorization"
 // @Param id path int true "article id"
-// @Success 200 {object} model.ArticleDetail
+// @Success 200 {object} models.ArticleDetail
 // @Failure 403 {object} errors.HTTPError "Unauthenticated"
 // @Failure 404 {object} errors.HTTPError "NotFound"
 // @Router /article/{id} [get]

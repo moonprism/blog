@@ -37,7 +37,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.articleListResponse"
+                            "$ref": "#/definitions/api.ArticleListResponse"
                         }
                     },
                     "403": {
@@ -70,7 +70,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.ArticleInfo"
+                            "$ref": "#/definitions/models.ArticleInfo"
                         }
                     }
                 ],
@@ -119,7 +119,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.ArticleDetail"
+                            "$ref": "#/definitions/models.ArticleDetail"
                         }
                     },
                     "403": {
@@ -165,7 +165,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/service.ArticleUpdateBody"
+                            "$ref": "#/definitions/article.ArticleUpdateBody"
                         }
                     }
                 ],
@@ -236,6 +236,25 @@
                 }
             }
         },
+        "/auth/captcha": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "image/png"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "deprecated",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/auth/info": {
             "get": {
                 "consumes": [
@@ -250,10 +269,7 @@
                 "summary": "deprecated",
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.infoResponse"
-                        }
+                        "description": "OK"
                     }
                 }
             }
@@ -277,7 +293,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/service.AuthBody"
+                            "$ref": "#/definitions/api.AuthRequest"
                         }
                     }
                 ],
@@ -285,46 +301,13 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.authResponse"
+                            "$ref": "#/definitions/api.AuthResponse"
                         }
                     },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/errors.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/auth/regist": {
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "deprecated",
-                "parameters": [
-                    {
-                        "description": " ",
-                        "name": "loginData",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/service.AuthBody"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/api.authResponse"
                         }
                     }
                 }
@@ -392,7 +375,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.casAuthorization"
+                            "$ref": "#/definitions/api.CasAuthorization"
                         }
                     },
                     "403": {
@@ -433,7 +416,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.codeListResponse"
+                            "$ref": "#/definitions/api.CodeListResponse"
                         }
                     },
                     "403": {
@@ -466,7 +449,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/service.CodeUpdateBody"
+                            "$ref": "#/definitions/code.UpdateBody"
                         }
                     }
                 ],
@@ -515,7 +498,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.CodeDetail"
+                            "$ref": "#/definitions/models.CodeDetail"
                         }
                     },
                     "403": {
@@ -561,7 +544,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/service.CodeUpdateBody"
+                            "$ref": "#/definitions/code.UpdateBody"
                         }
                     }
                 ],
@@ -661,7 +644,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.commentListResponse"
+                            "$ref": "#/definitions/api.CommentListResponse"
                         }
                     },
                     "403": {
@@ -796,7 +779,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.FileMeta"
+                            "$ref": "#/definitions/models.FileMeta"
                         }
                     },
                     "403": {
@@ -849,6 +832,62 @@
                 }
             }
         },
+        "/link": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Link"
+                ],
+                "summary": "get link list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.LinkListResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/link/{id}": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Link"
+                ],
+                "summary": "update link apply",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Link"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    },
+                    "404": {
+                        "description": "NotFound",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/search/code": {
             "get": {
                 "produces": [
@@ -871,7 +910,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.codeDetailListResponse"
+                            "$ref": "#/definitions/api.CodeDetailListResponse"
                         }
                     },
                     "403": {
@@ -883,7 +922,7 @@
                 }
             }
         },
-        "/setting": {
+        "/system/info": {
             "get": {
                 "produces": [
                     "application/json"
@@ -892,20 +931,11 @@
                     "Setting"
                 ],
                 "summary": "get setting",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Authorization",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.Setting"
+                            "$ref": "#/definitions/api.SystemInfo"
                         }
                     },
                     "403": {
@@ -915,7 +945,9 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/system/info/notice": {
             "put": {
                 "produces": [
                     "application/json"
@@ -938,7 +970,50 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.Setting"
+                            "$ref": "#/definitions/api.SystemInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/errors.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/system/info/theme": {
+            "put": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "set setting",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Authorization",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": " ",
+                        "name": "settingInfo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Theme"
                         }
                     }
                 ],
@@ -982,7 +1057,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.Tag"
+                                "$ref": "#/definitions/models.Tag"
                             }
                         }
                     },
@@ -1016,7 +1091,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.TagMeta"
+                            "$ref": "#/definitions/models.TagMeta"
                         }
                     }
                 ],
@@ -1066,7 +1141,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.TagMeta"
+                            "$ref": "#/definitions/models.TagMeta"
                         }
                     }
                 ],
@@ -1139,13 +1214,13 @@
         }
     },
     "definitions": {
-        "api.articleListResponse": {
+        "api.ArticleListResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.ArticleInfo"
+                        "$ref": "#/definitions/models.ArticleInfo"
                     }
                 },
                 "pagination": {
@@ -1153,7 +1228,21 @@
                 }
             }
         },
-        "api.authResponse": {
+        "api.AuthRequest": {
+            "type": "object",
+            "properties": {
+                "captcha": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "api.AuthResponse": {
             "type": "object",
             "properties": {
                 "token": {
@@ -1161,7 +1250,7 @@
                 }
             }
         },
-        "api.casAuthorization": {
+        "api.CasAuthorization": {
             "type": "object",
             "properties": {
                 "cas_key": {
@@ -1169,13 +1258,13 @@
                 }
             }
         },
-        "api.codeDetailListResponse": {
+        "api.CodeDetailListResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.Code"
+                        "$ref": "#/definitions/models.Code"
                     }
                 },
                 "pagination": {
@@ -1183,13 +1272,13 @@
                 }
             }
         },
-        "api.codeListResponse": {
+        "api.CodeListResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.CodeMeta"
+                        "$ref": "#/definitions/models.CodeMeta"
                     }
                 },
                 "pagination": {
@@ -1197,17 +1286,45 @@
                 }
             }
         },
-        "api.commentListResponse": {
+        "api.CommentListResponse": {
             "type": "object",
             "properties": {
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.Comment"
+                        "$ref": "#/definitions/models.Comment"
                     }
                 },
                 "pagination": {
                     "$ref": "#/definitions/utils.Pagination"
+                }
+            }
+        },
+        "api.LinkListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Link"
+                    }
+                },
+                "pagination": {
+                    "$ref": "#/definitions/utils.Pagination"
+                }
+            }
+        },
+        "api.SystemInfo": {
+            "type": "object",
+            "properties": {
+                "captcha": {
+                    "type": "boolean"
+                },
+                "notice": {
+                    "type": "boolean"
+                },
+                "theme": {
+                    "$ref": "#/definitions/models.Theme"
                 }
             }
         },
@@ -1217,19 +1334,69 @@
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.File"
+                        "$ref": "#/definitions/models.File"
                     }
                 }
             }
         },
-        "api.infoResponse": {
+        "article.ArticleUpdateBody": {
             "type": "object",
             "properties": {
-                "background_image": {
+                "content": {
                     "type": "string"
                 },
-                "is_register": {
-                    "type": "boolean"
+                "created_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.TagMeta"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_time": {
+                    "type": "string"
+                }
+            }
+        },
+        "code.UpdateBody": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "created_time": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lang": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "string"
+                },
+                "updated_time": {
+                    "type": "string"
                 }
             }
         },
@@ -1244,7 +1411,7 @@
                 }
             }
         },
-        "model.ArticleDetail": {
+        "models.ArticleDetail": {
             "type": "object",
             "properties": {
                 "content": {
@@ -1268,7 +1435,7 @@
                 "tags": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.TagMeta"
+                        "$ref": "#/definitions/models.TagMeta"
                     }
                 },
                 "title": {
@@ -1279,7 +1446,7 @@
                 }
             }
         },
-        "model.ArticleInfo": {
+        "models.ArticleInfo": {
             "type": "object",
             "properties": {
                 "created_time": {
@@ -1300,7 +1467,7 @@
                 "tags": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.TagMeta"
+                        "$ref": "#/definitions/models.TagMeta"
                     }
                 },
                 "title": {
@@ -1311,7 +1478,7 @@
                 }
             }
         },
-        "model.Code": {
+        "models.Code": {
             "type": "object",
             "properties": {
                 "content": {
@@ -1337,7 +1504,7 @@
                 }
             }
         },
-        "model.CodeDetail": {
+        "models.CodeDetail": {
             "type": "object",
             "properties": {
                 "content": {
@@ -1363,7 +1530,7 @@
                 }
             }
         },
-        "model.CodeMeta": {
+        "models.CodeMeta": {
             "type": "object",
             "properties": {
                 "created_time": {
@@ -1386,7 +1553,7 @@
                 }
             }
         },
-        "model.Comment": {
+        "models.Comment": {
             "type": "object",
             "properties": {
                 "art_id": {
@@ -1409,10 +1576,13 @@
                 },
                 "to_id": {
                     "type": "integer"
+                },
+                "top_id": {
+                    "type": "integer"
                 }
             }
         },
-        "model.File": {
+        "models.File": {
             "type": "object",
             "properties": {
                 "created_time": {
@@ -1426,7 +1596,7 @@
                 }
             }
         },
-        "model.FileMeta": {
+        "models.FileMeta": {
             "type": "object",
             "properties": {
                 "key": {
@@ -1434,7 +1604,76 @@
                 }
             }
         },
-        "model.Setting": {
+        "models.Link": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "created_time": {
+                    "type": "string"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "link": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Tag": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "type": "string"
+                },
+                "created_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_time": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.TagMeta": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Theme": {
             "type": "object",
             "properties": {
                 "background_image": {
@@ -1444,112 +1683,6 @@
                     "type": "string"
                 },
                 "global_js": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.Tag": {
-            "type": "object",
-            "properties": {
-                "color": {
-                    "type": "string"
-                },
-                "created_time": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updated_time": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.TagMeta": {
-            "type": "object",
-            "properties": {
-                "color": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                }
-            }
-        },
-        "service.ArticleUpdateBody": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string"
-                },
-                "created_time": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "image": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer"
-                },
-                "summary": {
-                    "type": "string"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.TagMeta"
-                    }
-                },
-                "title": {
-                    "type": "string"
-                },
-                "updated_time": {
-                    "type": "string"
-                }
-            }
-        },
-        "service.AuthBody": {
-            "type": "object",
-            "properties": {
-                "password": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                }
-            }
-        },
-        "service.CodeUpdateBody": {
-            "type": "object",
-            "properties": {
-                "content": {
-                    "type": "string"
-                },
-                "created_time": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "lang": {
-                    "type": "string"
-                },
-                "tags": {
-                    "type": "string"
-                },
-                "updated_time": {
                     "type": "string"
                 }
             }

@@ -69,8 +69,8 @@ func Login(c echo.Context) error {
 // @bolg captcha
 // @Tags Auth
 // @Accept  json
-// @Produce  json
-// @Success 200 {object} CaptchaResponse
+// @Produce  png
+// @Success 200
 // @Router /auth/captcha [get]
 func Captcha(c echo.Context) error {
 	f := system.NewCaptcha().Generate()
@@ -84,7 +84,7 @@ func Captcha(c echo.Context) error {
 // @Tags Auth
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} infoResponse
+// @Success 200
 // @Router /auth/info [get]
 func Info(c echo.Context) error {
 	return nil

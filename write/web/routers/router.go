@@ -7,6 +7,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/swaggo/echo-swagger"
+	_ "git.kicoe.com/blog/write/docs"
 )
 
 func Routers() *echo.Echo {
@@ -100,6 +102,10 @@ func Routers() *echo.Echo {
 		{
 			searchG.GET("/code", api.SearchCode)
 		}
+	}
+
+	if setting.App.Debug {
+        e.GET("/swagger/*", echoSwagger.WrapHandler)
 	}
 
 	return e

@@ -11,13 +11,18 @@ services:
     command: /bin/sh -c "npm install ; npm run build"
 
   api:
-    image: golang:1.19.2-alpine
+    build:
+      context: ../docker/golang
+      # args:
+      #   http_proxy: "http://localhost:8080"
+      #   https_proxy: "http://localhost:8080"
+      # network: host
     volumes:
       - ./:/app
-      - ./mod:/go/pkg/mod
+      - ./.mod:/go/pkg/mod
     working_dir: /app
     # environment:
     #   http_proxy: "http://localhost:8080"
     #   https_proxy: "http://localhost:8080"
     # network_mode: "host"
-    command: /bin/sh -c "go mod tidy ; GOOS=linux GOARCH=amd64 go build -o linux_amd64_api -v"
+    command: /bin/sh -c "swag init ; go mod tidy ; GOOS=linux GOARCH=amd64 go build -o linux_amd64_api -v"

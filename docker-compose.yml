@@ -29,6 +29,9 @@ services:
       - "9000:9000"
     environment:
       TZ: "Asia/Shanghai"
+    #   http_proxy: "http://localhost:8080"
+    #   https_proxy: "http://localhost:8080"
+    # network_mode: "host"
     volumes:
       - ./read:/var/www/html/read
       - ./log/read:/var/www/html/log

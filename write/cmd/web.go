@@ -17,8 +17,8 @@ var CmdWeb = cli.Command{
 	Action:      runWeb,
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
-			Name:   "reindex",
-			Usage:  "reindex from db",
+			Name:  "reindex",
+			Usage: "reindex from db",
 		},
 	},
 }
@@ -27,7 +27,7 @@ func runWeb(ctx *cli.Context) error {
 	Init()
 	se.InitRiot()
 
-	if (ctx.Bool("reindex")) {
+	if ctx.Bool("reindex") {
 		seReIndex(ctx)
 	}
 

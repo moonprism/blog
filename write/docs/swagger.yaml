@@ -1,64 +1,124 @@
 basePath: /api/v1
 definitions:
-  api.articleListResponse:
+  api.ArticleListResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/model.ArticleInfo'
+          $ref: '#/definitions/models.ArticleInfo'
         type: array
       pagination:
         $ref: '#/definitions/utils.Pagination'
     type: object
-  api.authResponse:
+  api.AuthRequest:
+    properties:
+      captcha:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  api.AuthResponse:
     properties:
       token:
         type: string
     type: object
-  api.casAuthorization:
+  api.CasAuthorization:
     properties:
       cas_key:
         type: string
     type: object
-  api.codeDetailListResponse:
+  api.CodeDetailListResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/model.Code'
+          $ref: '#/definitions/models.Code'
         type: array
       pagination:
         $ref: '#/definitions/utils.Pagination'
     type: object
-  api.codeListResponse:
+  api.CodeListResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/model.CodeMeta'
+          $ref: '#/definitions/models.CodeMeta'
         type: array
       pagination:
         $ref: '#/definitions/utils.Pagination'
     type: object
-  api.commentListResponse:
+  api.CommentListResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/model.Comment'
+          $ref: '#/definitions/models.Comment'
         type: array
       pagination:
         $ref: '#/definitions/utils.Pagination'
+    type: object
+  api.LinkListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Link'
+        type: array
+      pagination:
+        $ref: '#/definitions/utils.Pagination'
+    type: object
+  api.SystemInfo:
+    properties:
+      captcha:
+        type: boolean
+      notice:
+        type: boolean
+      theme:
+        $ref: '#/definitions/models.Theme'
     type: object
   api.fileListResponse:
     properties:
       data:
         items:
-          $ref: '#/definitions/model.File'
+          $ref: '#/definitions/models.File'
         type: array
     type: object
-  api.infoResponse:
+  article.ArticleUpdateBody:
     properties:
-      background_image:
+      content:
         type: string
-      is_register:
-        type: boolean
+      created_time:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      status:
+        type: integer
+      summary:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/models.TagMeta'
+        type: array
+      title:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  code.UpdateBody:
+    properties:
+      content:
+        type: string
+      created_time:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      lang:
+        type: string
+      tags:
+        type: string
+      updated_time:
+        type: string
     type: object
   errors.HTTPError:
     properties:
@@ -67,7 +127,7 @@ definitions:
       message:
         type: string
     type: object
-  model.ArticleDetail:
+  models.ArticleDetail:
     properties:
       content:
         type: string
@@ -83,14 +143,14 @@ definitions:
         type: string
       tags:
         items:
-          $ref: '#/definitions/model.TagMeta'
+          $ref: '#/definitions/models.TagMeta'
         type: array
       title:
         type: string
       updated_time:
         type: string
     type: object
-  model.ArticleInfo:
+  models.ArticleInfo:
     properties:
       created_time:
         type: string
@@ -104,14 +164,14 @@ definitions:
         type: string
       tags:
         items:
-          $ref: '#/definitions/model.TagMeta'
+          $ref: '#/definitions/models.TagMeta'
         type: array
       title:
         type: string
       updated_time:
         type: string
     type: object
-  model.Code:
+  models.Code:
     properties:
       content:
         type: string
@@ -128,7 +188,7 @@ definitions:
       updated_time:
         type: string
     type: object
-  model.CodeDetail:
+  models.CodeDetail:
     properties:
       content:
         type: string
@@ -145,7 +205,7 @@ definitions:
       updated_time:
         type: string
     type: object
-  model.CodeMeta:
+  models.CodeMeta:
     properties:
       created_time:
         type: string
@@ -160,7 +220,7 @@ definitions:
       updated_time:
         type: string
     type: object
-  model.Comment:
+  models.Comment:
     properties:
       art_id:
         type: integer
@@ -176,8 +236,10 @@ definitions:
         type: string
       to_id:
         type: integer
+      top_id:
+        type: integer
     type: object
-  model.File:
+  models.File:
     properties:
       created_time:
         type: string
@@ -186,87 +248,63 @@ definitions:
       key:
         type: string
     type: object
-  model.FileMeta:
+  models.FileMeta:
     properties:
       key:
         type: string
     type: object
-  model.Setting:
+  models.Link:
+    properties:
+      avatar:
+        type: string
+      created_time:
+        type: string
+      data:
+        type: string
+      email:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      message:
+        type: string
+      name:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.Tag:
+    properties:
+      color:
+        type: string
+      created_time:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_time:
+        type: string
+    type: object
+  models.TagMeta:
+    properties:
+      color:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  models.Theme:
     properties:
       background_image:
         type: string
       global_css:
         type: string
       global_js:
-        type: string
-    type: object
-  model.Tag:
-    properties:
-      color:
-        type: string
-      created_time:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      updated_time:
-        type: string
-    type: object
-  model.TagMeta:
-    properties:
-      color:
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-    type: object
-  service.ArticleUpdateBody:
-    properties:
-      content:
-        type: string
-      created_time:
-        type: string
-      id:
-        type: integer
-      image:
-        type: string
-      status:
-        type: integer
-      summary:
-        type: string
-      tags:
-        items:
-          $ref: '#/definitions/model.TagMeta'
-        type: array
-      title:
-        type: string
-      updated_time:
-        type: string
-    type: object
-  service.AuthBody:
-    properties:
-      password:
-        type: string
-      username:
-        type: string
-    type: object
-  service.CodeUpdateBody:
-    properties:
-      content:
-        type: string
-      created_time:
-        type: string
-      description:
-        type: string
-      id:
-        type: integer
-      lang:
-        type: string
-      tags:
-        type: string
-      updated_time:
         type: string
     type: object
   utils.Pagination:
@@ -303,7 +341,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.articleListResponse'
+            $ref: '#/definitions/api.ArticleListResponse'
         "403":
           description: Forbidden
           schema:
@@ -323,7 +361,7 @@ paths:
         name: articleInfo
         required: true
         schema:
-          $ref: '#/definitions/model.ArticleInfo'
+          $ref: '#/definitions/models.ArticleInfo'
       produces:
       - application/json
       responses:
@@ -387,7 +425,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.ArticleDetail'
+            $ref: '#/definitions/models.ArticleDetail'
         "403":
           description: Unauthenticated
           schema:
@@ -416,7 +454,7 @@ paths:
         name: articleUpdateBody
         required: true
         schema:
-          $ref: '#/definitions/service.ArticleUpdateBody'
+          $ref: '#/definitions/article.ArticleUpdateBody'
       produces:
       - application/json
       responses:
@@ -435,6 +473,18 @@ paths:
       summary: update article
       tags:
       - Article
+  /auth/captcha:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: OK
+      summary: deprecated
+      tags:
+      - Auth
   /auth/info:
     get:
       consumes:
@@ -444,8 +494,6 @@ paths:
       responses:
         "200":
           description: OK
-          schema:
-            $ref: '#/definitions/api.infoResponse'
       summary: deprecated
       tags:
       - Auth
@@ -459,40 +507,19 @@ paths:
         name: loginData
         required: true
         schema:
-          $ref: '#/definitions/service.AuthBody'
+          $ref: '#/definitions/api.AuthRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.authResponse'
+            $ref: '#/definitions/api.AuthResponse'
         "401":
           description: Unauthorized
           schema:
             $ref: '#/definitions/errors.HTTPError'
       summary: admin login (jwt)
-      tags:
-      - Auth
-  /auth/regist:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: ' '
-        in: body
-        name: loginData
-        required: true
-        schema:
-          $ref: '#/definitions/service.AuthBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/api.authResponse'
-      summary: deprecated
       tags:
       - Auth
   /cas/auth:
@@ -535,7 +562,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.casAuthorization'
+            $ref: '#/definitions/api.CasAuthorization'
         "403":
           description: Unauthenticated
           schema:
@@ -562,7 +589,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.codeListResponse'
+            $ref: '#/definitions/api.CodeListResponse'
         "403":
           description: Forbidden
           schema:
@@ -582,7 +609,7 @@ paths:
         name: codeMeta
         required: true
         schema:
-          $ref: '#/definitions/service.CodeUpdateBody'
+          $ref: '#/definitions/code.UpdateBody'
       produces:
       - application/json
       responses:
@@ -646,7 +673,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.CodeDetail'
+            $ref: '#/definitions/models.CodeDetail'
         "403":
           description: Unauthenticated
           schema:
@@ -675,7 +702,7 @@ paths:
         name: codeUpdateBody
         required: true
         schema:
-          $ref: '#/definitions/service.CodeUpdateBody'
+          $ref: '#/definitions/code.UpdateBody'
       produces:
       - application/json
       responses:
@@ -713,7 +740,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.commentListResponse'
+            $ref: '#/definitions/api.CommentListResponse'
         "403":
           description: Forbidden
           schema:
@@ -802,7 +829,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.FileMeta'
+            $ref: '#/definitions/models.FileMeta'
         "403":
           description: Forbidden
           schema:
@@ -837,6 +864,42 @@ paths:
       summary: delete file
       tags:
       - File
+  /link:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.LinkListResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: get link list
+      tags:
+      - Link
+  /link/{id}:
+    put:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Link'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+        "404":
+          description: NotFound
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: update link apply
+      tags:
+      - Link
   /search/code:
     get:
       parameters:
@@ -851,7 +914,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.codeDetailListResponse'
+            $ref: '#/definitions/api.CodeDetailListResponse'
         "403":
           description: Forbidden
           schema:
@@ -859,21 +922,15 @@ paths:
       summary: search by text
       tags:
       - Search
-  /setting:
+  /system/info:
     get:
-      parameters:
-      - description: Authorization
-        in: header
-        name: Authorization
-        required: true
-        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Setting'
+            $ref: '#/definitions/api.SystemInfo'
         "403":
           description: Forbidden
           schema:
@@ -881,6 +938,7 @@ paths:
       summary: get setting
       tags:
       - Setting
+  /system/info/notice:
     put:
       parameters:
       - description: Authorization
@@ -893,7 +951,35 @@ paths:
         name: settingInfo
         required: true
         schema:
-          $ref: '#/definitions/model.Setting'
+          $ref: '#/definitions/api.SystemInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/errors.HTTPError'
+      summary: set setting
+      tags:
+      - Setting
+  /system/info/theme:
+    put:
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ' '
+        in: body
+        name: settingInfo
+        required: true
+        schema:
+          $ref: '#/definitions/models.Theme'
       produces:
       - application/json
       responses:
@@ -923,7 +1009,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Tag'
+              $ref: '#/definitions/models.Tag'
             type: array
         "403":
           description: Forbidden
@@ -944,7 +1030,7 @@ paths:
         name: tagMeta
         required: true
         schema:
-          $ref: '#/definitions/model.TagMeta'
+          $ref: '#/definitions/models.TagMeta'
       produces:
       - application/json
       responses:
@@ -1007,7 +1093,7 @@ paths:
         name: TagMeta
         required: true
         schema:
-          $ref: '#/definitions/model.TagMeta'
+          $ref: '#/definitions/models.TagMeta'
       produces:
       - application/json
       responses:
