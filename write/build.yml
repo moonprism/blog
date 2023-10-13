@@ -14,7 +14,7 @@ services:
     image: golang:1.19.2-alpine
     volumes:
       - ./:/app
-      # - ./mod:/go/pkg/mod
+      - ./mod:/go/pkg/mod
     working_dir: /app
     # environment:
     #   http_proxy: "http://localhost:8080"

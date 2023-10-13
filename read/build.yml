@@ -5,4 +5,4 @@ services:
     volumes:
       - ./:/web
     working_dir: /web
-    command: /bin/sh -c "npm install ; npm run build"
+    command: /bin/sh -c "npm install ; npm run build" # serve
