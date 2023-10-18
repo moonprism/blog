@@ -57,15 +57,20 @@ if (url.indexOf("?") != -1) {
     seed = Math.round(Math.random() * 8999999) + 1000000
 }
 var linkText = document.getElementById('mb').innerHTML
-var ll = linkText.match(/\n@@@[\s\S]*?\n@@@/)[0].split('\n\n')
-ll.shift();ll.pop()
-ll.map((v, i) => {
-    let r = seed / v.split('').map(v => v.charCodeAt()).reduce((c, sum) => sum + c)
-    r = Math.floor(r) % ll.length;
-    [ll[i], ll[r]] = [ll[r], ll[i]]
+linkText = linkText.replaceAll(/\n(@@@[\s\S]*?\n@@@\+?)/g, (match, capture) => {
+    let ll = match.split('\n\n')
+    ll.shift();ll.pop()
+    ll.map((v, i) => {
+        let r = seed / v.split('').map(v => v.charCodeAt()).reduce((c, sum) => sum + c)
+        r = Math.floor(r) % ll.length;
+        [ll[i], ll[r]] = [ll[r], ll[i]]
+    })
+    let text = ll.join("\n\n")
+    if (match.charAt(match.length-1) === '+') {
+        return text + '\n\n<div class="seed"> 🌱 random seed: <span>'+seed+'<span></div>'
+    }
+    return text
 })
-linkText = linkText.replace(/\n@@@[\s\S]*?\n@@@/, ll.join("\n\n")+
-    '\n\n<div class="seed"> 🌱 random seed: <span>'+seed+'<span></div>')
 document.getElementById('mb').innerHTML = linkText
 window.history.pushState({}, 0, "?"+seed)
 </script>

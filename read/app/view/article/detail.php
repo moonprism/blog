@@ -29,7 +29,7 @@
 
         </textarea>
     </div>
-    <div class="agreement" id="agreement">parsed by <a target="_blank" href="https://github.com/moonprism/markdown.js">markdown.js</a><br></div>
+    <div class="agreement" id="agreement">powered by <a target="_blank" href="https://github.com/moonprism/kicoephp-src">kicoephp</a><br></div>
     <div id="comment" data-id="<?php echo $article->id ?>"></div>
 </div>
 <?php if ($math_flag) { ?>

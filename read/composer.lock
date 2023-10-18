@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1386e10d1a758cb943533a9efade6f7",
+    "content-hash": "216150b3da0410415058cdd361c317f0",
     "packages": [
         {
             "name": "filp/whoops",
@@ -493,16 +493,16 @@
         },
         {
             "name": "kicoephp/src",
-            "version": "2.3.1",
+            "version": "dev-php8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moonprism/kicoephp-src.git",
-                "reference": "d0d9609d30b4ccbdc5aabbc3ce60b86b26b2f2a4"
+                "reference": "27ce9a141c05c311026f9e79c559c0d394f22883"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/d0d9609d30b4ccbdc5aabbc3ce60b86b26b2f2a4",
-                "reference": "d0d9609d30b4ccbdc5aabbc3ce60b86b26b2f2a4",
+                "url": "https://api.github.com/repos/moonprism/kicoephp-src/zipball/27ce9a141c05c311026f9e79c559c0d394f22883",
+                "reference": "27ce9a141c05c311026f9e79c559c0d394f22883",
                 "shasum": ""
             },
             "require": {
@@ -524,9 +524,9 @@
             ],
             "description": "a simple web framework.",
             "support": {
-                "source": "https://github.com/moonprism/kicoephp-src/tree/2.3.1"
+                "source": "https://github.com/moonprism/kicoephp-src/tree/php8.2"
             },
-            "time": "2021-06-19T04:20:45+00:00"
+            "time": "2023-10-14T00:30:31+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1212,6 +1212,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "kicoephp/src": 20,
         "google/protobuf": 5
     },
     "prefer-stable": false,
