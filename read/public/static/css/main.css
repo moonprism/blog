@@ -233,7 +233,7 @@ body {
     transition: 0.2s;
 }
 .tag, .tag-banner .t, .tag-banner .c {
-    font-family: 'Space Mono', monospace;
+    font-family: 'Space Mono', 'Noto Sans SC';
 }
 .tag:hover {
     background-color: #fff !important;

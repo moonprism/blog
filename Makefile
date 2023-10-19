@@ -73,7 +73,7 @@ sh-write:
 
 # ======= Read =======
 
-# build-php: 编译PHP容器后续
+## build-php: 编译PHP容器后续
 build-php:
 	$(DOCKER_COMPOSE) exec php chown www-data:www-data /var/www/html/log
 	$(DOCKER_COMPOSE) exec php composer install
