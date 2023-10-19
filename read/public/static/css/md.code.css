@@ -118,12 +118,12 @@
 }
 
 .m-c .m-cc {
-    padding: 10px 12px;
+    padding: 10px 12px 5px;
     display: none;
 }
 .m-c .m-cc > p {
     font-size: 15px;
-    margin: 2px 5px 10px;
+    margin: 4px 5px 6px;
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
     white-space: -pre-wrap;
@@ -164,7 +164,7 @@
     left: -5px;
 }
 .m-c .m-cc ul, .m-c .m-cc ol{
-    margin: 13px 0;
+    margin: 10px 0 12px;
     font-size: 15px;
     color: #494949;
     padding-left: 1.7em;
@@ -211,7 +211,7 @@
     padding: 7px 10px;
     font-size: 15px;
     font-style: italic;
-    margin: 3px 0;
+    margin: 3px 0 5px;
     color: #333;
     background-color: #fff;
     text-decoration: underline;
