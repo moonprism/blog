@@ -136,12 +136,6 @@
     background: #444;
     color: #444;
     transition: background .3s;
-    cursor: default;
-}
-.m-a .mask:hover {
-    background: #fff;
-    /* 没有使用现代化前端的弊处 */
-    color: #333;
 }
 
 @media screen and (max-width: 750px) {
