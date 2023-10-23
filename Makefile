@@ -96,4 +96,5 @@ sh-mysql:
 
 ## back-sql: 备份sql
 back-sql:
-	$(DOCKER_COMPOSE) exec mysql mysqldump --default-character-set=utf8mb4 -uroot -p$(PASSWORD) --databases blog --tables article article_tag code comment file tag > ./data/$(shell date +%Y%m%d)_blog.sql
+	$(DOCKER_COMPOSE) exec mysql mysqldump --default-character-set=utf8mb4 -uroot -p$(PASSWORD) --databases blog --tables article article_tag code comment file tag > ./blog.sql
+	cp ./blog.sql ./data/$(shell date +%Y%m%d)_blog.sql
