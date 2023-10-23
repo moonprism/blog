@@ -21,6 +21,7 @@ func main() {
 			&cmd.CmdWeb,
 			&cmd.CmdAuth,
 			&cmd.CmdSE,
+			&cmd.CmdSync,
 		},
 	}
 
