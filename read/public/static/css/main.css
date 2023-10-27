@@ -668,3 +668,6 @@ button {
     padding: 0 !important;
     border: 0 !important;
 }
+pre code.hljs {
+    padding: 0.5em !important;
+}

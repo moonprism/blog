@@ -88,12 +88,12 @@ if (searchResult) {
     function highlight() {
         document.querySelectorAll('pre code').forEach((block) => {
             if (typeof(hljs) != "undefined") {
-                hljs.highlightBlock(block);
+                hljs.highlightElement(block);
             }
-            block.innerHTML = block.innerHTML.replace(/\<span class=\"hljs-comment\">(.+\s)(https?:\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])\<\/span\>/, '<span class="hljs-comment">$1<a href="$2">$2</a></span>')
+            block.innerHTML = searchCommandUrl(block.innerHTML)
         });
-            addLineNumber();
-        }
+        addLineNumber();
+    }
     function hoverMarkdown(flash = false) {
         let preEl = document.getElementsByTagName('pre');
         let preList = Array.prototype.slice.call(preEl);
@@ -112,7 +112,7 @@ if (searchResult) {
                     show.innerHTML = markd(text.value);
                     document.querySelectorAll('pre code').forEach((block) => {
                         hljs.highlightBlock(block);
-                        block.innerHTML = block.innerHTML.replace(/\<span class=\"hljs-comment\">(.+\s)(https?:\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])\<\/span\>/, '<span class="hljs-comment">$1<a href="$2">$2</a></span>')
+                        block.innerHTML = searchCommandUrl(block.innerHTML)
                     });
                 }
                 // if (code.style.display != 'none') {
@@ -125,13 +125,21 @@ if (searchResult) {
             })
         })
     }
-    hoverMarkdown(true);
-    highlight();
 
     let lo = window.location.href.split("#!/");
     if (lo.length > 1) {
         $('searchInput').value = decodeURI(lo[1]);
         let event = new InputEvent('input');
         $('searchInput').dispatchEvent(event);
+    }
+    function searchCommandUrl(text) {
+        return text.replace(/\<span class=\"hljs-comment\">(.+\s)(https?:\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|])\<\/span\>/, '<span class="hljs-comment">$1<a target="_blank" rel="noopener" href="$2">$2</a></span>')
+    }
+    window.onload=() => {
+        document.querySelectorAll('.search-item').forEach((md) => {
+            md.innerHTML = searchCommandUrl(md.innerHTML)
+        })
+        hoverMarkdown(true);
+        highlight();
     }
 }

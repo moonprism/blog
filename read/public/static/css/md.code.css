@@ -263,7 +263,7 @@
     overflow: auto;
     word-wrap:break-word;
     font: .9em Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
-    padding: 0 8px 0;
+    padding: 2px 8px !important;
     background-color: rgba(0,0,0,0.04) !important;
     display: inline;
     border-radius: 3px;

@@ -37,4 +37,8 @@
 </script>
 <?php } ?>
 <?php $_temp_footer(); ?>
-<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/monokai.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/highlight.js/11.9.0/styles/tokyo-night-dark.min.css">
+<script src="//cdn.staticfile.org/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.configure({
+    ignoreUnescapedHTML: true
+});hljs.highlightAll()</script>
