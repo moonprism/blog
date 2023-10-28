@@ -68,7 +68,7 @@ if (searchResult) {
         let html = '';
         if (searchItem.lang === 'md') {
             content = searchItem.content.replaceAll('<em>', '').replaceAll('</em>', '');
-            html = markd(searchItem.content);
+            html = markd(searchItem.content.replace(/^<em>/, ' <em>'));
         }
         var real_lang = searchItem.lang.replaceAll('<em>', '').replaceAll('</em>', '');
         $('searchResult').innerHTML += '<div class="search-item">\n'+
@@ -88,11 +88,19 @@ if (searchResult) {
     function highlight() {
         document.querySelectorAll('pre code').forEach((block) => {
             if (typeof(hljs) != "undefined") {
+                block.innerHTML = replaceEmTag(block.innerHTML)
                 hljs.highlightElement(block);
+                block.innerHTML = reduceEmTag(block.innerHTML)
             }
             block.innerHTML = searchCommandUrl(block.innerHTML)
         });
         addLineNumber();
+    }
+    function replaceEmTag(text) {
+        return text.replace(/\<em\>(.+?)\<\/em\>/g, '[s-s|$1|s-e]');
+    }
+    function reduceEmTag(text) {
+        return text.replace(/\[s\-s\|(.+?)\|s\-e\]/g, '<em>$1</em>');
     }
     function hoverMarkdown(flash = false) {
         let preEl = document.getElementsByTagName('pre');
@@ -108,10 +116,10 @@ if (searchResult) {
             show.style.display = 'block';
             code.style.display = 'none';
             f.addEve(pre, 'click', (e) => {
-                if (text.value) {
+                if (text && text.value) {
                     show.innerHTML = markd(text.value);
                     document.querySelectorAll('pre code').forEach((block) => {
-                        hljs.highlightBlock(block);
+                        hljs.highlightElement(block);
                         block.innerHTML = searchCommandUrl(block.innerHTML)
                     });
                 }

@@ -576,6 +576,11 @@ body {
     }
 }
 
+pre code::selection, pre code span::selection {
+    background: #444;
+    color: #fff
+}
+
 ::selection {
     background: #222;
     color: #fff
