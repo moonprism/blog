@@ -93,7 +93,7 @@ func (r *RiotSE) Search(index, text string, offset, limit int) (result []interfa
 		var endL, tokenL int
 		for i, loc := range locs {
 			endL = loc
-			if i != 0 && loc <= len(doc.Content) {
+			if i != 0 && loc <= len(doc.Content) && locs[i-1]+tokenL <= loc {
 				re = append(re, doc.Content[locs[i-1]+tokenL:loc]...)
 			}
 			for _, token := range output.Tokens {
