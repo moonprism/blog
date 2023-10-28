@@ -148,6 +148,20 @@ f.addNode = function(parent_n, child_s, string, attr){
     return child_n;
 }
 
+document.querySelectorAll('.article-block > .markdown > pre').forEach((pre) => {
+    let btn = f.addNode(pre, 'div', 'copy', {class: "code-copy-btn"})
+    let txt = pre.querySelector('code').innerText
+    btn.onclick = (e) => {
+        document.querySelectorAll('.article-block > .markdown > pre > .code-copy-btn').forEach((b) => {
+            b.innerText = 'copy'
+            b.style.color = '#f7768e'
+        })
+        navigator.clipboard.writeText(txt);
+        btn.style.color = '#9ece6a'
+        btn.innerText = 'copied'
+   }
+})
+
 // 请求(重写ajax)
 f.fetch = async (url, options) => {
     let response

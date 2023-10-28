@@ -180,7 +180,25 @@
     margin: 0 .2em;
     color: #f04a62;
 }
+.markdown pre .code-copy-btn{
+    content: "copy";
+    font-family: 'Roboto Mono',monospace;
+    font-size: 14px;
+    color: #f7768e;
+    cursor: pointer;
+    letter-spacing: -.5px;
+    padding: 2px 6px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition: opacity 0.2s;
+    opacity:0;
+}
+.markdown pre:hover .code-copy-btn{
+    opacity:1;
+}
 .markdown pre{
+    position: relative;
     overflow: auto;
     word-wrap: break-word;
     line-height: 1.1;
