@@ -1,13 +1,15 @@
 package api
 
 import (
+	"net/http"
+	"net/url"
+	"strconv"
+	"time"
+
 	"git.kicoe.com/blog/write/models"
 	"git.kicoe.com/blog/write/modules/err/errors"
 	"git.kicoe.com/blog/write/services/file"
 	"github.com/labstack/echo/v4"
-	"net/http"
-	"strconv"
-	"time"
 )
 
 // @Summary upload image
@@ -59,6 +61,7 @@ func FileList(c echo.Context) error {
 	)
 
 	timeFormat := c.QueryParam("max_time")
+	timeFormat, _ = url.QueryUnescape(timeFormat)
 	if timeFormat != "" {
 		maxTime, err := time.Parse("2006-01-02 15:04:05", timeFormat)
 		if err != nil {

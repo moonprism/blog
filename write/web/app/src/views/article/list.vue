@@ -132,7 +132,7 @@
                     confirmButtonText: 'Delete',
                     cancelButtonText: 'Cancel',
                 }).then(async () => {
-                    const res = articleApi.delete(article.id)
+                    const res = await articleApi.delete(article.id)
                     if (res.data === 'ok') {
                         this.$message({
                             message: "delete success",

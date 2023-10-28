@@ -52,5 +52,6 @@ build-web:
 docker-build-api: data/dictionary.txt data/stop_tokens.txt
 	$(DOCKER_COMPOSE) -f build.yml run api
 
+## docker-build-web: docker build web
 docker-build-web:
-	$(DOCKER_COMPOSE) -f build.yml run web
+	$(DOCKER_COMPOSE) -f build.yml up web

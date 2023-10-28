@@ -44,10 +44,10 @@
             }
         },
         created() {
-            this.createList(this.startFetchLimit)
+            this.createList()
         },
         methods: {
-            async createList(limit) {
+            async createList() {
                 let maxDate = new Date()
                 if (this.mon) {
                     maxDate = new Date(this.mon)
@@ -57,24 +57,18 @@
                 } else {
                     maxDate = new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 1);
                 }
-                let max_time = dateFormat(maxDate, 'yyyy-MM-dd hh:mm:ss')
-                const res = await fileApi.imageList({
-                    max_time,
-                    size: limit
-                })
-                this.list = res.data.data
-
-                this.list.map(function (item) {
-                    item.src = process.env.VUE_APP_FILE_ORIGIN + item.key
-                    item.time = dateFormat(item.created_time, 'yyyy-MM-dd hh:mm')
-                    return item
-                })
+                this.maxTime = dateFormat(maxDate, 'yyyy-MM-dd hh:mm:ss')
+                this.list = []
+                this.fetchList()
             },
             async fetchList() {
                 if (this.isOver)
                     return
-                let max_time = dateFormat(this.list[this.list.length-1].created_time, 'yyyy-MM-dd hh:mm:ss')
-                const res = await fileApi.imageList({max_time, size: this.fetchLimit})
+                let limit = this.fetchLimit
+                if (this.list.length === 0) {
+                    limit = this.startFetchLimit
+                }
+                const res = await fileApi.imageList({max_time: (this.maxTime), size:limit})
                 let list = res.data.data
                 if (list.length < this.fetchLimit) {
                     this.isOver = true
@@ -82,7 +76,8 @@
                 }
                 list.forEach(item => {
                     item.src = process.env.VUE_APP_FILE_ORIGIN + item.key
-                    item.time = dateFormat(item.created_time, 'yyyy-MM-dd hh:mm')
+                    item.time = dateFormat(item.created_time, 'yyyy-MM-dd hh:mm:ss')
+                    this.maxTime = item.time
                     this.list.push(item)
                 })
             },

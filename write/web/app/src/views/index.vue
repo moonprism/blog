@@ -134,4 +134,7 @@
         border-radius: 3px;
         min-height: 650px;
     }
+    .el-main {
+        padding-top: 0px !important;
+    }
 </style>

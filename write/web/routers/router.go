@@ -28,7 +28,7 @@ func Routers() *echo.Echo {
 	})
 
 	if setting.App.EnableStatic {
-		e.Static("/static", "static")
+		e.Static("/static", "../data/write/static/")
 	}
 
 	// router
