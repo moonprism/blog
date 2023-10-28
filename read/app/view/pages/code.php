@@ -26,7 +26,7 @@
 <?php $_temp_footer(); ?>
 
 <link rel="stylesheet" type="text/css" href="https://cdn.staticfile.org/highlight.js/11.9.0/styles/github.min.css">
-<script src="//cdn.staticfile.org/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.staticfile.org/highlight.js/11.9.0/highlight.min.js"></script>
 <script>hljs.configure({
     ignoreUnescapedHTML: true
 })</script>

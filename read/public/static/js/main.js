@@ -148,11 +148,11 @@ f.addNode = function(parent_n, child_s, string, attr){
     return child_n;
 }
 
-document.querySelectorAll('.article-block > .markdown > pre').forEach((pre) => {
+document.querySelectorAll('.article-block > .markdown pre').forEach((pre) => {
     let btn = f.addNode(pre, 'div', 'copy', {class: "code-copy-btn"})
     let txt = pre.querySelector('code').innerText
     btn.onclick = (e) => {
-        document.querySelectorAll('.article-block > .markdown > pre > .code-copy-btn').forEach((b) => {
+        document.querySelectorAll('.article-block > .markdown pre > .code-copy-btn').forEach((b) => {
             b.innerText = 'copy'
             b.style.color = '#f7768e'
         })
