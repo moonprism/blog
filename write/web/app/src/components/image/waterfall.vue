@@ -1,13 +1,5 @@
 <template>
     <div class="image-list-wrapper">
-    <div class="picker">
-        <el-date-picker
-           v-model="mon"
-           type="month"
-           @change="createList()"
-           placeholder="选择月">
-        </el-date-picker>
-    </div>
         <Waterfall :list="list" :gutter="15" :width="waterfallItemWidth" :phoneCol="2" ref="waterfall">
             <template slot="item" slot-scope="props">
                 <el-card :body-style="{padding:'0px'}">
@@ -29,17 +21,15 @@
 <script>
     import Waterfall from "vue-waterfall-plugin"
     import fileApi from "@/api/file"
-    import {dateFormat} from "@/utils/time"
 
     // emit [select-image]
     export default {
         data () {
             return {
-                mon: '',
                 list: [],
                 selectedItem: {},
-                startFetchLimit: 25,
-                fetchLimit: 12,
+                startFetchLimit: 30,
+                fetchLimit: 20,
                 isOver: false
             }
         },
@@ -48,16 +38,6 @@
         },
         methods: {
             async createList() {
-                let maxDate = new Date()
-                if (this.mon) {
-                    maxDate = new Date(this.mon)
-                }
-                if (maxDate.getMonth() == 11) {
-                    maxDate = new Date(maxDate.getFullYear() + 1, 0, 1);
-                } else {
-                    maxDate = new Date(maxDate.getFullYear(), maxDate.getMonth() + 1, 1);
-                }
-                this.maxTime = dateFormat(maxDate, 'yyyy-MM-dd hh:mm:ss')
                 this.list = []
                 this.fetchList()
             },
@@ -68,7 +48,7 @@
                 if (this.list.length === 0) {
                     limit = this.startFetchLimit
                 }
-                const res = await fileApi.imageList({max_time: (this.maxTime), size:limit})
+                const res = await fileApi.imageList({max_time: this.maxTime, size:limit})
                 let list = res.data.data
                 if (list.length < this.fetchLimit) {
                     this.isOver = true
@@ -76,8 +56,8 @@
                 }
                 list.forEach(item => {
                     item.src = process.env.VUE_APP_FILE_ORIGIN + item.key
-                    item.time = dateFormat(item.created_time, 'yyyy-MM-dd hh:mm:ss')
-                    this.maxTime = item.time
+                    item.time = item.created_time
+                    this.maxTime = encodeURI(item.created_time)
                     this.list.push(item)
                 })
             },

@@ -2,7 +2,6 @@ package api
 
 import (
 	"net/http"
-	"net/url"
 	"strconv"
 	"time"
 
@@ -61,9 +60,8 @@ func FileList(c echo.Context) error {
 	)
 
 	timeFormat := c.QueryParam("max_time")
-	timeFormat, _ = url.QueryUnescape(timeFormat)
 	if timeFormat != "" {
-		maxTime, err := time.Parse("2006-01-02 15:04:05", timeFormat)
+		maxTime, err := time.Parse(time.RFC3339, timeFormat)
 		if err != nil {
 			return errors.HTTPErrorBadRequest
 		}
