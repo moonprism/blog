@@ -206,8 +206,13 @@
     overflow: auto;
     border-radius: 3px;
     background-color: #282828;
-    margin: 17px 0 24px;
     tab-size: 4;
+}
+.markdown>pre {
+    margin: 17px 0 24px;
+}
+.markdown>blockquote>pre{
+    margin: 10px 0;
 }
 .markdown pre code {
     color: #ebdbb2;
