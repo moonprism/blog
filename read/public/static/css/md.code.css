@@ -64,8 +64,7 @@
     border: 1px solid rgba(100,100,100,.15);
     overflow: auto;
     word-wrap: break-word;
-    line-height: 1.1;
-    padding: 10px 16px;
+    padding: 8px 16px;
     border-radius: 3px;
     margin: 5px 0;
     tab-size: 4;
@@ -97,8 +96,7 @@
     margin: 0 !important;
 }
 .m-c .hljs ol li {
-    padding: 2px 7px!important;
-    margin: 0 !important;
+    padding: 2px;
     white-space: pre;
     color: rgba(27,31,35,.3);
 }

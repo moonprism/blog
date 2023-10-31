@@ -105,7 +105,7 @@
 .markdown ul, .markdown ol{
     margin: 18px 0;
     font-size: 16px;
-    padding-left: 2em;
+    padding-left: 1.5em;
 }
 .markdown ul li,.markdown ol li{
     margin-bottom: 5px;
