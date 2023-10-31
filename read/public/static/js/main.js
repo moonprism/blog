@@ -133,15 +133,20 @@ f.addNode = function(parent_n, child_s, string, attr){
 // 代码复制按钮
 document.querySelectorAll('.article-block > .markdown pre').forEach((pre) => {
     let btn = f.addNode(pre, 'div', 'copy', {class: "code-copy-btn"})
-    let txt = pre.querySelector('code').innerText
+    let code = pre.querySelector('code')
     btn.onclick = (e) => {
         document.querySelectorAll('.article-block > .markdown pre > .code-copy-btn').forEach((b) => {
             b.innerText = 'copy'
-            b.style.color = '#f7768e'
+            b.style.color = 'var(--md-pre-copy-btn-color)'
         })
-        navigator.clipboard.writeText(txt);
-        btn.style.color = '#9ece6a'
+        navigator.clipboard.writeText(code.innerText)
+        btn.style.color = '#d2e3c8'
         btn.innerText = 'copied'
+        // const selection = document.getSelection()
+        // const range = document.createRange()
+        // range.selectNode(code)
+        // selection.removeAllRanges()
+        // selection.addRange(range)
    }
 })
 

@@ -108,8 +108,9 @@
     padding-left: 2em;
 }
 .markdown ul li,.markdown ol li{
-    margin-bottom: 7px;
+    margin-bottom: 5px;
     padding-left: 5px;
+    line-height: 1.7rem;
 }
 .markdown ul li{
     list-style-type: disc !important;
@@ -189,12 +190,12 @@
     content: "copy";
     font-family: var(--ui-font);
     font-size: 14px;
-    color: #f7768e;
+    color: var(--md-pre-copy-btn-color);
     cursor: pointer;
-    padding: 2px 6px;
+    padding: 0px;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -4px;
+    right: 5px;
     transition: opacity 0.2s;
     opacity:0;
 }
@@ -205,18 +206,17 @@
     position: relative;
     overflow: auto;
     word-wrap: break-word;
-    line-height: 1.1;
-    padding: 16px 16px 12px;
+    padding: 2px;
     overflow: auto;
     border-radius: 3px;
-    background-color: #282828;
+    background-color: #1a1b26;
     tab-size: 4;
 }
 .markdown>pre {
     margin: 17px 0 24px;
 }
 .markdown pre code {
-    color: #ebdbb2;
+    color: #c0caf5;
 }
 .markdown ul pre, .markdown ol pre {
     margin-left: -10px;
