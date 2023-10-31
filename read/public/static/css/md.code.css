@@ -42,12 +42,12 @@
 .search-result blockquote {
     margin: 12px 0 2px;
     padding: 5px 5px 0;
-    color: #555;
+    color: #444;
     word-wrap: break-word;
     font-size: 18px;
 }
 .search-result blockquote span {
-    color: #777;
+    color: #666;
     font-size: 15px;
 }
 
@@ -74,7 +74,7 @@
     font: 15px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace !important;
 }
 .search-result em {
-    border-bottom: 2px solid aqua;
+    border-bottom: 2px solid deeppink;
     border-radius: 2px;
     font-style: normal;
 }
@@ -134,34 +134,17 @@
 }
 .m-c .m-cc a {
 }
-.m-c .m-cc h1:before{
-    content: '#';
-    margin-right: 6px;
-    font-size: 19px;
-    color: #888;
-}
 .m-c .m-cc h1{
-    padding: 5px 4px;
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #111;
-    font-weight: 400;
+    margin: 10px 5px 5px;
+}
+.m-c .m-cc h2{
+    margin: 10px 5px 5px;
 }
 .m-c .m-cc h3{
-    padding: 4px 12px;
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: #222;
-    font-weight: 400;
-    position: relative;
+    margin: 10px 5px 5px;
 }
-.m-c .m-cc h3:before{
-    content: '@';
-    font-size: 19px;
-    color: #9b45e4;
-    position: absolute;
-    top: 3px;
-    left: -5px;
+.m-c .m-cc h4{
+    margin: 10px 5px 5px;
 }
 .m-c .m-cc ul, .m-c .m-cc ol{
     margin: 10px 0 12px;
@@ -195,11 +178,14 @@
     margin: 11px 3px;
     padding: 8px 13px;
     border-radius: 4px;
-    word-wrap: break-word;
+    text-wrap: pretty;
     font-size: 14px;
     line-height: 1.6;
     background-color: #eee;
     color: #000;
+}
+.m-c .m-cc blockquote p{
+    margin: 5px 0;
 }
 .m-c .m-cc blockquote blockquote {
     margin: 3px 0;

@@ -101,24 +101,6 @@ if (upButton) {
     }
 }
 
-// 预览图片 #curtain .preview
-var curtain = $('curtain')
-if (curtain) {
-    curtain.onclick = () => {
-        curtain.style.display = 'none'
-    }
-    document.querySelectorAll('img').forEach((p) => {
-        p.style.cursor = 'pointer'
-        p.onclick = (i) => {
-            let wh = document.documentElement.clientHeight || document.body.clientHeight
-            let h = (wh - i.srcElement.naturalHeight) / 2.1
-            let paddingHeigh = h > 0 ? h : 15
-            $('curtain').style.display = 'block'
-            $('curtain').innerHTML = '<img style="margin: '+paddingHeigh+'px auto" src="'+ i.srcElement.currentSrc +'">'
-        }
-    })
-}
-
 // six years ago
 var f = {};
 // 绑定事件
@@ -148,6 +130,7 @@ f.addNode = function(parent_n, child_s, string, attr){
     return child_n;
 }
 
+// 代码复制按钮
 document.querySelectorAll('.article-block > .markdown pre').forEach((pre) => {
     let btn = f.addNode(pre, 'div', 'copy', {class: "code-copy-btn"})
     let txt = pre.querySelector('code').innerText
@@ -161,6 +144,31 @@ document.querySelectorAll('.article-block > .markdown pre').forEach((pre) => {
         btn.innerText = 'copied'
    }
 })
+
+// 预览图片 #curtain .preview
+var curtain = $('curtain')
+if (curtain) {
+    curtain.onclick = () => {
+        curtain.style.display = 'none'
+        document.body.style.overflow = ''
+    }
+    var urlRegex = new RegExp('https?:\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]');
+    document.querySelectorAll('img').forEach((p) => {
+        p.style.cursor = 'pointer'
+        p.onclick = (i) => {
+            let wh = document.documentElement.clientHeight || document.body.clientHeight
+            let h = (wh - i.srcElement.naturalHeight) / 2.1
+            let paddingHeigh = h > 0 ? h : 15
+            $('curtain').style.display = 'block'
+            $('curtain').innerHTML = '<img style="margin: '+paddingHeigh+'px auto" src="'+ i.srcElement.currentSrc +'">'
+            document.body.style.overflow = 'hidden'
+        }
+        // todo
+        // if (urlRegex.test(p.alt)) {
+        //     f.addNode(p.parentNode, 'a', p.alt, {href: p.alt, class: 'img-decoration'})
+        // }
+    })
+}
 
 // 请求(重写ajax)
 f.fetch = async (url, options) => {

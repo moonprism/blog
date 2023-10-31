@@ -1,7 +1,7 @@
 <?php $_temp_header(); ?>
 <div id="content" class="m-c">
     <div <?php if($next_page == -1){ echo 'style="display:none"'; } ?> class="search-input">
-        <input id="searchInput" autocomplete="off" autofocus>
+        <input id="searchInput" autocomplete="off">
     </div>
     <div id="load"></div>
     <div id="searchResult" class="search-result">

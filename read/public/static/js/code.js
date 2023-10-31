@@ -97,10 +97,10 @@ if (searchResult) {
         addLineNumber();
     }
     function replaceEmTag(text) {
-        return text.replace(/\<em\>(.+?)\<\/em\>/g, '[s-s|$1|s-e]');
+        return text.replace(/\<em\>(.+?)\<\/em\>/g, '卍$1卐');
     }
     function reduceEmTag(text) {
-        return text.replace(/\[s\-s\|(.+?)\|s\-e\]/g, '<em>$1</em>');
+        return text.replace(/卍(.+?)卐/g, '<em>$1</em>');
     }
     function hoverMarkdown(flash = false) {
         let preEl = document.getElementsByTagName('pre');

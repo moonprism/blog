@@ -135,7 +135,7 @@
     display: inline-block;
     letter-spacing: 1px;
     font-size: 13px;
-    color: #777;
+    color: #666;
 }
 .com b {
     font-weight: normal;
@@ -144,7 +144,7 @@
     color: #777;
 }
 .com .repl_name {
-    color: #333;
+    color: var(--read-color);
 }
 .com .repl{
     float: right;
