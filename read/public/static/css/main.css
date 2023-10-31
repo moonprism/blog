@@ -20,10 +20,11 @@ body,h1,h2,h3,h4,h5,h6,p,form,blockquote,pre {
     --md-bq-info-color: 129,52,175;
     --ui-font: 'Space Mono', monospace;
     --read-font: 'Work Sans', sans-serif;
+    --system-font: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
 }
 
 html body {
-    font-family: var(--read-font),ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+    font-family: var(--read-font), var(--system-font);
 }
 
 ol,ul,li {
@@ -249,7 +250,7 @@ body {
     border: 1px solid #fff;
     transition: 0.2s;
     font-size: 13px;
-    font-family: var(--ui-font)
+    font-family: var(--ui-font), var(--system-font);
 }
 
 .tag:hover {
