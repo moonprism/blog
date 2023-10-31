@@ -58,7 +58,7 @@
     border: 1px solid rgba(100,100,100,.15);
     color: #909399;
     border-radius: 4px;
-    font-family: 'Space mono';
+    font-family: var(--ui-font);
 }
 .search-result pre {
     border: 1px solid rgba(100,100,100,.15);
@@ -132,7 +132,6 @@
     line-height: 140%;
 }
 .m-c .m-cc a {
-    font-family: -apple-system, "Roboto Mono", "Microsoft Yahei Light","Microsoft YaHei", sans-serif;
 }
 .m-c .m-cc h1:before{
     content: '#';
@@ -172,7 +171,6 @@
 .m-c .m-cc ul li,.m-c .m-cc ol li{
     margin-bottom: 7px;
     padding-left: 5px;
-    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,SimSun,sans-serif;
 }
 .m-c .m-cc ul li{
     list-style-type: disc !important;
@@ -199,7 +197,6 @@
     word-wrap: break-word;
     font-size: 14px;
     line-height: 1.6;
-    font-family: -apple-system, "Roboto Mono","Microsoft YaHei", sans-serif;
     background-color: #eee;
     color: #000;
 }

@@ -1,13 +1,13 @@
 .markdown{
-    font-size: 15px;
+    font-size: 16px;
     margin-top: 26px;
-    letter-spacing: .01em;
 }
-.markdown a:hover{
-    text-decoration: underline;
-}
+/* .markdown > :not(pre){ */
+/*     word-spacing: 0px; */
+/* } */
 .markdown a {
     margin: 0 2px;
+    text-decoration: underline;
 }
 .markdown h1, .markdown h2, .markdown h3{
     color: #555;
@@ -30,35 +30,38 @@
 }
 .markdown h2{
     padding: 5px 4px;
-    font-size: 17px;
-    margin: 20px 0 10px;
+    font-size: 18px;
+    margin: 25px 0 15px;
     color: #050505;
-    font-weight: 400;
+    font-weight: 500;
+    line-height: 16px;
     position: relative;
 }
 .markdown h2:before{
     content: '#';
-    font-size: 17px;
+    font-size: 18px;
     color: rgb(235 80 85 / 85%);;
     font-weight: 600;
     position: absolute;
-    top: 6px;
-    left: -13px;
+    top: 4px;
+    left: -14px;
 }
 .markdown h3{
     padding: 4px 12px;
-    font-size: 16px;
-    margin: 15px 0 10px;
+    font-size: 17px;
+    margin: 20px 0 15px;
     color: #181818;
-    font-weight: 400;
+    font-weight: 500;
     position: relative;
+    line-height: 16px;
 }
 .markdown h3:before{
     content: '*';
     font-size: 21px;
     color: #9b45e4;
     position: absolute;
-    top: 3px;
+    font-weight: 600;
+    top: 7px;
     left: -5px;
 }
 @keyframes anchorTarget {
@@ -92,13 +95,11 @@
 } */
 .markdown b {
     padding: 0 2px;
-    color: #555;
+    color: var(--read-bold-color);
     font-size: 15px;
 }
 .markdown>p{
-    font-size: 16px;
     line-height: 1.77;
-    color: #333;
     margin-bottom: 19px;
 }
 .markdown ul, .markdown ol{
@@ -135,30 +136,34 @@
     box-shadow: rgba(0,0,0,0.2) 0 1px 1px;
 }
 .markdown blockquote{
-    margin: 15px 2px;
-    padding: 12px 15px;
-    border-left: 3px solid rgba(81,91,212,1);
-    background-color: rgba(81,91,212,.05);
+    margin: 15px auto;
+    padding: 8px 2px 8px 10px;
+    border-left: 3px solid rgba(var(--md-bq-color));
+    background-color: rgba(var(--md-bq-color), var(--md-bq-opacity));
     word-wrap: break-word;
-    font-size: 15px;
-    line-height: 1.6;
-    letter-spacing: .05em;
+    line-height: 1.5;
+}
+.markdown blockquote>p:not(:last-child){
+    margin-bottom: 8px;
+}
+.markdown blockquote>pre:not(:last-child){
+    margin-bottom: 5px;
 }
 .markdown .success {
-    border-left-color: rgba(150,193,32,1);
-    background-color: rgba(150,193,32,.05);
+    border-left-color: rgba(var(--md-bq-success-color));
+    background-color: rgba(var(--md-bq-success-color), var(--md-bq-opacity));
 }
 .markdown .warning {
-    border-left-color: rgba(255,217,114,1);
-    background-color: rgba(255,217,114,.05)
+    border-left-color: rgba(var(--md-bq-warning-color));
+    background-color: rgba(var(--md-bq-warning-color), var(--md-bq-opacity));
 }
 .markdown .danger {
-    border-left-color: rgba(221,42,123,1);
-    background-color: rgba(221,42,123,.05);
+    border-left-color: rgba(var(--md-bq-danger-color));
+    background-color: rgba(var(--md-bq-danger-color), var(--md-bq-opacity));
 }
 .markdown .info {
-    border-left-color: rgba(129,52,175,1);
-    background-color: rgba(129,52,175,.05);
+    border-left-color: rgba(var(--md-bq-info-color));
+    background-color: rgba(var(--md-bq-info-color), var(--md-bq-opacity));
 }
 
 .markdown hr{
@@ -175,18 +180,17 @@
     word-wrap:break-word;
     font: .9em Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,Hiragino Sans GB,Microsoft YaHei, monospace;
     padding: .2em .4em .1em;
-    background-color: rgba(0,0,0,0.04);
     border-radius: 3px;
     margin: 0 .2em;
-    color: #f04a62;
+    color: var(--md-code-color);
+    background-color: var(--md-code-bg-color);
 }
 .markdown pre .code-copy-btn{
     content: "copy";
-    font-family: 'Roboto Mono',monospace;
+    font-family: var(--ui-font);
     font-size: 14px;
     color: #f7768e;
     cursor: pointer;
-    letter-spacing: -.5px;
     padding: 2px 6px;
     position: absolute;
     top: 0;
@@ -210,9 +214,6 @@
 }
 .markdown>pre {
     margin: 17px 0 24px;
-}
-.markdown>blockquote>pre{
-    margin: 10px 0;
 }
 .markdown pre code {
     color: #ebdbb2;
@@ -239,7 +240,7 @@
 }
 .markdown table th,
 .markdown table td {
-    padding: 9px 25px 8px;
+    padding: 8px 25px;
     border: 1px solid #dfe2e5;
 }
 

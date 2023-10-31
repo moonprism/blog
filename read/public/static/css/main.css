@@ -1,30 +1,31 @@
 @charset "UTF-8";
 
-body,h1,h2,h3,h4,h5,h6,p,form,blockquote {
+body,h1,h2,h3,h4,h5,h6,p,form,blockquote,pre {
     margin: 0;
 }
 
-html body {
-    font-family: 'Roboto Mono',Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,'Noto Sans SC',Microsoft YaHei,sans-serif
+:root{
+    --main-color: #233;
+    --mask-color: #555;
+    --read-color: #202020;
+    --read-link-color: #00a1d6;
+    --read-bold-color: #111;
+    --md-code-color: #f04a62;
+    --md-code-bg-color: rgba(0,0,0,.04);
+    --md-bq-opacity: .01;
+    --md-bq-color: 81,91,212;
+    --md-bq-success-color: 150,193,32;
+    --md-bq-warning-color: 255,217,114;
+    --md-bq-danger-color: 221,42,123;
+    --md-bq-info-color: 129,52,175;
+    --ui-font: 'Space Mono', monospace;
+    --read-font: 'Work Sans', sans-serif;
 }
 
-/* iconfont init */
-.icon {
-   width: 1em; height: 1em;
-   vertical-align: -0.15em;
-   fill: currentColor;
-   overflow: hidden;
-   font-size: 18px;
+html body {
+    font-family: var(--read-font),ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
 }
-.i-date {
-    position: relative;
-    top: -1px;
-}
-.i-tag {
-    position: relative;
-    top: 1px;
-    margin: 0 2px 0 5px;
-}
+
 ol,ul,li {
     padding: 0;
     margin: 0
@@ -32,15 +33,15 @@ ol,ul,li {
 
 a {
     outline: 0;
-    color: #00a1d6;
+    color: var(--read-link-color);
     text-decoration: none;
     cursor: pointer;
 }
 
 html {
-    font-size: 14px;
+    font-size: 15px;
     background: #fff;
-    color: #333;
+    color: var(--read-color);
     height:100%;
 }
 html, body {
@@ -106,7 +107,8 @@ body {
     border-radius: 3px;
     color: #333;
     z-index: 99;
-    font-family: 'Space Mono', monospace;
+    font-family: var(--ui-font);
+    font-size: 16px;
 }
 
 #header .nav {
@@ -132,7 +134,6 @@ body {
     position: relative;
     padding: 2px 10px;
     display: inline-block;
-    font-size: 16px;
     color: #333;
     transition: color 0.5s
 }
@@ -214,7 +215,24 @@ body {
 
 #content .article .mark {
     margin: 5px 0 3px 5px;
-    color: #111
+    color: #111;
+    font-family: var(--read-font);
+}
+
+/* iconfont init */
+.icon {
+   width: 1em; height: 1em;
+   vertical-align: -0.15em;
+   fill: currentColor;
+   overflow: hidden;
+   font-size: 18px;
+}
+.i-date {
+    position: relative;
+}
+.i-tag {
+    position: relative;
+    margin: 0 2px 0 5px;
 }
 
 .tag {
@@ -222,23 +240,22 @@ body {
     background-color: #56c4e1;
     display: inline-block;
     margin-right: 0.25rem;
-    padding: .3rem .5em .28rem;
+    padding: .2rem .5em;
     min-width: 2.1rem;
     text-align: center;
-    line-height: 1;
+    line-height: 13px;
     color: #fff;
-    font-size: 12px;
     border-radius: 3px;
-    border: 1.2px solid #fff;
+    border: 1px solid #fff;
     transition: 0.2s;
+    font-size: 13px;
+    font-family: var(--ui-font)
 }
-.tag, .tag-banner .t, .tag-banner .c {
-    font-family: 'Space Mono', 'Noto Sans SC';
-}
+
 .tag:hover {
     background-color: #fff !important;
     color: inherit;
-    border: 1.2px solid #fff;
+    border: 1px solid #fff;
     border-color: inherit;
     border-radius: 2px;
     transition: 0.3s;
@@ -263,7 +280,6 @@ body {
     min-width: 2.1rem;
     text-align: center;
     line-height: 1;
-    font-size: 12px;
     border-radius: 3px;
     border: 1.2px solid #fff;
 }
@@ -272,7 +288,6 @@ body {
     padding: 0 .6rem .11rem;
     border-radius: 10px;
     margin: 2px;
-    font-size: 12px;
 }
 .summary {
     word-wrap: break-word;
@@ -313,7 +328,6 @@ body {
     margin-top: 9px;
     letter-spacing: 1px;
     line-height: 1.7;
-    color: #111;
     font-size: 16px;
     padding-bottom: 25px;
     border-bottom: 1.4px solid rgba(50,50,50,.06);
@@ -347,7 +361,7 @@ body {
     border-bottom: 1px solid rgba(50,50,50,.07);
     color: #444;
     font-size: 13px;
-    font-family: 'Space Mono', monospace;
+    font-family: var(--ui-font)
 }
 #content .agreement a {
     transition: color .2s;
@@ -438,6 +452,7 @@ body {
 }
 
 #up {
+    font-family: var(--ui-font);
     position: fixed;
     right: 60px;
     bottom: 55px;
@@ -453,7 +468,7 @@ body {
     border: 1px solid #111;
     width: 32px;
     height: 32px;
-    line-height: 36px;
+    line-height: 40px;
     border-radius: 50%;
     display: inline-block;
     box-shadow: rgba(0,0,0,0.4) 0 1px 2px;
@@ -640,9 +655,6 @@ pre code::selection, pre code span::selection {
   }
 }
 /** fix */
-button {
-    font: 400 13.3333px Arial;
-}
 .fav {
     transition: max-height .33s;
     max-height: 30px;
@@ -675,4 +687,9 @@ button {
 }
 pre code.hljs {
     padding: 0.5em !important;
+}
+
+.mask {
+    background: var(--mask-color);
+    color: var(--mask-color);
 }

@@ -44,6 +44,7 @@ class ArticleController
 
     /**
      * @route get /article/{id}
+     * @route get /article/id/{id}
      * @param ViewResponse $response
      * @param int $id
      * @return Response
