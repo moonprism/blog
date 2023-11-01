@@ -4,6 +4,12 @@ body,h1,h2,h3,h4,h5,h6,p,form,blockquote,pre {
     margin: 0;
 }
 
+ol,ul,li {
+    padding: 0;
+    margin: 0
+}
+
+/* 缝缝补补还能用，诶嘿 */
 :root{
     --main-color: #233;
     --mask-color: #555;
@@ -26,11 +32,6 @@ body,h1,h2,h3,h4,h5,h6,p,form,blockquote,pre {
 
 html body {
     font-family: var(--read-font), var(--system-font);
-}
-
-ol,ul,li {
-    padding: 0;
-    margin: 0
 }
 
 a {

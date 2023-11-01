@@ -102,18 +102,29 @@
     line-height: 1.77;
     margin-bottom: 19px;
 }
-.markdown ul, .markdown ol{
+.markdown>ul, .markdown>ol{
     margin: 18px 0;
     font-size: 16px;
+}
+.markdown ul, .markdown ol{
     padding-left: 1.5em;
 }
 .markdown ul li,.markdown ol li{
     margin-bottom: 5px;
     padding-left: 5px;
-    line-height: 1.7rem;
+    line-height: 2rem;
 }
 .markdown ul li{
     list-style-type: disc !important;
+}
+.markdown ul li::marker,.markdown ol li::marker{
+    color: rgba(27,31,35,.8);
+}
+.markdown ul blockquote, .markdown ol blockquote{
+    margin: 5px 0 0;
+}
+.markdown ul pre, .markdown ol pre {
+    margin-top: 5px;
 }
 .markdown ol li{
     list-style-type: decimal !important;
@@ -142,7 +153,7 @@
     border-left: 3px solid rgba(var(--md-bq-color));
     background-color: rgba(var(--md-bq-color), var(--md-bq-opacity));
     word-wrap: break-word;
-    line-height: 1.5;
+    line-height: 1.8rem;
 }
 .markdown blockquote>p:not(:last-child){
     margin-bottom: 8px;
@@ -217,10 +228,6 @@
 }
 .markdown pre code {
     color: #c0caf5;
-}
-.markdown ul pre, .markdown ol pre {
-    margin-left: -10px;
-    margin-top: 10px;
 }
 .hljs-comment, .hljs-emphasis {
     font-style: inherit !important;
