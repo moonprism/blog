@@ -8,8 +8,6 @@
     <meta name="description" content="静默空白.">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/dist/css/app.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet">
     <style>
 <?php echo $setting['global_css'] ?? '' ?>

@@ -24,10 +24,10 @@
         </div>
     </div>
     <div class="markdown">
-        <textarea class="md" style="display: none;">
+<script type='text/html' class="md">
 <?php echo trim($article->content); ?>
 
-        </textarea>
+</script>
     </div>
     <div class="agreement" id="agreement">powered by <a target="_blank" href="https://github.com/moonprism/kicoephp-src">kicoephp</a><br></div>
     <div id="comment" data-id="<?php echo $article->id ?>"></div>

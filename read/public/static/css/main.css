@@ -30,6 +30,10 @@ ol,ul,li {
     --system-font: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
 }
 
+.article-block>.markdown a{
+    color: #2277ee;
+}
+
 html body {
     font-family: var(--read-font), var(--system-font);
 }
