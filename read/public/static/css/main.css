@@ -235,6 +235,12 @@ body {
     font-family: var(--read-font);
 }
 
+#content .article .rune {
+    color: #aaa;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 /* iconfont init */
 .icon {
    width: 1em; height: 1em;

@@ -21,6 +21,7 @@
                <a href="/?tag_id=<?php echo $tag->id ?>" style="background-color: <?php echo $tag->color ?>" class="tag"><?php echo $tag->name ?></a>
            </span>
 <?php } ?>
+<span class="rune">runes: <?php echo $article->rune; ?></span>
         </div>
     </div>
     <div class="markdown">

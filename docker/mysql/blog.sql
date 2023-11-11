@@ -22,6 +22,7 @@ CREATE TABLE `article`(
     `image` varchar(64) NOT NULL DEFAULT '',
     `summary` varchar(500) NOT NULL DEFAULT '',
     `content` text NOT NULL,
+    `rune` int(10) UNSIGNED NOT NULL DEFAULT 0,
     `created_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_time` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `deleted_at` TIMESTAMP NULL,

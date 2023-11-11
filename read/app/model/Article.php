@@ -10,6 +10,7 @@ class Article extends Model
     public int $id;
     public string $title;
     public int $status;
+    public int $rune;
     public string $image;
     public string $summary;
     public string $content;

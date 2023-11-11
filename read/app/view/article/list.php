@@ -23,6 +23,7 @@
                         <a href="/?tag_id=<?php echo $t->id ?>" style="<?php if ($tag && $t->id == $tag->id) echo 'background-color: inherit;color: inherit;border-color: inherit'; else echo 'background-color: '.$t->color; ?>" class="tag"><?php echo $t->name ?></a>
                     </span>
 <?php } ?>
+<span class="rune">runes: <?php echo $article->rune; ?></span>
                 </div>
                 <div class="summary markdown">
                     <script type='text/html' style="display:none" class="md"><?php echo $article->summary?></script>

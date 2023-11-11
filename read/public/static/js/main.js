@@ -2,7 +2,7 @@
 var main_markdown_config = {
     linkTargetBlank: true,
     debug: false,
-    imageCDN: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
+    imageCDN: 'http://localhost:8033/static/'
 }
 var avatar_cdn = 'https://gravatar.loli.net/avatar/{0}?d=retro'
 function markd(md) {

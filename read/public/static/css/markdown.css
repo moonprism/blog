@@ -234,7 +234,6 @@
 }
 .markdown pre code{
     font: 16px Consolas, "Liberation Mono", Menlo, Courier, "Microsoft Yahei Light", monospace;
-    padding-bottom: 7px;
 }
 .markdown table{
     margin: 20px 7px 22px;

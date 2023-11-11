@@ -6,11 +6,12 @@ import (
 )
 
 type ArticleMeta struct {
-	ID          int64     `xorm:"pk autoincr 'id'" json:"id"`
-	Title       string    `json:"title"`
-	Status      int       `json:"status"`
-	Image       string    `json:"image"`
-	Summary     string    `json:"summary"`
+	ID          int64  `xorm:"pk autoincr 'id'" json:"id"`
+	Title       string `json:"title"`
+	Status      int    `json:"status"`
+	Image       string `json:"image"`
+	Summary     string `json:"summary"`
+	Rune        int64
 	CreatedTime time.Time `xorm:"created 'created_time'" json:"created_time"`
 	UpdatedTime time.Time `xorm:"updated 'updated_time'" json:"updated_time"`
 }
@@ -58,12 +59,21 @@ func FetchArticle(id int64) (article *Article, has bool, err error) {
 	return
 }
 
+func UpdateArticleRune(article *Article) {
+	runes := len([]rune(article.Content))
+	if runes != 0 {
+		article.Rune = int64(runes)
+	}
+}
+
 func InsertArticle(article *Article) (affected int64, err error) {
+	UpdateArticleRune(article)
 	affected, err = db.MysqlXEngine.Insert(article)
 	return
 }
 
 func UpdateArticle(id int64, article *Article, mustCols []string) (affected int64, err error) {
+	UpdateArticleRune(article)
 	affected, err = db.MysqlXEngine.Id(id).MustCols(mustCols...).Update(article)
 	return
 }

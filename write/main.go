@@ -22,6 +22,7 @@ func main() {
 			&cmd.CmdAuth,
 			&cmd.CmdSE,
 			&cmd.CmdSync,
+			&cmd.CmdRune,
 		},
 	}
 
