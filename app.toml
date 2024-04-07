@@ -2,5 +2,5 @@
 addr = ":3000"
 
 [database]
-driver = "sqlite3"
-source = "./test.db"
+driver = "mysql"
+source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"

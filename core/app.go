@@ -3,8 +3,8 @@ package core
 import (
 	"os"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/urfave/cli/v2"
 )
 
@@ -46,6 +46,7 @@ func (app *App) initDB() error {
 	if err != nil {
 		return err
 	}
+	engine.ShowSQL(true)
 	app.O = engine
 	return nil
 }

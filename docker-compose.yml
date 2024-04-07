@@ -1,0 +1,32 @@
+version: "3.1"
+
+services:
+  db:
+    image: mariadb:latest
+    # restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: "/run/secrets/password"
+      # TZ: "Asia/Shanghai"
+      # LANG: "C.UTF-8"
+    secrets:
+      - password
+    volumes:
+      - .docker/data/mysql:/var/lib/mysql
+      - .docker/log/mysql:/var/log/mysql
+    networks:
+      - app
+  adminer:
+    image: adminer
+    ports:
+      - 8888:8080
+    networks:
+      - app
+
+secrets:
+  password:
+    file: password.txt
+
+networks:
+  app:

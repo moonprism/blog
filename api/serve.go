@@ -12,7 +12,7 @@ func Serve(app *core.App) error {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	r.Route("/articles", func(r chi.Router) { bindArticleApi(app, r) })
+	r.Route("/article", func(r chi.Router) { bindArticleApi(app, r) })
 
 	return http.ListenAndServe(app.Setting.Server.Addr, r)
 }
