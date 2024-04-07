@@ -3,6 +3,7 @@ module github.com/moonprism/blog
 go 1.22.1
 
 require (
+	github.com/BurntSushi/toml v1.3.2
 	github.com/davecgh/go-spew v1.1.1
 	github.com/go-chi/chi/v5 v5.0.12
 	github.com/go-xorm/xorm v0.7.9

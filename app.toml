@@ -1,0 +1,6 @@
+[server]
+addr = ":3000"
+
+[database]
+driver = "sqlite3"
+source = "./test.db"

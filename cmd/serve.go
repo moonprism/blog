@@ -11,8 +11,7 @@ func NewServeCommand(app *core.App) *cli.Command {
 		Name:  "serve",
 		Usage: "start web serve",
 		Action: func(ctx *cli.Context) error {
-			api.Serve(app)
-			return nil
+			return api.Serve(app)
 		},
 	}
 	return command

@@ -8,9 +8,11 @@ import (
 	"github.com/moonprism/blog/core"
 )
 
-func Serve(app *core.App) {
+func Serve(app *core.App) error {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+
 	r.Route("/articles", func(r chi.Router) { bindArticleApi(app, r) })
-	http.ListenAndServe(":3000", r)
+
+	return http.ListenAndServe(app.Setting.Server.Addr, r)
 }
