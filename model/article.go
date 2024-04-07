@@ -9,5 +9,5 @@ type Article struct {
 	Image   string `xorm:"notnull default('')" json:"image"`
 	Summary string `xorm:"varchar(1024) notnull default('')" json:"summary"`
 	Content string `xorm:"text notnull default('')" json:"content"`
-	Deleted int    `xorm:"deleted" json:"deleted"`
+	Deleted *int   `xorm:"deleted" json:"deleted"`
 }

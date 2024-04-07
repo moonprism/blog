@@ -11,6 +11,7 @@ import (
 func Serve(app *core.App) error {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 
 	r.Route("/article", func(r chi.Router) { bindArticleApi(app, r) })
 
