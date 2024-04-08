@@ -1,6 +1,12 @@
-[server]
-addr = ":3000"
+JwtSecret = "2aEtVr"
 
-[database]
-driver = "mysql"
-source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"
+[Server]
+  Addr = ":3000"
+
+[Account]
+  Name = "kicoe"
+  Pass = "$2a$14$ZCypsLmGAefmXm4XtJdzPOpgYJQFREsBjysA7xAk3JP0SPK4E/6oi"
+
+[Database]
+  Driver = "mysql"
+  Source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"

@@ -7,6 +7,7 @@ import (
 	"unicode/utf8"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
 	"github.com/moonprism/blog/core/http/middleware"
 	"github.com/moonprism/blog/model"
@@ -14,13 +15,19 @@ import (
 
 func bindArticleApi(app *core.App, r chi.Router) {
 	api := articleApi{app}
-
 	r.Use(middleware.JsonResponse)
+
 	r.Get("/", api.list)
 	r.Get("/{id}", api.detail)
-	r.Post("/", api.create)
-	r.Put("/{id}", api.update)
-	r.Delete("/{id}", api.delete)
+
+	r.Group(func(r chi.Router) {
+		r.Use(jwtauth.Verifier(app.TokenAuth))
+		r.Use(jwtauth.Authenticator(app.TokenAuth))
+
+		r.Post("/", api.create)
+		r.Put("/{id}", api.update)
+		r.Delete("/{id}", api.delete)
+	})
 }
 
 type articleApi struct {

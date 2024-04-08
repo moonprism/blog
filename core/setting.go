@@ -7,23 +7,41 @@ import (
 )
 
 type setting struct {
-	Server   SettingServer
-	Database SettingDatabase
+	Server    settingServer
+	Account   settingAccount
+	Database  settingDatabase
+	JwtSecret string
 }
 
-type SettingServer struct {
+type settingServer struct {
 	Addr string
 }
 
-type SettingDatabase struct {
+type settingDatabase struct {
 	Driver string
 	Source string
 }
 
-func NewSetting(f string) (s setting, err error) {
-	if _, err = os.Stat(f); err != nil {
+type settingAccount struct {
+	Name string
+	Pass string
+}
+
+var configPath = "./app.toml"
+
+func NewSetting() (s setting, err error) {
+	if _, err = os.Stat(configPath); err != nil {
 		return
 	}
-	_, err = toml.DecodeFile(f, &s)
+	_, err = toml.DecodeFile(configPath, &s)
 	return
+}
+
+func ReSetting(s *setting) error {
+	file, err := os.OpenFile(configPath, os.O_RDWR, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	return toml.NewEncoder(file).Encode(s)
 }
