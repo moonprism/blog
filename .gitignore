@@ -2,5 +2,7 @@ ui/frontend/dist/*
 ui/frontend/node_modules
 ui/frontend/package-lock.json
 
+ui/backend/node_modules
+
 .docker
 password.txt
