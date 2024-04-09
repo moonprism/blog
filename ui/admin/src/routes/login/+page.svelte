@@ -4,13 +4,13 @@
   import { Input } from '$lib/components/ui/input/index.js';
   import { Label } from '$lib/components/ui/label/index.js';
 
-  import { Avatar } from 'svelte-radix';
+  import { IdCard } from 'svelte-radix';
 </script>
 
 <div class="mt-16 flex w-full items-center justify-center">
   <Card.Root class="w-full max-w-sm">
     <Card.Header>
-      <Card.Title class="text-2xl">Admin</Card.Title>
+      <Card.Title class="text-2xl"><IdCard class="inline-block mb-1 mr-2"/>Admin</Card.Title>
     </Card.Header>
     <Card.Content class="grid gap-4">
       <div class="grid gap-2">
