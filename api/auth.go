@@ -21,7 +21,7 @@ type authApi struct {
 }
 
 type loginRequestBody struct {
-	Name     string `json:"name"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
@@ -33,7 +33,7 @@ func (api *authApi) login(w http.ResponseWriter, r *http.Request) {
 	var req loginRequestBody
 	err := json.NewDecoder(r.Body).Decode(&req)
 	core.Pf(err)
-	if req.Name != api.App.Setting.Account.Name {
+	if req.Username != api.App.Setting.Account.Name {
 		w.WriteHeader(401)
 		return
 	}
@@ -45,7 +45,7 @@ func (api *authApi) login(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(401)
 		return
 	}
-	_, tokenString, err := api.App.TokenAuth.Encode(map[string]interface{}{"user_id": req.Name})
+	_, tokenString, err := api.App.TokenAuth.Encode(map[string]interface{}{"username": req.Username})
 	core.Pf(err)
 	res := new(loginResponseBody)
 	res.Token = tokenString

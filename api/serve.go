@@ -13,8 +13,10 @@ func Serve(app *core.App) error {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
-	r.Route("/", func(r chi.Router) { bindAuthApi(app, r) })
-	r.Route("/article", func(r chi.Router) { bindArticleApi(app, r) })
+	r.Route("/api", func(r chi.Router) {
+		r.Route("/", func(r chi.Router) { bindAuthApi(app, r) })
+		r.Route("/article", func(r chi.Router) { bindArticleApi(app, r) })
+	})
 
 	return http.ListenAndServe(app.Setting.Server.Addr, r)
 }
