@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -34,16 +35,14 @@ func (api *authApi) login(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&req)
 	core.Pf(err)
 	if req.Username != api.App.Setting.Account.Name {
-		w.WriteHeader(401)
-		return
+		core.Pf(errors.New("login failed"), core.CodeLoginFailed)
 	}
 	err = bcrypt.CompareHashAndPassword(
 		[]byte(api.App.Setting.Account.Pass),
 		[]byte(req.Password),
 	)
 	if err != nil {
-		w.WriteHeader(401)
-		return
+		core.Pf(errors.New("login failed"), core.CodeLoginFailed)
 	}
 	_, tokenString, err := api.App.TokenAuth.Encode(map[string]interface{}{"username": req.Username})
 	core.Pf(err)

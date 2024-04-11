@@ -1,9 +1,13 @@
 <script lang="ts">
-  import '../app.pcss';
+  import '../app.pcss'
 
-  import { ModeWatcher, toggleMode } from 'mode-watcher';
-  import { Sun, Moon } from 'svelte-radix';
-  import { Button } from '$lib/components/ui/button/index.js';
+  // 切换夜间模式
+  import { ModeWatcher, toggleMode } from 'mode-watcher'
+  import { Sun, Moon } from 'svelte-radix'
+  import { Button } from '$lib/components/ui/button/index.js'
+
+  // Toast组件
+  import { Toaster } from '$lib/components/ui/sonner'
 </script>
 
 <ModeWatcher />
@@ -21,5 +25,7 @@
     </Button>
   </div>
 </div>
+
+<Toaster />
 
 <slot />

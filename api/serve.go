@@ -6,12 +6,14 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/moonprism/blog/core"
+	m "github.com/moonprism/blog/core/http/middleware"
 )
 
 func Serve(app *core.App) error {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	r.Use(middleware.Recoverer)
+	r.Use(m.Recoverer)
+	r.Use(m.JsonResponse)
 
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/", func(r chi.Router) { bindAuthApi(app, r) })

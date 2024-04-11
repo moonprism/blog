@@ -9,13 +9,11 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
-	"github.com/moonprism/blog/core/http/middleware"
 	"github.com/moonprism/blog/model"
 )
 
 func bindArticleApi(app *core.App, r chi.Router) {
 	api := articleApi{app}
-	r.Use(middleware.JsonResponse)
 
 	r.Get("/", api.list)
 	r.Get("/{id}", api.detail)
