@@ -3,40 +3,34 @@
   import * as Sheet from '$lib/components/ui/sheet/index.js'
   import * as Tooltip from '$lib/components/ui/tooltip/index.js'
 
-  import { Castle } from 'lucide-svelte'
-  import { BookA } from 'lucide-svelte'
-  import { Scroll } from 'lucide-svelte'
-  import { Award } from 'lucide-svelte'
-  import { Mountain } from 'lucide-svelte'
+  import { Castle, BookA, Scroll, Award, Mountain } from 'lucide-svelte'
   import { WandSparkles } from 'lucide-svelte'
   import { toggleMode } from 'mode-watcher'
   import { ChevronsLeft } from 'lucide-svelte'
 
-  const menus = [
-    {
-      title: 'Article',
-      href: '/article',
-      icon: BookA,
-      isActive: false
-    },
-    {
-      title: 'Code',
-      href: '/code',
-      icon: Scroll,
-      isActive: true
-    },
-    {
-      title: 'Tag',
-      href: '/tag',
-      icon: Award,
-      isActive: false
-    },
-    {
-      title: 'Attachment',
-      href: '/attachment',
-      icon: Mountain,
-      isActive: false
+  import { page } from '$app/stores'
+  import type { SvelteComponent } from 'svelte'
+  
+  export const adminPath = '/admin'
+  
+  class Menu {
+    title: string
+    href: string
+    // 好麻烦
+    // https://stackoverflow.com/questions/63551277/typing-sveltecomponents-this-property-in-typescript
+    icon: typeof SvelteComponent
+    constructor(name: string, icon: any) {
+      this.title = name
+      this.href = `${adminPath}/${name}`
+      this.icon = icon
     }
+  }
+  
+  export let menus: Menu[] = [
+    new Menu('article', BookA),
+    new Menu('code', Scroll),
+    new Menu('tag', Award),
+    new Menu('attachment', Mountain),
   ]
 </script>
 
@@ -44,7 +38,7 @@
   <aside class="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
     <nav class="flex flex-col items-center gap-4 px-2 py-4">
       <a
-        href="##"
+        href={adminPath}
         class="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
       >
         <Castle class="h-5 w-5 transition-all group-hover:scale-110" />
@@ -53,15 +47,14 @@
         <Tooltip.Root>
           <Tooltip.Trigger asChild let:builder>
             <a
-              href="##"
-              class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 {menu.isActive
+              href={menu.href}
+              class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 {$page.url.pathname == menu.href
                 ? 'bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
                 : ''}"
               use:builder.action
               {...builder}
             >
               <svelte:component this={menu.icon} class="h-5 w-5" />
-              <span class="sr-only">{menu.title}</span>
             </a>
           </Tooltip.Trigger>
           <Tooltip.Content side="right">{menu.title}</Tooltip.Content>
@@ -71,22 +64,21 @@
     <nav class="mt-auto flex flex-col items-center gap-4 px-2 py-4">
       <Tooltip.Root>
         <Tooltip.Trigger asChild let:builder>
-          <a
+          <button
             on:click={toggleMode}
-            href="##"
             class="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             use:builder.action
             {...builder}
           >
             <WandSparkles class="h-5 w-5" />
-            <span class="sr-only">Settings</span>
-          </a>
+        </button>
         </Tooltip.Trigger>
-        <Tooltip.Content side="right">Settings</Tooltip.Content>
+        <Tooltip.Content side="right">Wand</Tooltip.Content>
       </Tooltip.Root>
     </nav>
   </aside>
   <div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+    <!--移动端nav-->
     <header
       class="sticky top-0 z-30 flex h-12 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
     >
@@ -105,15 +97,15 @@
         <Sheet.Content side="left" class="sm:max-w-xs">
           <nav class="grid gap-6 text-lg font-medium">
             <a
-              href="##"
+              href={adminPath}
               class="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
               <Castle class="h-5 w-5 transition-all group-hover:scale-110" />
             </a>
             {#each menus as menu}
               <a
-                href="##"
-                class="flex items-center gap-4 px-2.5 {menu.isActive
+                href={menu.href}
+                class="flex items-center gap-4 px-2.5 {$page.url.pathname == menu.href
                   ? ''
                   : 'text-muted-foreground'}"
               >

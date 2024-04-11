@@ -13,14 +13,19 @@
   import { login } from '@/helpers/fetch'
 
 
-  let data = <LoginRequest>{}
+  let data: LoginRequest = {
+    username: '',
+    password: '',
+  }
   let isLoading = false
 
   /**
    * 推荐使用sveltekit-superforms进行表单验证，该插件官网有SPA模式使用说明
    * ssr参照: https://shadcn-svelte.com/docs/components/form
+   * 个人项目就不用了随便写写
    */
   let checkOn = false
+  $: isShowError = checkOn && data.username == ''
 
   function handleLogin() {
     if (!data.username) {
@@ -32,6 +37,7 @@
       isLoading = false
     })
   }
+  
 </script>
 
 <div class="mx-auto flex justify-between px-6 py-4">
@@ -57,7 +63,7 @@
       <div class="grid gap-2">
         <Label for="name">Name</Label>
         <Input id="name" type="text" bind:value={data.username} />
-        {#if checkOn && data.username == ''}
+        {#if isShowError}
           <p class="border-l-2 border-l-red-400 pl-1 text-xs text-muted-foreground">
             用户名不能为空
           </p>
