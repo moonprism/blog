@@ -1,31 +1,26 @@
 package core
 
 const (
-	CodeDefault     = 0
-	CodeLoginFailed = 100
+	ErrCodeDefault     = 100
+	ErrCodeLoginFailed = 101
 )
 
-// PfError Custom Error
-type PfError struct {
+type Err struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
-func (pe *PfError) Error() string {
-	return pe.Message
+func (e *Err) Error() string {
+	return e.Message
 }
 
-func NewPfError(message string, code int) PfError {
-	return PfError{code, message}
+func NewErr(message string, code int) *Err {
+	return &Err{code, message}
 }
 
-// Pf panic forever
-func Pf(err error, codes ...int) {
+// P panic forever
+func P(err error) {
 	if err != nil {
-		code := CodeDefault
-		if len(codes) > 0 {
-			code = codes[0]
-		}
-		panic(NewPfError(err.Error(), code))
+		panic(err)
 	}
 }

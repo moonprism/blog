@@ -40,10 +40,10 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 
 func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
-	core.Pf(err)
+	core.P(err)
 	article := new(model.Article)
 	has, err := api.O.ID(id).Get(article)
-	core.Pf(err)
+	core.P(err)
 	if !has {
 		w.WriteHeader(404)
 		return
@@ -54,28 +54,28 @@ func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
 func (api *articleApi) create(w http.ResponseWriter, r *http.Request) {
 	var article model.Article
 	err := json.NewDecoder(r.Body).Decode(&article)
-	core.Pf(err)
+	core.P(err)
 	article.Rune = utf8.RuneCountInString(article.Content)
 	_, err = api.O.Insert(&article)
-	core.Pf(err)
+	core.P(err)
 }
 
 func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
-	core.Pf(err)
+	core.P(err)
 	var data map[string]interface{}
 	err = json.NewDecoder(r.Body).Decode(&data)
-	core.Pf(err)
+	core.P(err)
 	if v, ok := data["content"]; ok {
 		data["rune"] = utf8.RuneCountInString(v.(string))
 	}
 	_, err = api.O.Table(new(model.Article)).ID(id).Update(data)
-	core.Pf(err)
+	core.P(err)
 }
 
 func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
-	core.Pf(err)
+	core.P(err)
 	_, err = api.O.ID(id).Delete(new(model.Article))
-	core.Pf(err)
+	core.P(err)
 }

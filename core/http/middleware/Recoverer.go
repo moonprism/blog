@@ -30,7 +30,7 @@ func Recoverer(next http.Handler) http.Handler {
 
 				if r.Header.Get("Connection") != "Upgrade" {
 					w.WriteHeader(http.StatusInternalServerError)
-					if pe, ok := rvr.(core.PfError); ok {
+					if pe, ok := rvr.(*core.Err); ok {
 						json.NewEncoder(w).Encode(&pe)
 					}
 				}
