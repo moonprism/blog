@@ -10,9 +10,9 @@
 
   import { page } from '$app/stores'
   import type { SvelteComponent } from 'svelte'
-  
+
   export const adminPath = '/admin'
-  
+
   class Menu {
     title: string
     href: string
@@ -25,12 +25,12 @@
       this.icon = icon
     }
   }
-  
+
   export let menus: Menu[] = [
     new Menu('article', BookA),
     new Menu('code', Scroll),
     new Menu('tag', Award),
-    new Menu('attachment', Mountain),
+    new Menu('attachment', Mountain)
   ]
 </script>
 
@@ -48,7 +48,8 @@
           <Tooltip.Trigger asChild let:builder>
             <a
               href={menu.href}
-              class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 {$page.url.pathname == menu.href
+              class="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:text-foreground md:h-8 md:w-8 {$page
+                .url.pathname == menu.href
                 ? 'bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8'
                 : ''}"
               use:builder.action
@@ -71,7 +72,7 @@
             {...builder}
           >
             <WandSparkles class="h-5 w-5" />
-        </button>
+          </button>
         </Tooltip.Trigger>
         <Tooltip.Content side="right">Wand</Tooltip.Content>
       </Tooltip.Root>

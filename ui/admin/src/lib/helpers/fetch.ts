@@ -7,7 +7,7 @@ import { goto } from '$app/navigation'
 // ff custom wrapper for "fetch" funtion
 export const fet = async (path: string, method: string, data: any): Promise<Response> => {
   const address = PUBLIC_API_ADDR
-  let headers: HeadersInit = {
+  const headers: HeadersInit = {
     'Content-Type': 'application/json'
   }
   const token = getJwt()
@@ -61,16 +61,15 @@ export const getJwtInfo = (): JwtInfo | null => {
 }
 
 export const login = (data: LoginRequest) => {
-  return fet('login', 'post', data)
-    .then((response) => {
-      if (response.ok) {
-        response.json().then((data) => {
-          setJwt(data.token)
-          toast.success(`登陆成功，${getJwtInfo()?.username}`)
-          goto('admin')
-        })
-      } else {
-        throw Error('login failed')
-      }
-    })
+  return fet('login', 'post', data).then((response) => {
+    if (response.ok) {
+      response.json().then((data) => {
+        setJwt(data.token)
+        toast.success(`登陆成功，${getJwtInfo()?.username}`)
+        goto('admin')
+      })
+    } else {
+      throw Error('login failed')
+    }
+  })
 }

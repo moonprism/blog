@@ -6,16 +6,15 @@
   import * as Card from '$lib/components/ui/card/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
   import { Label } from '$lib/components/ui/label/index.js'
-  import { Crown } from 'lucide-svelte';
-  import { LoaderCircle } from 'lucide-svelte';
+  import { Crown } from 'lucide-svelte'
+  import { LoaderCircle } from 'lucide-svelte'
 
   import type { LoginRequest } from '$src/types/stream'
   import { login } from '@/helpers/fetch'
 
-
   let data: LoginRequest = {
     username: '',
-    password: '',
+    password: ''
   }
   let isLoading = false
 
@@ -37,7 +36,6 @@
       isLoading = false
     })
   }
-  
 </script>
 
 <div class="mx-auto flex justify-between px-6 py-4">
