@@ -1,13 +1,17 @@
 <script lang="ts">
+  import { toggleMode } from 'mode-watcher'
+  import { Sun, Moon } from 'lucide-svelte'
+
   import { Button } from '$lib/components/ui/button/index.js'
   import * as Card from '$lib/components/ui/card/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
   import { Label } from '$lib/components/ui/label/index.js'
-  import { IdCard } from 'svelte-radix'
-  import Reload from 'svelte-radix/Reload.svelte'
+  import { Crown } from 'lucide-svelte';
+  import { LoaderCircle } from 'lucide-svelte';
 
   import type { LoginRequest } from '$src/types/stream'
   import { login } from '@/helpers/fetch'
+
 
   let data = <LoginRequest>{}
   let isLoading = false
@@ -30,10 +34,24 @@
   }
 </script>
 
+<div class="mx-auto flex justify-between px-6 py-4">
+  <div></div>
+  <div>
+    <Button on:click={toggleMode} variant="outline" size="icon">
+      <Sun
+        class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+      />
+      <Moon
+        class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+      />
+    </Button>
+  </div>
+</div>
+
 <div class="mt-16 flex w-full items-center justify-center">
   <Card.Root class="w-full max-w-sm">
     <Card.Header>
-      <Card.Title class="text-2xl"><IdCard class="mb-1 mr-2 inline-block" />Admin</Card.Title>
+      <Card.Title class="text-2xl"><Crown class="mb-2 mr-1 inline-block" />.admin</Card.Title>
     </Card.Header>
     <Card.Content class="grid gap-4">
       <div class="grid gap-2">
@@ -53,7 +71,7 @@
     <Card.Footer>
       {#if isLoading}
         <Button class="w-full">
-          <Reload class="mr-2 h-4 w-4 animate-spin" />
+          <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>
       {:else}
         <Button class="w-full" on:click={handleLogin}><span class="font-bold">Log in</span></Button>

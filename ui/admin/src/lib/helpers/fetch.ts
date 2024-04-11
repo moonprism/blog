@@ -67,7 +67,7 @@ export const login = (data: LoginRequest) => {
         response.json().then((data) => {
           setJwt(data.token)
           toast.success(`登陆成功，${getJwtInfo()?.username}`)
-          goto('/')
+          goto('/home')
         })
       } else {
         throw Error('login failed')
