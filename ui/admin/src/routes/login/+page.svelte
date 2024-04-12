@@ -7,7 +7,10 @@
   import Solar from './solar.svelte'
 
   import type { LoginRequest } from '$src/types/stream'
-  import { login } from '@/helpers/fetch'
+  import { fet } from '@/helpers/fetch'
+  import { getJwtInfo, setJwt } from '@/helpers/jwt'
+  import toast from '$lib/helpers/toast'
+  import { goto } from '$app/navigation'
 
   let data: LoginRequest = {
     username: '',
@@ -29,8 +32,14 @@
       return
     }
     isLoading = true
-    login(data).catch((err) => {
-      isLoading = false
+    fet.post('login', data).then((respo) => {
+      if (respo.ok) {
+        setJwt(respo.data.token)
+        toast.success(`登陆成功，${getJwtInfo()?.username}`)
+        goto('/')
+      } else {
+        isLoading = false
+      }
     })
   }
 </script>

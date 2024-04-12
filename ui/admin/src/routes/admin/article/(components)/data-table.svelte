@@ -10,6 +10,7 @@
   import { Button } from '$lib/components/ui/button'
 
   import DataTablePagination from './data-table-pagination.svelte'
+  import { fet } from '@/helpers/fetch'
 
   type Article = {
     id: number
@@ -21,44 +22,15 @@
     content: string
   }
 
-  const data: Article[] = [
-    {
-      id: 1,
-      title: 'xxx',
-      status: 0,
-      rune: 100,
-      image: 'xxx',
-      summary: 'xxxx',
-      content: 'xxxxxxxxx'
-    },
-    {
-      id: 1,
-      title: 'xxx',
-      status: 0,
-      rune: 100,
-      image: 'xxx',
-      summary: 'xxxx',
-      content: 'xxxxxxxxx'
-    },
-    {
-      id: 1,
-      title: 'xxx',
-      status: 0,
-      rune: 100,
-      image: 'xxx',
-      summary: 'xxxx',
-      content: 'xxxxxxxxx'
-    },
-    {
-      id: 1,
-      title: 'xxx',
-      status: 0,
-      rune: 100,
-      image: 'xxx',
-      summary: 'xxxx',
-      content: 'xxxxxxxxx'
-    }
-  ]
+  const data: Article[] = []
+
+  function getArticles() {
+    const articles = fet.get('article').then((data) => {
+      console.log(data)
+    })
+  }
+
+  getArticles()
 
   const table = createTable(readable(data), {
     page: addPagination()

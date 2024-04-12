@@ -1,7 +1,10 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
 
 	"github.com/moonprism/blog/core"
 	"github.com/moonprism/blog/model"
@@ -14,6 +17,37 @@ func NewAdminCommand(app *core.App) *cli.Command {
 	command := &cli.Command{
 		Name: "admin",
 		Subcommands: []*cli.Command{
+			{
+				Name:  "test",
+				Usage: "test import",
+				Action: func(ctx *cli.Context) error {
+					fileContent, err := os.Open("test.json")
+					if err != nil {
+						return err
+					}
+					defer fileContent.Close()
+					byteResult, _ := ioutil.ReadAll(fileContent)
+					var res []map[string]interface{}
+					json.Unmarshal([]byte(byteResult), &res)
+					for _, v := range res {
+						fmt.Printf("%s\n", v["title"])
+						article := model.Article{
+							Title:   v["title"].(string),
+							Summary: v["summary"].(string),
+						}
+						article.BaseModel = &model.BaseModel{
+							Created: int(v["created"].(float64)),
+						}
+						article.Image = v["image"].(string)
+						article.Content = v["content"].(string)
+						_, err = app.O.Insert(&article)
+						if err != nil {
+							panic(err)
+						}
+					}
+					return nil
+				},
+			},
 			{
 				Name:  "construct",
 				Usage: "sync database struct",

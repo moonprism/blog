@@ -10,12 +10,19 @@ export interface LoginRequest {
 }
 
 /**
- * 服务器 status == 200 直接返回 { data }
- * status != 200 则返回 BadResponse
+ * if response.ok == true
+ *   badRespo
+ * else
+ *   { data }
  */
-export interface BadResponse {
+export interface BadRespo {
   code: number
   message: string
+}
+
+export interface Respoi extends BadRespo {
+  data?: any
+  ok: boolean
 }
 
 export interface JwtInfo {
