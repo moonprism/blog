@@ -1,13 +1,10 @@
 <script lang="ts">
-  import { toggleMode } from 'mode-watcher'
-  import { Sun, Moon } from 'lucide-svelte'
-
   import { Button } from '$lib/components/ui/button/index.js'
   import * as Card from '$lib/components/ui/card/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
   import { Label } from '$lib/components/ui/label/index.js'
-  import { Crown } from 'lucide-svelte'
-  import { LoaderCircle } from 'lucide-svelte'
+  import { Crown, LoaderCircle } from 'lucide-svelte'
+  import Solar from './solar.svelte'
 
   import type { LoginRequest } from '$src/types/stream'
   import { login } from '@/helpers/fetch'
@@ -38,19 +35,7 @@
   }
 </script>
 
-<div class="mx-auto flex justify-between px-6 py-4">
-  <div></div>
-  <div>
-    <Button on:click={toggleMode} variant="outline" size="icon">
-      <Sun
-        class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-      />
-      <Moon
-        class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-      />
-    </Button>
-  </div>
-</div>
+<Solar />
 
 <div class="mt-16 flex w-full items-center justify-center">
   <Card.Root class="w-full max-w-sm">
