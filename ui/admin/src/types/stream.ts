@@ -21,10 +21,21 @@ export interface BadRespo {
 }
 
 export interface Respoi extends BadRespo {
-  data?: any
+  data: any
   ok: boolean
 }
 
 export interface JwtInfo {
   username: string
+}
+
+export interface Article {
+  id: number
+  title: string
+  status: number
+  rune: number
+  image: string
+  summary: string
+  content: string
+  created: number
 }

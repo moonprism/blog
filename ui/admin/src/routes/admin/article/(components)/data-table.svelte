@@ -1,39 +1,42 @@
 <script lang="ts">
   import { createTable, Render, Subscribe, createRender } from 'svelte-headless-table'
-  import { addPagination } from 'svelte-headless-table/plugins'
+  import { addColumnFilters, addPagination, addTableFilter } from 'svelte-headless-table/plugins'
 
-  import { readable } from 'svelte/store'
+  import { get, writable } from 'svelte/store'
   import * as Table from '@/components/ui/table'
 
   import DataTableActions from './data-table-actions.svelte'
 
-  import { Button } from '$lib/components/ui/button'
-
   import DataTablePagination from './data-table-pagination.svelte'
   import { fet } from '@/helpers/fetch'
+  import DataTableImage from './data-table-image.svelte'
+  import type { Article } from '$src/types/stream'
 
-  type Article = {
-    id: number
-    title: string
-    status: number
-    rune: number
-    image: string
-    summary: string
-    content: string
-  }
+  import DataTableToolbar from './data-table-toolbar.svelte'
 
-  const data: Article[] = []
+  let data: Article[] = []
+
+  let storeData = writable(data)
 
   function getArticles() {
-    const articles = fet.get('article').then((data) => {
-      console.log(data)
+    fet.get('article').then((respoi) => {
+      if (respoi.ok) {
+        data = <Article[]>respoi.data
+        storeData.set(data)
+      }
     })
   }
 
   getArticles()
 
-  const table = createTable(readable(data), {
-    page: addPagination()
+  const table = createTable(storeData, {
+    page: addPagination(),
+    filter: addTableFilter({
+      fn: ({ filterValue, value }) => {
+        return value.toLowerCase().includes(filterValue.toLowerCase())
+      }
+    }),
+    colFilter: addColumnFilters()
   })
 
   const columns = table.createColumns([
@@ -43,7 +46,28 @@
     }),
     table.column({
       accessor: 'status',
-      header: 'Status'
+      header: 'Status',
+      plugins: {
+        colFilter: {
+          fn: ({ filterValue, value }) => {
+            if (filterValue.length === 0) return true
+            if (!Array.isArray(filterValue)) return true
+            if (typeof value !== 'string') {
+              let v = String(value)
+              return filterValue.some((filter) => {
+                return v.includes(filter)
+              })
+            }
+            return filterValue.some((filter) => {
+              return value.includes(filter)
+            })
+          },
+          initialFilterValue: [],
+          render: ({ filterValue }) => {
+            return get(filterValue)
+          }
+        }
+      }
     }),
     table.column({
       accessor: 'title',
@@ -53,12 +77,18 @@
       accessor: 'image',
       header: 'Image',
       cell: ({ value }) => {
-        return value
+        return createRender(DataTableImage, {
+          src: `https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/${value}`
+        })
       }
     }),
     table.column({
       accessor: 'summary',
       header: 'Summary'
+    }),
+    table.column({
+      accessor: 'created',
+      header: 'Created'
     }),
     table.column({
       accessor: ({ id }) => id,
@@ -75,6 +105,7 @@
 </script>
 
 <div>
+  <DataTableToolbar {tableModel} {data} />
   <div class="rounded-md border">
     <Table.Root {...$tableAttrs}>
       <Table.Header>
