@@ -3,6 +3,7 @@
   import ChevronLeft from 'svelte-radix/ChevronLeft.svelte'
   import DoubleArrowRight from 'svelte-radix/DoubleArrowRight.svelte'
   import DoubleArrowLeft from 'svelte-radix/DoubleArrowLeft.svelte'
+
   import type { TableViewModel } from 'svelte-headless-table'
   import Button from '@/components/ui/button/button.svelte'
   import * as Select from '$lib/components/ui/select'
@@ -12,11 +13,15 @@
   const { pageRows, pluginStates, rows } = tableModel
 
   const { hasNextPage, hasPreviousPage, pageIndex, pageCount, pageSize } = pluginStates.page
+
+  const { selectedDataIds } = pluginStates.select
+
+  console.log(pageSize)
 </script>
 
 <div class="flex items-center justify-between px-2">
   <div class="flex-1 text-sm text-muted-foreground">
-    {10} of {$rows.length} row(s) selected.
+    {$rows.length} row(s)
   </div>
   <div class="flex items-center space-x-6 lg:space-x-8">
     <div class="flex items-center space-x-2">
@@ -29,11 +34,10 @@
           <Select.Value placeholder="Select page size" />
         </Select.Trigger>
         <Select.Content>
+          <Select.Item value="5">5</Select.Item>
           <Select.Item value="10">10</Select.Item>
           <Select.Item value="20">20</Select.Item>
           <Select.Item value="30">30</Select.Item>
-          <Select.Item value="40">40</Select.Item>
-          <Select.Item value="50">50</Select.Item>
         </Select.Content>
       </Select.Root>
     </div>

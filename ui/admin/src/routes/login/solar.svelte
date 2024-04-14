@@ -1,6 +1,6 @@
 <script lang="ts">
   import { toggleMode } from 'mode-watcher'
-  import { Sun, Moon } from 'lucide-svelte'
+  import { Sun, Moon } from 'svelte-radix'
   import { Button } from '$lib/components/ui/button/index.js'
 </script>
 

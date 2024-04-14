@@ -1,21 +1,7 @@
-import Circle from 'svelte-radix/Circle.svelte'
-import QuestionMarkCircled from 'svelte-radix/QuestionMarkCircled.svelte'
-import Stopwatch from 'svelte-radix/Stopwatch.svelte'
+import type { ComponentType } from 'svelte'
 
-export const statuses = [
-  {
-    value: '0',
-    label: 'Draft',
-    icon: QuestionMarkCircled
-  },
-  {
-    value: '1',
-    label: 'Published',
-    icon: Circle
-  },
-  {
-    value: '2',
-    label: 'Hidden',
-    icon: Stopwatch
-  }
-]
+export interface option {
+  id: number
+  label: string
+  icon: ComponentType
+}

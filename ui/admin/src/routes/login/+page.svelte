@@ -36,7 +36,7 @@
       if (respo.ok) {
         setJwt(respo.data.token)
         toast.success(`登陆成功，${getJwtInfo()?.username}`)
-        goto('/')
+        goto('/admin')
       } else {
         isLoading = false
       }

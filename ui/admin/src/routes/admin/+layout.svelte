@@ -3,23 +3,21 @@
   import * as Sheet from '$lib/components/ui/sheet/index.js'
   import * as Tooltip from '$lib/components/ui/tooltip/index.js'
 
-  import { Castle, BookA, Scroll, Award, Mountain } from 'lucide-svelte'
+  import { Castle, BookA, Scroll, Award, Mountain, type Icon } from 'lucide-svelte'
   import { WandSparkles } from 'lucide-svelte'
   import { toggleMode } from 'mode-watcher'
   import { ChevronsLeft } from 'lucide-svelte'
 
   import { page } from '$app/stores'
-  import type { SvelteComponent } from 'svelte'
+  import type { ComponentType } from 'svelte'
 
   export const adminPath = '/admin'
 
   class Menu {
     title: string
     href: string
-    // 好麻烦
-    // https://stackoverflow.com/questions/63551277/typing-sveltecomponents-this-property-in-typescript
-    icon: typeof SvelteComponent
-    constructor(name: string, icon: any) {
+    icon: ComponentType<Icon>
+    constructor(name: string, icon: ComponentType<Icon>) {
       this.title = name
       this.href = `${adminPath}/${name}`
       this.icon = icon

@@ -2,26 +2,14 @@
   import type { TableViewModel } from 'svelte-headless-table'
   import Cross2 from 'svelte-radix/Cross2.svelte'
   import type { Writable } from 'svelte/store'
-  import { statuses } from '$src/types/table.js'
   import { DataTableFacetedFilter } from './index.js'
   import { Button } from '@/components/ui/button'
   import { Input } from '@/components/ui/input'
   import type { Article } from '$src/types/stream.js'
+  import TableViewOptions from './table-view-options.svelte'
+  import { statuses } from '../(data)/data.js'
 
   export let tableModel: TableViewModel<Article>
-  export let data: Article[]
-
-  const counts = data.reduce<{
-    status: { [index: string]: number }
-  }>(
-    (acc, { status }) => {
-      acc.status[status] = (acc.status[status] || 0) + 1
-      return acc
-    },
-    {
-      status: {}
-    }
-  )
 
   const { pluginStates } = tableModel
   const {
@@ -34,14 +22,12 @@
     filterValues
   }: {
     filterValues: Writable<{
-      status: string[]
+      status: number[]
     }>
   } = pluginStates.colFilter
 
   $: showReset = Object.values({ ...$filterValues, $filterValue }).some((v) => v.length > 0)
 </script>
-
-<pre>$filterValues = {JSON.stringify($filterValues, null, 2)}</pre>
 
 <div class="flex items-center justify-between">
   <div class="flex flex-1 items-center space-x-2">
@@ -56,7 +42,6 @@
       bind:filterValues={$filterValues.status}
       title="Status"
       options={statuses}
-      counts={counts.status}
     />
     {#if showReset}
       <Button
@@ -72,4 +57,6 @@
       </Button>
     {/if}
   </div>
+
+  <TableViewOptions {tableModel} />
 </div>

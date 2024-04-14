@@ -38,4 +38,5 @@ export interface Article {
   summary: string
   content: string
   created: number
+  updated: number
 }
