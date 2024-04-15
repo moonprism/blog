@@ -1,9 +1,9 @@
 <script lang="ts">
-  import MixerHorizontal from 'svelte-radix/MixerHorizontal.svelte'
   import type { TableViewModel } from 'svelte-headless-table'
   import { Button } from '@/components/ui/button'
   import * as DropdownMenu from '@/components/ui/dropdown-menu'
   import type { Article } from '$src/types/stream'
+  import { AlignStartVertical } from 'lucide-svelte'
 
   export let tableModel: TableViewModel<Article>
   const { pluginStates, flatColumns } = tableModel
@@ -18,21 +18,19 @@
     })
   }
 
-  const hidableCols = ['id', 'image', 'summary', 'created', 'updated']
+  const noHidableCols = ['id', 'actions']
 </script>
 
 <DropdownMenu.Root>
   <DropdownMenu.Trigger asChild let:builder>
     <Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex" builders={[builder]}>
-      <MixerHorizontal class="mr-2 h-4 w-4" />
+      <AlignStartVertical class="mr-1 h-4 w-4" />
       View
     </Button>
   </DropdownMenu.Trigger>
   <DropdownMenu.Content>
-    <DropdownMenu.Label>Toggle columns</DropdownMenu.Label>
-    <DropdownMenu.Separator />
     {#each flatColumns as col}
-      {#if hidableCols.includes(col.id)}
+      {#if !noHidableCols.includes(col.id)}
         <DropdownMenu.CheckboxItem
           checked={!$hiddenColumnIds.includes(col.id)}
           on:click={() => handleHide(col.id)}

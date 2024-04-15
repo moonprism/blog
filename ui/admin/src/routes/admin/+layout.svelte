@@ -26,7 +26,7 @@
 
   export let menus: Menu[] = [
     new Menu('article', BookA),
-    new Menu('code', Scroll),
+    new Menu('gist', Scroll),
     new Menu('tag', Award),
     new Menu('attachment', Mountain)
   ]

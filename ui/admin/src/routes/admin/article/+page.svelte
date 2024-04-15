@@ -1,7 +1,7 @@
 <script lang="ts">
-  import DataTable from './(components)/data-table.svelte'
+  import Table from './(components)/table.svelte'
 </script>
 
 <div class="container mx-auto py-5">
-  <DataTable />
+  <Table />
 </div>

@@ -5,3 +5,8 @@ export interface option {
   label: string
   icon: ComponentType
 }
+
+export interface filter {
+  name: string
+  options: option[]
+}

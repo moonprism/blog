@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Plus, type Icon } from 'lucide-svelte'
+  import { Plus } from 'lucide-svelte'
   import Check from 'svelte-radix/Check.svelte'
   import * as Command from '@/components/ui/command'
   import * as Popover from '@/components/ui/popover'
@@ -27,9 +27,8 @@
 <Popover.Root bind:open>
   <Popover.Trigger asChild let:builder>
     <Button builders={[builder]} variant="outline" size="sm" class="h-8 border-dashed">
-      <Plus class="mr-2 h-4 w-4" />
+      <Plus class="mr-1 h-4 w-4" />
       {title}
-
       {#if filterValues.length > 0}
         <Separator orientation="vertical" class="mx-2 h-4" />
         <Badge variant="secondary" class="rounded-sm px-1 font-normal lg:hidden">

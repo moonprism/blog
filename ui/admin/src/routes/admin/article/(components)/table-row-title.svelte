@@ -2,4 +2,4 @@
   export let text: string
 </script>
 
-<h1 class="whitespace-nowrap">{text}</h1>
+<div class="whitespace-nowrap">{text}</div>

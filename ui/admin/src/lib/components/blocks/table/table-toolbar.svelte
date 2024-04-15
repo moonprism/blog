@@ -1,15 +1,20 @@
 <script lang="ts">
   import type { TableViewModel } from 'svelte-headless-table'
-  import Cross2 from 'svelte-radix/Cross2.svelte'
   import type { Writable } from 'svelte/store'
-  import { DataTableFacetedFilter } from './index.js'
   import { Button } from '@/components/ui/button'
   import { Input } from '@/components/ui/input'
+  import { BookmarkX, Delete, ListRestart, Undo, Undo2 } from 'lucide-svelte';
+  
+
   import type { Article } from '$src/types/stream.js'
   import TableViewOptions from './table-view-options.svelte'
-  import { statuses } from '../(data)/data.js'
+  import type { filter } from '$src/types/table.js'
+  import TableFilterOption from './table-filter-option.svelte'
+  import { capitalizeFirstLetter } from '@/helpers/string'
 
   export let tableModel: TableViewModel<Article>
+
+  export let filters: filter[]
 
   const { pluginStates } = tableModel
   const {
@@ -22,7 +27,9 @@
     filterValues
   }: {
     filterValues: Writable<{
-      status: number[]
+      //status: number[]
+      //id: number[]
+      [index: string]: number[]
     }>
   } = pluginStates.colFilter
 
@@ -32,28 +39,30 @@
 <div class="flex items-center justify-between">
   <div class="flex flex-1 items-center space-x-2">
     <Input
-      placeholder="Filter tasks..."
+      placeholder="What is it you desire."
       class="h-8 w-[150px] lg:w-[250px]"
       type="search"
       bind:value={$filterValue}
     />
 
-    <DataTableFacetedFilter
-      bind:filterValues={$filterValues.status}
-      title="Status"
-      options={statuses}
-    />
+    {#each filters as filter}
+      <TableFilterOption
+        bind:filterValues={$filterValues[filter.name]}
+        title={capitalizeFirstLetter(filter.name)}
+        options={filter.options}
+      />
+    {/each}
     {#if showReset}
       <Button
         on:click={() => {
           $filterValue = ''
-          $filterValues.status = []
+          filters.forEach((filter) => ($filterValues[filter.name] = []))
         }}
         variant="ghost"
         class="h-8 px-2 lg:px-3"
       >
         Reset
-        <Cross2 class="ml-2 h-4 w-4" />
+        <Undo class="h-4 w-4" />
       </Button>
     {/if}
   </div>
