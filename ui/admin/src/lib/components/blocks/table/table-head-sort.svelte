@@ -3,7 +3,7 @@
   import { Button } from '@/components/ui/button'
   import * as DropdownMenu from '@/components/ui/dropdown-menu'
   import Separator from '@/components/ui/separator/separator.svelte'
-  import { ChevronsUpDown, ArrowDown, ArrowUp, SeparatorHorizontal } from 'lucide-svelte'
+  import { ChevronsUpDown, ArrowDown, ArrowUp, SeparatorHorizontal, Eraser } from 'lucide-svelte'
 
   let className: string | undefined | null = undefined
   export { className as class }
@@ -72,7 +72,7 @@
         {#if sort.order !== undefined}
           <Separator />
           <DropdownMenu.Item on:click={handleNopSort}>
-            <SeparatorHorizontal class="mr-2 h-4 w-4 text-muted-foreground/70" />
+            <Eraser class="mr-2 h-4 w-4 text-muted-foreground/70" />
             Clean
           </DropdownMenu.Item>
         {/if}

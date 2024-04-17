@@ -23,7 +23,7 @@
         selected={{ value: 10, label: '10' }}
       >
         <Select.Trigger class="h-8 w-16">
-          <Select.Value placeholder="Select page size" />
+          <Select.Value />
         </Select.Trigger>
         <Select.Content>
           <Select.Item value="10">10</Select.Item>

@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
 	"github.com/moonprism/blog/model"
+	"gorm.io/gorm"
 )
 
 func bindArticleApi(app *core.App, r chi.Router) {
@@ -33,49 +34,96 @@ type articleApi struct {
 }
 
 func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
-	articles := make([]*model.Article, 0)
-	api.O.Omit("content").Find(&articles)
-	json.NewEncoder(w).Encode(&articles)
+	var article []*model.Article
+	err := api.O.Model(&model.Article{}).Preload("Tags").Find(&article).Error
+	core.P(err)
+	json.NewEncoder(w).Encode(&article)
 }
 
 func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	core.P(err)
 	article := new(model.Article)
-	has, err := api.O.ID(id).Get(article)
+	err = api.O.Model(&model.Article{}).
+		Preload("ArticleText").
+		Preload("Tags").
+		First(article, id).
+		Error
 	core.P(err)
-	if !has {
-		w.WriteHeader(404)
-		return
-	}
-	json.NewEncoder(w).Encode(&article)
+	json.NewEncoder(w).Encode(article)
 }
 
 func (api *articleApi) create(w http.ResponseWriter, r *http.Request) {
-	var article model.Article
-	err := json.NewDecoder(r.Body).Decode(&article)
+	art := new(model.ArticleInfo)
+	err := json.NewDecoder(r.Body).Decode(art)
 	core.P(err)
-	article.Rune = utf8.RuneCountInString(article.Content)
-	_, err = api.O.Insert(&article)
+	err = api.O.Transaction(func(tx *gorm.DB) error {
+		if err = tx.Create(art.Article).Error; err != nil {
+			return err
+		}
+		for _, ti := range art.Tags {
+			artTags := &model.ArticleTags{
+				ArticleID: art.ID,
+				TagID:     ti,
+			}
+			if err = tx.Create(artTags).Error; err != nil {
+				return err
+			}
+		}
+		at := &model.ArticleText{
+			ArticleID: art.ID,
+		}
+		return tx.Create(at).Error
+	})
 	core.P(err)
 }
 
 func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 10, 32)
 	core.P(err)
 	var data map[string]interface{}
 	err = json.NewDecoder(r.Body).Decode(&data)
 	core.P(err)
-	if v, ok := data["content"]; ok {
-		data["rune"] = utf8.RuneCountInString(v.(string))
-	}
-	_, err = api.O.Table(new(model.Article)).ID(id).Update(data)
+	err = api.O.Transaction(func(tx *gorm.DB) error {
+		if v, ok := data["content"]; ok {
+			artText := &model.ArticleText{
+				ArticleID: uint(id),
+				Content:   v.(string),
+			}
+			err = tx.Save(artText).Error
+			if err != nil {
+				return err
+			}
+			data["rune"] = utf8.RuneCountInString(artText.Content)
+			delete(data, "content")
+		}
+		if v, ok := data["tags"]; ok {
+			tags := v.([]interface{})
+			tx.Where("article_id = ?", id).Delete(new(model.ArticleTags))
+			for _, ti := range tags {
+				artTags := &model.ArticleTags{
+					ArticleID: uint(id),
+					TagID:     uint(ti.(float64)),
+				}
+				if err = tx.Create(artTags).Error; err != nil {
+					return err
+				}
+			}
+			delete(data, "tags")
+		}
+		return tx.Model(new(model.Article)).Where("id = ?", id).Updates(data).Error
+	})
 	core.P(err)
 }
 
 func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	core.P(err)
-	_, err = api.O.ID(id).Delete(new(model.Article))
+	err = api.O.Transaction(func(tx *gorm.DB) error {
+		if err = tx.Delete(new(model.Article), id).Error; err != nil {
+			return err
+		}
+		return tx.Where("article_id = ?", id).Delete(new(model.ArticleTags)).Error
+	})
 	core.P(err)
 }

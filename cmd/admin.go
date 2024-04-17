@@ -35,13 +35,14 @@ func NewAdminCommand(app *core.App) *cli.Command {
 							Title:   v["title"].(string),
 							Summary: v["summary"].(string),
 						}
-						article.BaseModel = &model.BaseModel{
-							Created: int(v["created"].(float64)),
+						article.BaseModel = model.BaseModel{
+							Created: v["created"].(uint),
 						}
 						article.Image = v["image"].(string)
-						article.Content = v["content"].(string)
-						_, err = app.O.Insert(&article)
-						if err != nil {
+						//article.Content = v["content"].(string)
+						result := app.O.Create(&article)
+						println(article.ID)
+						if result.Error != nil {
 							panic(err)
 						}
 					}
@@ -52,7 +53,12 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				Name:  "construct",
 				Usage: "sync database struct",
 				Action: func(ctx *cli.Context) error {
-					return app.O.Sync2(new(model.Article))
+					return app.O.AutoMigrate(
+						&model.Article{},
+						&model.ArticleText{},
+						&model.ArticleTags{},
+						&model.Tag{},
+					)
 				},
 			},
 			{

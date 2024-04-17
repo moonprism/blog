@@ -25,10 +25,18 @@
   let storeData = writable(data)
 
   function getArticles() {
-    fet.get('article').then((respoi) => {
+    fet.get('article').then(respoi => {
       if (respoi.ok) {
         data = <Article[]>respoi.data
         storeData.set(data)
+      }
+    })
+  }
+  
+  function getTags() {
+    fet.get('tag').then(respoi => {
+      if (respoi.ok) {
+        
       }
     })
   }
@@ -154,11 +162,6 @@
   ]
 
   const tableModel = table.createViewModel(columns)
-
-  const { pluginStates } = tableModel
-  const { filterValues } = pluginStates.colFilter
 </script>
-
-<pre>$filterValues = {JSON.stringify($filterValues, null, 2)}</pre>
 
 <DataTable {tableModel} {filters} />

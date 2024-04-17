@@ -3,7 +3,7 @@
   import { Button } from '@/components/ui/button'
   import * as DropdownMenu from '@/components/ui/dropdown-menu'
   import type { Article } from '$src/types/stream'
-  import { AlignStartVertical } from 'lucide-svelte'
+  import { ListTodo } from 'lucide-svelte'
 
   export let tableModel: TableViewModel<Article>
   const { pluginStates, flatColumns } = tableModel
@@ -24,7 +24,7 @@
 <DropdownMenu.Root>
   <DropdownMenu.Trigger asChild let:builder>
     <Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex" builders={[builder]}>
-      <AlignStartVertical class="mr-1 h-4 w-4" />
+      <ListTodo class="mr-1 h-4 w-4" />
       View
     </Button>
   </DropdownMenu.Trigger>

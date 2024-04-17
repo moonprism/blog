@@ -1,7 +1,11 @@
 package model
 
+import "gorm.io/plugin/soft_delete"
+
 type BaseModel struct {
-	ID      int64 `xorm:"int pk autoincr 'id'" json:"id"`
-	Created int   `xorm:"notnull default(0) created" json:"created"`
-	Updated int   `xorm:"notnull default(0) updated" json:"updated"`
+	ID      uint `json:"id"`
+	Created uint `gorm:"notnull;autoCreateTime" json:"created"`
+	Updated uint `gorm:"notnull;autoUpdateTime" json:"updated"`
+
+	IsDel soft_delete.DeletedAt `gorm:"type:tinyint(1);notnull;softDelete:flag" json:"-"`
 }

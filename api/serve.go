@@ -18,6 +18,7 @@ func Serve(app *core.App) error {
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/", func(r chi.Router) { bindAuthApi(app, r) })
 		r.Route("/article", func(r chi.Router) { bindArticleApi(app, r) })
+		r.Route("/tag", func(r chi.Router) { bindTagApi(app, r) })
 	})
 
 	return http.ListenAndServe(app.Setting.Server.Addr, r)

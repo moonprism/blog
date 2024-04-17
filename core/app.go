@@ -4,15 +4,15 @@ import (
 	"os"
 
 	"github.com/go-chi/jwtauth/v5"
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/xorm"
 	"github.com/urfave/cli/v2"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 type App struct {
 	isDev     bool
 	RootCmd   *cli.App
-	O         *xorm.Engine
+	O         *gorm.DB
 	Setting   *setting
 	TokenAuth *jwtauth.JWTAuth
 }
@@ -25,7 +25,7 @@ func (app *App) Run() error {
 	if err := app.initSetting(); err != nil {
 		return err
 	}
-	if err := app.initDB(); err != nil {
+	if err := app.initDatabase(); err != nil {
 		return err
 	}
 	app.initTokenAuth()
@@ -45,16 +45,13 @@ func (app *App) ReSetting() error {
 	return ReSetting(app.Setting)
 }
 
-func (app *App) initDB() error {
-	// ...
-	engine, err := func(db settingDatabase) (*xorm.Engine, error) {
-		return xorm.NewEngine(db.Driver, db.Source)
-	}(app.Setting.Database)
+func (app *App) initDatabase() error {
+	// TODO sqlite
+	db, err := gorm.Open(mysql.Open(app.Setting.Database.Source), &gorm.Config{})
 	if err != nil {
 		return err
 	}
-	engine.ShowSQL(true)
-	app.O = engine
+	app.O = db
 	return nil
 }
 
