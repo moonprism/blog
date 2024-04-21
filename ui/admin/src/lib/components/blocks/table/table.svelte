@@ -8,7 +8,7 @@
   import TableToolbar from './table-toolbar.svelte'
   import TableHeadSort from './table-head-sort.svelte'
   import TablePagination from './table-pagination.svelte'
-  
+
   export let tableModel: TableViewModel<any, any>
   export let filters: filter[] = []
 

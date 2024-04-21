@@ -25,14 +25,14 @@
   let storeData = writable(data)
 
   function getArticles() {
-    fet.get('article').then(respoi => {
+    fet.get('article').then((respoi) => {
       if (respoi.ok) {
         data = <Article[]>respoi.data
         storeData.set(data)
       }
     })
   }
-  
+
   getArticles()
 
   const table = createTable(storeData, {

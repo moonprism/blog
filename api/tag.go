@@ -52,11 +52,9 @@ func (api *tagApi) update(w http.ResponseWriter, r *http.Request) {
 	var data map[string]interface{}
 	err = json.NewDecoder(r.Body).Decode(&data)
 	core.P(err)
-	tag := new(model.Tag)
-	tag.ID = uint(id)
-	err = api.O.Model(tag).Updates(data).Error
+	err = api.O.Model(&model.Tag{}).Where("id = ?", id).Updates(data).Error
 	core.P(err)
-	api.JSON(w, tag)
+	api.JSON(w, id)
 }
 
 func (api *tagApi) delete(w http.ResponseWriter, r *http.Request) {
@@ -66,4 +64,5 @@ func (api *tagApi) delete(w http.ResponseWriter, r *http.Request) {
 	tag.ID = uint(id)
 	api.O.Select("Articles").Delete(&tag)
 	core.P(err)
+	api.JSON(w, id)
 }

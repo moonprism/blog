@@ -18,11 +18,11 @@
 
   // 限定单用户喵
   if ($tableData.length === 0) {
-  fet.get('tag').then((respoi) => {
-    if (respoi.ok) {
-      $tableData = <Tag[]>respoi.data
-    }
-  })
+    fet.get('tag').then((respoi) => {
+      if (respoi.ok) {
+        $tableData = <Tag[]>respoi.data
+      }
+    })
   }
 
   const table = createTable(tableData, {
@@ -42,11 +42,11 @@
   const columns = table.createColumns([
     table.column({
       accessor: 'id',
-      header: 'ID',
+      header: 'ID'
     }),
     table.column({
       accessor: 'name',
-      header: 'Name',
+      header: 'Name'
     }),
     table.column({
       accessor: 'color',

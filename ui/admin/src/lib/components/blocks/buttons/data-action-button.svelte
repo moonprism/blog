@@ -1,8 +1,8 @@
 <script lang="ts">
   import Button from '@/components/ui/button/button.svelte'
   import { Plus } from 'lucide-svelte'
-  
-  export let text:string
+
+  export let text: string
   export let onClick = () => {}
 </script>
 
