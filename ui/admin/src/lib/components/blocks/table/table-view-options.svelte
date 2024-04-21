@@ -2,10 +2,9 @@
   import type { TableViewModel } from 'svelte-headless-table'
   import { Button } from '@/components/ui/button'
   import * as DropdownMenu from '@/components/ui/dropdown-menu'
-  import type { Article } from '$src/types/stream'
   import { ListTodo } from 'lucide-svelte'
 
-  export let tableModel: TableViewModel<Article>
+  export let tableModel: TableViewModel<any>
   const { pluginStates, flatColumns } = tableModel
   const { hiddenColumnIds } = pluginStates.hide
 

@@ -32,9 +32,9 @@ type tagApi struct {
 
 func (api *tagApi) list(w http.ResponseWriter, r *http.Request) {
 	tags := make([]*model.Tag, 0)
-	err := api.O.Find(&tags).Error
+	err := api.O.Order("id desc").Find(&tags).Error
 	core.P(err)
-	json.NewEncoder(w).Encode(tags)
+	api.JSON(w, tags)
 }
 
 func (api *tagApi) create(w http.ResponseWriter, r *http.Request) {
@@ -43,18 +43,20 @@ func (api *tagApi) create(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	err = api.O.Create(tag).Error
 	core.P(err)
+	api.JSON(w, tag)
 }
 
 func (api *tagApi) update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 10, 32)
 	core.P(err)
+	var data map[string]interface{}
+	err = json.NewDecoder(r.Body).Decode(&data)
+	core.P(err)
 	tag := new(model.Tag)
-	err = json.NewDecoder(r.Body).Decode(tag)
-	core.P(err)
 	tag.ID = uint(id)
-	err = api.O.Save(tag).Error
+	err = api.O.Model(tag).Updates(data).Error
 	core.P(err)
-	json.NewDecoder(r.Body).Decode(tag)
+	api.JSON(w, tag)
 }
 
 func (api *tagApi) delete(w http.ResponseWriter, r *http.Request) {

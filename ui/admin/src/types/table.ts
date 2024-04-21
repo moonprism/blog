@@ -7,6 +7,7 @@ export interface option {
 }
 
 export interface filter {
+  // todo keyof ...
   name: string
   options: option[]
 }

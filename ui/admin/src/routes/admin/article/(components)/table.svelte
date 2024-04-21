@@ -33,14 +33,6 @@
     })
   }
   
-  function getTags() {
-    fet.get('tag').then(respoi => {
-      if (respoi.ok) {
-        
-      }
-    })
-  }
-
   getArticles()
 
   const table = createTable(storeData, {

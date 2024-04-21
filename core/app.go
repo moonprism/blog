@@ -1,6 +1,8 @@
 package core
 
 import (
+	"encoding/json"
+	"net/http"
 	"os"
 
 	"github.com/go-chi/jwtauth/v5"
@@ -57,6 +59,10 @@ func (app *App) initDatabase() error {
 
 func (app *App) initTokenAuth() {
 	app.TokenAuth = jwtauth.New("HS256", []byte(app.Setting.JwtSecret), nil)
+}
+
+func (app *App) JSON(w http.ResponseWriter, data any) error {
+	return json.NewEncoder(w).Encode(data)
 }
 
 func NewApp() *App {

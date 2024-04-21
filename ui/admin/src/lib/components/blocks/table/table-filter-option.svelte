@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Plus } from 'lucide-svelte'
+  import { Filter, Milestone, Plus } from 'lucide-svelte'
   import Check from 'svelte-radix/Check.svelte'
   import * as Command from '@/components/ui/command'
   import * as Popover from '@/components/ui/popover'
@@ -27,7 +27,7 @@
 <Popover.Root bind:open>
   <Popover.Trigger asChild let:builder>
     <Button builders={[builder]} variant="outline" size="sm" class="h-8 border-dashed">
-      <Plus class="mr-1 h-4 w-4" />
+      <Milestone class="mr-1 h-4 w-4 text-slate-700" />
       {title}
       {#if filterValues.length > 0}
         <Separator orientation="vertical" class="mx-2 h-4" />

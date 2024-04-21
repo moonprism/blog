@@ -29,14 +29,27 @@ export interface JwtInfo {
   username: string
 }
 
-export interface Article {
+// 泛用数据模型
+interface DataModel {
   id: number
+  created: number
+  updated: number
+}
+
+export interface ArticleBody {
   title: string
   status: number
   rune: number
   image: string
   summary: string
   content: string
-  created: number
-  updated: number
 }
+
+export interface Article extends DataModel, ArticleBody {}
+
+export interface TagBody {
+  name: string
+  color: string
+}
+
+export interface Tag extends DataModel, TagBody {}

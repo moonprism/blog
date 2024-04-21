@@ -3,16 +3,14 @@
   import type { Writable } from 'svelte/store'
   import { Button } from '@/components/ui/button'
   import { Input } from '@/components/ui/input'
-  import { BookmarkX, Delete, ListRestart, Undo, Undo2 } from 'lucide-svelte';
-  
+  import { Undo } from 'lucide-svelte'
 
-  import type { Article } from '$src/types/stream.js'
   import TableViewOptions from './table-view-options.svelte'
   import type { filter } from '$src/types/table.js'
   import TableFilterOption from './table-filter-option.svelte'
   import { capitalizeFirstLetter } from '@/helpers/string'
 
-  export let tableModel: TableViewModel<Article>
+  export let tableModel: TableViewModel<any>
 
   export let filters: filter[]
 
@@ -23,15 +21,25 @@
     filterValue: Writable<string>
   } = pluginStates.filter
 
-  const {
-    filterValues
-  }: {
-    filterValues: Writable<{
-      //status: number[]
-      //id: number[]
-      [index: string]: number[]
-    }>
-  } = pluginStates.colFilter
+  type filterItemT = Writable<{
+    //status: number[]
+    //id: number[]
+    [index: string]: number[]
+  }>
+
+  let filterValues: filterItemT
+
+  if (filters.length !== 0) {
+    filterValues = (() => {
+      const {
+        filterValues
+      }: {
+        filterValues: filterItemT
+      } = pluginStates.colFilter
+      return filterValues
+    })()
+  } else {
+  }
 
   $: showReset = Object.values({ ...$filterValues, $filterValue }).some((v) => v.length > 0)
 </script>

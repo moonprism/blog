@@ -6,13 +6,11 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/moonprism/blog/core"
-	"github.com/moonprism/blog/core/http/middleware"
 	"golang.org/x/crypto/bcrypt"
 )
 
 func bindAuthApi(app *core.App, r chi.Router) {
 	api := authApi{app}
-	r.Use(middleware.JsonResponse)
 	r.Post("/login", api.login)
 }
 
