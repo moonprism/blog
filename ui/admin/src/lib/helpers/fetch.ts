@@ -3,6 +3,7 @@ import toast from '$lib/helpers/toast'
 
 import { PUBLIC_API_ADDR } from '$env/static/public'
 import { getJwt } from './jwt'
+import { writable } from 'svelte/store'
 
 const host = PUBLIC_API_ADDR
 
@@ -13,8 +14,11 @@ export const fet = {
   delete: (path: string) => request(path, 'DELETE')
 }
 
+export const isReuqestIn = writable(false)
+
 // custom wrapper for "fetch" funtion
 const request = async (path: string, method: string, data?: any): Promise<Respoi> => {
+  isReuqestIn.set(true)
   const headers: HeadersInit = {
     'Content-Type': 'application/json'
   }
@@ -43,6 +47,7 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
     const response = await fetchWithTimeout(`${host}${path}`, options)
     const data = await response.json()
 
+    isReuqestIn.set(false)
     if (!response.ok) {
       const badRespo = <BadRespo>data
       toast.error(badRespo.code.toString(), {
@@ -62,6 +67,7 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
     toast.error('system failure', {
       description: result.message
     })
+    isReuqestIn.set(false)
     return result
   }
 }

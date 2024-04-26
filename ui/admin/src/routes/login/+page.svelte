@@ -7,7 +7,7 @@
   import Solar from './solar.svelte'
 
   import type { LoginRequest } from '$src/types/stream'
-  import { fet } from '@/helpers/fetch'
+  import { fet, isReuqestIn } from '@/helpers/fetch'
   import { getJwtInfo, setJwt } from '@/helpers/jwt'
   import toast from '$lib/helpers/toast'
   import { goto } from '$app/navigation'
@@ -16,7 +16,6 @@
     username: '',
     password: ''
   }
-  let isLoading = false
 
   /**
    * 推荐使用sveltekit-superforms进行表单验证，该插件官网有SPA模式使用说明
@@ -30,14 +29,11 @@
       checkOn = true
       return
     }
-    isLoading = true
     fet.post('login', data).then((respo) => {
       if (respo.ok) {
         setJwt(respo.data.token)
         toast.success(`登陆成功，${getJwtInfo()?.username}`)
         goto('/admin')
-      } else {
-        isLoading = false
       }
     })
   }
@@ -66,7 +62,7 @@
       </div>
     </Card.Content>
     <Card.Footer>
-      {#if isLoading}
+      {#if $isReuqestIn}
         <Button class="w-full">
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>

@@ -6,13 +6,14 @@
   import { cn } from '@/utils'
   import type { Tag, TagBody } from '$src/types/stream'
   import { tableData, formOpen, formData, closeForm } from '../(data)/data'
-  import { fet } from '@/helpers/fetch'
+  import { fet, isReuqestIn } from '@/helpers/fetch'
   import Badge from '@/components/ui/badge/badge.svelte'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
+  import { LoaderCircle } from 'lucide-svelte'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -94,7 +95,13 @@
           >{$formValidData.name}</Badge
         >
       </div>
-      <Form.Button class="w-full">Save</Form.Button>
+      {#if $isReuqestIn}
+        <Button class="w-full">
+          <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
+        </Button>
+      {:else}
+        <Form.Button class="w-full">Save</Form.Button>
+      {/if}
     </form>
   </Dialog.Content>
 </Dialog.Root>
