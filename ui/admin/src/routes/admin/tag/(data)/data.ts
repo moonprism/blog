@@ -9,3 +9,16 @@ export function getDefaultFormData() {
 
 export const formData = writable(getDefaultFormData())
 export const formOpen = writable(false)
+
+export function openForm(t?: Tag) {
+  if (!t) {
+    t = getDefaultFormData()
+  }
+  formData.set(t)
+  formOpen.set(true)
+}
+
+export function closeForm() {
+  formData.set(getDefaultFormData())
+  formOpen.set(false)
+}

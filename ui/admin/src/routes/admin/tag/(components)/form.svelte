@@ -5,43 +5,56 @@
   import { Label } from '@/components/ui/label/index.js'
   import { cn } from '@/utils'
   import type { Tag, TagBody } from '$src/types/stream'
-  import { tableData, formOpen, formData, getDefaultFormData } from '../(data)/data'
+  import { tableData, formOpen, formData, closeForm } from '../(data)/data'
   import { fet } from '@/helpers/fetch'
   import Badge from '@/components/ui/badge/badge.svelte'
 
-  let isCheck = false
+  import * as Form from '@/components/ui/form'
+  import { formSchema, type FormSchema } from '../(data)/schema'
+  import { superForm, defaults } from 'sveltekit-superforms'
+  import { zod, zodClient } from 'sveltekit-superforms/adapters'
 
-  $: inputClass = isCheck && $formData.name === '' ? 'text-red-500' : undefined
+  const form = superForm(defaults(zod(formSchema)), {
+    validators: zodClient(formSchema),
+    SPA: true,
+    onUpdate({ form }) {
+      if (form.valid) {
+        save()
+      }
+    },
+    resetForm: false
+  })
+
+  const { form: formValidData, enhance } = form
+
+  $: $formValidData = $formData
 
   function save() {
-    if ($formData.name === '') {
-      isCheck = true
-      return
-    }
-
     if ($formData.id === 0) {
-      fet.post('tag', $formData).then((res) => {
+      fet.post('tag', $formValidData).then((res) => {
         if (res.ok) {
           $tableData = [<Tag>res.data, ...$tableData]
-          $formData = getDefaultFormData()
-          $formOpen = false
+          closeForm()
         }
       })
     } else {
       let form: TagBody = {
-        name: $formData.name,
-        color: $formData.color
+        name: $formValidData.name,
+        color: $formValidData.color
       }
       fet.put(`tag/${$formData.id}`, form).then((res) => {
         if (res.ok) {
           $tableData = $tableData.map((v) => {
             if (v.id === $formData.id) {
-              return $formData
+              let d = <Tag>res.data
+              if (d.created === 0) {
+                d.created = $formData.created
+              }
+              return res.data
             }
             return v
           })
-          $formData = getDefaultFormData()
-          $formOpen = false
+          closeForm()
         }
       })
     }
@@ -53,24 +66,35 @@
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
+
     <Dialog.Header>
       <Dialog.Title>{$formData.id === 0 ? 'New' : 'Edit'} Tag</Dialog.Title>
     </Dialog.Header>
-    <div class="">
-      <Label for="name" class={cn('text-right', inputClass)}>Name:</Label>
-      <Input id="name" bind:value={$formData.name} autocomplete="off" />
-      <Label for="color">Color:</Label>
-      <div class="flex items-center space-x-2">
-        <Input id="color" bind:value={$formData.color} autocomplete="off" />
-        <input type="color" bind:value={$formData.color} class="border-0" />
-      </div>
-      <Label for="color">Preview:</Label>
+    <form method="POST" use:enhance class="space-y-2">
+      <Form.Field {form} name="name">
+        <Form.Control let:attrs>
+          <Form.Label>Name</Form.Label>
+          <Input {...attrs} bind:value={$formValidData.name} autocomplete="off" />
+        </Form.Control>
+        <Form.FieldErrors />
+      </Form.Field>
+      <Form.Field {form} name="color">
+        <Form.Control let:attrs>
+          <Form.Label>Color</Form.Label>
+          <div class="flex items-center space-x-2">
+            <Input {...attrs} bind:value={$formValidData.color} autocomplete="off" />
+            <input type="color" bind:value={$formValidData.color} class="border-0" />
+          </div>
+        </Form.Control>
+        <Form.FieldErrors />
+      </Form.Field>
+      <Label>Preview:</Label>
       <div>
-        <Badge class="ml-1" style="background-color:{$formData.color};color:white"
-          >{$formData.name}</Badge
+        <Badge class="ml-1" style="background-color:{$formValidData.color};color:white"
+          >{$formValidData.name}</Badge
         >
       </div>
-    </div>
-    <Button type="submit" on:click={save}>Save</Button>
+      <Form.Button class="w-full">Save</Form.Button>
+    </form>
   </Dialog.Content>
 </Dialog.Root>

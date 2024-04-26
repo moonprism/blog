@@ -21,7 +21,6 @@
   /**
    * 推荐使用sveltekit-superforms进行表单验证，该插件官网有SPA模式使用说明
    * ssr参照: https://shadcn-svelte.com/docs/components/form
-   * 个人项目就不用了随便写写
    */
   let checkOn = false
   $: isShowError = checkOn && data.username == ''

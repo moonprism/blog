@@ -3,7 +3,7 @@
   import type { Tag } from '$src/types/stream.js'
   import * as DropdownMenu from '@/components/ui/dropdown-menu'
   import { Button } from '@/components/ui/button'
-  import { formData, formOpen, tableData } from '../(data)/data'
+  import { openForm, tableData } from '../(data)/data'
   import { fet } from '@/helpers/fetch'
   import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
   import Badge from '@/components/ui/badge/badge.svelte'
@@ -11,8 +11,7 @@
   export let row: Tag
 
   function edit() {
-    $formData = row
-    $formOpen = true
+    openForm(row)
   }
 
   function del() {

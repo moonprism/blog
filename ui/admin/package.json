@@ -41,11 +41,14 @@
     "bits-ui": "^0.21.4",
     "clsx": "^2.1.0",
     "cmdk-sv": "^0.0.17",
+    "formsnap": "^1.0.0",
     "lucide-svelte": "^0.367.0",
     "mode-watcher": "^0.3.0",
     "svelte-radix": "^1.1.0",
     "svelte-sonner": "^0.3.22",
+    "sveltekit-superforms": "^2.12.6",
     "tailwind-merge": "^2.2.2",
-    "tailwind-variants": "^0.2.1"
+    "tailwind-variants": "^0.2.1",
+    "zod": "^3.23.4"
   }
 }

@@ -2,11 +2,9 @@
   import Form from './(components)/form.svelte'
   import Table from './(components)/table.svelte'
   import DataActionButton from '@/components/blocks/buttons/data-action-button.svelte'
-  import { getDefaultFormData, formData, formOpen } from './(data)/data'
-
+  import { openForm } from './(data)/data'
   function add() {
-    $formOpen = true
-    $formData = getDefaultFormData()
+    openForm()
   }
 </script>
 
