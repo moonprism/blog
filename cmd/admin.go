@@ -36,7 +36,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 							Summary: v["summary"].(string),
 						}
 						article.BaseModel = model.BaseModel{
-							Created: v["created"].(uint),
+							Created: uint(v["created"].(float64)),
 						}
 						article.Image = v["image"].(string)
 						//article.Content = v["content"].(string)

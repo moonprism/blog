@@ -13,12 +13,15 @@
   import { DataTable } from '@/components/blocks/table/index'
 
   import { fet } from '@/helpers/fetch'
-  import type { Article } from '$src/types/stream'
+  import type { Article, Tag } from '$src/types/stream'
   import type { filter } from '$src/types/table'
   import { statuses } from '../(data)/data'
   import TableActions from './table-actions.svelte'
   import TableRowStatus from './table-row-status.svelte'
   import TableRowTitle from './table-row-title.svelte'
+  
+  import {tableData as tagTableData} from '../../tag/(data)/data'
+  import { BookLock } from 'lucide-svelte'
 
   let data: Article[] = []
 
@@ -141,6 +144,16 @@
       }
     })
   ])
+  
+  if ($tagTableData.length === 0) {
+    fet.get('tag').then((respoi) => {
+      if (respoi.ok) {
+        $tagTableData = <Tag[]>respoi.data
+      }
+    })
+  }
+  
+  let tags = $tagTableData.map(v => {return {id: v.id, label: v.name, icon: BookLock}})
 
   const filters: filter[] = [
     {
@@ -149,7 +162,7 @@
     },
     {
       name: 'id',
-      options: statuses
+      options: tags
     }
   ]
 

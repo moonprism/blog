@@ -43,6 +43,7 @@ export interface ArticleBody {
   image: string
   summary: string
   content: string
+  tags: number[]
 }
 
 export interface Article extends DataModel, ArticleBody {}
