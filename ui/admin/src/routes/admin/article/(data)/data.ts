@@ -1,11 +1,21 @@
-import type { Article } from '$src/types/stream'
+import type { Article, Tag } from '$src/types/stream'
 import type { option } from '$src/types/table'
+import { fet } from '@/helpers/fetch'
 import { BookLock, BookOpen, VenetianMask } from 'lucide-svelte'
-import { writable } from 'svelte/store'
+import type { ReadOrWritable } from 'svelte-headless-table'
+import { readable, writable } from 'svelte/store'
 
 export const tableData = writable([] as Article[])
 
-export const statuses: option[] = [
+export function initTableData() {
+  fet.get('article').then((respoi) => {
+    if (respoi.ok) {
+      tableData.set(<Article[]>respoi.data)
+    }
+  })
+}
+
+export const statuses: ReadOrWritable<option[]> = readable([
   {
     id: 0,
     label: 'Draft',
@@ -21,7 +31,7 @@ export const statuses: option[] = [
     label: 'Hidden',
     icon: VenetianMask
   }
-]
+])
 
 export function getDefaultFormData() {
   return {
@@ -32,7 +42,7 @@ export function getDefaultFormData() {
     image: '',
     summary: '',
     content: '',
-    tags: [] as number[],
+    tags: [] as Tag[],
   } as Article
 }
 

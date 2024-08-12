@@ -40,7 +40,7 @@
     })()
   } else {
   }
-
+  
   $: showReset = Object.values({ ...$filterValues, $filterValue }).some((v) => v.length > 0)
 </script>
 

@@ -38,22 +38,13 @@
         }
       })
     } else {
-      let form: TagBody = {
+      const form: TagBody = {
         name: $formValidData.name,
         color: $formValidData.color
       }
       fet.put(`tag/${$formData.id}`, form).then((res) => {
         if (res.ok) {
-          $tableData = $tableData.map((v) => {
-            if (v.id === $formData.id) {
-              let d = <Tag>res.data
-              if (d.created === 0) {
-                d.created = $formData.created
-              }
-              return res.data
-            }
-            return v
-          })
+          $tableData[$tableData.findIndex(v => v.id === $formData.id)] = <Tag>res.data
           closeForm()
         }
       })

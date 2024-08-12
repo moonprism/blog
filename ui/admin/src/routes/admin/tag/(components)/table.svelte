@@ -10,19 +10,13 @@
 
   import { DataTable } from '@/components/blocks/table/index'
 
-  import { fet } from '@/helpers/fetch'
-  import type { Tag } from '$src/types/stream'
   import TableActions from './table-actions.svelte'
-  import { tableData } from '../(data)/data'
+  import { initTableData, tableData } from '../(data)/data'
   import TableRowColor from './table-row-color.svelte'
 
   // 限定单用户喵
   if ($tableData.length === 0) {
-    fet.get('tag').then((respoi) => {
-      if (respoi.ok) {
-        $tableData = <Tag[]>respoi.data
-      }
-    })
+    initTableData()
   }
 
   const table = createTable(tableData, {

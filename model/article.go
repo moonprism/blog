@@ -23,8 +23,3 @@ type ArticleTags struct {
 	ArticleID uint `gorm:"notnull" json:"article_id"`
 	TagID     uint `gorm:"notnull" json:"tag_id"`
 }
-
-type ArticleInfo struct {
-	*Article
-	Tags []uint `json:"tags"`
-}

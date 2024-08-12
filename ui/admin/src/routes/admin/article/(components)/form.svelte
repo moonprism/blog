@@ -2,7 +2,7 @@
   import { Button } from '@/components/ui/button/index.js'
   import * as Dialog from '@/components/ui/dialog/index.js'
   import { Input } from '@/components/ui/input/index.js'
-  import type { Article, ArticleBody, Tag, TagBody } from '$src/types/stream'
+  import type { Article } from '$src/types/stream'
   import { tableData, formOpen, formData, closeForm, statuses } from '../(data)/data'
   import { fet, isReuqestIn } from '@/helpers/fetch'
 
@@ -32,7 +32,7 @@
   const { form: formValidData, enhance } = form
 
   $: $formValidData = $formData
-
+  
   function save() {
     if ($formData.id === 0) {
       fet.post('article', $formValidData).then((res) => {
@@ -42,27 +42,18 @@
         }
       })
     } else {
-      let form: ArticleBody = {
+      const form = {
         title: $formValidData.title,
-        status: 0,
-        rune: 0,
-        image: '',
-        summary: '',
-        content: '',
-        tags: [],
+        status: $formValidData.status,
+        image: $formValidData.image,
+        summary: $formValidData.summary,
+        tags: $formValidData.tags,
       }
       fet.put(`article/${$formData.id}`, form).then((res) => {
         if (res.ok) {
-          $tableData = $tableData.map((v) => {
-            if (v.id === $formData.id) {
-              let d = <Tag>res.data
-              if (d.created === 0) {
-                d.created = $formData.created
-              }
-              return res.data
-            }
-            return v
-          })
+          let newFormData = <Article>$formValidData
+          newFormData.updated = Date.parse(new Date().toString())/1000
+          $tableData[$tableData.findIndex(v => v.id === $formData.id)] = <Article>$formValidData
           closeForm()
         }
       })
@@ -100,7 +91,7 @@
               <Select.Value placeholder="Draft" />
             </Select.Trigger>
             <Select.Content>
-              {#each statuses as status}
+              {#each $statuses as status}
                 <Select.Item value={status.id} label={status.label}>{status.label}</Select.Item>
               {/each}
             </Select.Content>
@@ -114,7 +105,7 @@
           <Form.Label>Tags</Form.Label>
           <div>
           {#each $tagTableData as tag}
-          {@const checked = $formData.tags.includes(tag.id)}
+          {@const checked = $formData.tags.some(e => e.id === tag.id)}
           <div class="inline-block mr-2">
             <Form.Control let:attrs>
               <Checkbox
@@ -123,10 +114,10 @@
                 onCheckedChange={(v) => {
                   if (v) {
                     // add
-                    $formValidData.tags = [...$formValidData.tags, tag.id]
+                    $formValidData.tags = [...$formValidData.tags, tag]
                   } else {
                     // remove
-                    $formValidData.tags = $formValidData.tags.filter((i) => i !== tag.id)
+                    $formValidData.tags = $formValidData.tags.filter(e => e.id !== tag.id)
                   }
                 }}
               />
@@ -152,7 +143,7 @@
       <Form.Field {form} name="summary">
         <Form.Control let:attrs>
           <Form.Label>Summary</Form.Label>
-          <Textarea {...attrs} bind:value={$formValidData.summary} />
+          <Textarea {...attrs} bind:value={$formValidData.summary} rows={3} />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>

@@ -35,7 +35,7 @@ type articleApi struct {
 
 func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 	var article []*model.Article
-	err := api.O.Model(&model.Article{}).Preload("Tags").Find(&article).Error
+	err := api.O.Model(&model.Article{}).Preload("Tags").Order("id desc").Find(&article).Error
 	core.P(err)
 	json.NewEncoder(w).Encode(&article)
 }
@@ -54,28 +54,30 @@ func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *articleApi) create(w http.ResponseWriter, r *http.Request) {
-	art := new(model.ArticleInfo)
+	art := new(model.Article)
 	err := json.NewDecoder(r.Body).Decode(art)
 	core.P(err)
 	err = api.O.Transaction(func(tx *gorm.DB) error {
-		if err = tx.Create(art.Article).Error; err != nil {
+		if err = tx.Create(art).Error; err != nil {
 			return err
 		}
-		for _, ti := range art.Tags {
-			artTags := &model.ArticleTags{
-				ArticleID: art.ID,
-				TagID:     ti,
-			}
-			if err = tx.Create(artTags).Error; err != nil {
-				return err
-			}
-		}
+		// gorm auto!!!
+		// for _, t := range art.Tags {
+		// 	artTags := &model.ArticleTags{
+		// 		ArticleID: art.ID,
+		// 		TagID:     t.ID,
+		// 	}
+		// 	if err = tx.Create(artTags).Error; err != nil {
+		// 		return err
+		// 	}
+		// }
 		at := &model.ArticleText{
 			ArticleID: art.ID,
 		}
 		return tx.Create(at).Error
 	})
 	core.P(err)
+	api.JSON(w, art)
 }
 
 func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
@@ -100,10 +102,10 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 		if v, ok := data["tags"]; ok {
 			tags := v.([]interface{})
 			tx.Where("article_id = ?", id).Delete(new(model.ArticleTags))
-			for _, ti := range tags {
+			for _, t := range tags {
 				artTags := &model.ArticleTags{
 					ArticleID: uint(id),
-					TagID:     uint(ti.(float64)),
+					TagID:     uint(t.(map[string]interface{})["id"].(float64)),
 				}
 				if err = tx.Create(artTags).Error; err != nil {
 					return err
@@ -114,6 +116,7 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 		return tx.Model(new(model.Article)).Where("id = ?", id).Updates(data).Error
 	})
 	core.P(err)
+	api.JSON(w, id)
 }
 
 func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {

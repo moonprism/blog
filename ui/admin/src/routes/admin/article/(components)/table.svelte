@@ -9,36 +9,31 @@
     addTableFilter
   } from 'svelte-headless-table/plugins'
 
-  import { get, writable } from 'svelte/store'
+  import { derived, get } from 'svelte/store'
   import { DataTable } from '@/components/blocks/table/index'
 
-  import { fet } from '@/helpers/fetch'
-  import type { Article, Tag } from '$src/types/stream'
   import type { filter } from '$src/types/table'
-  import { statuses } from '../(data)/data'
+  import { tableData, statuses, initTableData } from '../(data)/data'
   import TableActions from './table-actions.svelte'
   import TableRowStatus from './table-row-status.svelte'
   import TableRowTitle from './table-row-title.svelte'
-  
-  import {tableData as tagTableData} from '../../tag/(data)/data'
+
+  import {
+    tableData as tagTableData,
+    initTableData as initTagTableData
+  } from '../../tag/(data)/data'
   import { BookLock } from 'lucide-svelte'
+  import type { Tag } from '$src/types/stream'
 
-  let data: Article[] = []
-
-  let storeData = writable(data)
-
-  function getArticles() {
-    fet.get('article').then((respoi) => {
-      if (respoi.ok) {
-        data = <Article[]>respoi.data
-        storeData.set(data)
-      }
-    })
+  if ($tagTableData.length === 0) {
+    initTagTableData()
   }
 
-  getArticles()
+  if ($tableData.length === 0) {
+    initTableData()
+  }
 
-  const table = createTable(storeData, {
+  const table = createTable(tableData, {
     select: addSelectedRows(),
     page: addPagination(),
     filter: addTableFilter({
@@ -89,7 +84,7 @@
         filter: { exclude: true }
       },
       cell: ({ value }) => {
-        return createRender(TableRowStatus, { text: statuses.find((op) => op.id == value)?.label })
+        return createRender(TableRowStatus, { text: $statuses.find((op) => op.id == value)?.label })
       }
     }),
     table.column({
@@ -106,6 +101,27 @@
     table.column({
       accessor: 'summary',
       header: 'Summary'
+    }),
+    table.column({
+      accessor: 'tags',
+      header: 'Tags',
+      cell: ({ value }) => {
+        return value.map((e) => e.name).join(',')
+      },
+      plugins: {
+        colFilter: {
+          fn: ({ filterValue, value }) => {
+            if (filterValue.length === 0) return true
+            if (!Array.isArray(filterValue)) return true
+            const vIndex = value.map((e: Tag) => e.id)
+            return filterValue.every(e => vIndex.includes(e))
+          },
+          initialFilterValue: [],
+          render: ({ filterValue }) => {
+            return get(filterValue)
+          }
+        }
+      }
     }),
     table.column({
       accessor: 'created',
@@ -144,24 +160,21 @@
       }
     })
   ])
-  
-  if ($tagTableData.length === 0) {
-    fet.get('tag').then((respoi) => {
-      if (respoi.ok) {
-        $tagTableData = <Tag[]>respoi.data
-      }
-    })
-  }
-  
-  let tags = $tagTableData.map(v => {return {id: v.id, label: v.name, icon: BookLock}})
 
+  const tags = derived(tagTableData, (t) =>
+    t.map((v) => {
+      return { id: v.id, label: v.name, icon: BookLock }
+    })
+  )
+
+  // filter.name 对应该字段配置的colFilter
   const filters: filter[] = [
     {
       name: 'status',
       options: statuses
     },
     {
-      name: 'id',
+      name: 'tags',
       options: tags
     }
   ]

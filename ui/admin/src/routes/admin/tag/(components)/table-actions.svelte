@@ -51,9 +51,9 @@
     </Button>
   </DropdownMenu.Trigger>
   <DropdownMenu.Content class="w-[100px]" align="end">
-    <DropdownMenu.Item on:click={edit}>Edit</DropdownMenu.Item>
+    <DropdownMenu.Item on:click={edit}>编辑</DropdownMenu.Item>
     <DropdownMenu.Item on:click={() => (isDel = true)}>
-      Delete
+      删除
       <DropdownMenu.Shortcut>⌘⌫</DropdownMenu.Shortcut>
     </DropdownMenu.Item>
   </DropdownMenu.Content>

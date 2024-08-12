@@ -8,10 +8,11 @@
   import { Separator } from '@/components/ui/separator'
   import { Badge } from '@/components/ui/badge'
   import { type option } from '$src/types/table'
+  import type { ReadOrWritable } from 'svelte-headless-table'
 
   export let filterValues: number[] = []
   export let title: string
-  export let options: option[]
+  export let options: ReadOrWritable<option[]>
 
   let open = false
 
@@ -40,7 +41,7 @@
               {filterValues.length} Selected
             </Badge>
           {:else}
-            {#each options as option}
+            {#each $options as option}
               {#if filterValues.includes(option.id)}
                 <Badge variant="secondary" class="rounded-sm px-1 font-normal">
                   {option.label}
@@ -58,7 +59,7 @@
       <Command.List>
         <Command.Empty>No results found.</Command.Empty>
         <Command.Group>
-          {#each options as option}
+          {#each $options as option}
             {@const Icon = option.icon}
             <Command.Item
               value={option.label}

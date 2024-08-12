@@ -11,7 +11,7 @@
 
   export let tableModel: TableViewModel<any, any>
   export let filters: filter[] = []
-
+  
   const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = tableModel
 </script>
 

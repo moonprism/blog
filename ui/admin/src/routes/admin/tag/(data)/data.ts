@@ -1,7 +1,16 @@
 import type { Tag } from '$src/types/stream'
+import { fet } from '@/helpers/fetch'
 import { writable } from 'svelte/store'
 
 export const tableData = writable([] as Tag[])
+
+export function initTableData() {
+  fet.get('tag').then((respoi) => {
+    if (respoi.ok) {
+      tableData.set(<Tag[]>respoi.data)
+    }
+  })
+}
 
 export function getDefaultFormData() {
   return { id: 0, name: '', color: '#000000' } as Tag

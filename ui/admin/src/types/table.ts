@@ -1,4 +1,5 @@
 import type { ComponentType } from 'svelte'
+import type { ReadOrWritable } from 'svelte-headless-table'
 
 export interface option {
   id: number
@@ -9,5 +10,5 @@ export interface option {
 export interface filter {
   // todo keyof ...
   name: string
-  options: option[]
+  options: ReadOrWritable<option[]>
 }
