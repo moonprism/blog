@@ -4,7 +4,7 @@
   import { Input } from '@/components/ui/input/index.js'
   import { Label } from '@/components/ui/label/index.js'
   import type { Tag, TagBody } from '$src/types/stream'
-  import { tableData, formOpen, formData, closeForm } from '../(data)/data'
+  import { tableData, closeForm } from '../(data)/data'
   import { fet, isReuqestIn } from '@/helpers/fetch'
   import Badge from '@/components/ui/badge/badge.svelte'
 
@@ -13,6 +13,7 @@
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
   import { LoaderCircle } from 'lucide-svelte'
+  import type { ReadOrWritable } from 'svelte-headless-table'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -27,10 +28,13 @@
 
   const { form: formValidData, enhance } = form
 
-  $: $formValidData = $formData
+  export let formData:Tag
+  export let formOpen:ReadOrWritable<boolean>
+
+  $: $formValidData = formData
 
   function save() {
-    if ($formData.id === 0) {
+    if (formData.id === 0) {
       fet.post('tag', $formValidData).then((res) => {
         if (res.ok) {
           $tableData = [<Tag>res.data, ...$tableData]
@@ -42,9 +46,9 @@
         name: $formValidData.name,
         color: $formValidData.color
       }
-      fet.put(`tag/${$formData.id}`, form).then((res) => {
+      fet.put(`tag/${formData.id}`, form).then((res) => {
         if (res.ok) {
-          $tableData[$tableData.findIndex(v => v.id === $formData.id)] = <Tag>res.data
+          $tableData[$tableData.findIndex(v => v.id === formData.id)] = <Tag>res.data
           closeForm()
         }
       })
@@ -59,7 +63,7 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>{$formData.id === 0 ? 'New' : 'Edit'} Tag</Dialog.Title>
+      <Dialog.Title>{formData.id === 0 ? 'New' : 'Edit'} Tag</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="name">

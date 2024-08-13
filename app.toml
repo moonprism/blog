@@ -5,7 +5,7 @@ JwtSecret = "2aEtVr"
 
 [Account]
   Name = "kicoe"
-  Pass = "$2a$14$ZCypsLmGAefmXm4XtJdzPOpgYJQFREsBjysA7xAk3JP0SPK4E/6oi"
+  Pass = "$2a$14$z2KmWYDadZlBpSpGg30hB.akygxHkSDnjJ4838A9eBlNYSrZ7XSo."
 
 [Database]
   Driver = "mysql"

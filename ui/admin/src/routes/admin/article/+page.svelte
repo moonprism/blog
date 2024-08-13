@@ -10,6 +10,5 @@
 
 <div class="container mx-auto">
   <DataActionButton text="New Article" onClick={add} />
-  <Form />
   <Table />
 </div>

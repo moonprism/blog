@@ -58,6 +58,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 						&model.ArticleText{},
 						&model.ArticleTags{},
 						&model.Tag{},
+						&model.Attachment{},
 					)
 				},
 			},

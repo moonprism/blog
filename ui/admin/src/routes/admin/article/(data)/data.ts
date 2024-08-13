@@ -4,6 +4,8 @@ import { fet } from '@/helpers/fetch'
 import { BookLock, BookOpen, VenetianMask } from 'lucide-svelte'
 import type { ReadOrWritable } from 'svelte-headless-table'
 import { readable, writable } from 'svelte/store'
+import Form from '../(components)/form.svelte'
+import type { SvelteComponent } from 'svelte'
 
 export const tableData = writable([] as Article[])
 
@@ -46,18 +48,28 @@ export function getDefaultFormData() {
   } as Article
 }
 
-export const formData = writable(getDefaultFormData())
-export const formOpen = writable(false)
+let formComponent:SvelteComponent
+
+// 为了动画
+const formOpen = writable(false)
 
 export function openForm(t?: Article) {
   if (!t) {
     t = getDefaultFormData()
   }
-  formData.set(t)
+  if (formComponent) {
+    formComponent.$destroy()
+  }
+  formComponent =  new Form({
+    target: document.body,
+    props: {
+      formData: t,
+      formOpen: formOpen,
+    }
+  })
   formOpen.set(true)
 }
 
 export function closeForm() {
-  formData.set(getDefaultFormData())
   formOpen.set(false)
 }

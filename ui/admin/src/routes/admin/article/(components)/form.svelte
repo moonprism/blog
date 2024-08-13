@@ -3,7 +3,7 @@
   import * as Dialog from '@/components/ui/dialog/index.js'
   import { Input } from '@/components/ui/input/index.js'
   import type { Article } from '$src/types/stream'
-  import { tableData, formOpen, formData, closeForm, statuses } from '../(data)/data'
+  import { tableData, closeForm, statuses } from '../(data)/data'
   import { fet, isReuqestIn } from '@/helpers/fetch'
 
   import * as Form from '@/components/ui/form'
@@ -17,11 +17,12 @@
   import Checkbox from '@/components/ui/checkbox/checkbox.svelte'
 
   import {tableData as tagTableData} from '../../tag/(data)/data'
+  import type { ReadOrWritable } from 'svelte-headless-table'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
     SPA: true,
-    onUpdate({ form }) {
+    onUpdated({ form }) {
       if (form.valid) {
         save()
       }
@@ -30,11 +31,14 @@
   })
 
   const { form: formValidData, enhance } = form
+  
+  export let formData:Article
+  export let formOpen:ReadOrWritable<boolean>
 
-  $: $formValidData = $formData
+  $: $formValidData = formData
   
   function save() {
-    if ($formData.id === 0) {
+    if (formData.id === 0) {
       fet.post('article', $formValidData).then((res) => {
         if (res.ok) {
           $tableData = [<Article>res.data, ...$tableData]
@@ -49,11 +53,11 @@
         summary: $formValidData.summary,
         tags: $formValidData.tags,
       }
-      fet.put(`article/${$formData.id}`, form).then((res) => {
+      fet.put(`article/${formData.id}`, form).then((res) => {
         if (res.ok) {
           let newFormData = <Article>$formValidData
           newFormData.updated = Date.parse(new Date().toString())/1000
-          $tableData[$tableData.findIndex(v => v.id === $formData.id)] = <Article>$formValidData
+          $tableData[$tableData.findIndex(v => v.id === formData.id)] = <Article>$formValidData
           closeForm()
         }
       })
@@ -68,7 +72,7 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>{$formData.id === 0 ? 'New' : 'Edit'} Article</Dialog.Title>
+      <Dialog.Title>{formData.id === 0 ? 'New' : 'Edit'} Article</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="title">
@@ -105,7 +109,7 @@
           <Form.Label>Tags</Form.Label>
           <div>
           {#each $tagTableData as tag}
-          {@const checked = $formData.tags.some(e => e.id === tag.id)}
+          {@const checked = formData.tags.some(e => e.id === tag.id)}
           <div class="inline-block mr-2">
             <Form.Control let:attrs>
               <Checkbox

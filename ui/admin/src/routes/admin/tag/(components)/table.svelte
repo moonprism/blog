@@ -14,7 +14,6 @@
   import { initTableData, tableData } from '../(data)/data'
   import TableRowColor from './table-row-color.svelte'
 
-  // 限定单用户喵
   if ($tableData.length === 0) {
     initTableData()
   }
