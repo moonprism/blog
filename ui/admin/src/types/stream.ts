@@ -54,3 +54,10 @@ export interface TagBody {
 }
 
 export interface Tag extends DataModel, TagBody {}
+
+export interface AttachmentBody {
+  link: string
+  summary: string
+}
+
+export interface Attachment extends DataModel, AttachmentBody {}

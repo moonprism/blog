@@ -1,7 +1,7 @@
 import type { BadRespo, Respoi } from '$src/types/stream'
 import toast from '$lib/helpers/toast'
 
-import { PUBLIC_API_ADDR } from '$env/static/public'
+import { PUBLIC_API_ADDR, PUBLIC_MOCK_MODE } from '$env/static/public'
 import { getJwt } from './jwt'
 import { writable } from 'svelte/store'
 
@@ -15,6 +15,7 @@ export const fet = {
 }
 
 export const isReuqestIn = writable(false)
+let fakeStartGlobalID = 1001
 
 // custom wrapper for "fetch" funtion
 const request = async (path: string, method: string, data?: any): Promise<Respoi> => {
@@ -43,7 +44,33 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
     data: null
   }
 
+  if (PUBLIC_MOCK_MODE) {
+    isReuqestIn.set(false)
+    let fakeData: any
+    switch (method) {
+      case 'DELETE':
+        break;
+      case 'GET':
+        fakeData = []
+        break
+      case 'POST':
+        data.created = Date.parse(new Date().toString()) / 1000
+        data.id = fakeStartGlobalID++
+      default:
+        data.updated = Date.parse(new Date().toString()) / 1000
+        fakeData = data
+    }
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        result.ok = true
+        result.data = fakeData
+        resolve(result)
+      }, 1000)
+    })
+  }
+
   try {
+
     const response = await fetchWithTimeout(`${host}${path}`, options)
     const data = await response.json()
 

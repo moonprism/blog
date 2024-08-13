@@ -16,7 +16,7 @@
   import Textarea from '@/components/ui/textarea/textarea.svelte'
   import Checkbox from '@/components/ui/checkbox/checkbox.svelte'
 
-  import {tableData as tagTableData} from '../../tag/(data)/data'
+  import { tableData as tagTableData } from '../../tag/(data)/data'
   import type { ReadOrWritable } from 'svelte-headless-table'
 
   const form = superForm(defaults(zod(formSchema)), {
@@ -31,33 +31,33 @@
   })
 
   const { form: formValidData, enhance } = form
-  
-  export let formData:Article
-  export let formOpen:ReadOrWritable<boolean>
+
+  export let formData: Article
+  export let formOpen: ReadOrWritable<boolean>
 
   $: $formValidData = formData
-  
+
   function save() {
+    const body = {
+      title: $formValidData.title,
+      status: $formValidData.status,
+      image: $formValidData.image,
+      summary: $formValidData.summary,
+      tags: $formValidData.tags
+    }
     if (formData.id === 0) {
-      fet.post('article', $formValidData).then((res) => {
+      fet.post('article', body).then((res) => {
         if (res.ok) {
           $tableData = [<Article>res.data, ...$tableData]
           closeForm()
         }
       })
     } else {
-      const form = {
-        title: $formValidData.title,
-        status: $formValidData.status,
-        image: $formValidData.image,
-        summary: $formValidData.summary,
-        tags: $formValidData.tags,
-      }
-      fet.put(`article/${formData.id}`, form).then((res) => {
+      fet.put(`article/${formData.id}`, body).then((res) => {
         if (res.ok) {
           let newFormData = <Article>$formValidData
-          newFormData.updated = Date.parse(new Date().toString())/1000
-          $tableData[$tableData.findIndex(v => v.id === formData.id)] = <Article>$formValidData
+          newFormData.updated = Date.parse(new Date().toString()) / 1000
+          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = <Article>$formValidData
           closeForm()
         }
       })
@@ -103,39 +103,39 @@
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
-      
+
       <Form.Field {form} name="tags">
         <Form.Control let:attrs>
           <Form.Label>Tags</Form.Label>
           <div>
-          {#each $tagTableData as tag}
-          {@const checked = formData.tags.some(e => e.id === tag.id)}
-          <div class="inline-block mr-2">
-            <Form.Control let:attrs>
-              <Checkbox
-                {...attrs}
-                {checked}
-                onCheckedChange={(v) => {
-                  if (v) {
-                    // add
-                    $formValidData.tags = [...$formValidData.tags, tag]
-                  } else {
-                    // remove
-                    $formValidData.tags = $formValidData.tags.filter(e => e.id !== tag.id)
-                  }
-                }}
-              />
-              <Form.Label class="text-sm font-normal">
-                {tag.name}
-              </Form.Label>
-            </Form.Control>
-          </div>
-          {/each}
+            {#each $tagTableData as tag}
+              {@const checked = formData.tags.some((e) => e.id === tag.id)}
+              <div class="mr-2 inline-block">
+                <Form.Control let:attrs>
+                  <Checkbox
+                    {...attrs}
+                    {checked}
+                    onCheckedChange={(v) => {
+                      if (v) {
+                        // add
+                        $formValidData.tags = [...$formValidData.tags, tag]
+                      } else {
+                        // remove
+                        $formValidData.tags = $formValidData.tags.filter((e) => e.id !== tag.id)
+                      }
+                    }}
+                  />
+                  <Form.Label class="text-sm font-normal">
+                    {tag.name}
+                  </Form.Label>
+                </Form.Control>
+              </div>
+            {/each}
           </div>
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
-      
+
       <Form.Field {form} name="image">
         <Form.Control let:attrs>
           <Form.Label>Image</Form.Label>

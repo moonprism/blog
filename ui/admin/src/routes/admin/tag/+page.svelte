@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Form from './(components)/form.svelte'
   import Table from './(components)/table.svelte'
   import DataActionButton from '@/components/blocks/buttons/data-action-button.svelte'
   import { openForm } from './(data)/data'
