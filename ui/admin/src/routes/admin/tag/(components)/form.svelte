@@ -31,10 +31,12 @@
   export let formData:Tag
   export let formOpen:ReadOrWritable<boolean>
 
+  const isCreate = formData.id === 0
+
   $: $formValidData = formData
 
   function save() {
-    if (formData.id === 0) {
+    if (isCreate) {
       fet.post('tag', $formValidData).then((res) => {
         if (res.ok) {
           $tableData = [<Tag>res.data, ...$tableData]
@@ -63,7 +65,7 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>{formData.id === 0 ? 'New' : 'Edit'} Tag</Dialog.Title>
+      <Dialog.Title>{isCreate ? 'New' : 'Edit'} Tag</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="name">

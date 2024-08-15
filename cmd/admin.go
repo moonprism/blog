@@ -21,7 +21,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				Name:  "test",
 				Usage: "test import",
 				Action: func(ctx *cli.Context) error {
-					fileContent, err := os.Open("test.json")
+					fileContent, err := os.Open("file.test.json")
 					if err != nil {
 						return err
 					}
@@ -29,6 +29,22 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					byteResult, _ := ioutil.ReadAll(fileContent)
 					var res []map[string]interface{}
 					json.Unmarshal([]byte(byteResult), &res)
+					// file
+					for _, v := range res {
+						a := model.Attachment{
+							Link: v["key"].(string),
+							BaseModel: model.BaseModel{
+								Created: uint(v["created"].(float64)),
+							},
+						}
+						result := app.O.Create(&a)
+						println(a.ID)
+						if result.Error != nil {
+							panic(err)
+						}
+					}
+					// article
+					return nil
 					for _, v := range res {
 						fmt.Printf("%s\n", v["title"])
 						article := model.Article{

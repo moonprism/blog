@@ -8,10 +8,12 @@
     addTableFilter
   } from 'svelte-headless-table/plugins'
 
-  import { DataTable } from '@/components/blocks/table/index'
+  import { FlowDataTable } from '@/components/blocks/table/index'
 
   import TableActions from './table-actions.svelte'
   import { initTableData, tableData } from '../(data)/data'
+  import TableRowImage from './table-row-image.svelte'
+  import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
 
   if ($tableData.length === 0) {
     initTableData()
@@ -33,12 +35,11 @@
 
   const columns = table.createColumns([
     table.column({
-      accessor: 'id',
-      header: 'ID'
-    }),
-    table.column({
       accessor: 'link',
-      header: 'Link'
+      header: 'Link',
+      cell: ({ value }) => {
+        return createRender(TableRowImage, { src: `${PUBLIC_ATTACHMENT_CDN}${value}` })
+      }
     }),
     table.column({
       accessor: 'summary',
@@ -47,17 +48,6 @@
     table.column({
       accessor: 'created',
       header: 'Created',
-      cell: ({ value }) => {
-        const time = new Date(value * 1000)
-        return time.toLocaleDateString('en')
-      },
-      plugins: {
-        filter: { exclude: true }
-      }
-    }),
-    table.column({
-      accessor: 'updated',
-      header: 'Updated',
       cell: ({ value }) => {
         const time = new Date(value * 1000)
         return time.toLocaleDateString('en')
@@ -85,4 +75,4 @@
   const tableModel = table.createViewModel(columns)
 </script>
 
-<DataTable {tableModel} />
+<FlowDataTable {tableModel} />

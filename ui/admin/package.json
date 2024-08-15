@@ -38,6 +38,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@egjs/svelte-grid": "^1.16.0",
     "bits-ui": "^0.21.8",
     "clsx": "^2.1.0",
     "cmdk-sv": "^0.0.17",

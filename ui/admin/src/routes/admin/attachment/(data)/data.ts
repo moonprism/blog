@@ -3,6 +3,7 @@ import { fet } from "@/helpers/fetch";
 import type { SvelteComponent } from "svelte";
 import { writable } from "svelte/store";
 import Form from "../(components)/form.svelte";
+import { PUBLIC_ATTACHMENT_CDN } from "$env/static/public";
 
 export const tableData = writable([] as Attachment[])
 
@@ -15,10 +16,10 @@ export function initTableData() {
 }
 
 export function getDefaultFormData() {
-  return { id: 0 } as Attachment
+  return { id: 0, link: '' } as Attachment
 }
 
-let formComponent:SvelteComponent
+let formComponent: SvelteComponent
 
 const formOpen = writable(false)
 
@@ -29,12 +30,11 @@ export function openForm(t?: Attachment) {
   if (formComponent) {
     formComponent.$destroy()
   }
-  formComponent =  new Form({
+  formComponent = new Form({
     target: document.body,
     props: {
       formData: t,
       formOpen: formOpen,
-      previewUrl: t.link,
     }
   })
   formOpen.set(true)

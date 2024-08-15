@@ -70,7 +70,6 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
   }
 
   try {
-
     const response = await fetchWithTimeout(`${host}${path}`, options)
     const data = await response.json()
 

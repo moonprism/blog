@@ -35,6 +35,8 @@
   export let formData: Article
   export let formOpen: ReadOrWritable<boolean>
 
+  const isCreate = formData.id === 0
+
   $: $formValidData = formData
 
   function save() {
@@ -45,7 +47,7 @@
       summary: $formValidData.summary,
       tags: $formValidData.tags
     }
-    if (formData.id === 0) {
+    if (isCreate) {
       fet.post('article', body).then((res) => {
         if (res.ok) {
           $tableData = [<Article>res.data, ...$tableData]
@@ -55,9 +57,10 @@
     } else {
       fet.put(`article/${formData.id}`, body).then((res) => {
         if (res.ok) {
+          // 为了方便造假数据
           let newFormData = <Article>$formValidData
           newFormData.updated = Date.parse(new Date().toString()) / 1000
-          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = <Article>$formValidData
+          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = newFormData
           closeForm()
         }
       })
@@ -72,7 +75,7 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>{formData.id === 0 ? 'New' : 'Edit'} Article</Dialog.Title>
+      <Dialog.Title>{isCreate ? 'New' : 'Edit'} Article Info</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="title">

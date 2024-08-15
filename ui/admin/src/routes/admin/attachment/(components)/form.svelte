@@ -13,7 +13,7 @@
   import type { ReadOrWritable } from 'svelte-headless-table'
   import type { Attachment, AttachmentBody } from '$src/types/stream'
   import Textarea from '@/components/ui/textarea/textarea.svelte'
-  import { PUBLIC_MOCK_MODE } from '$env/static/public'
+  import { PUBLIC_ATTACHMENT_CDN, PUBLIC_MOCK_MODE } from '$env/static/public'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -31,25 +31,23 @@
   export let formData: Attachment
   export let formOpen: ReadOrWritable<boolean>
 
+  const isCreate = formData.id === 0
+
   $: $formValidData = formData
 
   function save() {
     if (PUBLIC_MOCK_MODE) {
       $formValidData.link = previewUrl
     }
-    const body: AttachmentBody = {
-      link: $formValidData.link,
-      summary: $formValidData.summary
-    }
-    if (formData.id === 0) {
-      fet.post('attachment', body).then((res) => {
+    if (isCreate) {
+      fet.post('attachment', $formValidData).then((res) => {
         if (res.ok) {
           $tableData = [<Attachment>res.data, ...$tableData]
           closeForm()
         }
       })
     } else {
-      fet.put(`attachment/${formData.id}`, body).then((res) => {
+      fet.put(`attachment/${formData.id}`, { summary: $formValidData.summary }).then((res) => {
         if (res.ok) {
           if (PUBLIC_MOCK_MODE) {
             $formValidData.link = previewUrl
@@ -63,7 +61,14 @@
     }
   }
 
-  export let previewUrl:string = ''
+  let previewUrl: string = ''
+  if (
+    formData.link !== '' &&
+    !formData.link.startsWith('data') &&
+    !formData.link.startsWith('http')
+  ) {
+    previewUrl = `${PUBLIC_ATTACHMENT_CDN}${formData.link}`
+  }
   // 图片预览
   function handleFileChange(event: Event) {
     const input = event.target as HTMLInputElement
@@ -77,7 +82,7 @@
       }
       reader.readAsDataURL(file)
     } else {
-      previewUrl = ''
+      $formValidData.link = previewUrl = ''
     }
   }
 </script>
@@ -89,26 +94,29 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>Upload</Dialog.Title>
+      <Dialog.Title>{isCreate ? '上传' : '更新'}</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2" enctype="multipart/form-data">
       <Form.Field {form} name="link">
         <Form.Control let:attrs>
+          <Form.Label>文件</Form.Label>
           {#if previewUrl !== ''}
             <img src={previewUrl} alt="preview" class="max-h-[300px]" />
           {/if}
           <Input
+            disabled={!isCreate}
             {...attrs}
             type="file"
             on:change={handleFileChange}
             class="w-[240px]"
+            accept="image/*"
           />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
       <Form.Field {form} name="summary">
         <Form.Control let:attrs>
-          <Form.Label>Summary</Form.Label>
+          <Form.Label>描述</Form.Label>
           <Textarea {...attrs} bind:value={$formValidData.summary} rows={2} />
         </Form.Control>
         <Form.FieldErrors />
@@ -118,7 +126,7 @@
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>
       {:else}
-        <Form.Button class="w-full">Save</Form.Button>
+        <Form.Button class="w-full">保存</Form.Button>
       {/if}
     </form>
   </Dialog.Content>
