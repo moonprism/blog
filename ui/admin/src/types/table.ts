@@ -1,14 +1,21 @@
 import type { ComponentType } from 'svelte'
-import type { ReadOrWritable } from 'svelte-headless-table'
+import type { ReadOrWritable } from '$src/types/store';
+import { type Writable } from 'svelte/store';
 
-export interface option {
+export interface Option {
   id: number
   label: string
   icon: ComponentType
 }
 
-export interface filter {
+export interface Filter {
   // todo keyof ...
   name: string
-  options: ReadOrWritable<option[]>
+  options: ReadOrWritable<Option[]>
+}
+
+export interface ViewOption {
+  type: 'hideColumn' | 'cardSize',
+  selected: Writable<string[]>,
+  options: string[],
 }

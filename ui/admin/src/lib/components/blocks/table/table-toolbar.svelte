@@ -6,42 +6,34 @@
   import { Undo } from 'lucide-svelte'
 
   import TableViewOptions from './table-view-options.svelte'
-  import type { filter } from '$src/types/table.js'
+  import type { Filter, ViewOption } from '$src/types/table.js'
   import TableFilterOption from './table-filter-option.svelte'
   import { capitalizeFirstLetter } from '@/helpers/string'
 
   export let tableModel: TableViewModel<any>
-
-  export let filters: filter[]
+  export let viewOption: ViewOption
+  export let filters: Filter[]
 
   const { pluginStates } = tableModel
-  const {
-    filterValue
-  }: {
-    filterValue: Writable<string>
-  } = pluginStates.filter
 
-  type filterItemT = Writable<{
-    //status: number[]
-    //id: number[]
-    [index: string]: number[]
-  }>
+  const filterText = pluginStates.filter.filterValue
 
-  let filterValues: filterItemT
+  let filterValues: Writable<{ [index: string]: any[] }>
 
-  if (filters.length !== 0) {
-    filterValues = (() => {
-      const {
-        filterValues
-      }: {
-        filterValues: filterItemT
-      } = pluginStates.colFilter
-      return filterValues
-    })()
-  } else {
+  if (pluginStates.colFilter !== undefined) {
+    filterValues = pluginStates.colFilter.filterValues
   }
-  
-  $: showReset = Object.values({ ...$filterValues, $filterValue }).some((v) => v.length > 0)
+
+  $: {
+    // fix 隐藏列后该列过滤失效
+    filters.forEach((e) => {
+      if (!(e.name in $filterValues)) {
+        $filterValues[e.name] = []
+      }
+    })
+  }
+
+  $: showReset = Object.values({ ...$filterValues, $filterText }).some((v) => v.length > 0)
 </script>
 
 <div class="flex items-center justify-between">
@@ -50,7 +42,7 @@
       placeholder="What is it you desire."
       class="h-8 w-[150px] lg:w-[250px]"
       type="search"
-      bind:value={$filterValue}
+      bind:value={$filterText}
     />
 
     {#each filters as filter}
@@ -63,7 +55,7 @@
     {#if showReset}
       <Button
         on:click={() => {
-          $filterValue = ''
+          $filterText = ''
           filters.forEach((filter) => ($filterValues[filter.name] = []))
         }}
         variant="ghost"
@@ -75,5 +67,5 @@
     {/if}
   </div>
 
-  <TableViewOptions {tableModel} />
+  <TableViewOptions {tableModel} {viewOption} />
 </div>

@@ -12,8 +12,8 @@
   import { derived, get } from 'svelte/store'
   import { DataTable } from '@/components/blocks/table/index'
 
-  import type { filter } from '$src/types/table'
-  import { tableData, statuses, initTableData } from '../(data)/data'
+  import type { Filter } from '$src/types/table'
+  import { tableData, statuses, initTableData, selectedViewOption } from '../(data)/data'
   import TableActions from './table-actions.svelte'
   import TableRowStatus from './table-row-status.svelte'
   import TableRowTitle from './table-row-title.svelte'
@@ -24,6 +24,7 @@
   } from '../../tag/(data)/data'
   import { BookLock } from 'lucide-svelte'
   import type { Tag } from '$src/types/stream'
+  import type { ViewOption } from '$src/types/table'
 
   if ($tagTableData.length === 0) {
     initTagTableData()
@@ -34,7 +35,6 @@
   }
 
   const table = createTable(tableData, {
-    select: addSelectedRows(),
     page: addPagination(),
     filter: addTableFilter({
       fn: ({ filterValue, value }) => {
@@ -51,20 +51,7 @@
   const columns = table.createColumns([
     table.column({
       accessor: 'id',
-      header: 'ID',
-      plugins: {
-        colFilter: {
-          fn: ({ filterValue, value }) => {
-            if (filterValue.length === 0) return true
-            if (!Array.isArray(filterValue)) return true
-            return filterValue.includes(value)
-          },
-          initialFilterValue: [],
-          render: ({ filterValue }) => {
-            return get(filterValue)
-          }
-        }
-      }
+      header: 'ID'
     }),
     table.column({
       accessor: 'status',
@@ -114,7 +101,7 @@
             if (filterValue.length === 0) return true
             if (!Array.isArray(filterValue)) return true
             const vIndex = value.map((e: Tag) => e.id)
-            return filterValue.every(e => vIndex.includes(e))
+            return filterValue.every((e) => vIndex.includes(e))
           },
           initialFilterValue: [],
           render: ({ filterValue }) => {
@@ -168,7 +155,7 @@
   )
 
   // filter.name 对应该字段配置的colFilter
-  const filters: filter[] = [
+  const filters: Filter[] = [
     {
       name: 'status',
       options: statuses
@@ -180,6 +167,12 @@
   ]
 
   const tableModel = table.createViewModel(columns)
+  
+  const viewOption: ViewOption = {
+    type: 'hideColumn',
+    selected: selectedViewOption,
+    options: []
+  }
 </script>
 
-<DataTable {tableModel} {filters} />
+<DataTable {tableModel} {filters} {viewOption} />

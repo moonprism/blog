@@ -42,3 +42,5 @@ export function openForm(t?: Tag) {
 export function closeForm() {
   formOpen.set(false)
 }
+
+export const selectedViewOption = writable([] as string[])

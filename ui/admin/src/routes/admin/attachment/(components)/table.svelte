@@ -11,19 +11,19 @@
   import { FlowDataTable } from '@/components/blocks/table/index'
 
   import TableActions from './table-actions.svelte'
-  import { formOpen, initTableData, tableData } from '../(data)/data'
+  import { formOpen, initTableData, selectedViewOption, tableData } from '../(data)/data'
   import TableRowImage from './table-row-image.svelte'
   import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
   import TableRowDate from './table-row-date.svelte'
   import TableRowSummary from './table-row-summary.svelte'
-  import { onMount } from 'svelte'
+  import type { ViewOption } from '$src/types/table'
+  import { resetMode } from 'mode-watcher'
 
   if ($tableData.length === 0) {
     initTableData()
   }
 
   const table = createTable(tableData, {
-    select: addSelectedRows(),
     page: addPagination(),
     filter: addTableFilter({
       fn: ({ filterValue, value }) => {
@@ -82,6 +82,12 @@
 
   const tableModel = table.createViewModel(columns)
 
+  const viewOption: ViewOption = {
+    type: 'cardSize',
+    selected: selectedViewOption,
+    options: ['max-w-xs | 320', 'max-w-sm | 384', 'max-w-md | 448', 'max-w-xl | 576']
+  }
+
   let flowTableComponent: FlowDataTable
 
   let initFlag = false
@@ -96,6 +102,15 @@
       }, 300)
     }
   }
+
+  $: {
+    if ($selectedViewOption.length != 0) {
+      let size = parseInt($selectedViewOption[0].split('|')[1])
+      if (flowTableComponent) {
+        flowTableComponent.reset(size)
+      }
+    }
+  }
 </script>
 
-<FlowDataTable bind:this={flowTableComponent} {tableModel} />
+<FlowDataTable bind:this={flowTableComponent} {tableModel} {viewOption} />

@@ -13,7 +13,7 @@
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
   import { LoaderCircle } from 'lucide-svelte'
-  import type { ReadOrWritable } from 'svelte-headless-table'
+  import type { Writable } from 'svelte/store'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -29,7 +29,7 @@
   const { form: formValidData, enhance } = form
 
   export let formData: Tag
-  export let formOpen: ReadOrWritable<boolean>
+  export let formOpen: Writable<boolean>
 
   const isCreate = formData.id === 0
 

@@ -3,20 +3,22 @@
   import { Subscribe, Render } from 'svelte-headless-table'
 
   import * as Table from '@/components/ui/table'
-  import type { filter } from '$src/types/table'
+  import type { Filter, ViewOption } from '$src/types/table'
 
   import TableToolbar from './table-toolbar.svelte'
   import TableHeadSort from './table-head-sort.svelte'
   import TablePagination from './table-pagination.svelte'
+  import type { AnyPlugins } from 'svelte-headless-table/plugins'
 
-  export let tableModel: TableViewModel<any, any>
-  export let filters: filter[] = []
+  export let tableModel: TableViewModel<any, AnyPlugins>
+  export let filters: Filter[] = []
+  export let viewOption: ViewOption
   
   const { headerRows, pageRows, tableAttrs, tableBodyAttrs } = tableModel
 </script>
 
 <div class="space-y-3">
-  <TableToolbar {tableModel} {filters} />
+  <TableToolbar {tableModel} {filters} {viewOption} />
   <div class="rounded-md border px-3">
     <Table.Root {...$tableAttrs}>
       <Table.Header>

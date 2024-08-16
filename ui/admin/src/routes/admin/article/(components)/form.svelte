@@ -17,7 +17,7 @@
   import Checkbox from '@/components/ui/checkbox/checkbox.svelte'
 
   import { tableData as tagTableData } from '../../tag/(data)/data'
-  import type { ReadOrWritable } from 'svelte-headless-table'
+  import type { Writable } from 'svelte/store'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -33,7 +33,7 @@
   const { form: formValidData, enhance } = form
 
   export let formData: Article
-  export let formOpen: ReadOrWritable<boolean>
+  export let formOpen: Writable<boolean>
 
   const isCreate = formData.id === 0
 

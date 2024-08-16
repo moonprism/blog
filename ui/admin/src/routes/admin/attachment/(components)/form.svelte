@@ -11,10 +11,10 @@
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
   import { LoaderCircle, Maximize, Trash2 } from 'lucide-svelte'
-  import type { ReadOrWritable } from 'svelte-headless-table'
   import type { Attachment } from '$src/types/stream'
   import Textarea from '@/components/ui/textarea/textarea.svelte'
   import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
+  import type { Writable } from 'svelte/store'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -30,7 +30,7 @@
   const { form: formValidData, enhance } = form
 
   export let formData: Attachment
-  export let formOpen: ReadOrWritable<boolean>
+  export let formOpen: Writable<boolean>
 
   const isCreate = formData.id === 0
 

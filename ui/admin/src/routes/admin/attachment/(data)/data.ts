@@ -42,3 +42,5 @@ export function openForm(t?: Attachment) {
 export function closeForm() {
   formOpen.set(false)
 }
+
+export const selectedViewOption = writable([] as string[])

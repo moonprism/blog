@@ -1,11 +1,11 @@
 import type { Article, Tag } from '$src/types/stream'
-import type { option } from '$src/types/table'
+import type { Option } from '$src/types/table'
 import { fet } from '@/helpers/fetch'
 import { BookLock, BookOpen, VenetianMask } from 'lucide-svelte'
-import type { ReadOrWritable } from 'svelte-headless-table'
 import { readable, writable } from 'svelte/store'
 import Form from '../(components)/form.svelte'
 import type { SvelteComponent } from 'svelte'
+import type { ReadOrWritable } from '$src/types/store'
 
 export const tableData = writable([] as Article[])
 
@@ -17,7 +17,7 @@ export function initTableData() {
   })
 }
 
-export const statuses: ReadOrWritable<option[]> = readable([
+export const statuses: ReadOrWritable<Option[]> = readable([
   {
     id: 0,
     label: 'Draft',
@@ -73,3 +73,5 @@ export function openForm(t?: Article) {
 export function closeForm() {
   formOpen.set(false)
 }
+
+export const selectedViewOption = writable([] as string[])

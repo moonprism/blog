@@ -3,7 +3,6 @@
   import {
     addHiddenColumns,
     addPagination,
-    addSelectedRows,
     addSortBy,
     addTableFilter
   } from 'svelte-headless-table/plugins'
@@ -11,15 +10,15 @@
   import { DataTable } from '@/components/blocks/table/index'
 
   import TableActions from './table-actions.svelte'
-  import { initTableData, tableData } from '../(data)/data'
+  import { initTableData, selectedViewOption, tableData } from '../(data)/data'
   import TableRowColor from './table-row-color.svelte'
+  import type { ViewOption } from '$src/types/table'
 
   if ($tableData.length === 0) {
     initTableData()
   }
 
   const table = createTable(tableData, {
-    select: addSelectedRows(),
     page: addPagination(),
     filter: addTableFilter({
       fn: ({ filterValue, value }) => {
@@ -90,6 +89,12 @@
   ])
 
   const tableModel = table.createViewModel(columns)
+  
+  const viewOption: ViewOption = {
+    type: 'hideColumn',
+    selected: selectedViewOption,
+    options: []
+  }
 </script>
 
-<DataTable {tableModel} />
+<DataTable {tableModel} {viewOption} />

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Filter, Milestone, Plus } from 'lucide-svelte'
+  import { Milestone } from 'lucide-svelte'
   import Check from 'svelte-radix/Check.svelte'
   import * as Command from '@/components/ui/command'
   import * as Popover from '@/components/ui/popover'
@@ -7,12 +7,12 @@
   import { cn } from '$lib/utils.js'
   import { Separator } from '@/components/ui/separator'
   import { Badge } from '@/components/ui/badge'
-  import { type option } from '$src/types/table'
-  import type { ReadOrWritable } from 'svelte-headless-table'
+  import { type Option } from '$src/types/table'
+  import type { ReadOrWritable } from '$src/types/store'
 
   export let filterValues: number[] = []
   export let title: string
-  export let options: ReadOrWritable<option[]>
+  export let options: ReadOrWritable<Option[]>
 
   let open = false
 
