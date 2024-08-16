@@ -2,6 +2,6 @@
   export let text: string = ''
 </script>
 
-<div  class="mx-2 my-1">
-  <p class="text-sm text-muted-foreground">{text}</p>
+<div  class="mx-2 mt-1">
+  <pre class="text-sm text-muted-foreground">{text}</pre>
 </div>

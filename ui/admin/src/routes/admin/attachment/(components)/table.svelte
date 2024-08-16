@@ -16,6 +16,7 @@
   import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
   import TableRowDate from './table-row-date.svelte'
   import TableRowSummary from './table-row-summary.svelte'
+  import { onMount } from 'svelte'
 
   if ($tableData.length === 0) {
     initTableData()

@@ -10,7 +10,7 @@
   import { formSchema, type FormSchema } from '../(data)/schema'
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
-  import { LoaderCircle, Trash2 } from 'lucide-svelte'
+  import { LoaderCircle, Maximize, Trash2 } from 'lucide-svelte'
   import type { ReadOrWritable } from 'svelte-headless-table'
   import type { Attachment } from '$src/types/stream'
   import Textarea from '@/components/ui/textarea/textarea.svelte'
@@ -93,7 +93,21 @@
   }
 
   let isDel = false
+
+  let isPreview = false
 </script>
+
+<Dialog.Root bind:open={isPreview}>
+  <Dialog.Content class="max-w-screen z-[51] h-full cursor-pointer">
+    <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
+    <!-- svelte-ignore a11y-autofocus -->
+    <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
+    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+    <div class="flex h-full w-full justify-center p-3" on:click={() => (isPreview = false)}>
+      <img src={previewUrl} alt="preview" class="scale-down h-auto max-h-[92vh] w-auto" />
+    </div>
+  </Dialog.Content>
+</Dialog.Root>
 
 <Dialog.Root bind:open={$formOpen}>
   <Dialog.Content class="sm:max-w-[460px]">
@@ -107,9 +121,26 @@
     <form method="POST" use:enhance class="space-y-2" enctype="multipart/form-data">
       <Form.Field {form} name="link">
         <Form.Control let:attrs>
-          <Form.Label>文件</Form.Label>
+          <Form.Label>
+            <div>文件
+              {#if !isCreate}
+                <span class="mx-1 text-xs text-muted-foreground">{formData.link}</span>
+              {/if}
+            </div>
+          </Form.Label>
           {#if previewUrl !== ''}
-            <img src={previewUrl} alt="preview" class="max-h-[300px]" />
+            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+            <div
+              on:click={() => (isPreview = true)}
+              class="group relative inline-block cursor-pointer hover:shadow"
+            >
+              <img src={previewUrl} alt="preview" class="block h-auto max-h-[300px] w-full" />
+              <div
+                class="absolute right-0 top-0 hidden bg-white/30 backdrop-blur-sm group-hover:block"
+              >
+                <Maximize class="m-1 h-4 w-4"></Maximize>
+              </div>
+            </div>
           {/if}
           <div class="mr-1 flex items-center justify-between">
             <Input
@@ -120,22 +151,24 @@
               class="w-[240px]"
               accept="image/*"
             />
-            <Popover.Root bind:open={isDel}>
-              <Popover.Trigger>
-                  <Trash2 class=" h-4 w-4 duration-100 hover:text-red-500"></Trash2>
-              </Popover.Trigger>
-              <Popover.Content class="w-56">
-                <div class="grid gap-3">
-                  <h4 class="font-medium leading-none">完全删除该文件？</h4>
-                  <div class="flex justify-end gap-1">
-                    <Button variant="outline" size="sm" on:click={() => (isDel = false)}
-                      >再想想</Button
-                    >
-                    <Button size="sm" on:click={del}>确认</Button>
+            {#if !isCreate}
+              <Popover.Root bind:open={isDel}>
+                <Popover.Trigger>
+                  <Trash2 class="h-4 w-4 duration-100 hover:text-red-500"></Trash2>
+                </Popover.Trigger>
+                <Popover.Content class="w-56">
+                  <div class="grid gap-3">
+                    <h4 class="font-medium leading-none">完全删除该数据？</h4>
+                    <div class="flex justify-end gap-1">
+                      <Button variant="outline" size="sm" on:click={() => (isDel = false)}
+                        >再想想</Button
+                      >
+                      <Button size="sm" on:click={del}>确认</Button>
+                    </div>
                   </div>
-                </div>
-              </Popover.Content>
-            </Popover.Root>
+                </Popover.Content>
+              </Popover.Root>
+            {/if}
           </div>
         </Form.Control>
         <Form.FieldErrors />

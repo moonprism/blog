@@ -11,6 +11,9 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-<div on:click={edit} class="flex items-end justify-center opacity-0 group-hover:opacity-100 absolute top-0 left-0 h-full w-full">
+<div
+  on:click={edit}
+  class="absolute left-0 top-0 flex h-full w-full items-end justify-center opacity-0 group-hover:opacity-100"
+>
   <Keyboard class="h-5"></Keyboard>
 </div>
