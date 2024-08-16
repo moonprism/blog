@@ -16,14 +16,22 @@
   const gap = 10
   const align = 'stretch'
   const maxStretchColumnSize = 400
+
+  let grid: MasonryGrid
+  
+  export function reset(): void {
+      grid.updateItems(grid.getItems())
+  }
 </script>
 
 <div class="space-y-3">
   <TableToolbar {tableModel} {filters} />
+  
+  <!--button on:click={reset}>reset</button-->
 
-  <MasonryGrid class="overflow-hidden" {gap} {align} {maxStretchColumnSize}>
+  <MasonryGrid bind:this={grid} class="overflow-hidden" {gap} {align} {maxStretchColumnSize}>
     {#each $pageRows as row (row.id)}
-      <div>
+      <div class="group cursor-pointer rounded-md border hover:shadow">
         {#each row.cells as cell (cell.id)}
           <Render of={cell.render()} />
         {/each}

@@ -11,9 +11,11 @@
   import { FlowDataTable } from '@/components/blocks/table/index'
 
   import TableActions from './table-actions.svelte'
-  import { initTableData, tableData } from '../(data)/data'
+  import { formOpen, initTableData, tableData } from '../(data)/data'
   import TableRowImage from './table-row-image.svelte'
   import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
+  import TableRowDate from './table-row-date.svelte'
+  import TableRowSummary from './table-row-summary.svelte'
 
   if ($tableData.length === 0) {
     initTableData()
@@ -38,19 +40,24 @@
       accessor: 'link',
       header: 'Link',
       cell: ({ value }) => {
-        return createRender(TableRowImage, { src: `${PUBLIC_ATTACHMENT_CDN}${value}` })
+        return createRender(TableRowImage, {
+          src: `${value.startsWith('data') ? '' : PUBLIC_ATTACHMENT_CDN}${value}`
+        })
       }
     }),
     table.column({
       accessor: 'summary',
-      header: 'Summary'
+      header: 'Summary',
+      cell: ({ value }) => {
+        return createRender(TableRowSummary, { text: value })
+      }
     }),
     table.column({
       accessor: 'created',
       header: 'Created',
       cell: ({ value }) => {
         const time = new Date(value * 1000)
-        return time.toLocaleDateString('en')
+        return createRender(TableRowDate, { date: time.toLocaleDateString('en') })
       },
       plugins: {
         filter: { exclude: true }
@@ -73,6 +80,21 @@
   ])
 
   const tableModel = table.createViewModel(columns)
+
+  let flowTableComponent: FlowDataTable
+
+  let initFlag = false
+  $: {
+    if ($formOpen) {
+      initFlag = true
+    }
+    if (!$formOpen && initFlag && flowTableComponent) {
+      setTimeout(() => {
+        // 意外发现这样能正常运行
+        flowTableComponent.reset()
+      }, 300)
+    }
+  }
 </script>
 
-<FlowDataTable {tableModel} />
+<FlowDataTable bind:this={flowTableComponent} {tableModel} />

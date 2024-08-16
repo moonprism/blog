@@ -7,6 +7,8 @@ import { writable } from 'svelte/store'
 
 const host = PUBLIC_API_ADDR
 
+export const isMockMode = PUBLIC_MOCK_MODE === "true"
+
 export const fet = {
   get: (path: string) => request(path, 'GET'),
   put: (path: string, data: any) => request(path, 'PUT', data),
@@ -29,7 +31,7 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
     headers['Authorization'] = `Bearer ${token}`
   }
 
-  let options: RequestInit = {
+  const options: RequestInit = {
     method,
     headers
   }
@@ -37,14 +39,14 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
     options.body = JSON.stringify(data)
   }
 
-  let result: Respoi = {
+  const result: Respoi = {
     ok: false,
     code: 0,
     message: '',
     data: null
   }
 
-  if (PUBLIC_MOCK_MODE) {
+  if (isMockMode) {
     isReuqestIn.set(false)
     let fakeData: any
     switch (method) {

@@ -1,11 +1,8 @@
 <script lang="ts">
-  import DotsHorizontal from 'svelte-radix/DotsHorizontal.svelte'
   import type { Tag } from '$src/types/stream.js'
-  import * as DropdownMenu from '@/components/ui/dropdown-menu'
-  import { Button } from '@/components/ui/button'
   import { openForm, tableData } from '../(data)/data'
   import { fet } from '@/helpers/fetch'
-  import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
+  import * as AlertDialog from '@/components/ui/alert-dialog/index.js'
   import Badge from '@/components/ui/badge/badge.svelte'
 
   export let row: Tag
@@ -40,21 +37,7 @@
   </AlertDialog.Content>
 </AlertDialog.Root>
 
-<DropdownMenu.Root>
-  <DropdownMenu.Trigger asChild let:builder>
-    <Button
-      variant="ghost"
-      builders={[builder]}
-      class="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
-    >
-      <DotsHorizontal class="h-4 w-4" />
-    </Button>
-  </DropdownMenu.Trigger>
-  <DropdownMenu.Content class="w-[100px]" align="end">
-    <DropdownMenu.Item on:click={edit}>编辑</DropdownMenu.Item>
-    <DropdownMenu.Item on:click={() => (isDel = true)}>
-      删除
-      <DropdownMenu.Shortcut>⌘⌫</DropdownMenu.Shortcut>
-    </DropdownMenu.Item>
-  </DropdownMenu.Content>
-</DropdownMenu.Root>
+<div class="flex items-center justify-center h-8 gap-1">
+<button on:click={edit} class="text-xs px-2 border bg-white text-black border-black rounded-sm">Edit</button>
+<button on:click={() => isDel = true} class="text-xs px-2 border border-black bg-black text-white rounded-sm">Delete</button>
+</div>

@@ -28,29 +28,30 @@
 
   const { form: formValidData, enhance } = form
 
-  export let formData:Tag
-  export let formOpen:ReadOrWritable<boolean>
+  export let formData: Tag
+  export let formOpen: ReadOrWritable<boolean>
 
   const isCreate = formData.id === 0
 
   $: $formValidData = formData
 
   function save() {
+    const body: TagBody = {
+      name: formData.name,
+      color: formData.color
+    }
     if (isCreate) {
-      fet.post('tag', $formValidData).then((res) => {
+      fet.post('tag', body).then((res) => {
         if (res.ok) {
           $tableData = [<Tag>res.data, ...$tableData]
           closeForm()
         }
       })
     } else {
-      const form: TagBody = {
-        name: $formValidData.name,
-        color: $formValidData.color
-      }
-      fet.put(`tag/${formData.id}`, form).then((res) => {
+      fet.put(`tag/${formData.id}`, body).then((res) => {
         if (res.ok) {
-          $tableData[$tableData.findIndex(v => v.id === formData.id)] = <Tag>res.data
+          formData.updated = Date.parse(new Date().toString()) / 1000
+          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
         }
       })
@@ -59,7 +60,7 @@
 </script>
 
 <Dialog.Root bind:open={$formOpen}>
-  <Dialog.Content class="sm:max-w-[425px]">
+  <Dialog.Content class="sm:max-w-[330px]">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
@@ -71,7 +72,7 @@
       <Form.Field {form} name="name">
         <Form.Control let:attrs>
           <Form.Label>Name</Form.Label>
-          <Input {...attrs} bind:value={$formValidData.name} autocomplete="off" />
+          <Input {...attrs} bind:value={formData.name} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
@@ -79,16 +80,16 @@
         <Form.Control let:attrs>
           <Form.Label>Color</Form.Label>
           <div class="flex items-center space-x-2">
-            <Input {...attrs} bind:value={$formValidData.color} autocomplete="off" />
-            <input type="color" bind:value={$formValidData.color} class="border-0" />
+            <Input {...attrs} bind:value={formData.color} autocomplete="off" />
+            <input type="color" bind:value={formData.color} class="border-0" />
           </div>
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
-      <Label>Preview:</Label>
+      <Label>Preview</Label>
       <div>
-        <Badge class="ml-1" style="background-color:{$formValidData.color};color:white"
-          >{$formValidData.name}</Badge
+        <Badge class="mb-1" style="background-color:{formData.color};color:white"
+          >{formData.name}</Badge
         >
       </div>
       {#if $isReuqestIn}

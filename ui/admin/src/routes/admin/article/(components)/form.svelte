@@ -41,11 +41,11 @@
 
   function save() {
     const body = {
-      title: $formValidData.title,
-      status: $formValidData.status,
-      image: $formValidData.image,
-      summary: $formValidData.summary,
-      tags: $formValidData.tags
+      title: formData.title,
+      status: formData.status,
+      image: formData.image,
+      summary: formData.summary,
+      tags: formData.tags
     }
     if (isCreate) {
       fet.post('article', body).then((res) => {
@@ -58,9 +58,8 @@
       fet.put(`article/${formData.id}`, body).then((res) => {
         if (res.ok) {
           // 为了方便造假数据
-          let newFormData = <Article>$formValidData
-          newFormData.updated = Date.parse(new Date().toString()) / 1000
-          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = newFormData
+          formData.updated = Date.parse(new Date().toString()) / 1000
+          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
         }
       })
@@ -69,7 +68,7 @@
 </script>
 
 <Dialog.Root bind:open={$formOpen}>
-  <Dialog.Content class="sm:max-w-[425px]">
+  <Dialog.Content class="sm:max-w-[450px]">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
@@ -81,7 +80,7 @@
       <Form.Field {form} name="title">
         <Form.Control let:attrs>
           <Form.Label>Title</Form.Label>
-          <Input {...attrs} bind:value={$formValidData.title} autocomplete="off" />
+          <Input {...attrs} bind:value={formData.title} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
@@ -91,7 +90,7 @@
           <Form.Label>Status</Form.Label>
           <Select.Root
             onSelectedChange={(v) => {
-              v && ($formValidData.status = Number(v.value))
+              v && (formData.status = Number(v.value))
             }}
           >
             <Select.Trigger>
@@ -121,10 +120,10 @@
                     onCheckedChange={(v) => {
                       if (v) {
                         // add
-                        $formValidData.tags = [...$formValidData.tags, tag]
+                        formData.tags = [...formData.tags, tag]
                       } else {
                         // remove
-                        $formValidData.tags = $formValidData.tags.filter((e) => e.id !== tag.id)
+                        formData.tags = formData.tags.filter((e) => e.id !== tag.id)
                       }
                     }}
                   />
@@ -142,7 +141,7 @@
       <Form.Field {form} name="image">
         <Form.Control let:attrs>
           <Form.Label>Image</Form.Label>
-          <Input {...attrs} bind:value={$formValidData.image} autocomplete="off" />
+          <Input {...attrs} bind:value={formData.image} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
@@ -150,7 +149,7 @@
       <Form.Field {form} name="summary">
         <Form.Control let:attrs>
           <Form.Label>Summary</Form.Label>
-          <Textarea {...attrs} bind:value={$formValidData.summary} rows={3} />
+          <Textarea {...attrs} bind:value={formData.summary} rows={3} />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>

@@ -56,7 +56,7 @@ func (api *tagApi) update(w http.ResponseWriter, r *http.Request) {
 	tag.ID = uint(id)
 	err = api.O.Model(tag).Updates(data).Error
 	core.P(err)
-	api.JSON(w, tag)
+	api.JSON(w, id)
 }
 
 func (api *tagApi) delete(w http.ResponseWriter, r *http.Request) {

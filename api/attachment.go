@@ -20,6 +20,7 @@ func bindAttachmentApi(app *core.App, r chi.Router) {
 		r.Get("/", api.list)
 		r.Post("/", api.create)
 		r.Put("/{id}", api.update)
+		r.Delete("/{id}", api.delete)
 	})
 }
 
@@ -53,5 +54,15 @@ func (api *attachmentApi) update(w http.ResponseWriter, r *http.Request) {
 	attachment.ID = uint(id)
 	err = api.O.Model(attachment).Updates(data).Error
 	core.P(err)
-	api.JSON(w, attachment)
+	api.JSON(w, id)
+}
+
+func (api *attachmentApi) delete(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 10, 32)
+	core.P(err)
+	attachment := new(model.Attachment)
+	attachment.ID = uint(id)
+	api.O.Delete(&attachment)
+	core.P(err)
+	api.JSON(w, id)
 }

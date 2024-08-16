@@ -3,17 +3,18 @@
   import * as Dialog from '@/components/ui/dialog/index.js'
   import { Input } from '@/components/ui/input/index.js'
   import { tableData, closeForm } from '../(data)/data'
-  import { fet, isReuqestIn } from '@/helpers/fetch'
+  import * as Popover from '@/components/ui/popover'
+  import { fet, isMockMode, isReuqestIn } from '@/helpers/fetch'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
-  import { LoaderCircle } from 'lucide-svelte'
+  import { LoaderCircle, Trash2 } from 'lucide-svelte'
   import type { ReadOrWritable } from 'svelte-headless-table'
-  import type { Attachment, AttachmentBody } from '$src/types/stream'
+  import type { Attachment } from '$src/types/stream'
   import Textarea from '@/components/ui/textarea/textarea.svelte'
-  import { PUBLIC_ATTACHMENT_CDN, PUBLIC_MOCK_MODE } from '$env/static/public'
+  import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -36,25 +37,21 @@
   $: $formValidData = formData
 
   function save() {
-    if (PUBLIC_MOCK_MODE) {
-      $formValidData.link = previewUrl
+    if (isMockMode) {
+      formData.link = previewUrl
     }
     if (isCreate) {
-      fet.post('attachment', $formValidData).then((res) => {
+      fet.post('attachment', formData).then((res) => {
         if (res.ok) {
           $tableData = [<Attachment>res.data, ...$tableData]
           closeForm()
         }
       })
     } else {
-      fet.put(`attachment/${formData.id}`, { summary: $formValidData.summary }).then((res) => {
+      fet.put(`attachment/${formData.id}`, { summary: formData.summary }).then((res) => {
         if (res.ok) {
-          if (PUBLIC_MOCK_MODE) {
-            $formValidData.link = previewUrl
-          }
-          let newFormData = <Attachment>$formValidData
-          newFormData.updated = Date.parse(new Date().toString()) / 1000
-          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = newFormData
+          formData.updated = Date.parse(new Date().toString()) / 1000
+          $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
         }
       })
@@ -75,16 +72,27 @@
     const file = input.files?.[0]
 
     if (file) {
-      $formValidData.link = file.name
+      formData.link = file.name
       const reader = new FileReader()
       reader.onload = (e) => {
         previewUrl = e.target?.result as string
       }
       reader.readAsDataURL(file)
     } else {
-      $formValidData.link = previewUrl = ''
+      formData.link = previewUrl = ''
     }
   }
+
+  function del() {
+    fet.delete(`attachment/${formData.id}`).then((res) => {
+      if (res.ok) {
+        $tableData = $tableData.filter((v) => v.id !== formData.id)
+        closeForm()
+      }
+    })
+  }
+
+  let isDel = false
 </script>
 
 <Dialog.Root bind:open={$formOpen}>
@@ -103,21 +111,39 @@
           {#if previewUrl !== ''}
             <img src={previewUrl} alt="preview" class="max-h-[300px]" />
           {/if}
-          <Input
-            disabled={!isCreate}
-            {...attrs}
-            type="file"
-            on:change={handleFileChange}
-            class="w-[240px]"
-            accept="image/*"
-          />
+          <div class="mr-1 flex items-center justify-between">
+            <Input
+              disabled={!isCreate}
+              {...attrs}
+              type="file"
+              on:change={handleFileChange}
+              class="w-[240px]"
+              accept="image/*"
+            />
+            <Popover.Root bind:open={isDel}>
+              <Popover.Trigger>
+                  <Trash2 class=" h-4 w-4 duration-100 hover:text-red-500"></Trash2>
+              </Popover.Trigger>
+              <Popover.Content class="w-56">
+                <div class="grid gap-3">
+                  <h4 class="font-medium leading-none">完全删除该文件？</h4>
+                  <div class="flex justify-end gap-1">
+                    <Button variant="outline" size="sm" on:click={() => (isDel = false)}
+                      >再想想</Button
+                    >
+                    <Button size="sm" on:click={del}>确认</Button>
+                  </div>
+                </div>
+              </Popover.Content>
+            </Popover.Root>
+          </div>
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
       <Form.Field {form} name="summary">
         <Form.Control let:attrs>
           <Form.Label>描述</Form.Label>
-          <Textarea {...attrs} bind:value={$formValidData.summary} rows={2} />
+          <Textarea {...attrs} bind:value={formData.summary} rows={2} />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
