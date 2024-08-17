@@ -15,5 +15,12 @@
   on:click={edit}
   class="absolute left-0 top-0 flex h-full w-full items-end justify-center opacity-0 group-hover:opacity-100"
 >
+  <!--
+  <div
+    class="flex h-4 w-4 items-center justify-center rounded-full border-2 border-black mb-1"
+  >
+    <div class="relative top-[.8px] font-mono font-bold text-sm">A</div>
+  </div>
+-->
   <Keyboard class="h-5"></Keyboard>
 </div>

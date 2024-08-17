@@ -1,11 +1,14 @@
 import type { Article, Tag } from '$src/types/stream'
 import type { Option } from '$src/types/table'
 import { fet } from '@/helpers/fetch'
-import { BookLock, BookOpen, VenetianMask } from 'lucide-svelte'
-import { readable, writable } from 'svelte/store'
+import { Radio, VenetianMask } from 'lucide-svelte'
+import { derived, readable, writable } from 'svelte/store'
 import Form from '../(components)/form.svelte'
 import type { SvelteComponent } from 'svelte'
 import type { ReadOrWritable } from '$src/types/store'
+import { createRender } from 'svelte-headless-table'
+import TableRowTagColors from '../(components)/table-row-tag-colors.svelte'
+import { tableData as tagTableData } from '../../tag/(data)/data'
 
 export const tableData = writable([] as Article[])
 
@@ -21,19 +24,25 @@ export const statuses: ReadOrWritable<Option[]> = readable([
   {
     id: 0,
     label: 'Draft',
-    icon: BookLock
+    icon: createRender(VenetianMask, { class: 'h-4 w-4' })
   },
   {
     id: 1,
     label: 'Published',
-    icon: BookOpen
-  },
-  {
-    id: 2,
-    label: 'Hidden',
-    icon: VenetianMask
+    icon: createRender(Radio, { class: 'h-4 w-4' })
+    //icon: Radio
   }
 ])
+
+export const tags = derived(tagTableData, (t) =>
+  t.map((v) => {
+    return {
+      id: v.id,
+      label: v.name,
+      icon: createRender(TableRowTagColors, { colors: [v.color] })
+    }
+  })
+)
 
 export function getDefaultFormData() {
   return {
@@ -48,7 +57,7 @@ export function getDefaultFormData() {
   } as Article
 }
 
-let formComponent:SvelteComponent
+let formComponent: SvelteComponent
 
 // 为了动画
 const formOpen = writable(false)
@@ -60,7 +69,7 @@ export function openForm(t?: Article) {
   if (formComponent) {
     formComponent.$destroy()
   }
-  formComponent =  new Form({
+  formComponent = new Form({
     target: document.body,
     props: {
       formData: t,

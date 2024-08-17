@@ -4,27 +4,25 @@
     addColumnFilters,
     addHiddenColumns,
     addPagination,
-    addSelectedRows,
     addSortBy,
     addTableFilter
   } from 'svelte-headless-table/plugins'
 
-  import { derived, get } from 'svelte/store'
+  import { get } from 'svelte/store'
   import { DataTable } from '@/components/blocks/table/index'
 
   import type { Filter } from '$src/types/table'
-  import { tableData, statuses, initTableData, selectedViewOption } from '../(data)/data'
+  import { tableData, statuses, initTableData, selectedViewOption, tags } from '../(data)/data'
   import TableActions from './table-actions.svelte'
-  import TableRowStatus from './table-row-status.svelte'
   import TableRowTitle from './table-row-title.svelte'
 
   import {
     tableData as tagTableData,
     initTableData as initTagTableData
   } from '../../tag/(data)/data'
-  import { BookLock } from 'lucide-svelte'
   import type { Tag } from '$src/types/stream'
   import type { ViewOption } from '$src/types/table'
+  import TableRowTagColors from './table-row-tag-colors.svelte'
 
   if ($tagTableData.length === 0) {
     initTagTableData()
@@ -71,7 +69,9 @@
         filter: { exclude: true }
       },
       cell: ({ value }) => {
-        return createRender(TableRowStatus, { text: $statuses.find((op) => op.id == value)?.label })
+        const p = $statuses.find((op) => op.id == value)
+        if (!p) return ''
+        return p.icon
       }
     }),
     table.column({
@@ -93,7 +93,10 @@
       accessor: 'tags',
       header: 'Tags',
       cell: ({ value }) => {
-        return value.map((e) => e.name).join(',')
+        return createRender(TableRowTagColors, {
+          colors: value.map((e) => e.color),
+          class: 'h-2 w-2'
+        })
       },
       plugins: {
         colFilter: {
@@ -148,12 +151,6 @@
     })
   ])
 
-  const tags = derived(tagTableData, (t) =>
-    t.map((v) => {
-      return { id: v.id, label: v.name, icon: BookLock }
-    })
-  )
-
   // filter.name 对应该字段配置的colFilter
   const filters: Filter[] = [
     {
@@ -167,7 +164,7 @@
   ]
 
   const tableModel = table.createViewModel(columns)
-  
+
   const viewOption: ViewOption = {
     type: 'hideColumn',
     selected: selectedViewOption,

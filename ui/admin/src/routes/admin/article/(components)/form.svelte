@@ -74,7 +74,7 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>{isCreate ? 'New' : 'Edit'} Article Info</Dialog.Title>
+      <Dialog.Title>{isCreate ? 'New' : 'Edit'} Article</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="title">

@@ -1,11 +1,12 @@
-import type { ComponentType } from 'svelte'
+import type { SvelteComponent } from 'svelte'
 import type { ReadOrWritable } from '$src/types/store';
 import { type Writable } from 'svelte/store';
+import type { ComponentRenderConfig } from 'svelte-headless-table';
 
 export interface Option {
   id: number
   label: string
-  icon: ComponentType
+  icon: ComponentRenderConfig<SvelteComponent>
 }
 
 export interface Filter {

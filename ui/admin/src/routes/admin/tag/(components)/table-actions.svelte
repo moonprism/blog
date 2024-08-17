@@ -37,7 +37,12 @@
   </AlertDialog.Content>
 </AlertDialog.Root>
 
-<div class="flex items-center justify-center h-8 gap-1">
-<button on:click={edit} class="text-xs px-2 border bg-white text-black border-black rounded-sm">Edit</button>
-<button on:click={() => isDel = true} class="text-xs px-2 border border-black bg-black text-white rounded-sm">Delete</button>
+<div class="flex h-8 items-center justify-center gap-1">
+  <button on:click={edit} class="rounded-sm border border-black bg-white px-2 text-xs text-black"
+    >Edit</button
+  >
+  <button
+    on:click={() => (isDel = true)}
+    class="rounded-sm border border-black bg-black px-2 text-xs text-white">Delete</button
+  >
 </div>

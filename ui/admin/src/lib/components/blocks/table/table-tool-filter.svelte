@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Milestone } from 'lucide-svelte'
+  import { Eraser, Milestone } from 'lucide-svelte'
   import Check from 'svelte-radix/Check.svelte'
   import * as Command from '@/components/ui/command'
   import * as Popover from '@/components/ui/popover'
@@ -9,6 +9,7 @@
   import { Badge } from '@/components/ui/badge'
   import { type Option } from '$src/types/table'
   import type { ReadOrWritable } from '$src/types/store'
+  import { Render } from 'svelte-headless-table'
 
   export let filterValues: number[] = []
   export let title: string
@@ -53,14 +54,13 @@
       {/if}
     </Button>
   </Popover.Trigger>
-  <Popover.Content class="w-[200px] p-0" align="start" side="bottom">
+  <Popover.Content class="w-[180px] p-0" align="start" side="bottom">
     <Command.Root>
       <Command.Input placeholder={title} />
       <Command.List>
         <Command.Empty>No results found.</Command.Empty>
         <Command.Group>
           {#each $options as option}
-            {@const Icon = option.icon}
             <Command.Item
               value={option.label}
               onSelect={() => {
@@ -77,7 +77,9 @@
               >
                 <Check className={cn('h-4 w-4')} />
               </div>
-              <Icon class="mr-2 h-4 w-4 text-muted-foreground" />
+              <div class="mr-2 flex h-4 w-4 items-center justify-center text-muted-foreground">
+                <Render of={option.icon} />
+              </div>
               <span>
                 {option.label}
               </span>
@@ -87,12 +89,12 @@
         {#if filterValues.length > 0}
           <Command.Separator />
           <Command.Item
-            class="justify-center text-center"
+            class="cursor-pointer justify-center text-center"
             onSelect={() => {
               filterValues = []
             }}
           >
-            Clear filters
+            <Eraser class="h-4 w-4 text-muted-foreground"></Eraser>
           </Command.Item>
         {/if}
       </Command.List>
