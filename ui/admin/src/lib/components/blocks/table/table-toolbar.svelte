@@ -5,9 +5,9 @@
   import { Input } from '@/components/ui/input'
   import { Undo } from 'lucide-svelte'
 
-  import TableViewOptions from './table-view-options.svelte'
+  import TableViewOptions from './table-tool-view.svelte'
   import type { Filter, ViewOption } from '$src/types/table.js'
-  import TableFilterOption from './table-filter-option.svelte'
+  import TableFilterOption from './table-tool-filter.svelte'
   import { capitalizeFirstLetter } from '@/helpers/string'
 
   export let tableModel: TableViewModel<any>

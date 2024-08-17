@@ -4,7 +4,7 @@
   import type { Filter, ViewOption } from '$src/types/table'
   import TableToolbar from './table-toolbar.svelte'
   import { MasonryGrid } from '@egjs/svelte-grid'
-  import Loading from '../animate/loading.svelte'
+  import Loading from '../animation/loading.svelte'
   import { onMount, onDestroy } from 'svelte'
   import { isScrollAtBottom, throttle } from '@/helpers/system'
 
