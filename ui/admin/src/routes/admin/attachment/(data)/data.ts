@@ -3,6 +3,7 @@ import { fet } from "@/helpers/fetch";
 import type { SvelteComponent } from "svelte";
 import { writable } from "svelte/store";
 import Form from "../(components)/form.svelte";
+import type { ViewOption } from "$src/types/table";
 
 export const tableData = writable([] as Attachment[])
 
@@ -15,7 +16,7 @@ export function initTableData() {
 }
 
 export function getDefaultFormData() {
-  return { id: 0, link: '' } as Attachment
+  return { id: 0, link: '', summary: '' } as Attachment
 }
 
 let formComponent: SvelteComponent
@@ -44,3 +45,9 @@ export function closeForm() {
 }
 
 export const selectedViewOption = writable([] as string[])
+export const viewOption: ViewOption = {
+  type: 'cardSize',
+  selected: selectedViewOption,
+  options: ['max-w-xs | 320', 'max-w-sm | 384', 'max-w-md | 448']
+}
+selectedViewOption.set([viewOption.options[1]])

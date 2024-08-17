@@ -3,7 +3,6 @@
   import {
     addHiddenColumns,
     addPagination,
-    addSelectedRows,
     addSortBy,
     addTableFilter
   } from 'svelte-headless-table/plugins'
@@ -11,13 +10,11 @@
   import { FlowDataTable } from '@/components/blocks/table/index'
 
   import TableActions from './table-actions.svelte'
-  import { formOpen, initTableData, selectedViewOption, tableData } from '../(data)/data'
+  import { formOpen, initTableData, selectedViewOption, viewOption, tableData } from '../(data)/data'
   import TableRowImage from './table-row-image.svelte'
   import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
   import TableRowDate from './table-row-date.svelte'
   import TableRowSummary from './table-row-summary.svelte'
-  import type { ViewOption } from '$src/types/table'
-  import { resetMode } from 'mode-watcher'
 
   if ($tableData.length === 0) {
     initTableData()
@@ -81,12 +78,6 @@
   ])
 
   const tableModel = table.createViewModel(columns)
-
-  const viewOption: ViewOption = {
-    type: 'cardSize',
-    selected: selectedViewOption,
-    options: ['max-w-xs | 320', 'max-w-sm | 384', 'max-w-md | 448', 'max-w-xl | 576']
-  }
 
   let flowTableComponent: FlowDataTable
 

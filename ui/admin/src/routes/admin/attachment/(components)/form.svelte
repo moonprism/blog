@@ -104,7 +104,11 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
     <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
     <div class="flex h-full w-full justify-center p-3" on:click={() => (isPreview = false)}>
-      <img src={previewUrl} alt="preview" class="scale-down h-auto max-h-[92vh] w-auto" />
+      <img
+        src={previewUrl}
+        alt="preview"
+        class="scale-down h-auto max-h-[92vh] w-auto object-contain"
+      />
     </div>
   </Dialog.Content>
 </Dialog.Root>
@@ -122,7 +126,8 @@
       <Form.Field {form} name="link">
         <Form.Control let:attrs>
           <Form.Label>
-            <div>文件
+            <div>
+              文件
               {#if !isCreate}
                 <span class="mx-1 text-xs text-muted-foreground">{formData.link}</span>
               {/if}

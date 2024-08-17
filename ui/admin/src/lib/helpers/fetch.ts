@@ -17,7 +17,7 @@ export const fet = {
 }
 
 export const isReuqestIn = writable(false)
-let fakeStartGlobalID = 1001
+let fakeGlobalID = 1001
 
 // custom wrapper for "fetch" funtion
 const request = async (path: string, method: string, data?: any): Promise<Respoi> => {
@@ -57,7 +57,7 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
         break
       case 'POST':
         data.created = Date.parse(new Date().toString()) / 1000
-        data.id = fakeStartGlobalID++
+        data.id = fakeGlobalID++
       default:
         data.updated = Date.parse(new Date().toString()) / 1000
         fakeData = data

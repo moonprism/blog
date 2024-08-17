@@ -6,7 +6,7 @@
   import { MasonryGrid } from '@egjs/svelte-grid'
   import Loading from '../animate/loading.svelte'
   import { onMount, onDestroy } from 'svelte'
-  import { scrollAtBottom } from '@/helpers/system'
+  import { isScrollAtBottom, throttle } from '@/helpers/system'
 
   export let tableModel: TableViewModel<any, any>
   export let viewOption: ViewOption
@@ -31,19 +31,13 @@
   $pageSize = 20
 
   let isLoading = false
-  function handleScroll() {
-    if (scrollAtBottom()) {
-      isLoading = true
-      setTimeout(() => {
-        $pageSize += 10
-        // todo 平滑滚动& 防抖
-        console.log($pageSize)
-      }, 1000)
-      if (!$hasNextPage) {
-        isLoading = false
-      }
+  
+  const handleScroll = throttle(() => {
+    if (isScrollAtBottom()) {
+      isLoading = $hasNextPage
+      $pageSize += 10
     }
-  }
+  }, 200)
 
   onMount(() => {
     window.addEventListener('scroll', handleScroll)
