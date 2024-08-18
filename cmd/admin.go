@@ -32,7 +32,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					// file
 					for _, v := range res {
 						a := model.Attachment{
-							Link: v["key"].(string),
+							Key: v["key"].(string),
 							BaseModel: model.BaseModel{
 								Created: uint(v["created"].(float64)),
 							},
@@ -43,25 +43,65 @@ func NewAdminCommand(app *core.App) *cli.Command {
 							panic(err)
 						}
 					}
+					aFileContent, err := os.Open("article.test.json")
+					if err != nil {
+						return err
+					}
+					defer aFileContent.Close()
+					byteResult, _ = ioutil.ReadAll(aFileContent)
+					json.Unmarshal([]byte(byteResult), &res)
 					// article
-					return nil
-					for _, v := range res {
+					for i := len(res) - 1; i >= 0; i-- {
+						v := res[i]
 						fmt.Printf("%s\n", v["title"])
 						article := model.Article{
 							Title:   v["title"].(string),
 							Summary: v["summary"].(string),
 						}
 						article.BaseModel = model.BaseModel{
+							ID:      uint(v["id"].(float64)),
 							Created: uint(v["created"].(float64)),
 						}
 						article.Image = v["image"].(string)
-						//article.Content = v["content"].(string)
+						articleContent := model.ArticleText{
+							ArticleID: article.ID,
+							Content:   v["content"].(string),
+						}
 						result := app.O.Create(&article)
 						println(article.ID)
 						if result.Error != nil {
 							panic(err)
 						}
+						result = app.O.Create(&articleContent)
+						if result.Error != nil {
+							panic(err)
+						}
 					}
+					// gist
+					gFileContent, err := os.Open("gist.test.json")
+					if err != nil {
+						return err
+					}
+					defer gFileContent.Close()
+					byteResult, _ = ioutil.ReadAll(gFileContent)
+					json.Unmarshal([]byte(byteResult), &res)
+					for _, v := range res {
+						a := model.Gist{
+							Title:   v["description"].(string),
+							Lang:    v["lang"].(string),
+							Content: v["content"].(string),
+							BaseModel: model.BaseModel{
+								Created: uint(v["created"].(float64)),
+								Updated: uint(v["updated"].(float64)),
+							},
+						}
+						result := app.O.Create(&a)
+						println(a.ID)
+						if result.Error != nil {
+							panic(err)
+						}
+					}
+
 					return nil
 				},
 			},
@@ -72,9 +112,10 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					return app.O.AutoMigrate(
 						&model.Article{},
 						&model.ArticleText{},
-						&model.ArticleTags{},
 						&model.Tag{},
+						&model.ArticleTags{},
 						&model.Attachment{},
+						&model.Gist{},
 					)
 				},
 			},

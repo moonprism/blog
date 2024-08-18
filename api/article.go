@@ -129,4 +129,5 @@ func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 		return tx.Where("article_id = ?", id).Delete(new(model.ArticleTags)).Error
 	})
 	core.P(err)
+	api.JSON(w, id)
 }

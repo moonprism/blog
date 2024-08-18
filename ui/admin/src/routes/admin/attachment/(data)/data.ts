@@ -16,7 +16,7 @@ export function initTableData() {
 }
 
 export function getDefaultFormData() {
-  return { id: 0, link: '', summary: '' } as Attachment
+  return { id: 0, key: '', summary: '' } as Attachment
 }
 
 let formComponent: SvelteComponent

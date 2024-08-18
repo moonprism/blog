@@ -37,7 +37,7 @@
 
   function save() {
     if (isMockMode) {
-      formData.link = previewUrl
+      formData.key = previewUrl
     }
     if (isCreate) {
       fet.post('attachment', formData).then((res) => {
@@ -58,21 +58,21 @@
     }
   }
 
-  let previewUrl: string = getRealSrc(formData.link)
+  let previewUrl: string = getRealSrc(formData.key)
   // 图片预览
   function handleFileChange(event: Event) {
     const input = event.target as HTMLInputElement
     const file = input.files?.[0]
 
     if (file) {
-      $vform.link = file.name
+      $vform.key = file.name
       const reader = new FileReader()
       reader.onload = (e) => {
         previewUrl = e.target?.result as string
       }
       reader.readAsDataURL(file)
     } else {
-      $vform.link = previewUrl = ''
+      $vform.key = previewUrl = ''
     }
   }
 
@@ -116,13 +116,13 @@
       <Dialog.Title>{isCreate ? '上传' : '更新'}</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2" enctype="multipart/form-data">
-      <Form.Field {form} name="link">
+      <Form.Field {form} name="key">
         <Form.Control let:attrs>
           <Form.Label>
             <div>
               文件
               {#if !isCreate}
-                <span class="mx-1 text-xs text-muted-foreground">{$vform.link}</span>
+                <span class="mx-1 text-xs text-muted-foreground">{$vform.key}</span>
               {/if}
             </div>
           </Form.Label>

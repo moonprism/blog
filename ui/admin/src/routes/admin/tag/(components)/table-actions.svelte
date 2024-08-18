@@ -2,8 +2,6 @@
   import type { Tag } from '$src/types/stream.js'
   import { openForm, tableData } from '../(data)/data'
   import { fet } from '@/helpers/fetch'
-  import * as AlertDialog from '@/components/ui/alert-dialog/index.js'
-  import Badge from '@/components/ui/badge/badge.svelte'
   import { alertDialog } from '@/components/blocks/dialog/alert'
 
   export let row: Tag
@@ -19,7 +17,6 @@
       }
     })
   }
-
 </script>
 
 <div class="flex h-8 items-center justify-center gap-1">

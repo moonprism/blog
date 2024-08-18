@@ -1,11 +1,9 @@
 package model
 
 type Gist struct {
-	*BaseModel `xorm:"extends -"`
+	BaseModel
 
-	Description string `xorm:"notnull default('')" json:"desc"`
-	Lang        string `xorm:"notnull default('')" json:"lang"`
-	Tags        string `xorm:"notnull default('')" json:"tags"`
-	Content     string `xorm:"text notnull default('')" json:"content"`
-	Deleted     *int   `xorm:"deleted" json:"deleted"`
+	Title   string `gorm:"type:varchar(255);notnull" json:"title"`
+	Lang    string `gorm:"type:varchar(20);notnull" json:"lang"`
+	Content string `gorm:"type:text;notnull" json:"content"`
 }

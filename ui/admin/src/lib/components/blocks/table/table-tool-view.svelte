@@ -23,10 +23,7 @@
   }
 
   if (viewOption.type === 'hideColumn') {
-    if (viewOption.options.length !== 0) {
-      // todo 自定义过滤字段
-    }
-    hiddenColumnIds.update(() => $selected)
+    $hiddenColumnIds = $selected
   }
 
   const noHidableCols = ['id', 'actions']

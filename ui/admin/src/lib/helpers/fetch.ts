@@ -9,13 +9,13 @@ const host = PUBLIC_API_ADDR
 
 export const isMockMode = PUBLIC_MOCK_MODE === "true"
 
-export const getRealSrc = (link: string) => {
+export const getRealSrc = (key: string) => {
   if (
-    link !== '' &&
-    !link.startsWith('data') &&
-    !link.startsWith('http')
+    key !== '' &&
+    !key.startsWith('data') &&
+    !key.startsWith('http')
   ) {
-    return `${PUBLIC_ATTACHMENT_CDN}${link}`
+    return `${PUBLIC_ATTACHMENT_CDN}${key}`
   }
   return ''
 }

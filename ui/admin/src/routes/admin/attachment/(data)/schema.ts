@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const formSchema = z.object({
-  link: z.string().min(1),
+  key: z.string().min(1),
   summary: z.string().max(20),
 })
 

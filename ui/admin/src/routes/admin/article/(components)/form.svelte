@@ -169,7 +169,7 @@
                 {/if}
               </HoverCard.Content>
             </HoverCard.Root>
-            <FormImageFlow open={isOpenImageFlow} callback={(v) => ($vform.image = v.link)}
+            <FormImageFlow open={isOpenImageFlow} callback={(v) => ($vform.image = v.key)}
             ></FormImageFlow>
             <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
             {#if $vform.image !== ''}

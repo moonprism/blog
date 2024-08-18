@@ -3,12 +3,22 @@
   import type { Article } from '$src/types/stream.js'
   import * as DropdownMenu from '@/components/ui/dropdown-menu'
   import { Button } from '@/components/ui/button'
-  import { openForm } from '../(data)/data'
+  import { openForm, tableData } from '../(data)/data'
+  import { fet } from '@/helpers/fetch'
+  import { alertDialog } from '@/components/blocks/dialog/alert'
 
   export let row: Article
-  
+
   function edit() {
     openForm(row)
+  }
+
+  function del() {
+    fet.delete(`article/${row.id}`).then((res) => {
+      if (res.ok) {
+        $tableData = $tableData.filter((v) => v.id !== row.id)
+      }
+    })
   }
 </script>
 
@@ -27,7 +37,13 @@
     <DropdownMenu.Item on:click={edit}>更改信息</DropdownMenu.Item>
     <DropdownMenu.Item>编辑内容</DropdownMenu.Item>
     <DropdownMenu.Item>预览</DropdownMenu.Item>
-    <DropdownMenu.Item>
+    <DropdownMenu.Item
+      on:click={() => {
+        alertDialog(`删除文章：${row.title}`).then(() => {
+          del()
+        })
+      }}
+    >
       删除
       <DropdownMenu.Shortcut>⌘⌫</DropdownMenu.Shortcut>
     </DropdownMenu.Item>

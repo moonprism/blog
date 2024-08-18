@@ -44,8 +44,8 @@
 
   const columns = table.createColumns([
     table.column({
-      accessor: 'link',
-      header: 'Link',
+      accessor: 'key',
+      header: 'Key',
       cell: ({ value }) => {
         return createRender(TableRowImage, {
           src: getRealSrc(value)

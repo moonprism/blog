@@ -66,3 +66,7 @@ func (api *attachmentApi) delete(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	api.JSON(w, id)
 }
+
+func (api *attachmentApi) groupInfo(w http.ResponseWriter, r *http.Request) {
+
+}
