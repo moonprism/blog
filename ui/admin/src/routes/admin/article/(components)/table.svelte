@@ -23,6 +23,8 @@
   import type { Tag } from '$src/types/stream'
   import type { ViewOption } from '$src/types/table'
   import TableRowTagColors from './table-row-tag-colors.svelte'
+  import TableRowImage from './table-row-image.svelte'
+  import { getRealSrc } from '@/helpers/fetch'
 
   if ($tagTableData.length === 0) {
     initTagTableData()
@@ -83,7 +85,10 @@
     }),
     table.column({
       accessor: 'image',
-      header: 'Image'
+      header: 'Image',
+      cell: ({ value }) => {
+        return createRender(TableRowImage, { src: getRealSrc(value) })
+      }
     }),
     table.column({
       accessor: 'summary',

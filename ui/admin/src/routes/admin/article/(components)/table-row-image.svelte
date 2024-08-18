@@ -3,4 +3,4 @@
   export let alt = ''
 </script>
 
-<img class="max-w-60" {src} {alt} />
+<img class="max-h-[100px]" {src} {alt} />

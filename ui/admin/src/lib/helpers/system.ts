@@ -1,7 +1,14 @@
-export const isScrollAtBottom = (): boolean => {
-    const scrollTop = window.scrollY
-    const scrollHeight = document.documentElement.scrollHeight
-    const clientHeight = window.innerHeight
+export const isScrollAtBottom = (element: Element | null = null): boolean => {
+    let scrollTop: number, scrollHeight: number, clientHeight: number
+    if (element === null) {
+        scrollTop = window.scrollY || document.documentElement.scrollTop;
+        scrollHeight = document.documentElement.scrollHeight;
+        clientHeight = document.documentElement.clientHeight;
+    } else {
+        scrollTop = element.scrollTop;
+        scrollHeight = element.scrollHeight;
+        clientHeight = element.clientHeight;
+    }
     return scrollTop + clientHeight >= scrollHeight - 5
 }
 

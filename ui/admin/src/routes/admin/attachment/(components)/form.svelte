@@ -4,7 +4,7 @@
   import { Input } from '@/components/ui/input/index.js'
   import { tableData, closeForm } from '../(data)/data'
   import * as Popover from '@/components/ui/popover'
-  import { fet, isMockMode, isReuqestIn } from '@/helpers/fetch'
+  import { fet, getRealSrc, isMockMode, isReuqestIn } from '@/helpers/fetch'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'
@@ -13,7 +13,6 @@
   import { LoaderCircle, Maximize, Trash2 } from 'lucide-svelte'
   import type { Attachment } from '$src/types/stream'
   import Textarea from '@/components/ui/textarea/textarea.svelte'
-  import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
   import type { Writable } from 'svelte/store'
 
   const form = superForm(defaults(zod(formSchema)), {
@@ -59,14 +58,7 @@
     }
   }
 
-  let previewUrl: string = ''
-  if (
-    formData.link !== '' &&
-    !formData.link.startsWith('data') &&
-    !formData.link.startsWith('http')
-  ) {
-    previewUrl = `${PUBLIC_ATTACHMENT_CDN}${formData.link}`
-  }
+  let previewUrl: string = getRealSrc(formData.link)
   // 图片预览
   function handleFileChange(event: Event) {
     const input = event.target as HTMLInputElement

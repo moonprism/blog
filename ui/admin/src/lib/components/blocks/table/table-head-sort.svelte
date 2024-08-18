@@ -3,7 +3,7 @@
   import { Button } from '@/components/ui/button'
   import * as DropdownMenu from '@/components/ui/dropdown-menu'
   import Separator from '@/components/ui/separator/separator.svelte'
-  import { ChevronsUpDown, ArrowDown, ArrowUp, SeparatorHorizontal, Eraser } from 'lucide-svelte'
+  import { ChevronsUpDown, ArrowDown, ArrowUp, Eraser } from 'lucide-svelte'
 
   let className: string | undefined | null = undefined
   export { className as class }

@@ -31,23 +31,35 @@
   $pageSize = 20
 
   let isLoading = false
-  
+
+  let th: Element,
+    thParent: Element | null = null
+
   const handleScroll = throttle(() => {
-    if (isScrollAtBottom()) {
+    if (isScrollAtBottom(thParent)) {
       isLoading = $hasNextPage
       $pageSize += 10
     }
   }, 200)
 
   onMount(() => {
-    window.addEventListener('scroll', handleScroll)
+    if (th.parentElement && th.parentElement.getAttribute('role') === 'dialog') {
+      thParent = th.parentElement
+      thParent.addEventListener('scroll', handleScroll)
+    } else {
+      window.addEventListener('scroll', handleScroll)
+    }
   })
   onDestroy(() => {
-    window.removeEventListener('scroll', handleScroll)
+    if (thParent !== null) {
+      thParent.removeEventListener('scroll', handleScroll)
+    } else {
+      window.removeEventListener('scroll', handleScroll)
+    }
   })
 </script>
 
-<div class="space-y-3">
+<div class="space-y-3" bind:this={th}>
   <TableToolbar {tableModel} {filters} {viewOption} />
 
   <!--button on:click={reset}>reset</button-->

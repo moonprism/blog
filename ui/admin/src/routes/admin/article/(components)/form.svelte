@@ -4,20 +4,22 @@
   import { Input } from '@/components/ui/input/index.js'
   import type { Article } from '$src/types/stream'
   import { tableData, closeForm, statuses } from '../(data)/data'
-  import { fet, isReuqestIn } from '@/helpers/fetch'
+  import { fet, getRealSrc, isReuqestIn } from '@/helpers/fetch'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
-  import { LoaderCircle } from 'lucide-svelte'
+  import { Eraser, ImageOff, LoaderCircle } from 'lucide-svelte'
+  import * as HoverCard from '$lib/components/ui/hover-card'
 
   import * as Select from '@/components/ui/select'
   import Textarea from '@/components/ui/textarea/textarea.svelte'
   import Checkbox from '@/components/ui/checkbox/checkbox.svelte'
 
   import { tableData as tagTableData } from '../../tag/(data)/data'
-  import type { Writable } from 'svelte/store'
+  import { writable, type Writable } from 'svelte/store'
+  import FormImageFlow from './form-image-flow.svelte'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -65,10 +67,12 @@
       })
     }
   }
+
+  let isOpenImageFlow = writable(false)
 </script>
 
 <Dialog.Root bind:open={$formOpen}>
-  <Dialog.Content class="sm:max-w-[450px]">
+  <Dialog.Content class="max-w-[450px]">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
@@ -113,7 +117,7 @@
       <Form.Field {form} name="tags">
         <Form.Control let:attrs>
           <Form.Label>Tags</Form.Label>
-          <div>
+          <div class="ml-1">
             {#each $tagTableData as tag}
               {@const checked = $vform.tags.some((e) => e.id === tag.id)}
               <div class="mr-2 inline-block">
@@ -131,7 +135,7 @@
                       }
                     }}
                   />
-                  <Form.Label class="text-sm font-normal cursor-pointer">
+                  <Form.Label class="cursor-pointer text-sm font-normal">
                     {tag.name}
                   </Form.Label>
                 </Form.Control>
@@ -145,7 +149,37 @@
       <Form.Field {form} name="image">
         <Form.Control let:attrs>
           <Form.Label>Image</Form.Label>
-          <Input {...attrs} bind:value={$vform.image} autocomplete="off" />
+          <Input {...attrs} bind:value={$vform.image} autocomplete="off" class="hidden" />
+          <div class="flex items-center justify-between ml-1">
+            <HoverCard.Root openDelay={500}>
+              <HoverCard.Trigger class="text-sm hover:underline">
+                {$vform.image}
+                <Button
+                  class="mx-1"
+                  on:click={() => ($isOpenImageFlow = true)}
+                  variant="outline"
+                  size="sm">选择图片</Button
+                >
+              </HoverCard.Trigger>
+              <HoverCard.Content class="w-auto">
+                {#if $vform.image !== ''}
+                  <img src={getRealSrc($vform.image)} class="max-h-[320px]" alt="" />
+                {:else}
+                  <ImageOff class="h-4 w-4"></ImageOff>
+                {/if}
+              </HoverCard.Content>
+            </HoverCard.Root>
+            <FormImageFlow open={isOpenImageFlow} callback={(v) => ($vform.image = v.link)}
+            ></FormImageFlow>
+            <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+            {#if $vform.image !== ''}
+              <div on:click={() => ($vform.image = '')} class="group cursor-pointer p-2">
+                <Eraser
+                  class="h-4 w-4 cursor-pointer text-muted-foreground/70 group-hover:text-muted-foreground"
+                ></Eraser>
+              </div>
+            {/if}
+          </div>
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>

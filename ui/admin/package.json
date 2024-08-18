@@ -39,7 +39,7 @@
   "type": "module",
   "dependencies": {
     "@egjs/svelte-grid": "^1.16.0",
-    "bits-ui": "^0.21.8",
+    "bits-ui": "^0.21.13",
     "clsx": "^2.1.0",
     "cmdk-sv": "^0.0.17",
     "formsnap": "^1.0.0",

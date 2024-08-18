@@ -1,13 +1,24 @@
 import type { BadRespo, Respoi } from '$src/types/stream'
 import toast from '$lib/helpers/toast'
 
-import { PUBLIC_API_ADDR, PUBLIC_MOCK_MODE } from '$env/static/public'
+import { PUBLIC_API_ADDR, PUBLIC_ATTACHMENT_CDN, PUBLIC_MOCK_MODE } from '$env/static/public'
 import { getJwt } from './jwt'
 import { writable } from 'svelte/store'
 
 const host = PUBLIC_API_ADDR
 
 export const isMockMode = PUBLIC_MOCK_MODE === "true"
+
+export const getRealSrc = (link: string) => {
+  if (
+    link !== '' &&
+    !link.startsWith('data') &&
+    !link.startsWith('http')
+  ) {
+    return `${PUBLIC_ATTACHMENT_CDN}${link}`
+  }
+  return ''
+}
 
 export const fet = {
   get: (path: string) => request(path, 'GET'),

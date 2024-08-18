@@ -10,11 +10,20 @@
   import { FlowDataTable } from '@/components/blocks/table/index'
 
   import TableActions from './table-actions.svelte'
-  import { formOpen, initTableData, selectedViewOption, viewOption, tableData } from '../(data)/data'
+  import {
+    formOpen,
+    initTableData,
+    selectedViewOption,
+    viewOption,
+    tableData
+  } from '../(data)/data'
   import TableRowImage from './table-row-image.svelte'
-  import { PUBLIC_ATTACHMENT_CDN } from '$env/static/public'
   import TableRowDate from './table-row-date.svelte'
   import TableRowSummary from './table-row-summary.svelte'
+  import type { Attachment } from '$src/types/stream'
+  import { getRealSrc } from '@/helpers/fetch'
+
+  export let itemClick: ((row: Attachment) => void) | null = null
 
   if ($tableData.length === 0) {
     initTableData()
@@ -39,7 +48,7 @@
       header: 'Link',
       cell: ({ value }) => {
         return createRender(TableRowImage, {
-          src: `${value.startsWith('data') ? '' : PUBLIC_ATTACHMENT_CDN}${value}`
+          src: getRealSrc(value)
         })
       }
     }),
@@ -69,7 +78,8 @@
       cell: ({ row }) => {
         if (row.isData() && row.original) {
           return createRender(TableActions, {
-            row: row.original
+            row: row.original,
+            click: itemClick
           })
         }
         return ''
