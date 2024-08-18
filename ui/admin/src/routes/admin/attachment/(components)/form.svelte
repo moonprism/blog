@@ -27,14 +27,14 @@
     resetForm: false
   })
 
-  const { form: formValidData, enhance } = form
+  const { form: vform, enhance } = form
 
   export let formData: Attachment
   export let formOpen: Writable<boolean>
 
   const isCreate = formData.id === 0
 
-  $: $formValidData = formData
+  $: $vform = formData
 
   function save() {
     if (isMockMode) {
@@ -48,8 +48,9 @@
         }
       })
     } else {
-      fet.put(`attachment/${formData.id}`, { summary: formData.summary }).then((res) => {
+      fet.put(`attachment/${formData.id}`, { summary: $vform.summary }).then((res) => {
         if (res.ok) {
+          formData = <Attachment>$vform
           formData.updated = Date.parse(new Date().toString()) / 1000
           $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
@@ -72,14 +73,14 @@
     const file = input.files?.[0]
 
     if (file) {
-      formData.link = file.name
+      $vform.link = file.name
       const reader = new FileReader()
       reader.onload = (e) => {
         previewUrl = e.target?.result as string
       }
       reader.readAsDataURL(file)
     } else {
-      formData.link = previewUrl = ''
+      $vform.link = previewUrl = ''
     }
   }
 
@@ -129,7 +130,7 @@
             <div>
               文件
               {#if !isCreate}
-                <span class="mx-1 text-xs text-muted-foreground">{formData.link}</span>
+                <span class="mx-1 text-xs text-muted-foreground">{$vform.link}</span>
               {/if}
             </div>
           </Form.Label>
@@ -181,7 +182,7 @@
       <Form.Field {form} name="summary">
         <Form.Control let:attrs>
           <Form.Label>描述</Form.Label>
-          <Textarea {...attrs} bind:value={formData.summary} rows={2} />
+          <Textarea {...attrs} bind:value={$vform.summary} rows={2} />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>

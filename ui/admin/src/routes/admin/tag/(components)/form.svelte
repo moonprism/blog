@@ -26,19 +26,19 @@
     resetForm: false
   })
 
-  const { form: formValidData, enhance } = form
+  const { form: vform, enhance } = form
 
   export let formData: Tag
   export let formOpen: Writable<boolean>
 
   const isCreate = formData.id === 0
 
-  $: $formValidData = formData
+  $: $vform = formData
 
   function save() {
     const body: TagBody = {
-      name: formData.name,
-      color: formData.color
+      name: $vform.name,
+      color: $vform.color
     }
     if (isCreate) {
       fet.post('tag', body).then((res) => {
@@ -50,6 +50,7 @@
     } else {
       fet.put(`tag/${formData.id}`, body).then((res) => {
         if (res.ok) {
+          formData = <Tag>$vform
           formData.updated = Date.parse(new Date().toString()) / 1000
           $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
@@ -72,7 +73,7 @@
       <Form.Field {form} name="name">
         <Form.Control let:attrs>
           <Form.Label>Name</Form.Label>
-          <Input {...attrs} bind:value={formData.name} autocomplete="off" />
+          <Input {...attrs} bind:value={$vform.name} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
@@ -80,16 +81,16 @@
         <Form.Control let:attrs>
           <Form.Label>Color</Form.Label>
           <div class="flex items-center space-x-2">
-            <Input {...attrs} bind:value={formData.color} autocomplete="off" />
-            <input type="color" bind:value={formData.color} class="border-0" />
+            <Input {...attrs} bind:value={$vform.color} autocomplete="off" />
+            <input type="color" bind:value={$vform.color} class="border-0" />
           </div>
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
       <Label>Preview</Label>
       <div>
-        <Badge class="mb-1" style="background-color:{formData.color};color:white"
-          >{formData.name}</Badge
+        <Badge class="mb-1" style="background-color:{$vform.color};color:white"
+          >{$vform.name}</Badge
         >
       </div>
       {#if $isReuqestIn}

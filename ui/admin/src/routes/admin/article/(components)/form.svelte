@@ -30,22 +30,22 @@
     resetForm: false
   })
 
-  const { form: formValidData, enhance } = form
+  const { form: vform, enhance } = form
 
   export let formData: Article
   export let formOpen: Writable<boolean>
 
   const isCreate = formData.id === 0
 
-  $: $formValidData = formData
+  $: $vform = formData
 
   function save() {
     const body = {
-      title: formData.title,
-      status: formData.status,
-      image: formData.image,
-      summary: formData.summary,
-      tags: formData.tags
+      title: $vform.title,
+      status: $vform.status,
+      image: $vform.image,
+      summary: $vform.summary,
+      tags: $vform.tags
     }
     if (isCreate) {
       fet.post('article', body).then((res) => {
@@ -57,7 +57,7 @@
     } else {
       fet.put(`article/${formData.id}`, body).then((res) => {
         if (res.ok) {
-          // 为了方便造假数据
+          formData = <Article>$vform
           formData.updated = Date.parse(new Date().toString()) / 1000
           $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
@@ -80,7 +80,7 @@
       <Form.Field {form} name="title">
         <Form.Control let:attrs>
           <Form.Label>Title</Form.Label>
-          <Input {...attrs} bind:value={formData.title} autocomplete="off" />
+          <Input {...attrs} bind:value={$vform.title} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
@@ -89,8 +89,12 @@
         <Form.Control let:attrs>
           <Form.Label>Status</Form.Label>
           <Select.Root
+            selected={{
+              label: $statuses.find((e) => e.id === $vform.status)?.label,
+              value: $vform.status
+            }}
             onSelectedChange={(v) => {
-              v && (formData.status = Number(v.value))
+              v && ($vform.status = Number(v.value))
             }}
           >
             <Select.Trigger>
@@ -111,7 +115,7 @@
           <Form.Label>Tags</Form.Label>
           <div>
             {#each $tagTableData as tag}
-              {@const checked = formData.tags.some((e) => e.id === tag.id)}
+              {@const checked = $vform.tags.some((e) => e.id === tag.id)}
               <div class="mr-2 inline-block">
                 <Form.Control let:attrs>
                   <Checkbox
@@ -120,10 +124,10 @@
                     onCheckedChange={(v) => {
                       if (v) {
                         // add
-                        formData.tags = [...formData.tags, tag]
+                        $vform.tags = [...$vform.tags, tag]
                       } else {
                         // remove
-                        formData.tags = formData.tags.filter((e) => e.id !== tag.id)
+                        $vform.tags = $vform.tags.filter((e) => e.id !== tag.id)
                       }
                     }}
                   />
@@ -141,7 +145,7 @@
       <Form.Field {form} name="image">
         <Form.Control let:attrs>
           <Form.Label>Image</Form.Label>
-          <Input {...attrs} bind:value={formData.image} autocomplete="off" />
+          <Input {...attrs} bind:value={$vform.image} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
@@ -149,7 +153,7 @@
       <Form.Field {form} name="summary">
         <Form.Control let:attrs>
           <Form.Label>Summary</Form.Label>
-          <Textarea {...attrs} bind:value={formData.summary} rows={3} />
+          <Textarea {...attrs} bind:value={$vform.summary} rows={3} />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
