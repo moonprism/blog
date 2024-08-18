@@ -131,7 +131,7 @@
                       }
                     }}
                   />
-                  <Form.Label class="text-sm font-normal">
+                  <Form.Label class="text-sm font-normal cursor-pointer">
                     {tag.name}
                   </Form.Label>
                 </Form.Control>

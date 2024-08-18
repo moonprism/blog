@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { TableViewModel } from 'svelte-headless-table'
-  import type { Writable } from 'svelte/store'
+  import { writable, type Writable } from 'svelte/store'
   import { Button } from '@/components/ui/button'
   import { Input } from '@/components/ui/input'
   import { Undo } from 'lucide-svelte'
@@ -13,6 +13,7 @@
   export let tableModel: TableViewModel<any>
   export let viewOption: ViewOption
   export let filters: Filter[]
+  export let showHeadSparkles: Writable<boolean> | null = null
 
   const { pluginStates } = tableModel
 
@@ -33,6 +34,12 @@
     })
   }
 
+  function onInputFoucus(i: boolean) {
+    if (showHeadSparkles !== null) {
+      $showHeadSparkles = i
+    }
+  }
+
   $: showReset = Object.values({ ...$filterValues, $filterText }).some((v) => v.length > 0)
 </script>
 
@@ -43,6 +50,8 @@
       class="h-8 w-[150px] lg:w-[250px]"
       type="search"
       bind:value={$filterText}
+      on:focus={() => onInputFoucus(true)}
+      on:focusout={() => onInputFoucus(false)}
     />
 
     {#each filters as filter}
