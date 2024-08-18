@@ -4,6 +4,7 @@
   import { fet } from '@/helpers/fetch'
   import * as AlertDialog from '@/components/ui/alert-dialog/index.js'
   import Badge from '@/components/ui/badge/badge.svelte'
+  import { alertDialog } from '@/components/blocks/dialog/alert'
 
   export let row: Tag
 
@@ -19,30 +20,18 @@
     })
   }
 
-  let isDel = false
 </script>
-
-<AlertDialog.Root bind:open={isDel}>
-  <AlertDialog.Content>
-    <AlertDialog.Header>
-      <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
-      <AlertDialog.Description>
-        删除标签: <Badge>{row.name}</Badge>
-      </AlertDialog.Description>
-    </AlertDialog.Header>
-    <AlertDialog.Footer>
-      <AlertDialog.Cancel>再想想</AlertDialog.Cancel>
-      <AlertDialog.Action on:click={del}>确认</AlertDialog.Action>
-    </AlertDialog.Footer>
-  </AlertDialog.Content>
-</AlertDialog.Root>
 
 <div class="flex h-8 items-center justify-center gap-1">
   <button on:click={edit} class="rounded-sm border border-black bg-white px-2 text-xs text-black"
     >Edit</button
   >
   <button
-    on:click={() => (isDel = true)}
+    on:click={() => {
+      alertDialog(`删除标签：${row.name}`).then(() => {
+        del()
+      })
+    }}
     class="rounded-sm border border-black bg-black px-2 text-xs text-white">Delete</button
   >
 </div>
