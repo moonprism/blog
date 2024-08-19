@@ -9,7 +9,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
-	"github.com/moonprism/blog/model"
+	"github.com/moonprism/blog/models"
 	"gorm.io/gorm"
 )
 
@@ -34,8 +34,8 @@ type articleApi struct {
 }
 
 func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
-	var article []*model.Article
-	err := api.O.Model(&model.Article{}).Preload("Tags").Order("id desc").Find(&article).Error
+	var article []*models.Article
+	err := api.O.Model(&models.Article{}).Preload("Tags").Order("id desc").Find(&article).Error
 	core.P(err)
 	json.NewEncoder(w).Encode(&article)
 }
@@ -43,9 +43,9 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	core.P(err)
-	article := new(model.Article)
-	err = api.O.Model(&model.Article{}).
-		Preload("ArticleText").
+	article := new(models.Article)
+	err = api.O.Model(&models.Article{}).
+		Preload("ArticleContent").
 		Preload("Tags").
 		First(article, id).
 		Error
@@ -54,24 +54,14 @@ func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *articleApi) create(w http.ResponseWriter, r *http.Request) {
-	art := new(model.Article)
+	art := new(models.Article)
 	err := json.NewDecoder(r.Body).Decode(art)
 	core.P(err)
 	err = api.O.Transaction(func(tx *gorm.DB) error {
 		if err = tx.Create(art).Error; err != nil {
 			return err
 		}
-		// gorm auto!!!
-		// for _, t := range art.Tags {
-		// 	artTags := &model.ArticleTags{
-		// 		ArticleID: art.ID,
-		// 		TagID:     t.ID,
-		// 	}
-		// 	if err = tx.Create(artTags).Error; err != nil {
-		// 		return err
-		// 	}
-		// }
-		at := &model.ArticleText{
+		at := &models.ArticleContent{
 			ArticleID: art.ID,
 		}
 		return tx.Create(at).Error
@@ -87,23 +77,23 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&data)
 	core.P(err)
 	err = api.O.Transaction(func(tx *gorm.DB) error {
-		if v, ok := data["content"]; ok {
-			artText := &model.ArticleText{
+		if v, ok := data["text"]; ok {
+			content := &models.ArticleContent{
 				ArticleID: uint(id),
-				Content:   v.(string),
+				Text:      v.(string),
 			}
-			err = tx.Save(artText).Error
+			err = tx.Save(content).Error
 			if err != nil {
 				return err
 			}
-			data["rune"] = utf8.RuneCountInString(artText.Content)
-			delete(data, "content")
+			data["rune"] = utf8.RuneCountInString(content.Text)
+			delete(data, "text")
 		}
 		if v, ok := data["tags"]; ok {
 			tags := v.([]interface{})
-			tx.Where("article_id = ?", id).Delete(new(model.ArticleTags))
+			tx.Where("article_id = ?", id).Delete(new(models.ArticleTags))
 			for _, t := range tags {
-				artTags := &model.ArticleTags{
+				artTags := &models.ArticleTags{
 					ArticleID: uint(id),
 					TagID:     uint(t.(map[string]interface{})["id"].(float64)),
 				}
@@ -113,7 +103,7 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 			}
 			delete(data, "tags")
 		}
-		return tx.Model(new(model.Article)).Where("id = ?", id).Updates(data).Error
+		return tx.Model(new(models.Article)).Where("id = ?", id).Updates(data).Error
 	})
 	core.P(err)
 	api.JSON(w, id)
@@ -123,10 +113,10 @@ func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	core.P(err)
 	err = api.O.Transaction(func(tx *gorm.DB) error {
-		if err = tx.Delete(new(model.Article), id).Error; err != nil {
+		if err = tx.Delete(new(models.Article), id).Error; err != nil {
 			return err
 		}
-		return tx.Where("article_id = ?", id).Delete(new(model.ArticleTags)).Error
+		return tx.Where("article_id = ?", id).Delete(new(models.ArticleTags)).Error
 	})
 	core.P(err)
 	api.JSON(w, id)

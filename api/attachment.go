@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
-	"github.com/moonprism/blog/model"
+	"github.com/moonprism/blog/models"
 )
 
 func bindAttachmentApi(app *core.App, r chi.Router) {
@@ -29,14 +29,14 @@ type attachmentApi struct {
 }
 
 func (api *attachmentApi) list(w http.ResponseWriter, r *http.Request) {
-	var attachments []*model.Attachment
-	err := api.O.Model(&model.Attachment{}).Order("id desc").Find(&attachments).Error
+	var attachments []*models.Attachment
+	err := api.O.Model(&models.Attachment{}).Order("id desc").Find(&attachments).Error
 	core.P(err)
 	json.NewEncoder(w).Encode(&attachments)
 }
 
 func (api *attachmentApi) create(w http.ResponseWriter, r *http.Request) {
-	attachment := new(model.Attachment)
+	attachment := new(models.Attachment)
 	err := json.NewDecoder(r.Body).Decode(attachment)
 	core.P(err)
 	err = api.O.Create(attachment).Error
@@ -50,7 +50,7 @@ func (api *attachmentApi) update(w http.ResponseWriter, r *http.Request) {
 	var data map[string]interface{}
 	err = json.NewDecoder(r.Body).Decode(&data)
 	core.P(err)
-	attachment := new(model.Attachment)
+	attachment := new(models.Attachment)
 	attachment.ID = uint(id)
 	err = api.O.Model(attachment).Updates(data).Error
 	core.P(err)
@@ -60,7 +60,7 @@ func (api *attachmentApi) update(w http.ResponseWriter, r *http.Request) {
 func (api *attachmentApi) delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 10, 32)
 	core.P(err)
-	attachment := new(model.Attachment)
+	attachment := new(models.Attachment)
 	attachment.ID = uint(id)
 	api.O.Delete(&attachment)
 	core.P(err)

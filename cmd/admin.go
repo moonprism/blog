@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/moonprism/blog/core"
-	"github.com/moonprism/blog/model"
+	"github.com/moonprism/blog/models"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/crypto/ssh/terminal"
@@ -31,9 +31,9 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					json.Unmarshal([]byte(byteResult), &res)
 					// file
 					for _, v := range res {
-						a := model.Attachment{
+						a := models.Attachment{
 							Key: v["key"].(string),
-							BaseModel: model.BaseModel{
+							BaseModel: models.BaseModel{
 								Created: uint(v["created"].(float64)),
 							},
 						}
@@ -54,18 +54,18 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					for i := len(res) - 1; i >= 0; i-- {
 						v := res[i]
 						fmt.Printf("%s\n", v["title"])
-						article := model.Article{
+						article := models.Article{
 							Title:   v["title"].(string),
 							Summary: v["summary"].(string),
 						}
-						article.BaseModel = model.BaseModel{
+						article.BaseModel = models.BaseModel{
 							ID:      uint(v["id"].(float64)),
 							Created: uint(v["created"].(float64)),
 						}
 						article.Image = v["image"].(string)
-						articleContent := model.ArticleText{
+						articleContent := models.ArticleContent{
 							ArticleID: article.ID,
-							Content:   v["content"].(string),
+							Text:      v["content"].(string),
 						}
 						result := app.O.Create(&article)
 						println(article.ID)
@@ -86,11 +86,11 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					byteResult, _ = ioutil.ReadAll(gFileContent)
 					json.Unmarshal([]byte(byteResult), &res)
 					for _, v := range res {
-						a := model.Gist{
+						a := models.Gist{
 							Title:   v["description"].(string),
 							Lang:    v["lang"].(string),
 							Content: v["content"].(string),
-							BaseModel: model.BaseModel{
+							BaseModel: models.BaseModel{
 								Created: uint(v["created"].(float64)),
 								Updated: uint(v["updated"].(float64)),
 							},
@@ -110,12 +110,12 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				Usage: "sync database struct",
 				Action: func(ctx *cli.Context) error {
 					return app.O.AutoMigrate(
-						&model.Article{},
-						&model.ArticleText{},
-						&model.Tag{},
-						&model.ArticleTags{},
-						&model.Attachment{},
-						&model.Gist{},
+						&models.Article{},
+						&models.ArticleContent{},
+						&models.Tag{},
+						&models.ArticleTags{},
+						&models.Attachment{},
+						&models.Gist{},
 					)
 				},
 			},

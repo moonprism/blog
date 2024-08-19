@@ -8,7 +8,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
-	"github.com/moonprism/blog/model"
+	"github.com/moonprism/blog/models"
 )
 
 func bindTagApi(app *core.App, r chi.Router) {
@@ -31,14 +31,14 @@ type tagApi struct {
 }
 
 func (api *tagApi) list(w http.ResponseWriter, r *http.Request) {
-	tags := make([]*model.Tag, 0)
+	tags := make([]*models.Tag, 0)
 	err := api.O.Order("id desc").Find(&tags).Error
 	core.P(err)
 	api.JSON(w, tags)
 }
 
 func (api *tagApi) create(w http.ResponseWriter, r *http.Request) {
-	tag := new(model.Tag)
+	tag := new(models.Tag)
 	err := json.NewDecoder(r.Body).Decode(tag)
 	core.P(err)
 	err = api.O.Create(tag).Error
@@ -52,7 +52,7 @@ func (api *tagApi) update(w http.ResponseWriter, r *http.Request) {
 	var data map[string]interface{}
 	err = json.NewDecoder(r.Body).Decode(&data)
 	core.P(err)
-	tag := new(model.Tag)
+	tag := new(models.Tag)
 	tag.ID = uint(id)
 	err = api.O.Model(tag).Updates(data).Error
 	core.P(err)
@@ -62,7 +62,7 @@ func (api *tagApi) update(w http.ResponseWriter, r *http.Request) {
 func (api *tagApi) delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 10, 32)
 	core.P(err)
-	tag := new(model.Tag)
+	tag := new(models.Tag)
 	tag.ID = uint(id)
 	api.O.Select("Articles").Delete(&tag)
 	core.P(err)

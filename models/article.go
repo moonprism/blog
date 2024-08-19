@@ -1,4 +1,4 @@
-package model
+package models
 
 type Article struct {
 	BaseModel
@@ -9,13 +9,13 @@ type Article struct {
 	Image   string `gorm:"type:varchar(255);notnull" json:"image"`
 	Summary string `gorm:"type:varchar(2000);notnull" json:"summary"`
 
-	ArticleText *ArticleText `json:"text"`
-	Tags        []Tag        `gorm:"many2many:article_tags" json:"tags"`
+	ArticleContent *ArticleContent `json:"content"`
+	Tags           []Tag           `gorm:"many2many:article_tags" json:"tags"`
 }
 
-type ArticleText struct {
+type ArticleContent struct {
 	ArticleID uint   `gorm:"primaryKey" json:"-"`
-	Content   string `gorm:"type:text;notnull;" json:"content"`
+	Text      string `gorm:"type:text;notnull;" json:"text"`
 }
 
 type ArticleTags struct {
