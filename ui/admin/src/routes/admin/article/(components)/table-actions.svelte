@@ -6,6 +6,8 @@
   import { openForm, tableData } from '../(data)/data'
   import { fet } from '@/helpers/fetch'
   import { alertDialog } from '@/components/blocks/dialog/alert'
+  import { goto } from '$app/navigation'
+  import { page } from '$app/stores'
 
   export let row: Article
 
@@ -35,7 +37,11 @@
   </DropdownMenu.Trigger>
   <DropdownMenu.Content class="w-[160px]" align="end">
     <DropdownMenu.Item on:click={edit}>更改信息</DropdownMenu.Item>
-    <DropdownMenu.Item>编辑内容</DropdownMenu.Item>
+    <DropdownMenu.Item
+      on:click={() => {
+        goto(`${$page.url.pathname}/edit/${row.id}`)
+      }}>编辑内容</DropdownMenu.Item
+    >
     <DropdownMenu.Item>预览</DropdownMenu.Item>
     <DropdownMenu.Item
       on:click={() => {

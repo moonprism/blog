@@ -52,7 +52,6 @@ export function getDefaultFormData() {
     rune: 0,
     image: '',
     summary: '',
-    content: '',
     tags: [] as Tag[],
   } as Article
 }

@@ -161,7 +161,7 @@
             <div class="flex w-full items-center justify-between">
               <!--自定义图片-->
               {#if isCustomImage}
-                <Input {...attrs} bind:value={$vform.image} autocomplete="off" />
+                <Input {...attrs} bind:value={$vform.image} autocomplete="off" placeholder="http(s)://" />
               {/if}
               <HoverCard.Root openDelay={500}>
                 <HoverCard.Trigger class="text-sm hover:underline">

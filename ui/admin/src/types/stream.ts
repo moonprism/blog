@@ -42,11 +42,18 @@ export interface ArticleBody {
   rune: number
   image: string
   summary: string
-  content: string
   tags: Tag[]
 }
 
 export interface Article extends DataModel, ArticleBody {}
+
+interface ArticleContent {
+  content: {
+    text: string
+  }
+}
+
+export interface ArticleDetail extends DataModel, ArticleBody, ArticleContent {}
 
 export interface TagBody {
   name: string
