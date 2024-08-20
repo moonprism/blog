@@ -75,4 +75,21 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* 滚动条样式 */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-foreground/50;
+    border-radius: 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 }

@@ -89,7 +89,7 @@
       </Form.Field>
       <Label>Preview</Label>
       <div>
-        <Badge class="mb-1" style="background-color:{$vform.color};color:white"
+        <Badge class="mb-1 text-white" style="background-color:{$vform.color}"
           >{$vform.name}</Badge
         >
       </div>

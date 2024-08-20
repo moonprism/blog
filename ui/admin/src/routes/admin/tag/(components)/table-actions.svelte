@@ -20,15 +20,19 @@
 </script>
 
 <div class="flex h-8 items-center justify-center gap-1">
-  <button on:click={edit} class="rounded-sm border border-black bg-white px-2 text-xs text-black"
-    >Edit</button
-  >
+  <button on:click={edit} class="btn">Edit</button>
   <button
     on:click={() => {
       alertDialog(`删除标签：${row.name}`).then(() => {
         del()
       })
     }}
-    class="rounded-sm border border-black bg-black px-2 text-xs text-white">Delete</button
+    class="btn bg-foreground text-background">Delete</button
   >
 </div>
+
+<style>
+  .btn {
+    @apply min-w-14 rounded-sm border border-foreground text-xs hover:font-bold hover:shadow;
+  }
+</style>

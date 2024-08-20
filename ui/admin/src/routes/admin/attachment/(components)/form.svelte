@@ -134,7 +134,7 @@
             >
               <img src={previewUrl} alt="preview" class="block h-auto max-h-[300px] w-full" />
               <div
-                class="absolute right-0 top-0 hidden bg-white/30 backdrop-blur-sm group-hover:block"
+                class="absolute right-0 top-0 hidden bg-background/30 backdrop-blur-sm group-hover:block"
               >
                 <Maximize class="m-1 h-4 w-4"></Maximize>
               </div>

@@ -23,8 +23,8 @@
   {#if click === null}
     <Keyboard class="h-5"></Keyboard>
   {:else}
-    <div class="mb-1 flex h-3 w-3 items-center justify-center rounded-full border-2 border-black">
-      <div class="relative top-[1px] font-mono text-[.6rem] font-bold">A</div>
+    <div class="mb-1 flex h-3 w-3 items-center justify-center rounded-full bg-foreground shadow">
+      <div class="relative top-[1px] font-mono text-[.6rem] text-background font-bold">A</div>
     </div>
   {/if}
 </div>
