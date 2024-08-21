@@ -7,7 +7,7 @@
   import Solar from './solar.svelte'
 
   import type { LoginRequest } from '$src/types/stream'
-  import { fet, isReuqestIn } from '@/helpers/fetch'
+  import { fet, isRequestIn } from '@/helpers/fetch'
   import { getJwtInfo, setJwt } from '@/helpers/jwt'
   import toast from '$lib/helpers/toast'
   import { goto } from '$app/navigation'
@@ -62,7 +62,7 @@
       </div>
     </Card.Content>
     <Card.Footer>
-      {#if $isReuqestIn}
+      {#if $isRequestIn}
         <Button class="w-full">
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>

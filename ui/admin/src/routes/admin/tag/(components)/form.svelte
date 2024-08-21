@@ -5,7 +5,7 @@
   import { Label } from '@/components/ui/label/index.js'
   import type { Tag, TagBody } from '$src/types/stream'
   import { tableData, closeForm } from '../(data)/data'
-  import { fet, isReuqestIn } from '@/helpers/fetch'
+  import { fet, isRequestIn } from '@/helpers/fetch'
   import Badge from '@/components/ui/badge/badge.svelte'
 
   import * as Form from '@/components/ui/form'
@@ -93,7 +93,7 @@
           >{$vform.name}</Badge
         >
       </div>
-      {#if $isReuqestIn}
+      {#if $isRequestIn}
         <Button class="w-full">
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>

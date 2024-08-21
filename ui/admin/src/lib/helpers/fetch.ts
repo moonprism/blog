@@ -28,12 +28,12 @@ export const fet = {
   delete: (path: string) => request(path, 'DELETE')
 }
 
-export const isReuqestIn = writable(false)
+export const isRequestIn = writable(false)
 let fakeGlobalID = 1001
 
 // custom wrapper for "fetch" funtion
 const request = async (path: string, method: string, data?: any): Promise<Respoi> => {
-  isReuqestIn.set(true)
+  isRequestIn.set(true)
   const headers: HeadersInit = {
     'Content-Type': 'application/json'
   }
@@ -59,7 +59,7 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
   }
 
   if (isMockMode) {
-    isReuqestIn.set(false)
+    isRequestIn.set(false)
     let fakeData: any
     switch (method) {
       case 'DELETE':
@@ -87,7 +87,7 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
     const response = await fetchWithTimeout(`${host}${path}`, options)
     const data = await response.json()
 
-    isReuqestIn.set(false)
+    isRequestIn.set(false)
     if (!response.ok) {
       const badRespo = <BadRespo>data
       toast.error(badRespo.code.toString(), {
@@ -107,7 +107,7 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
     toast.error('system failure', {
       description: result.message
     })
-    isReuqestIn.set(false)
+    isRequestIn.set(false)
     return result
   }
 }

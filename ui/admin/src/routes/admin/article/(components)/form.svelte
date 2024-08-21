@@ -4,7 +4,7 @@
   import { Input } from '@/components/ui/input/index.js'
   import type { Article } from '$src/types/stream'
   import { tableData, closeForm, statuses } from '../(data)/data'
-  import { fet, getRealSrc, isExternalLink, isReuqestIn } from '@/helpers/fetch'
+  import { fet, getRealSrc, isExternalLink, isRequestIn } from '@/helpers/fetch'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'
@@ -128,7 +128,7 @@
           <div class="ml-1">
             {#each $tagTableData as tag}
               {@const checked = $vform.tags.some((e) => e.id === tag.id)}
-              <div class="mr-2 inline-block">
+              <div class="mr-2 inline-block cursor-pointer">
                 <Form.Control let:attrs>
                   <Checkbox
                     {...attrs}
@@ -217,7 +217,7 @@
         <Form.FieldErrors />
       </Form.Field>
 
-      {#if $isReuqestIn}
+      {#if $isRequestIn}
         <Button class="w-full">
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>

@@ -50,6 +50,7 @@
     "formsnap": "^1.0.0",
     "lucide-svelte": "^0.367.0",
     "mode-watcher": "^0.3.0",
+    "moonprism-blog-frontend": "file:../vanilla",
     "svelte-radix": "^1.1.0",
     "svelte-sonner": "^0.3.22",
     "sveltekit-superforms": "^2.12.6",

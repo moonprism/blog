@@ -4,7 +4,7 @@
   import { Input } from '@/components/ui/input/index.js'
   import { tableData, closeForm } from '../(data)/data'
   import * as Popover from '@/components/ui/popover'
-  import { fet, getRealSrc, isMockMode, isReuqestIn } from '@/helpers/fetch'
+  import { fet, getRealSrc, isMockMode, isRequestIn } from '@/helpers/fetch'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'
@@ -178,7 +178,7 @@
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
-      {#if $isReuqestIn}
+      {#if $isRequestIn}
         <Button class="w-full">
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>
