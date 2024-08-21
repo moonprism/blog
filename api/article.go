@@ -81,6 +81,8 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 			content := &models.ArticleContent{
 				ArticleID: uint(id),
 				Text:      v.(string),
+				// text 字段要和编译好的 html 字段一起
+				HTML: data["html"].(string),
 			}
 			err = tx.Save(content).Error
 			if err != nil {
@@ -88,6 +90,7 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 			}
 			data["rune"] = utf8.RuneCountInString(content.Text)
 			delete(data, "text")
+			delete(data, "html")
 		}
 		if v, ok := data["tags"]; ok {
 			tags := v.([]interface{})

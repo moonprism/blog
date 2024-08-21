@@ -1,15 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import type { ArticleDetail } from '$src/types/stream'
-  import { fet } from '@/helpers/fetch'
+  import { fet, isRequestIn } from '@/helpers/fetch'
 
   import { Carta, MarkdownEditor, type Icon, type Plugin } from 'carta-md'
   import './(styles)/editor_custom.css'
 
-  // 用来自定义解析的组件(img.src)
-  import { component } from '@cartamd/plugin-component'
-  import { svelte, initializeComponents } from '@cartamd/plugin-component/svelte'
-  import PreviewImage from './(components)/preview-image.svelte'
   // 斜杠命令
   import { slash } from '@cartamd/plugin-slash'
   import '@cartamd/plugin-slash/default.css'
@@ -19,37 +15,72 @@
   // 冒号命令
   import { emoji } from '@cartamd/plugin-emoji'
   import '@cartamd/plugin-emoji/default.css'
-  // 引用样式
+  // 引用markdown-body样式
   import 'moonprism-blog-frontend/src/css/markdown.css'
-  import { Heading } from 'svelte-radix'
-  import { BookUp, Import, Save } from 'lucide-svelte'
+
+  // @ts-ignore
+  import imgLinks from '@pondorasti/remark-img-links'
+
+  import SaveIcon from './(components)/save-icon.svelte'
+  import toast from '$lib/helpers/toast'
+  import { onMount } from 'svelte'
 
   const id = Number($page.params.slug)
   let article = {} as ArticleDetail
 
-  // 编辑器和预览的滚动条同步会有bug
-  // 准备直接在remark修复这个问题 https://github.com/Pondorasti/remark-img-links
-  const mapped = [svelte('img', PreviewImage)]
-
   const icon: Icon = {
     id: 'save',
-    action: (input) => {
-      console.log(
-        carta.render(value).then((v) => {
-          console.log(v)
-        })
-      )
+    action: async () => {
+      if ($isRequestIn) {
+        return
+      }
+      const html = await carta.render(value)
+      const res = await fet.put(`article/${id}`, { text: value, html })
+      if (res.ok) {
+        toast.success('保存成功，使用 <ESC> 退出编辑')
+        originValue = value
+        esc()
+      }
     },
-    component: BookUp
+    component: SaveIcon
   }
+
+  // issue: 这个编辑器 Esc 不退出编辑模式
+  function esc() {
+    // @ts-ignore
+    document.activeElement?.blur()
+  }
+
+  function handleGlobalKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      if (document.activeElement?.tagName === 'TEXTAREA') {
+        esc()
+      } else if (value === originValue) {
+        window.history.back()
+      } else {
+        toast.success('请使用浏览器按钮强制返回')
+      }
+    }
+  }
+
+  onMount(() => {
+    window.addEventListener('keydown', handleGlobalKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleGlobalKeyDown)
+    }
+  })
 
   const ext: Plugin = {
     icons: [icon],
     transformers: [
       {
-        execution: 'sync',
-        type: 'rehype',
+        execution: 'async',
+        type: 'remark',
         transform({ processor }) {
+          processor.use(imgLinks, {
+            absolutePath: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
+          })
         }
       }
     ]
@@ -57,21 +88,16 @@
 
   const carta = new Carta({
     sanitizer: false,
-    extensions: [
-      //component(mapped, initializeComponents),
-      slash(),
-      code({ theme: 'carta-dark' }),
-      emoji()
-    ]
+    extensions: [slash(), code({ theme: 'carta-dark' }), emoji(), ext]
   })
 
   let value = '',
-    html = ''
+    originValue = ''
 
   fet.get(`article/${id}`).then((respoi) => {
     if (respoi.ok) {
       article = <ArticleDetail>respoi.data
-      value = article.content.text
+      originValue = value = article.content.text
     }
   })
 </script>

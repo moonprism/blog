@@ -16,6 +16,7 @@ type Article struct {
 type ArticleContent struct {
 	ArticleID uint   `gorm:"primaryKey" json:"-"`
 	Text      string `gorm:"type:text;notnull;" json:"text"`
+	HTML      string `gorm:"type:mediumtext;notnull;" json:"html"`
 }
 
 type ArticleTags struct {
