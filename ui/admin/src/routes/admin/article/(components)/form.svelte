@@ -40,7 +40,7 @@
 
   const isCreate = formData.id === 0
 
-  $: $vform = formData
+  $vform = formData
 
   function save() {
     const body = {

@@ -33,7 +33,7 @@
 
   const isCreate = formData.id === 0
 
-  $: $vform = formData
+  $vform = formData
 
   function save() {
     const body: TagBody = {
@@ -67,7 +67,7 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>{isCreate ? 'New' : 'Edit'} Tag</Dialog.Title>
+      <Dialog.Title>{isCreate ? '创建' : '编辑'}标签</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="name">
@@ -87,18 +87,16 @@
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
-      <Label>Preview</Label>
       <div>
-        <Badge class="mb-1 text-white" style="background-color:{$vform.color}"
-          >{$vform.name}</Badge
-        >
+        <Label>预览：</Label>
+        <Badge class="mb-1 text-white" style="background-color:{$vform.color}">{$vform.name}</Badge>
       </div>
       {#if $isRequestIn}
         <Button class="w-full">
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>
       {:else}
-        <Form.Button class="w-full">Save</Form.Button>
+        <Form.Button class="w-full">保存</Form.Button>
       {/if}
     </form>
   </Dialog.Content>

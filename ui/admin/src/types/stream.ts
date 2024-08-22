@@ -11,16 +11,17 @@ export interface LoginRequest {
 
 /**
  * if response.ok == true
- *   badRespo
+ *   badRespoi
  * else
  *   { data }
  */
-export interface BadRespo {
+export interface BadRespoi {
   code: number
   message: string
 }
 
-export interface Respoi extends BadRespo {
+export interface Respoi extends BadRespoi {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any
   ok: boolean
 }
@@ -30,7 +31,7 @@ export interface JwtInfo {
 }
 
 // 泛用数据模型
-interface DataModel {
+export interface DataModel {
   id: number
   created: number
   updated: number

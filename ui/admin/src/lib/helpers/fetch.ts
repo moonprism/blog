@@ -1,4 +1,4 @@
-import type { BadRespo, Respoi } from '$src/types/stream'
+import type { BadRespoi, DataModel, Respoi } from '$src/types/stream'
 import toast from '$lib/helpers/toast'
 
 import { PUBLIC_API_ADDR, PUBLIC_ATTACHMENT_CDN, PUBLIC_MOCK_MODE } from '$env/static/public'
@@ -7,11 +7,10 @@ import { writable } from 'svelte/store'
 
 const host = PUBLIC_API_ADDR
 
-export const isMockMode = PUBLIC_MOCK_MODE === "true"
+export const isMockMode = PUBLIC_MOCK_MODE === 'true'
 
 export const isExternalLink = (link: string) => {
-  return link.startsWith('data') ||
-    link.startsWith('http')
+  return link.startsWith('data') || link.startsWith('http')
 }
 
 export const getRealSrc = (key: string) => {
@@ -23,16 +22,16 @@ export const getRealSrc = (key: string) => {
 
 export const fet = {
   get: (path: string) => request(path, 'GET'),
-  put: (path: string, data: any) => request(path, 'PUT', data),
-  post: (path: string, data: any) => request(path, 'POST', data),
+  put: (path: string, data: unknown) => request(path, 'PUT', data),
+  post: (path: string, data: unknown) => request(path, 'POST', data),
   delete: (path: string) => request(path, 'DELETE')
 }
 
 export const isRequestIn = writable(false)
 let fakeGlobalID = 1001
 
-// custom wrapper for "fetch" funtion
-const request = async (path: string, method: string, data?: any): Promise<Respoi> => {
+// custom wrapper for "fetch" function
+const request = async (path: string, method: string, data?: unknown): Promise<Respoi> => {
   isRequestIn.set(true)
   const headers: HeadersInit = {
     'Content-Type': 'application/json'
@@ -60,21 +59,21 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
 
   if (isMockMode) {
     isRequestIn.set(false)
-    let fakeData: any
+    let fakeData: DataModel | DataModel[] = <DataModel>data
     switch (method) {
       case 'DELETE':
-        break;
+        break
       case 'GET':
         fakeData = []
         break
       case 'POST':
-        data.created = Date.parse(new Date().toString()) / 1000
-        data.id = fakeGlobalID++
+        fakeData.created = Date.parse(new Date().toString()) / 1000
+        fakeData.id = fakeGlobalID++
+      // eslint-disable-next-line no-fallthrough
       default:
-        data.updated = Date.parse(new Date().toString()) / 1000
-        fakeData = data
+        fakeData.updated = Date.parse(new Date().toString()) / 1000
     }
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         result.ok = true
         result.data = fakeData
@@ -89,13 +88,13 @@ const request = async (path: string, method: string, data?: any): Promise<Respoi
 
     isRequestIn.set(false)
     if (!response.ok) {
-      const badRespo = <BadRespo>data
-      toast.error(badRespo.code.toString(), {
-        description: `${badRespo.message}`
+      const badRespoi = <BadRespoi>data
+      toast.error(badRespoi.code.toString(), {
+        description: `${badRespoi.message}`
       })
       result.ok = false
-      result.code = badRespo.code
-      result.message = badRespo.message
+      result.code = badRespoi.code
+      result.message = badRespoi.message
       return result
     }
 
