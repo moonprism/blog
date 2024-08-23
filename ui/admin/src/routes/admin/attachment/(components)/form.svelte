@@ -91,7 +91,7 @@
 </script>
 
 <Dialog.Root bind:open={isPreview}>
-  <Dialog.Content class="max-w-screen z-[51] h-full cursor-pointer">
+  <Dialog.Content class="max-w-screen z-[52] h-full cursor-pointer">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
@@ -107,7 +107,7 @@
 </Dialog.Root>
 
 <Dialog.Root bind:open={$formOpen}>
-  <Dialog.Content class="sm:max-w-[460px]">
+  <Dialog.Content class="sm:max-w-[460px] z-[51]">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />

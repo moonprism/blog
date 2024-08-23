@@ -27,27 +27,20 @@
   import AttachmentIcon from './(components)/attachment-icon.svelte'
   import FormImageFlow from '../../(components)/form-image-flow.svelte'
   import { writable } from 'svelte/store'
+  import { CircleArrowLeft, CircleChevronLeft, CircleX, SquareArrowLeft } from 'lucide-svelte'
+  import { alertDialog } from '@/components/blocks/dialog/alert'
 
   const id = Number($page.params.slug)
   let article = {} as ArticleDetail
 
   const saveIcon: Icon = {
     id: 'save',
-    action: async () => {
-      if ($isRequestIn) {
-        return
-      }
-      const html = await carta.render(value)
-      const res = await fet.put(`article/${id}`, { text: value, html })
-      if (res.ok) {
-        toast.success('保存成功，使用 <ESC> 退出编辑')
-        originValue = value
-        esc()
-      }
+    action: () => {
+      save()
     },
     component: SaveIcon
   }
-  
+
   let isOpenImageFlow = writable(false)
   let currentInput: InputEnhancer
 
@@ -66,23 +59,33 @@
     document.activeElement?.blur()
   }
 
-  function handleGlobalKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Escape') {
-      if (document.activeElement?.tagName === 'TEXTAREA') {
-        esc()
-      } else if (value === originValue) {
-        window.history.back()
-      } else {
-        toast.success('请使用浏览器按钮强制返回')
-      }
+  async function save() {
+    if ($isRequestIn) {
+      return
+    }
+    const html = await carta.render(value)
+    const res = await fet.put(`article/${id}`, { text: value, html })
+    if (res.ok) {
+      toast.success('保存成功')
+      originValue = value
+      //esc()
     }
   }
 
+  function handlePopstate(event: PopStateEvent): void {
+    if (originValue === value) {
+      return
+    }
+    alertDialog('', '自动保存修改').then(() => {
+      save()
+    })
+  }
+
   onMount(() => {
-    window.addEventListener('keydown', handleGlobalKeyDown)
+    window.addEventListener('popstate', handlePopstate)
 
     return () => {
-      window.removeEventListener('keydown', handleGlobalKeyDown)
+      window.removeEventListener('popstate', handlePopstate)
     }
   })
 
@@ -116,6 +119,15 @@
     }
   })
 </script>
+
+<button
+  class="absolute left-1 top-1 z-10 text-foreground/80 hover:text-foreground"
+  on:click={() => {
+    window.history.back()
+  }}
+>
+  <CircleChevronLeft></CircleChevronLeft>
+</button>
 
 <MarkdownEditor {carta} bind:value theme="custom" />
 

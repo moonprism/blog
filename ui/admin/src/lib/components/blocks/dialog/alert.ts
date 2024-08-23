@@ -1,4 +1,4 @@
-import { writable } from "svelte/store"
+import { writable, type Unsubscriber } from "svelte/store"
 import type { SvelteComponent } from "svelte"
 import Alert from "./alert.svelte"
 
@@ -7,7 +7,7 @@ const open = writable(false)
 const title = writable('')
 const description = writable('')
 const confirm = writable(false)
-let unsubscribe: Function
+let unsubscribe: Unsubscriber
 export const alertDialog = (desc = '', titl = '') => {
   description.set(desc)
   title.set(titl)
