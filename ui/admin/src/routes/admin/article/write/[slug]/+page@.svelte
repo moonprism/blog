@@ -3,7 +3,7 @@
   import type { ArticleDetail } from '$src/types/stream'
   import { fet, isRequestIn } from '@/helpers/fetch'
 
-  import { Carta, MarkdownEditor, type Icon, type Plugin } from 'carta-md'
+  import { Carta, MarkdownEditor, type Icon, type InputEnhancer, type Plugin } from 'carta-md'
   import './(styles)/editor_custom.css'
 
   // 斜杠命令
@@ -24,11 +24,14 @@
   import SaveIcon from './(components)/save-icon.svelte'
   import toast from '$lib/helpers/toast'
   import { onMount } from 'svelte'
+  import AttachmentIcon from './(components)/attachment-icon.svelte'
+  import FormImageFlow from '../../(components)/form-image-flow.svelte'
+  import { writable } from 'svelte/store'
 
   const id = Number($page.params.slug)
   let article = {} as ArticleDetail
 
-  const icon: Icon = {
+  const saveIcon: Icon = {
     id: 'save',
     action: async () => {
       if ($isRequestIn) {
@@ -43,6 +46,18 @@
       }
     },
     component: SaveIcon
+  }
+  
+  let isOpenImageFlow = writable(false)
+  let currentInput: InputEnhancer
+
+  const attachmentIcon: Icon = {
+    id: 'attachment',
+    action: (input) => {
+      currentInput = input
+      $isOpenImageFlow = true
+    },
+    component: AttachmentIcon
   }
 
   // issue: 这个编辑器 Esc 不退出编辑模式
@@ -72,7 +87,7 @@
   })
 
   const ext: Plugin = {
-    icons: [icon],
+    icons: [attachmentIcon, saveIcon],
     transformers: [
       {
         execution: 'async',
@@ -103,3 +118,11 @@
 </script>
 
 <MarkdownEditor {carta} bind:value theme="custom" />
+
+<FormImageFlow
+  open={isOpenImageFlow}
+  callback={(v) => {
+    currentInput.insertAt(currentInput.getSelection().start, `![](${v.key})`)
+    currentInput.update()
+  }}
+></FormImageFlow>

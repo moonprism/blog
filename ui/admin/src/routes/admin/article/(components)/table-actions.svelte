@@ -39,7 +39,7 @@
     <DropdownMenu.Item on:click={edit}>更改信息</DropdownMenu.Item>
     <DropdownMenu.Item
       on:click={() => {
-        goto(`${$page.url.pathname}/edit/${row.id}`)
+        goto(`${$page.url.pathname}/write/${row.id}`)
       }}>编辑内容</DropdownMenu.Item
     >
     <DropdownMenu.Item>预览</DropdownMenu.Item>

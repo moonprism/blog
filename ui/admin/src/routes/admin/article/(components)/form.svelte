@@ -70,11 +70,11 @@
   }
 
   let isOpenImageFlow = writable(false)
-  let isCustomImage = true
+  let isOwnImage = true
 
   onMount(() => {
     if (!isCreate && $vform.image !== '' && !isExternalLink($vform.image)) {
-      isCustomImage = false
+      isOwnImage = false
     }
   })
 </script>
@@ -160,12 +160,12 @@
           <div class="ml-1 flex items-center justify-between">
             <div class="flex w-full items-center justify-between">
               <!--自定义图片-->
-              {#if isCustomImage}
+              {#if isOwnImage}
                 <Input {...attrs} bind:value={$vform.image} autocomplete="off" placeholder="http(s)://" />
               {/if}
               <HoverCard.Root openDelay={500}>
                 <HoverCard.Trigger class="text-sm hover:underline">
-                  {isCustomImage ? '' : $vform.image}
+                  {isOwnImage ? '' : $vform.image}
                 </HoverCard.Trigger>
                 <HoverCard.Content class="w-auto">
                   {#if $vform.image !== ''}
@@ -179,15 +179,15 @@
               <FormImageFlow
                 open={isOpenImageFlow}
                 callback={(v) => {
-                  isCustomImage = false
+                  isOwnImage = false
                   $vform.image = v.key
                 }}
               ></FormImageFlow>
               <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-              {#if $vform.image !== '' && !isCustomImage}
+              {#if $vform.image !== '' && !isOwnImage}
                 <div
                   on:click={() => {
-                    isCustomImage = true
+                    isOwnImage = true
                     $vform.image = ''
                   }}
                   class="group cursor-pointer p-2"
