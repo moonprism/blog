@@ -151,7 +151,7 @@
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.2) 0 1px 1px;
 }
-.markdown-body blockquote {
+.markdown-body blockquote, .markdown-body .admonition {
   margin: 15px auto;
   padding: 8px 2px 8px 10px;
   border-left: 3px solid rgba(var(--md-bq-color));
@@ -159,25 +159,29 @@
   word-wrap: break-word;
   line-height: 1.8rem;
 }
-.markdown-body blockquote > p:not(:last-child) {
+/** 隐藏自定义 blockquote 标题 */
+.admonition .admonition-title {
+  display: none;
+}
+.markdown-body blockquote > p:not(:last-child), .admonition > p:not(:last-child) {
   margin-bottom: 8px;
 }
-.markdown-body blockquote > pre:not(:last-child) {
+.markdown-body blockquote > pre:not(:last-child), .admonition > pre:not(:last-child) {
   margin-bottom: 5px;
 }
-.markdown-body .success {
+.markdown-body .success, .markdown-body .ad-tip {
   border-left-color: rgba(var(--md-bq-success-color));
   background-color: rgba(var(--md-bq-success-color), var(--md-bq-opacity));
 }
-.markdown-body .warning {
+.markdown-body .warning, .markdown-body .ad-warning {
   border-left-color: rgba(var(--md-bq-warning-color));
   background-color: rgba(var(--md-bq-warning-color), var(--md-bq-opacity));
 }
-.markdown-body .danger {
+.markdown-body .danger, .markdown-body .ad-caution {
   border-left-color: rgba(var(--md-bq-danger-color));
   background-color: rgba(var(--md-bq-danger-color), var(--md-bq-opacity));
 }
-.markdown-body .info {
+.markdown-body .info, .markdown-body .ad-important {
   border-left-color: rgba(var(--md-bq-info-color));
   background-color: rgba(var(--md-bq-info-color), var(--md-bq-opacity));
 }

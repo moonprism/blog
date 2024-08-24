@@ -19,7 +19,7 @@
   import 'moonprism-blog-frontend/src/css/markdown.css'
 
   // @ts-ignore
-  import imgLinks from '@pondorasti/remark-img-links'
+  import remarkImgLinks from '@pondorasti/remark-img-links'
 
   import SaveIcon from './(components)/save-icon.svelte'
   import toast from '$lib/helpers/toast'
@@ -27,8 +27,10 @@
   import AttachmentIcon from './(components)/attachment-icon.svelte'
   import FormImageFlow from '../../(components)/form-image-flow.svelte'
   import { writable } from 'svelte/store'
-  import { CircleArrowLeft, CircleChevronLeft, CircleX, SquareArrowLeft } from 'lucide-svelte'
+  import { SquareX } from 'lucide-svelte'
   import { alertDialog } from '@/components/blocks/dialog/alert'
+
+  import remarkAdmonitions from 'remark-github-beta-blockquote-admonitions'
 
   const id = Number($page.params.slug)
   let article = {} as ArticleDetail
@@ -76,7 +78,7 @@
     if (originValue === value) {
       return
     }
-    alertDialog('', '自动保存修改').then(() => {
+    alertDialog('> 请尽量使用右侧保存按钮哦', '保存修改').then(() => {
       save()
     })
   }
@@ -89,6 +91,15 @@
     }
   })
 
+  // https://github.com/myl7/remark-github-beta-blockquote-admonitions
+  const remarkAdConfig = {
+    classNameMaps: {
+      block: (title: string) => `admonition ad-${title.toLowerCase()}`,
+      title: 'admonition-title'
+    },
+    titleFilter: ['[!NOTE]', '[!IMPORTANT]', '[!WARNING]', '[!TIP]', '[!CAUTION]']
+  }
+
   const ext: Plugin = {
     icons: [attachmentIcon, saveIcon],
     transformers: [
@@ -96,9 +107,12 @@
         execution: 'async',
         type: 'remark',
         transform({ processor }) {
-          processor.use(imgLinks, {
-            absolutePath: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
-          })
+          // remark plugins
+          processor
+            .use(remarkImgLinks, {
+              absolutePath: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
+            })
+            .use(remarkAdmonitions, remarkAdConfig)
         }
       }
     ]
@@ -121,12 +135,12 @@
 </script>
 
 <button
-  class="absolute left-1 top-1 z-10 text-foreground/80 hover:text-foreground"
+  class="group absolute z-10 flex h-8 w-8 items-center justify-center text-foreground/80 hover:text-foreground"
   on:click={() => {
     window.history.back()
   }}
 >
-  <CircleChevronLeft></CircleChevronLeft>
+  <SquareX class="h-5 w-5 group-hover:h-6 group-hover:w-6"></SquareX>
 </button>
 
 <MarkdownEditor {carta} bind:value theme="custom" />
