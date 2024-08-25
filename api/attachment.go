@@ -28,11 +28,17 @@ type attachmentApi struct {
 	*core.App
 }
 
+type attachmentList struct {
+	Data []*models.Attachment `json:"data"`
+}
+
 func (api *attachmentApi) list(w http.ResponseWriter, r *http.Request) {
 	var attachments []*models.Attachment
 	err := api.O.Model(&models.Attachment{}).Order("id desc").Find(&attachments).Error
 	core.P(err)
-	json.NewEncoder(w).Encode(&attachments)
+	json.NewEncoder(w).Encode(attachmentList{
+		Data: attachments,
+	})
 }
 
 func (api *attachmentApi) create(w http.ResponseWriter, r *http.Request) {

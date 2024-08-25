@@ -18,15 +18,13 @@ export const serverSide = true
 
 export const searchParams = writable({} as SearchParams)
 
-export function initTableData(params: SearchParams | null = null) {
-  let q = ''
-  if (params !== null) {
-    q = encodeURIComponent(JSON.stringify(params))
-  }
+export const searchUrlQuery = writable('')
+export function initTableData(q = '') {
   fet.get(`article?q=${q}`).then((respoi) => {
     if (respoi.ok) {
-      tableData.set(<Article[]>respoi.data.articles)
+      tableData.set(<Article[]>respoi.data.data)
       serverItemCount.set(respoi.data.paginator.count)
+      searchUrlQuery.set(q)
     }
   })
 }

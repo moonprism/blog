@@ -30,11 +30,17 @@ type tagApi struct {
 	*core.App
 }
 
+type tagList struct {
+	Data []*models.Tag `json:"data"`
+}
+
 func (api *tagApi) list(w http.ResponseWriter, r *http.Request) {
 	tags := make([]*models.Tag, 0)
 	err := api.O.Order("id desc").Find(&tags).Error
 	core.P(err)
-	api.JSON(w, tags)
+	api.JSON(w, tagList{
+		Data: tags,
+	})
 }
 
 func (api *tagApi) create(w http.ResponseWriter, r *http.Request) {

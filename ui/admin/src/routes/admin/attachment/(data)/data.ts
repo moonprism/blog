@@ -10,7 +10,7 @@ export const tableData = writable([] as Attachment[])
 export function initTableData() {
   fet.get('attachment').then((respoi) => {
     if (respoi.ok) {
-      tableData.set(<Attachment[]>respoi.data)
+      tableData.set(<Attachment[]>respoi.data.data)
     }
   })
 }

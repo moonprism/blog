@@ -19,7 +19,8 @@
     selectedViewOption,
     tags,
     serverItemCount,
-    searchParams
+    searchParams,
+    searchUrlQuery
   } from '../(data)/data'
   import TableActions from './table-actions.svelte'
   import TableRowTitle from './table-row-title.svelte'
@@ -32,20 +33,24 @@
   import type { ViewOption } from '$src/types/table'
   import TableRowTagColors from './table-row-tag-colors.svelte'
   import TableRowImage from './table-row-image.svelte'
-  import { getRealSrc } from '@/helpers/fetch'
+  import { getRealSrc, isMockMode } from '@/helpers/fetch'
   import { onMount } from 'svelte'
 
   if ($tagTableData.length === 0) {
     initTagTableData()
   }
 
-  const serverSide = true
-
-  const table = createTable(tableData, {
-    page: addPagination({
+  const serverSide = !isMockMode
+  let paginationConfig = {}
+  if (serverSide) {
+    paginationConfig = {
       serverSide,
       serverItemCount
-    }),
+    }
+  }
+
+  const table = createTable(tableData, {
+    page: addPagination(paginationConfig),
     filter: addTableFilter({
       serverSide,
       fn: ({ filterValue, value }) => {
@@ -209,7 +214,10 @@
         filter_values: <{ [index: string]: number[] }>$filterValues,
         sort_key: $sortKeys[0]
       }
-      initTableData($searchParams)
+      const q = encodeURIComponent(JSON.stringify($searchParams))
+      if ($searchUrlQuery !== q) {
+        initTableData(q)
+      }
     } else {
       // 编辑文章涉及到路由的改变，只好缓存这些查询参数了
       // not undefined

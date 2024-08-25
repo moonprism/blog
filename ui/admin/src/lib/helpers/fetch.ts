@@ -4,10 +4,12 @@ import toast from '$lib/helpers/toast'
 import { PUBLIC_API_ADDR, PUBLIC_ATTACHMENT_CDN, PUBLIC_MOCK_MODE } from '$env/static/public'
 import { getJwt } from './jwt'
 import { writable } from 'svelte/store'
+import { apiData } from '$src/mock'
 
 const host = PUBLIC_API_ADDR
 
 export const isMockMode = PUBLIC_MOCK_MODE === 'true'
+export const fileCDN = PUBLIC_ATTACHMENT_CDN
 
 export const isExternalLink = (link: string) => {
   return link.startsWith('data') || link.startsWith('http')
@@ -17,7 +19,7 @@ export const getRealSrc = (key: string) => {
   if (key === '' || isExternalLink(key)) {
     return key
   }
-  return `${PUBLIC_ATTACHMENT_CDN}${key}`
+  return `${fileCDN}${key}`
 }
 
 export const fet = {
@@ -58,13 +60,23 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
   }
 
   if (isMockMode) {
-    isRequestIn.set(false)
     let fakeData: DataModel | DataModel[] = <DataModel>data
+    let ro = ''
     switch (method) {
       case 'DELETE':
         break
       case 'GET':
-        fakeData = []
+        ro = path.split('?')[0]
+        // article/{id}
+        if (ro.includes('/')) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          fakeData = apiData[ro.split('/')[0]].detail
+        } else {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
+          fakeData = apiData[ro].list
+        }
         break
       case 'POST':
         fakeData.created = Date.parse(new Date().toString()) / 1000
@@ -77,6 +89,8 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
       setTimeout(() => {
         result.ok = true
         result.data = fakeData
+        // console.log(result)
+        isRequestIn.set(false)
         resolve(result)
       }, 1000)
     })

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import type { ArticleDetail } from '$src/types/stream'
-  import { fet, isRequestIn } from '@/helpers/fetch'
+  import { fet, fileCDN, isRequestIn } from '@/helpers/fetch'
 
   import { Carta, MarkdownEditor, type Icon, type InputEnhancer, type Plugin } from 'carta-md'
   import './(styles)/editor_custom.css'
@@ -110,7 +110,7 @@
           // remark plugins
           processor
             .use(remarkImgLinks, {
-              absolutePath: 'https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/'
+              absolutePath: fileCDN
             })
             .use(remarkAdmonitions, remarkAdConfig)
         }

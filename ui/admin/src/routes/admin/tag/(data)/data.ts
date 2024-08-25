@@ -9,7 +9,7 @@ export const tableData = writable([] as Tag[])
 export function initTableData() {
   fet.get('tag').then((respoi) => {
     if (respoi.ok) {
-      tableData.set(<Tag[]>respoi.data)
+      tableData.set(<Tag[]>respoi.data.data)
     }
   })
 }

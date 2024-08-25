@@ -35,7 +35,7 @@ type articleApi struct {
 }
 
 type articleList struct {
-	Articles  []*models.Article `json:"articles"`
+	Data      []*models.Article `json:"data"`
 	Paginator models.Pagination `json:"paginator"`
 }
 
@@ -55,7 +55,7 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 		// filter
 		if params.FilterText != "" {
 			model = model.Where(
-				"id = ? OR image = ? OR title LIKE ? OR summary LIKE ?",
+				"articles.id = ? OR image = ? OR title LIKE ? OR summary LIKE ?",
 				append(
 					core.CreateSlice[interface{}](2, params.FilterText),
 					core.CreateSlice[interface{}](2, fmt.Sprintf("%%%s%%", params.FilterText))...,
@@ -102,7 +102,7 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 	err := model.Find(&articles).Error
 	core.P(err)
 	json.NewEncoder(w).Encode(articleList{
-		Articles: articles,
+		Data: articles,
 		Paginator: models.Pagination{
 			Count: int(count),
 		},
