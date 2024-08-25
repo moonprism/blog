@@ -67,7 +67,7 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 			if k == "tags" {
-				model = model.Joins("JOIN article_tags AS ats ON articles.id = ats.article_id").
+				model = model.Joins("LEFT JOIN article_tags AS ats ON articles.id = ats.article_id").
 					Where("ats.tag_id IN ?", v).
 					Group("articles.id").
 					Having("COUNT(ats.id) = ?", len(v))
@@ -85,9 +85,7 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 				order = "DESC"
 			}
 			if params.SortKey.ID == "tags" {
-				model = model.Select("articles.*, COUNT(ats.id) as tag_count").
-					Joins("LEFT JOIN article_tags AS ats ON articles.id = ats.article_id").
-					Group("articles.id").
+				model = model.Select("articles.*, (SELECT COUNT(*) FROM article_tags WHERE article_tags.article_id = articles.id GROUP BY articles.id) AS tag_count").
 					Order(fmt.Sprintf("tag_count %s", order))
 			} else {
 				// TODO 使用反射校验该字段和 Article 结构的json 注释是否匹配 || 找个校验库

@@ -21,7 +21,7 @@
       <p class="text-sm font-medium">Rows per page</p>
       <Select.Root
         onSelectedChange={(selected) => pageSize.set(Number(selected?.value))}
-        selected={{ value: 10, label: '10' }}
+        selected={{ value: $pageSize, label: String($pageSize) }}
       >
         <Select.Trigger class="h-8 w-16">
           <Select.Value />
