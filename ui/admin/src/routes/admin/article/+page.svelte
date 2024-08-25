@@ -2,12 +2,9 @@
   import DataActionButton from '@/components/blocks/buttons/data-action-button.svelte'
   import Table from './(components)/table.svelte'
   import { openForm } from './(data)/data'
-  function add() {
-    openForm()
-  }
 </script>
 
 <div class="container mx-auto">
-  <DataActionButton text="New Article" onClick={add} />
+  <DataActionButton text="New Article" onClick={() => openForm()} />
   <Table />
 </div>

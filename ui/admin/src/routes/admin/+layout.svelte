@@ -116,6 +116,6 @@
         </Sheet.Content>
       </Sheet.Root>
     </header>
-    <main class=""><slot /></main>
+    <main class="mb-3"><slot /></main>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import type { Article, Tag } from '$src/types/stream'
-import type { Option } from '$src/types/table'
+import type { Option, SearchParams } from '$src/types/table'
 import { fet } from '@/helpers/fetch'
 import { Radio, VenetianMask } from 'lucide-svelte'
 import { derived, readable, writable } from 'svelte/store'
@@ -12,10 +12,21 @@ import { tableData as tagTableData } from '../../tag/(data)/data'
 
 export const tableData = writable([] as Article[])
 
-export function initTableData() {
-  fet.get('article').then((respoi) => {
+export const serverItemCount = writable(0)
+
+export const serverSide = true
+
+export const searchParams = writable({} as SearchParams)
+
+export function initTableData(params: SearchParams | null = null) {
+  let q = ''
+  if (params !== null) {
+    q = encodeURIComponent(JSON.stringify(params))
+  }
+  fet.get(`article?q=${q}`).then((respoi) => {
     if (respoi.ok) {
-      tableData.set(<Article[]>respoi.data)
+      tableData.set(<Article[]>respoi.data.articles)
+      serverItemCount.set(respoi.data.paginator.count)
     }
   })
 }
@@ -52,7 +63,7 @@ export function getDefaultFormData() {
     rune: 0,
     image: '',
     summary: '',
-    tags: [] as Tag[],
+    tags: [] as Tag[]
   } as Article
 }
 
@@ -72,7 +83,7 @@ export function openForm(t?: Article) {
     target: document.body,
     props: {
       formData: t,
-      formOpen: formOpen,
+      formOpen: formOpen
     }
   })
   formOpen.set(true)

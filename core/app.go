@@ -9,6 +9,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type App struct {
@@ -49,7 +50,9 @@ func (app *App) ReSetting() error {
 
 func (app *App) initDatabase() error {
 	// TODO sqlite
-	db, err := gorm.Open(mysql.Open(app.Setting.Database.Source), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(app.Setting.Database.Source), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		return err
 	}

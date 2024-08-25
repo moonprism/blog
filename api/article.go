@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"unicode/utf8"
@@ -33,11 +34,81 @@ type articleApi struct {
 	*core.App
 }
 
+type articleList struct {
+	Articles  []*models.Article `json:"articles"`
+	Paginator models.Pagination `json:"paginator"`
+}
+
 func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
-	var article []*models.Article
-	err := api.O.Model(&models.Article{}).Preload("Tags").Order("id desc").Find(&article).Error
+	model := api.O.Model(&models.Article{}).Preload("Tags")
+	q := r.URL.Query().Get("q")
+	var count int64
+	println(q)
+	page := 1
+	pageSize := 10
+	if q != "" {
+		var params models.SearchURLParams
+		err := json.Unmarshal([]byte(q), &params)
+		core.P(err)
+		page = params.Page + 1
+		pageSize = params.PageSize
+		// filter
+		if params.FilterText != "" {
+			model = model.Where(
+				"id = ? OR image = ? OR title LIKE ? OR summary LIKE ?",
+				append(
+					core.CreateSlice[interface{}](2, params.FilterText),
+					core.CreateSlice[interface{}](2, fmt.Sprintf("%%%s%%", params.FilterText))...,
+				)...,
+			)
+		}
+		for k, v := range params.FilterValues {
+			if len(v) == 0 {
+				continue
+			}
+			if k == "tags" {
+				model = model.Joins("JOIN article_tags AS ats ON articles.id = ats.article_id").
+					Where("ats.tag_id IN ?", v).
+					Group("articles.id").
+					Having("COUNT(ats.id) = ?", len(v))
+			} else {
+				// TODO inject
+				model = model.Where(fmt.Sprintf("%s IN ?", k), v)
+			}
+		}
+		err = model.Count(&count).Error
+		core.P(err)
+		// sort
+		if params.SortKey.ID != "" {
+			order := "ASC"
+			if params.SortKey.Order == "desc" {
+				order = "DESC"
+			}
+			if params.SortKey.ID == "tags" {
+				model = model.Select("articles.*, COUNT(ats.id) as tag_count").
+					Joins("LEFT JOIN article_tags AS ats ON articles.id = ats.article_id").
+					Group("articles.id").
+					Order(fmt.Sprintf("tag_count %s", order))
+			} else {
+				// TODO 使用反射校验该字段和 Article 结构的json 注释是否匹配 || 找个校验库
+				model = model.Order(fmt.Sprintf("%s %s", params.SortKey.ID, order))
+			}
+		}
+	} else {
+		err := model.Count(&count).Error
+		core.P(err)
+	}
+	model = model.Order("id DESC")
+	var articles []*models.Article
+	model = model.Offset((page - 1) * 10).Limit(pageSize)
+	err := model.Find(&articles).Error
 	core.P(err)
-	json.NewEncoder(w).Encode(&article)
+	json.NewEncoder(w).Encode(articleList{
+		Articles: articles,
+		Paginator: models.Pagination{
+			Count: int(count),
+		},
+	})
 }
 
 func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +116,9 @@ func (api *articleApi) detail(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	article := new(models.Article)
 	err = api.O.Model(&models.Article{}).
-		Preload("ArticleContent").
+		Preload("ArticleContent", func(db *gorm.DB) *gorm.DB {
+			return db.Omit("html")
+		}).
 		Preload("Tags").
 		First(article, id).
 		Error

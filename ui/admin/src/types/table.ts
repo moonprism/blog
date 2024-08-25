@@ -20,3 +20,16 @@ export interface ViewOption {
   selected: Writable<string[]>,
   options: string[],
 }
+
+export interface SearchParams {
+  page: number
+  page_size: number
+  filter_text: string
+  filter_values: {
+    [index: string]: number[]
+  }
+  sort_key: {
+    id: string
+    order: 'asc' | 'desc'
+  } | undefined
+}

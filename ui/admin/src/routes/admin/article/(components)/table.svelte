@@ -12,7 +12,15 @@
   import { DataTable } from '@/components/blocks/table/index'
 
   import type { Filter } from '$src/types/table'
-  import { tableData, statuses, initTableData, selectedViewOption, tags } from '../(data)/data'
+  import {
+    tableData,
+    statuses,
+    initTableData,
+    selectedViewOption,
+    tags,
+    serverItemCount,
+    searchParams
+  } from '../(data)/data'
   import TableActions from './table-actions.svelte'
   import TableRowTitle from './table-row-title.svelte'
 
@@ -25,25 +33,29 @@
   import TableRowTagColors from './table-row-tag-colors.svelte'
   import TableRowImage from './table-row-image.svelte'
   import { getRealSrc } from '@/helpers/fetch'
+  import { onMount } from 'svelte'
 
   if ($tagTableData.length === 0) {
     initTagTableData()
   }
 
-  if ($tableData.length === 0) {
-    initTableData()
-  }
+  const serverSide = true
 
   const table = createTable(tableData, {
-    page: addPagination(),
+    page: addPagination({
+      serverSide,
+      serverItemCount
+    }),
     filter: addTableFilter({
+      serverSide,
       fn: ({ filterValue, value }) => {
         return value.toLowerCase().includes(filterValue.toLowerCase())
       }
     }),
-    colFilter: addColumnFilters(),
+    colFilter: addColumnFilters({ serverSide }),
     hide: addHiddenColumns(),
     sort: addSortBy({
+      serverSide,
       toggleOrder: ['asc', 'desc']
     })
   })
@@ -174,6 +186,49 @@
     type: 'hideColumn',
     selected: selectedViewOption,
     options: []
+  }
+
+  const { pluginStates } = tableModel
+
+  const { pageIndex, pageSize } = pluginStates.page
+  const filterText = pluginStates.filter.filterValue
+  const { filterValues } = pluginStates.colFilter
+  const { sortKeys } = pluginStates.sort
+
+  let mounted = false
+  onMount(() => {
+    mounted = true
+  })
+
+  $: {
+    if (mounted) {
+      $searchParams = {
+        page: $pageIndex,
+        page_size: $pageSize,
+        filter_text: $filterText,
+        filter_values: <{ [index: string]: number[] }>$filterValues,
+        sort_key: $sortKeys[0]
+      }
+      initTableData($searchParams)
+    } else {
+      // 编辑文章涉及到路由的改变，只好缓存这些查询参数了
+      // not undefined
+      if ($searchParams.page) {
+        $pageIndex = $searchParams.page
+      }
+      if ($searchParams.page_size) {
+        $pageSize = $searchParams.page_size
+      }
+      if ($searchParams.filter_text) {
+        $filterText = $searchParams.filter_text
+      }
+      if ($searchParams.filter_values) {
+        $filterValues = $searchParams.filter_values
+      }
+      if ($searchParams.sort_key) {
+        $sortKeys = [$searchParams.sort_key]
+      }
+    }
   }
 </script>
 

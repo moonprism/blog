@@ -6,14 +6,15 @@
 
   export let tableModel: TableViewModel<any>
 
-  const { pageRows, pluginStates, rows } = tableModel
+  const { pluginStates } = tableModel
 
   const { hasNextPage, hasPreviousPage, pageIndex, pageCount, pageSize } = pluginStates.page
 </script>
 
 <div class="flex items-center justify-between px-2">
   <div class="flex-1 font-mono text-sm text-muted-foreground">
-    {$rows.length} row(s)
+  <!-- issue: 服务器模式下该插件不保存总数 -->
+    <!-- {$rows.length} row(s) -->
   </div>
   <div class="flex items-center">
     <div class="flex items-center space-x-1">
@@ -68,7 +69,7 @@
         variant="outline"
         class="hidden h-8 w-8 p-0 lg:flex"
         disabled={!$hasNextPage}
-        on:click={() => ($pageIndex = Math.ceil($rows.length / $pageRows.length) - 1)}
+        on:click={() => ($pageIndex = $pageCount - 1)}
       >
         <span class="sr-only">Go to last page</span>
         <ChevronsRight size={15} />
