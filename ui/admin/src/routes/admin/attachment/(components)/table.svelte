@@ -187,6 +187,7 @@
       filter_text: $filterText,
       filter_values: <{ [index: string]: number[] }>$filterValues
     }
+    $pageSize = 20
     initTableData(<SearchParams>searchParams, false)
   }, 300)
   $: {
