@@ -28,7 +28,7 @@
           ]
       }
   ],
-  "paginator": {
+  "pagination": {
       "count": 26
   }
 }

@@ -7,6 +7,7 @@
   import Loading from '../animation/loading.svelte'
   import { onMount, onDestroy } from 'svelte'
   import { isScrollAtBottom, throttle } from '@/helpers/system'
+  import { isRequestIn } from '@/helpers/fetch'
 
   export let tableModel: TableViewModel<any, any>
   export let viewOption: ViewOption
@@ -28,17 +29,17 @@
   }
 
   const { pageSize, hasNextPage } = tableModel.pluginStates.page
+  // 先固定20吧，方便计算从服务器取得真实数据需要的参数
   $pageSize = 20
-
-  let isLoading = false
 
   let th: Element,
     thParent: Element | null = null
 
   const handleScroll = throttle(() => {
     if (isScrollAtBottom(thParent)) {
-      isLoading = $hasNextPage
-      $pageSize += 10
+      if (!$isRequestIn && $hasNextPage) {
+        $pageSize += 20
+      }
     }
   }, 200)
 
@@ -74,7 +75,7 @@
   </MasonryGrid>
 
   <div class="flex justify-center text-base leading-9">
-    {#if isLoading}
+    {#if $isRequestIn}
       <Loading></Loading>
     {/if}
   </div>

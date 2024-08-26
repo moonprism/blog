@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createRender, createTable } from 'svelte-headless-table'
   import {
+    addColumnFilters,
     addHiddenColumns,
     addPagination,
     addSortBy,
@@ -15,27 +16,41 @@
     initTableData,
     selectedViewOption,
     viewOption,
-    tableData
+    tableData,
+    serverItemCount,
+    initGroupInfo,
+    groupInfo
   } from '../(data)/data'
   import TableRowImage from './table-row-image.svelte'
   import TableRowDate from './table-row-date.svelte'
   import TableRowSummary from './table-row-summary.svelte'
   import type { Attachment } from '$src/types/stream'
-  import { getRealSrc } from '@/helpers/fetch'
+  import { getRealSrc, isMockMode, isRequestIn } from '@/helpers/fetch'
+  import { onMount } from 'svelte'
+  import type { Filter, SearchParams } from '$src/types/table'
+  import { get } from 'svelte/store'
+  import { debounce } from '@/helpers/system'
 
   export let itemClick: ((row: Attachment) => void) | null = null
 
-  if ($tableData.length === 0) {
-    initTableData()
+  const serverSide = !isMockMode
+  let paginationConfig = {}
+  if (serverSide) {
+    paginationConfig = {
+      serverSide,
+      serverItemCount
+    }
   }
 
   const table = createTable(tableData, {
-    page: addPagination(),
+    page: addPagination(paginationConfig),
     filter: addTableFilter({
       fn: ({ filterValue, value }) => {
         return value.toLowerCase().includes(filterValue.toLowerCase())
-      }
+      },
+      serverSide
     }),
+    colFilter: addColumnFilters({ serverSide }),
     hide: addHiddenColumns(),
     sort: addSortBy({
       toggleOrder: ['asc', 'desc']
@@ -57,6 +72,27 @@
       header: 'Summary',
       cell: ({ value }) => {
         return createRender(TableRowSummary, { text: value })
+      }
+    }),
+    table.column({
+      accessor: 'year',
+      header: 'Year',
+      cell: () => {
+        return ''
+      },
+      plugins: {
+        colFilter: {
+          fn: ({ filterValue, value }) => {
+            if (filterValue.length === 0) return true
+            if (!Array.isArray(filterValue)) return true
+            return filterValue.includes(value)
+          },
+          initialFilterValue: [],
+          render: ({ filterValue }) => {
+            return get(filterValue)
+          }
+        },
+        filter: { exclude: true }
       }
     }),
     table.column({
@@ -91,14 +127,25 @@
 
   let flowTableComponent: FlowDataTable
 
-  let initFlag = false
-  $: {
-    if ($formOpen) {
-      initFlag = true
+  let mounted = false
+  onMount(() => {
+    mounted = true
+    initGroupInfo()
+  })
+
+  const filters: Filter[] = [
+    {
+      name: 'year',
+      options: groupInfo
     }
-    if (!$formOpen && initFlag && flowTableComponent) {
+  ]
+
+  $tableData = []
+
+  $: {
+    if (mounted && !$formOpen && flowTableComponent) {
       setTimeout(() => {
-        // 意外发现这样能正常运行
+        // 编辑图片后触发重新布局
         flowTableComponent.reset()
       }, 300)
     }
@@ -112,6 +159,44 @@
       }
     }
   }
+
+  const { pageSize } = tableModel.pluginStates.page
+  const filterText = tableModel.pluginStates.filter.filterValue
+  const { filterValues } = tableModel.pluginStates.colFilter
+
+  const indexTableData = debounce(() => {
+    const searchParams = {
+      page_size: $pageSize,
+      filter_text: $filterText,
+      filter_values: <{ [index: string]: number[] }>$filterValues
+    }
+    initTableData(<SearchParams>searchParams)
+  }, 100)
+  $: {
+    $pageSize
+    if (mounted && serverSide) {
+      // 交给下面的监听器初始化
+      if ($pageSize !== 20) {
+        indexTableData()
+      }
+    }
+  }
+
+  const searchTableData = debounce(() => {
+    const searchParams = {
+      filter_text: $filterText,
+      filter_values: <{ [index: string]: number[] }>$filterValues
+    }
+    initTableData(<SearchParams>searchParams, false)
+  }, 300)
+  $: {
+    $filterText
+    // todo values不需要防抖处理
+    $filterValues
+    if (mounted && serverSide) {
+      searchTableData()
+    }
+  }
 </script>
 
-<FlowDataTable bind:this={flowTableComponent} {tableModel} {viewOption} />
+<FlowDataTable bind:this={flowTableComponent} {filters} {tableModel} {viewOption} />

@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -28,16 +29,59 @@ type attachmentApi struct {
 	*core.App
 }
 
+type Attachment struct {
+	models.Attachment
+	Year int `json:"year"`
+}
+
 type attachmentList struct {
-	Data []*models.Attachment `json:"data"`
+	Data       []*Attachment     `json:"data"`
+	Pagination models.Pagination `json:"pagination"`
 }
 
 func (api *attachmentApi) list(w http.ResponseWriter, r *http.Request) {
-	var attachments []*models.Attachment
-	err := api.O.Model(&models.Attachment{}).Order("id desc").Find(&attachments).Error
+	model := api.O.Model(&models.Attachment{})
+	page := 1
+	pageSize := 20
+	var count int64
+	q := r.URL.Query().Get("q")
+	if q != "" {
+		var params models.SearchURLParams
+		err := json.Unmarshal([]byte(q), &params)
+		core.P(err)
+		page = params.Page + 1
+		pageSize = params.PageSize
+		// filter
+		if params.FilterText != "" {
+			model = model.Where(
+				"`key` = ? OR `summary` LIKE ?",
+				params.FilterText,
+				fmt.Sprintf("%%%s%%", params.FilterText),
+			)
+		}
+		for k, v := range params.FilterValues {
+			if len(v) == 0 {
+				continue
+			}
+			if k == "year" {
+				model = model.Where("FROM_UNIXTIME(created, '%Y') IN ?", v)
+			}
+		}
+	}
+	err := model.Count(&count).Error
+	core.P(err)
+	var attachments []*Attachment
+	err = model.Select("attachments.*, FROM_UNIXTIME(created, '%Y') AS year").Order("id DESC").
+		Offset((page - 1) * pageSize).
+		Limit(pageSize).
+		Find(&attachments).
+		Error
 	core.P(err)
 	json.NewEncoder(w).Encode(attachmentList{
 		Data: attachments,
+		Pagination: models.Pagination{
+			Count: int(count),
+		},
 	})
 }
 
@@ -71,8 +115,4 @@ func (api *attachmentApi) delete(w http.ResponseWriter, r *http.Request) {
 	api.O.Delete(&attachment)
 	core.P(err)
 	api.JSON(w, id)
-}
-
-func (api *attachmentApi) groupInfo(w http.ResponseWriter, r *http.Request) {
-
 }

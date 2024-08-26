@@ -77,7 +77,7 @@
               >
                 <Check className={cn('h-4 w-4')} />
               </div>
-              <div class="mr-2 flex h-4 w-4 items-center justify-center text-muted-foreground">
+              <div class="mr-2 flex items-center justify-center text-muted-foreground">
                 <Render of={option.icon} />
               </div>
               <span>

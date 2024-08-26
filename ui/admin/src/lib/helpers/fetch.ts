@@ -30,10 +30,12 @@ export const fet = {
 }
 
 export const isRequestIn = writable(false)
+let requestCount = 0
 let fakeGlobalID = 1001
 
 // custom wrapper for "fetch" function
 const request = async (path: string, method: string, data?: unknown): Promise<Respoi> => {
+  requestCount++
   isRequestIn.set(true)
   const headers: HeadersInit = {
     'Content-Type': 'application/json'
@@ -60,13 +62,12 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
   }
 
   if (isMockMode) {
-    let fakeData: DataModel | DataModel[] = <DataModel>data
-    let ro = ''
+    let fakeData: DataModel | DataModel[] | { token: string } = <DataModel>data
+    const ro = path.split('?')[0]
     switch (method) {
       case 'DELETE':
         break
       case 'GET':
-        ro = path.split('?')[0]
         // article/{id}
         if (ro.includes('/')) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -79,6 +80,10 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
         }
         break
       case 'POST':
+        if (ro === 'login') {
+          fakeData = { token: '' }
+          break
+        }
         fakeData.created = Date.parse(new Date().toString()) / 1000
         fakeData.id = fakeGlobalID++
       // eslint-disable-next-line no-fallthrough
@@ -100,7 +105,9 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
     const response = await fetchWithTimeout(`${host}${path}`, options)
     const data = await response.json()
 
-    isRequestIn.set(false)
+    if (--requestCount === 0) {
+      isRequestIn.set(false)
+    }
     if (!response.ok) {
       const badRespoi = <BadRespoi>data
       toast.error(badRespoi.code.toString(), {
@@ -120,7 +127,9 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
     toast.error('system failure', {
       description: result.message
     })
-    isRequestIn.set(false)
+    if (--requestCount === 0) {
+      isRequestIn.set(false)
+    }
     return result
   }
 }

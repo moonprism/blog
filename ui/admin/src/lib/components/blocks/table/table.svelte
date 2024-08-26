@@ -8,12 +8,11 @@
   import TableToolbar from './table-toolbar.svelte'
   import TableHeadSort from './table-head-sort.svelte'
   import TablePagination from './table-pagination.svelte'
-  import type { AnyPlugins } from 'svelte-headless-table/plugins'
   import { Sparkle } from 'lucide-svelte'
   import { writable } from 'svelte/store'
   import { cn } from '@/utils'
 
-  export let tableModel: TableViewModel<any, AnyPlugins>
+  export let tableModel: TableViewModel<any, any>
   export let filters: Filter[] = []
   export let viewOption: ViewOption
 

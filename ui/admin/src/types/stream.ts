@@ -54,7 +54,7 @@ interface ArticleContent {
   }
 }
 
-export interface ArticleDetail extends DataModel, ArticleBody, ArticleContent {}
+export interface ArticleDetail extends Article, ArticleContent {}
 
 export interface TagBody {
   name: string
@@ -66,6 +66,13 @@ export interface Tag extends DataModel, TagBody {}
 export interface AttachmentBody {
   key: string
   summary: string
+  year: number
 }
 
 export interface Attachment extends DataModel, AttachmentBody {}
+
+// todo 还应细分
+export interface GroupInfo {
+  year: number
+  count: number
+}

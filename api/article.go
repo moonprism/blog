@@ -35,17 +35,16 @@ type articleApi struct {
 }
 
 type articleList struct {
-	Data      []*models.Article `json:"data"`
-	Paginator models.Pagination `json:"paginator"`
+	Data       []*models.Article `json:"data"`
+	Pagination models.Pagination `json:"pagination"`
 }
 
 func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 	model := api.O.Model(&models.Article{}).Preload("Tags")
-	q := r.URL.Query().Get("q")
 	var count int64
-	println(q)
 	page := 1
 	pageSize := 10
+	q := r.URL.Query().Get("q")
 	if q != "" {
 		var params models.SearchURLParams
 		err := json.Unmarshal([]byte(q), &params)
@@ -55,7 +54,7 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 		// filter
 		if params.FilterText != "" {
 			model = model.Where(
-				"articles.id = ? OR image = ? OR title LIKE ? OR summary LIKE ?",
+				"articles.id = ? OR `image` = ? OR `title` LIKE ? OR `summary` LIKE ?",
 				append(
 					core.CreateSlice[interface{}](2, params.FilterText),
 					core.CreateSlice[interface{}](2, fmt.Sprintf("%%%s%%", params.FilterText))...,
@@ -96,14 +95,16 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 		err := model.Count(&count).Error
 		core.P(err)
 	}
-	model = model.Order("id DESC")
 	var articles []*models.Article
-	model = model.Offset((page - 1) * 10).Limit(pageSize)
-	err := model.Find(&articles).Error
+	err := model.Order("id DESC").
+		Offset((page - 1) * pageSize).
+		Limit(pageSize).
+		Find(&articles).
+		Error
 	core.P(err)
 	json.NewEncoder(w).Encode(articleList{
 		Data: articles,
-		Paginator: models.Pagination{
+		Pagination: models.Pagination{
 			Count: int(count),
 		},
 	})

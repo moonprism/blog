@@ -23,7 +23,7 @@ export function initTableData(q = '') {
   fet.get(`article?q=${q}`).then((respoi) => {
     if (respoi.ok) {
       tableData.set(<Article[]>respoi.data.data)
-      serverItemCount.set(respoi.data.paginator.count)
+      serverItemCount.set(respoi.data.pagination.count)
       searchUrlQuery.set(q)
     }
   })

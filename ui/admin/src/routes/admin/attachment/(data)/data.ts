@@ -1,16 +1,55 @@
-import type { Attachment } from "$src/types/stream";
-import { fet } from "@/helpers/fetch";
-import type { SvelteComponent } from "svelte";
-import { writable } from "svelte/store";
-import Form from "../(components)/form.svelte";
-import type { ViewOption } from "$src/types/table";
+import type { Attachment, GroupInfo } from '$src/types/stream'
+import { fet } from '@/helpers/fetch'
+import type { SvelteComponent } from 'svelte'
+import { writable } from 'svelte/store'
+import Form from '../(components)/form.svelte'
+import type { Option, SearchParams, ViewOption } from '$src/types/table'
+import { createRender } from 'svelte-headless-table'
+import TableToolFilterCount from '../(components)/table-tool-filterCount.svelte'
 
 export const tableData = writable([] as Attachment[])
 
-export function initTableData() {
-  fet.get('attachment').then((respoi) => {
+export const serverItemCount = writable(0)
+
+let data: Attachment[]
+
+tableData.subscribe((v) => {
+  data = v
+})
+
+export function initTableData(params: SearchParams, isAppend = true) {
+  if (!isAppend) {
+    tableData.set([])
+  }
+  params.page = params.page_size / 20 - 1
+  params.page_size = 20
+  const q = encodeURIComponent(JSON.stringify(params))
+  fet.get(`attachment?q=${q}`).then((respoi) => {
     if (respoi.ok) {
-      tableData.set(<Attachment[]>respoi.data.data)
+      if (!isAppend) {
+        tableData.set(<Attachment[]>respoi.data.data)
+      } else {
+        tableData.set([...data, ...(<Attachment[]>respoi.data.data)])
+      }
+      serverItemCount.set(respoi.data.pagination.count)
+    }
+  })
+}
+
+export const groupInfo = writable([] as Option[])
+
+export function initGroupInfo() {
+  fet.get('group/year?model=attachment').then((respoi) => {
+    if (respoi.ok) {
+      groupInfo.set(
+        respoi.data.map((v: GroupInfo) => {
+          return {
+            id: v.year,
+            label: String(v.year),
+            icon: createRender(TableToolFilterCount, {text: String(v.count)})
+          }
+        })
+      )
     }
   })
 }
@@ -34,7 +73,7 @@ export function openForm(t?: Attachment) {
     target: document.body,
     props: {
       formData: t,
-      formOpen: formOpen,
+      formOpen: formOpen
     }
   })
   formOpen.set(true)

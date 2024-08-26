@@ -35,6 +35,7 @@
   import TableRowImage from './table-row-image.svelte'
   import { getRealSrc, isMockMode } from '@/helpers/fetch'
   import { onMount } from 'svelte'
+  import { debounce } from '@/helpers/system'
 
   if ($tagTableData.length === 0) {
     initTagTableData()
@@ -205,6 +206,13 @@
     mounted = true
   })
 
+  const fetchData = debounce(() => {
+    const q = encodeURIComponent(JSON.stringify($searchParams))
+    if ($searchUrlQuery !== q) {
+      initTableData(q)
+    }
+  }, 200)
+
   $: {
     if (mounted) {
       $searchParams = {
@@ -214,10 +222,7 @@
         filter_values: <{ [index: string]: number[] }>$filterValues,
         sort_key: $sortKeys[0]
       }
-      const q = encodeURIComponent(JSON.stringify($searchParams))
-      if ($searchUrlQuery !== q) {
-        initTableData(q)
-      }
+      fetchData()
     } else {
       // 编辑文章涉及到路由的改变，只好缓存这些查询参数了
       // not undefined
