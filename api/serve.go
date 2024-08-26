@@ -14,6 +14,7 @@ func Serve(app *core.App) error {
 	r.Use(middleware.Logger)
 	r.Use(m.Recoverer)
 	r.Use(m.JsonResponse)
+	//r.Use(m.Delay)
 
 	r.Route("/api", func(r chi.Router) {
 		r.Route("/", func(r chi.Router) { bindAuthApi(app, r) })
