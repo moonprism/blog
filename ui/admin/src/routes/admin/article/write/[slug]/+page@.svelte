@@ -31,6 +31,7 @@
   import { alertDialog } from '@/components/blocks/dialog/alert'
 
   import remarkAdmonitions from 'remark-github-beta-blockquote-admonitions'
+  import { goto } from '$app/navigation'
 
   const id = Number($page.params.slug)
   let article = {} as ArticleDetail
@@ -74,22 +75,42 @@
     }
   }
 
-  function handlePopstate(event: PopStateEvent): void {
+  function handlePopstate(): void {
+    history.pushState(null, '', document.URL)
     if (originValue === value) {
+      back()
       return
     }
-    alertDialog('> 请尽量使用右侧保存按钮哦', '保存修改').then(() => {
-      save()
+    alertDialog('检测到未保存的文章内容！', '退出编辑').then(() => {
+      back()
     })
   }
 
+  function handleBeforeUnload(event: BeforeUnloadEvent) {
+    if (originValue === value) {
+      return
+    }
+    // Cancel the event as stated by the standard.
+    event.preventDefault()
+    // Chrome requires returnValue to be set.
+    event.returnValue = ''
+  }
+
   onMount(() => {
+    // 禁止回退和刷新
+    history.pushState(null, '', document.URL)
     window.addEventListener('popstate', handlePopstate)
+    window.addEventListener('beforeunload', handleBeforeUnload)
 
     return () => {
       window.removeEventListener('popstate', handlePopstate)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   })
+
+  function back() {
+    goto('/admin/article')
+  }
 
   // https://github.com/myl7/remark-github-beta-blockquote-admonitions
   const remarkAdConfig = {
@@ -136,9 +157,7 @@
 
 <button
   class="group absolute z-10 flex h-8 w-8 items-center justify-center text-foreground/80 hover:text-foreground"
-  on:click={() => {
-    window.history.back()
-  }}
+  on:click={handlePopstate}
 >
   <SquareX class="h-5 w-5 group-hover:h-6 group-hover:w-6"></SquareX>
 </button>
