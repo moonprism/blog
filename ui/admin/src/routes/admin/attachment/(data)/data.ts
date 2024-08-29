@@ -1,11 +1,11 @@
-import type { Attachment, GroupInfo } from '$src/types/stream'
+import type { Attachment, YearGroupInfo } from '$src/types/stream'
 import { fet } from '@/helpers/fetch'
 import type { SvelteComponent } from 'svelte'
 import { writable } from 'svelte/store'
 import Form from '../(components)/form.svelte'
 import type { Option, SearchParams, ViewOption } from '$src/types/table'
 import { createRender } from 'svelte-headless-table'
-import TableToolFilterCount from '../(components)/table-tool-filterCount.svelte'
+import CountFilter from '@/components/blocks/cell/count-filter.svelte'
 
 export const tableData = writable([] as Attachment[])
 
@@ -36,17 +36,17 @@ export function initTableData(params: SearchParams, isAppend = true) {
   })
 }
 
-export const groupInfo = writable([] as Option[])
+export const yearOptions = writable([] as Option[])
 
 export function initGroupInfo() {
   fet.get('group/year?model=attachment').then((respoi) => {
     if (respoi.ok) {
-      groupInfo.set(
-        respoi.data.map((v: GroupInfo) => {
+      yearOptions.set(
+        respoi.data.map((v: YearGroupInfo) => {
           return {
             id: v.year,
             label: String(v.year),
-            icon: createRender(TableToolFilterCount, {text: String(v.count)})
+            icon: createRender(CountFilter, {text: String(v.count)})
           }
         })
       )

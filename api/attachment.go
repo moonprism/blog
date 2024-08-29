@@ -46,7 +46,7 @@ func (api *attachmentApi) list(w http.ResponseWriter, r *http.Request) {
 	var count int64
 	q := r.URL.Query().Get("q")
 	if q != "" {
-		var params models.SearchURLParams
+		var params models.SearchURLParams[int]
 		err := json.Unmarshal([]byte(q), &params)
 		core.P(err)
 		page = params.Page + 1

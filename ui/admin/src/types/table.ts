@@ -1,10 +1,10 @@
 import type { SvelteComponent } from 'svelte'
-import type { ReadOrWritable } from '$src/types/store';
-import { type Writable } from 'svelte/store';
-import type { ComponentRenderConfig } from 'svelte-headless-table';
+import type { ReadOrWritable } from '$src/types/store'
+import { type Writable } from 'svelte/store'
+import type { ComponentRenderConfig } from 'svelte-headless-table'
 
 export interface Option {
-  id: number
+  id: number | string
   label: string
   icon: ComponentRenderConfig<SvelteComponent>
 }
@@ -16,9 +16,9 @@ export interface Filter {
 }
 
 export interface ViewOption {
-  type: 'hideColumn' | 'cardSize',
-  selected: Writable<string[]>,
-  options: string[],
+  type: 'hideColumn' | 'cardSize'
+  selected: Writable<string[]>
+  options: string[]
 }
 
 export interface SearchParams {
@@ -28,8 +28,10 @@ export interface SearchParams {
   filter_values: {
     [index: string]: number[]
   }
-  sort_key: {
-    id: string
-    order: 'asc' | 'desc'
-  } | undefined
+  sort_key:
+    | {
+        id: string
+        order: 'asc' | 'desc'
+      }
+    | undefined
 }

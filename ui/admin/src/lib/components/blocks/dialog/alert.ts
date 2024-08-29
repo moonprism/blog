@@ -1,27 +1,25 @@
 import { writable, type Unsubscriber } from "svelte/store"
-import type { SvelteComponent } from "svelte"
 import Alert from "./alert.svelte"
 
-let component: SvelteComponent
 const open = writable(false)
 const title = writable('')
 const description = writable('')
 const confirm = writable(false)
 let unsubscribe: Unsubscriber
-export const alertDialog = (desc = '', titl = '') => {
-  description.set(desc)
-  title.set(titl)
-  if (!component) {
-    component = new Alert({
-      target: document.body,
-      props: {
-        open,
-        description,
-        confirm,
-        title
-      }
-    })
+
+new Alert({
+  target: document.body,
+  props: {
+    open,
+    description,
+    confirm,
+    title,
   }
+})
+
+export const alertDialog = (desc = '', t = '') => {
+  description.set(desc)
+  title.set(t)
   open.set(true)
   return new Promise((resolve) => {
     unsubscribe = confirm.subscribe(value => {

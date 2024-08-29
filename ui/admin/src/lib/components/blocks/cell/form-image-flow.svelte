@@ -1,11 +1,11 @@
 <script lang="ts">
   import * as Dialog from '@/components/ui/dialog/index.js'
 
-  import Table from '../../attachment/(components)/table.svelte'
+  import Table from '$src/routes/admin/attachment/(components)/table.svelte'
   import type { Attachment } from '$src/types/stream'
   import { type Writable } from 'svelte/store'
-  import DataActionButton from '@/components/blocks/buttons/data-action-button.svelte'
-  import { openForm } from '../../attachment/(data)/data'
+  import DataActionButton from '@/components/blocks/cell/data-action-button.svelte'
+  import { openForm } from '$src/routes/admin/attachment/(data)/data'
 
   export let open: Writable<boolean>
   export let callback: typeof itemClick

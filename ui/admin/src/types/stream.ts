@@ -71,8 +71,21 @@ export interface AttachmentBody {
 
 export interface Attachment extends DataModel, AttachmentBody {}
 
-// todo 还应细分
-export interface GroupInfo {
+export interface GistBody {
+  title: string
+  lang: string
+  content: string
+  html: string
+}
+
+export interface Gist extends DataModel, GistBody {}
+
+export interface YearGroupInfo {
   year: number
+  count: number
+}
+
+export interface GistLangGroupInfo {
+  lang: string
   count: number
 }

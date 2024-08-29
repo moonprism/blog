@@ -16,6 +16,7 @@ func bindGroupApi(app *core.App, r chi.Router) {
 		r.Use(jwtauth.Verifier(app.TokenAuth))
 		r.Use(jwtauth.Authenticator(app.TokenAuth))
 		r.Get("/year", api.byYear)
+		r.Get("/gist-lang", api.byGistLang)
 	})
 }
 
@@ -35,6 +36,21 @@ func (api *groupApi) byYear(w http.ResponseWriter, r *http.Request) {
 		Select("FROM_UNIXTIME(created, '%Y') AS year, COUNT(*) AS count").
 		Group("year").
 		Order("id DESC").
+		Find(&result)
+	api.JSON(w, result)
+}
+
+type GistGroupByLang struct {
+	Lang  string `json:"lang"`
+	Count int    `json:"count"`
+}
+
+func (api *groupApi) byGistLang(w http.ResponseWriter, r *http.Request) {
+	var result []*GistGroupByLang
+	api.O.Model(&models.Gist{}).
+		Select("lang, COUNT(*) AS count").
+		Group("lang").
+		Order("count desc").
 		Find(&result)
 	api.JSON(w, result)
 }

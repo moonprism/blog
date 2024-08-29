@@ -19,7 +19,7 @@
     tableData,
     serverItemCount,
     initGroupInfo,
-    groupInfo
+    yearOptions
   } from '../(data)/data'
   import TableRowImage from './table-row-image.svelte'
   import TableRowDate from './table-row-date.svelte'
@@ -136,7 +136,7 @@
   const filters: Filter[] = [
     {
       name: 'year',
-      options: groupInfo
+      options: yearOptions
     }
   ]
 

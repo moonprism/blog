@@ -21,6 +21,8 @@ func Serve(app *core.App) error {
 		r.Route("/article", func(r chi.Router) { bindArticleApi(app, r) })
 		r.Route("/tag", func(r chi.Router) { bindTagApi(app, r) })
 		r.Route("/attachment", func(r chi.Router) { bindAttachmentApi(app, r) })
+		r.Route("/gist", func(r chi.Router) { bindGistApi(app, r) })
+
 		r.Route("/group", func(r chi.Router) { bindGroupApi(app, r) })
 	})
 

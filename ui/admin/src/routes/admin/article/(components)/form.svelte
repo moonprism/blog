@@ -19,7 +19,7 @@
 
   import { tableData as tagTableData } from '../../tag/(data)/data'
   import { writable, type Writable } from 'svelte/store'
-  import FormImageFlow from './form-image-flow.svelte'
+  import FormImageFlow from '@/components/blocks/cell/form-image-flow.svelte'
   import { onMount } from 'svelte'
 
   const form = superForm(defaults(zod(formSchema)), {
@@ -79,7 +79,7 @@
   })
 </script>
 
-<Dialog.Root bind:open={$formOpen}>
+<Dialog.Root bind:open={$formOpen} closeOnEscape={false}>
   <Dialog.Content class="max-w-[450px]">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->

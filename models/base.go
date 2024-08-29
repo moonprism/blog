@@ -14,11 +14,11 @@ type Pagination struct {
 	Count int `json:"count"`
 }
 
-type SearchURLParams struct {
-	Page         int              `json:"page"`
-	PageSize     int              `json:"page_size"`
-	FilterText   string           `json:"filter_text"`
-	FilterValues map[string][]int `json:"filter_values"`
+type SearchURLParams[T int | string] struct {
+	Page         int            `json:"page"`
+	PageSize     int            `json:"page_size"`
+	FilterText   string         `json:"filter_text"`
+	FilterValues map[string][]T `json:"filter_values"`
 	SortKey      struct {
 		ID    string `json:"id"`
 		Order string `json:"order"`

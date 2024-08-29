@@ -25,7 +25,7 @@
   import toast from '$lib/helpers/toast'
   import { onMount } from 'svelte'
   import AttachmentIcon from './(components)/attachment-icon.svelte'
-  import FormImageFlow from '../../(components)/form-image-flow.svelte'
+  import FormImageFlow from '@/components/blocks/cell/form-image-flow.svelte'
   import { writable } from 'svelte/store'
   import { SquareX } from 'lucide-svelte'
   import { alertDialog } from '@/components/blocks/dialog/alert'
