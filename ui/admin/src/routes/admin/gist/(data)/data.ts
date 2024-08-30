@@ -11,7 +11,7 @@ export const tableData = writable([] as Gist[])
 
 export const serverItemCount = writable(0)
 
-export const selectedViewOption = writable([] as string[])
+export const selectedViewOption = writable(['content'])
 
 export const langOptions = writable([] as Option[])
 export function initGroupInfo() {
@@ -21,7 +21,7 @@ export function initGroupInfo() {
         respoi.data.map((v: GistLangGroupInfo) => {
           return {
             id: v.lang,
-            label: String(v.lang),
+            label: getLangLabel(v.lang),
             icon: createRender(CountFilter, { text: String(v.count) })
           }
         })
@@ -74,3 +74,50 @@ export function openForm(t?: Gist) {
 export function closeForm() {
   formOpen.set(false)
 }
+
+function getLangLabel(lang = '') {
+  return langItems.find((i) => i.value === lang)?.label
+}
+
+export const langItems = [
+  {
+    value: 'md',
+    label: 'Markdown'
+  },
+  {
+    value: 'lua',
+    label: 'Lua'
+  },
+  {
+    value: 'go',
+    label: 'Golang'
+  },
+  {
+    value: 'js',
+    label: 'JavaScript'
+  },
+  {
+    value: 'sh',
+    label: 'Shell'
+  },
+  {
+    value: 'yml',
+    label: 'YAML'
+  },
+  {
+    value: 'css',
+    label: 'CSS'
+  },
+  {
+    value: 'php',
+    label: 'PHP'
+  },
+  {
+    value: 'sql',
+    label: 'SQL'
+  },
+  {
+    value: 'html',
+    label: 'HTML'
+  }
+]

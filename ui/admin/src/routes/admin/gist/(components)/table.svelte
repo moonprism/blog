@@ -16,11 +16,12 @@
   import TableActions from './table-actions.svelte'
 
   import type { ViewOption } from '$src/types/table'
-  import { getRealSrc, isMockMode } from '@/helpers/fetch'
+  import { isMockMode } from '@/helpers/fetch'
   import { onMount } from 'svelte'
   import { debounce } from '@/helpers/system'
   import RowTitle from '@/components/blocks/cell/row-title.svelte'
-
+  import TableRowHtml from './table-row-html.svelte'
+  
   const serverSide = !isMockMode
   let paginationConfig = {}
   if (serverSide) {
@@ -65,6 +66,13 @@
     table.column({
       accessor: 'content',
       header: 'Content'
+    }),
+    table.column({
+      accessor: 'html',
+      header: 'HTML',
+      cell: ({ value }) => {
+        return createRender(TableRowHtml, { html: value })
+      }
     }),
     table.column({
       accessor: 'created',

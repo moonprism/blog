@@ -1,21 +1,14 @@
 <script lang="ts">
   import { fileCDN } from '@/helpers/fetch'
 
-  import {
-    Carta,
-    MarkdownEditor,
-    PreRendered,
-    type Icon,
-    type InputEnhancer,
-    type Plugin
-  } from 'carta-md'
-  import './editor.css'
+  import { Carta, MarkdownEditor, type Icon, type InputEnhancer, type Plugin } from 'carta-md'
+  import '../(style)/editor.css'
 
   // 代码高亮
   import { code } from '@cartamd/plugin-code'
   import '@cartamd/plugin-code/default.css'
   // 引用markdown-body样式
-  //import 'moonprism-blog-frontend/src/css/markdown.css'
+  import 'moonprism-blog-frontend/src/css/gist.md.css'
 
   // @ts-ignore
   import remarkImgLinks from '@pondorasti/remark-img-links'
@@ -78,12 +71,14 @@
   }
 </script>
 
-<MarkdownEditor {carta} bind:value theme="gist" mode="tabs" />
+<div class="gist">
+  <MarkdownEditor {carta} bind:value theme="gist" mode="tabs" />
 
-<FormImageFlow
-  open={isOpenImageFlow}
-  callback={(v) => {
-    currentInput.insertAt(currentInput.getSelection().start, `![](${v.key})`)
-    currentInput.update()
-  }}
-></FormImageFlow>
+  <FormImageFlow
+    open={isOpenImageFlow}
+    callback={(v) => {
+      currentInput.insertAt(currentInput.getSelection().start, `![](${v.key})`)
+      currentInput.update()
+    }}
+  ></FormImageFlow>
+</div>

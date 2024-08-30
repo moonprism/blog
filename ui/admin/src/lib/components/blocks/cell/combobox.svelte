@@ -29,13 +29,13 @@
       variant="outline"
       role="combobox"
       aria-expanded={open}
-      class="w-[200px] justify-between"
+      class="w-[150px] justify-between"
     >
       {selectedValue}
       <CaretSort class="ml-2 h-4 w-4 shrink-0 opacity-50" />
     </Button>
   </Popover.Trigger>
-  <Popover.Content class="w-[200px] p-0">
+  <Popover.Content class="w-[180px] p-0">
     <Command.Root>
       <Command.Input placeholder="Search ..." class="h-9" />
       <Command.Empty>No item found.</Command.Empty>

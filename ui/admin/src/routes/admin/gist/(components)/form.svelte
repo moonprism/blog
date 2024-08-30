@@ -3,7 +3,7 @@
   import * as Dialog from '@/components/ui/dialog/index.js'
   import { Input } from '@/components/ui/input/index.js'
   import type { Gist, GistBody } from '$src/types/stream'
-  import { tableData, closeForm } from '../(data)/data'
+  import { tableData, closeForm, langItems } from '../(data)/data'
   import { fet, isRequestIn } from '@/helpers/fetch'
 
   import * as Form from '@/components/ui/form'
@@ -61,6 +61,7 @@
       fet.put(`gist/${formData.id}`, body).then((res) => {
         if (res.ok) {
           formData = <Gist>$vform
+          formData.html = body.html
           formData.updated = Date.parse(new Date().toString()) / 1000
           $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
@@ -68,37 +69,6 @@
       })
     }
   }
-
-  const langItems = [
-    {
-      value: 'md',
-      label: 'Markdown'
-    },
-    {
-      value: 'go',
-      label: 'Golang'
-    },
-    {
-      value: 'js',
-      label: 'JS'
-    },
-    {
-      value: 'sh',
-      label: 'Shell'
-    },
-    {
-      value: 'css',
-      label: 'CSS'
-    },
-    {
-      value: 'php',
-      label: 'PHP'
-    },
-    {
-      value: 'sql',
-      label: 'SQL'
-    }
-  ]
 
   let lang = isCreate ? 'md' : $vform.lang
 
@@ -126,7 +96,7 @@
 </script>
 
 <Dialog.Root bind:open={$formOpen} closeOnEscape={false}>
-  <Dialog.Content class="sm:max-w-[500px]">
+  <Dialog.Content class="sm:max-w-[540px]">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
@@ -134,16 +104,16 @@
     <Dialog.Header>
       <Dialog.Title>{isCreate ? 'New' : 'Edit'} Gist</Dialog.Title>
     </Dialog.Header>
-    <form method="POST" use:enhance class="space-y-2">
-      <div class="flex flex-1 space-x-2">
-        <Form.Field {form} name="title" class="w-5/6">
+    <form method="POST" use:enhance class="space-y-2 w-full overflow-auto">
+      <div class="flex flex-1 space-x-1">
+        <Form.Field {form} name="title" class="w-full p-1">
           <Form.Control let:attrs>
             <Form.Label>Title</Form.Label>
             <Input {...attrs} bind:value={$vform.title} autocomplete="off" />
           </Form.Control>
           <Form.FieldErrors />
         </Form.Field>
-        <Form.Field {form} name="lang">
+        <Form.Field {form} name="lang" class="p-1">
           <Form.Control let:attrs>
             <Form.Label>Lang</Form.Label>
             <Combobox items={langItems} bind:value={lang}></Combobox>
