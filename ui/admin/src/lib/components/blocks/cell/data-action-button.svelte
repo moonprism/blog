@@ -8,9 +8,10 @@
 
   export let text: string
   export let onClick = () => {}
+  export let disabled = false
 </script>
 
-<Button variant="ghost" class={cn('my-2 py-0', className)} on:click={onClick}>
+<Button variant="ghost" class={cn('my-2 py-0', className)} on:click={onClick} disabled={disabled}>
   <Plus class="mr-1 h-4 w-4" />
   {text}
 </Button>

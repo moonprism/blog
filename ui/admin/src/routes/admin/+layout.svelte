@@ -3,7 +3,7 @@
   import * as Sheet from '$lib/components/ui/sheet/index.js'
   import * as Tooltip from '$lib/components/ui/tooltip/index.js'
 
-  import { Castle, BookA, Scroll, Award, Mountain, type Icon } from 'lucide-svelte'
+  import { Castle, BookA, Scroll, Award, Mountain, type Icon, MessageSquareQuote } from 'lucide-svelte'
   import { WandSparkles } from 'lucide-svelte'
   import { toggleMode } from 'mode-watcher'
   import { ChevronsLeft } from 'lucide-svelte'
@@ -27,8 +27,9 @@
   export let menus: Menu[] = [
     new Menu('article', BookA),
     new Menu('gist', Scroll),
-    new Menu('tag', Award),
-    new Menu('attachment', Mountain)
+    new Menu('comment', MessageSquareQuote),
+    //new Menu('tag', Award),
+    new Menu('attachment', Mountain),
   ]
 </script>
 

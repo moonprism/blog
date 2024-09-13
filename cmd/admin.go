@@ -101,6 +101,32 @@ func NewAdminCommand(app *core.App) *cli.Command {
 							panic(err)
 						}
 					}
+					cFileContent, err := os.Open("comment.test.json")
+					if err != nil {
+						return err
+					}
+					defer cFileContent.Close()
+					byteResult, _ = ioutil.ReadAll(cFileContent)
+					json.Unmarshal([]byte(byteResult), &res)
+					for _, v := range res {
+						a := models.Comment{
+							Name:    v["name"].(string),
+							Email:   v["email"].(string),
+							Content: v["text"].(string),
+							BaseModel: models.BaseModel{
+								ID:      uint(v["id"].(float64)),
+								Created: uint(v["created"].(float64)),
+							},
+							ArticleID:      uint(v["art_id"].(float64)),
+							ReplyCommentID: uint(v["to_id"].(float64)),
+							RootCommentID:  uint(v["top_id"].(float64)),
+						}
+						result := app.O.Create(&a)
+						println(a.ID)
+						if result.Error != nil {
+							panic(err)
+						}
+					}
 
 					return nil
 				},
@@ -116,6 +142,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 						&models.ArticleTags{},
 						&models.Attachment{},
 						&models.Gist{},
+						&models.Comment{},
 					)
 				},
 			},

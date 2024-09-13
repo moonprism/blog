@@ -89,3 +89,15 @@ export interface GistLangGroupInfo {
   lang: string
   count: number
 }
+
+export interface CommentBody {
+  name: string
+  email: string
+  link: string
+  content: string
+  article_id: number
+  reply_comment_id: number
+  root_comment_id: number
+}
+
+export interface Comment extends DataModel, CommentBody {}
