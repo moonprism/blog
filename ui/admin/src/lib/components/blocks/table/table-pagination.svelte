@@ -13,7 +13,7 @@
 
 <div class="flex items-center justify-between px-2">
   <div class="flex-1 font-mono text-sm text-muted-foreground">
-  <!-- issue: 服务器模式下该插件不保存总数 -->
+    <!-- issue: 服务器模式下该插件不保存总数 -->
     <!-- {$rows.length} row(s) -->
   </div>
   <div class="flex items-center">

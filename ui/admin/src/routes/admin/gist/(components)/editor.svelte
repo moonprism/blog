@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { fileCDN } from '@/helpers/fetch'
-
   import { Carta, MarkdownEditor, type Icon, type InputEnhancer, type Plugin } from 'carta-md'
   import '../(style)/editor.css'
 
@@ -10,14 +8,11 @@
   // 引用markdown-body样式
   import 'moonprism-blog-frontend/src/css/gist.md.css'
 
-  // @ts-ignore
-  import remarkImgLinks from '@pondorasti/remark-img-links'
-
   import FormImageFlow from '@/components/blocks/cell/form-image-flow.svelte'
   import { writable } from 'svelte/store'
 
-  import remarkAdmonitions from 'remark-github-beta-blockquote-admonitions'
   import AttachmentIcon from '../../article/write/[slug]/(components)/attachment-icon.svelte'
+  import { middlewareTransformers } from '../../article/write/[slug]/(data)/data'
 
   let isOpenImageFlow = writable(false)
   let currentInput: InputEnhancer
@@ -31,31 +26,9 @@
     component: AttachmentIcon
   }
 
-  // https://github.com/myl7/remark-github-beta-blockquote-admonitions
-  const remarkAdConfig = {
-    classNameMaps: {
-      block: (title: string) => `admonition ad-${title.toLowerCase()}`,
-      title: 'admonition-title'
-    },
-    titleFilter: ['[!NOTE]', '[!IMPORTANT]', '[!WARNING]', '[!TIP]', '[!CAUTION]']
-  }
-
   const ext: Plugin = {
     icons: [attachmentIcon],
-    transformers: [
-      {
-        execution: 'async',
-        type: 'remark',
-        transform({ processor }) {
-          // remark plugins
-          processor
-            .use(remarkImgLinks, {
-              absolutePath: fileCDN
-            })
-            .use(remarkAdmonitions, remarkAdConfig)
-        }
-      }
-    ]
+    transformers: middlewareTransformers
   }
 
   const carta = new Carta({

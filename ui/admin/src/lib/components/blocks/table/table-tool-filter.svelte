@@ -11,13 +11,13 @@
   import type { ReadOrWritable } from '$src/types/store'
   import { Render } from 'svelte-headless-table'
 
-  export let filterValues: number[] = []
+  export let filterValues: any[] = []
   export let title: string
   export let options: ReadOrWritable<Option[]>
 
   let open = false
 
-  function handleSelect(currentValue: number) {
+  function handleSelect(currentValue: number | string) {
     if (Array.isArray(filterValues) && filterValues.includes(currentValue)) {
       filterValues = filterValues.filter((v) => v !== currentValue)
     } else {
@@ -68,12 +68,10 @@
               }}
             >
               <div
-                class={cn(
-                  'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                  filterValues.includes(option.id)
-                    ? 'bg-primary text-primary-foreground'
-                    : 'opacity-50 [&_svg]:invisible'
-                )}
+                class="mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary
+                  {filterValues.includes(option.id)
+                  ? 'bg-primary text-primary-foreground'
+                  : 'opacity-50 [&_svg]:invisible'}"
               >
                 <Check className={cn('h-4 w-4')} />
               </div>

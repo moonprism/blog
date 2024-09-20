@@ -10,6 +10,6 @@
 
 <ModeWatcher />
 
-<Toaster />
+<Toaster closeButton />
 
 <slot />

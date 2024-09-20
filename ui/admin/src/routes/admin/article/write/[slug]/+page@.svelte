@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores'
   import type { ArticleDetail } from '$src/types/stream'
-  import { fet, fileCDN, isRequestIn } from '@/helpers/fetch'
+  import { fet, isRequestIn } from '@/helpers/fetch'
 
   import { Carta, MarkdownEditor, type Icon, type InputEnhancer, type Plugin } from 'carta-md'
   import './(styles)/editor_custom.css'
@@ -18,9 +18,6 @@
   // 引用markdown-body样式
   import 'moonprism-blog-frontend/src/css/markdown.css'
 
-  // @ts-ignore
-  import remarkImgLinks from '@pondorasti/remark-img-links'
-
   import SaveIcon from './(components)/save-icon.svelte'
   import toast from '$lib/helpers/toast'
   import { onMount } from 'svelte'
@@ -30,8 +27,8 @@
   import { SquareX } from 'lucide-svelte'
   import { alertDialog } from '@/components/blocks/dialog/alert'
 
-  import remarkAdmonitions from 'remark-github-beta-blockquote-admonitions'
   import { goto } from '$app/navigation'
+  import { middlewareTransformers } from './(data)/data'
 
   const id = Number($page.params.slug)
   let article = {} as ArticleDetail
@@ -112,31 +109,9 @@
     goto('/admin/article')
   }
 
-  // https://github.com/myl7/remark-github-beta-blockquote-admonitions
-  const remarkAdConfig = {
-    classNameMaps: {
-      block: (title: string) => `admonition ad-${title.toLowerCase()}`,
-      title: 'admonition-title'
-    },
-    titleFilter: ['[!NOTE]', '[!IMPORTANT]', '[!WARNING]', '[!TIP]', '[!CAUTION]']
-  }
-
   const ext: Plugin = {
     icons: [attachmentIcon, saveIcon],
-    transformers: [
-      {
-        execution: 'async',
-        type: 'remark',
-        transform({ processor }) {
-          // remark plugins
-          processor
-            .use(remarkImgLinks, {
-              absolutePath: fileCDN
-            })
-            .use(remarkAdmonitions, remarkAdConfig)
-        }
-      }
-    ]
+    transformers: middlewareTransformers
   }
 
   const carta = new Carta({
@@ -162,12 +137,14 @@
   <SquareX class="h-5 w-5 group-hover:h-6 group-hover:w-6"></SquareX>
 </button>
 
-<MarkdownEditor {carta} bind:value theme="custom" />
+<div class="art">
+  <MarkdownEditor {carta} bind:value theme="custom" />
 
-<FormImageFlow
-  open={isOpenImageFlow}
-  callback={(v) => {
-    currentInput.insertAt(currentInput.getSelection().start, `![](${v.key})`)
-    currentInput.update()
-  }}
-></FormImageFlow>
+  <FormImageFlow
+    open={isOpenImageFlow}
+    callback={(v) => {
+      currentInput.insertAt(currentInput.getSelection().start, `![](${v.key})`)
+      currentInput.update()
+    }}
+  ></FormImageFlow>
+</div>
