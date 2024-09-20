@@ -22,6 +22,8 @@ func bindAttachmentApi(app *core.App, r chi.Router) {
 		r.Post("/", api.create)
 		r.Put("/{id}", api.update)
 		r.Delete("/{id}", api.delete)
+
+		r.Get("/cred", api.cred)
 	})
 }
 
@@ -115,4 +117,38 @@ func (api *attachmentApi) delete(w http.ResponseWriter, r *http.Request) {
 	api.O.Delete(&attachment)
 	core.P(err)
 	api.JSON(w, id)
+}
+
+type OssConfig struct {
+	AccessKeyId     string `json:"accessKeyId"`
+	AccessKeySecret string `json:"accessKeySecret"`
+	StsToken        string `json:"stsToken"`
+	Region          string `json:"region"`
+	Bucket          string `json:"bucket"`
+}
+
+func (api *attachmentApi) cred(w http.ResponseWriter, r *http.Request) {
+	credKey := "stsConfig"
+	ttl, err := api.CacheClient.TTL(credKey)
+	core.P(err)
+	if ttl < 30 {
+		credential, err := api.OssClient.GetAssumeRole()
+		core.P(err)
+		oc := &OssConfig{
+			Region:          api.Setting.OSS.Region,
+			Bucket:          api.Setting.OSS.Bucket,
+			AccessKeyId:     *credential.AccessKeyId,
+			AccessKeySecret: *credential.AccessKeySecret,
+			StsToken:        *credential.SecurityToken,
+		}
+		confJson, err := json.Marshal(oc)
+		core.P(err)
+		err = api.CacheClient.Set(credKey, confJson, api.OssClient.StsExpTime)
+		core.P(err)
+		api.JSON(w, oc)
+	} else {
+		confJson, err := api.CacheClient.Get(credKey)
+		core.P(err)
+		w.Write([]byte(confJson))
+	}
 }

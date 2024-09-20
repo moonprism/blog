@@ -10,3 +10,14 @@ JwtSecret = "2aEtVr"
 [Database]
   Driver = "mysql"
   Source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"
+
+[OSS]
+  Region = ""
+  Bucket = ""
+  Endpoint = ""
+  AccessKeyId = ""
+  AccessKeySecret = ""
+  RoleArn = ""
+
+[Cache]
+  Addr = "localhost:6379"

@@ -23,6 +23,15 @@ services:
       - 8888:8080
     networks:
       - app
+  redis:
+    image: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - .docker/data/redis:/data
+    networks:
+      - app
 
 secrets:
   password:

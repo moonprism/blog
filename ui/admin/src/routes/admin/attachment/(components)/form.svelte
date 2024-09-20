@@ -34,13 +34,24 @@
   const isCreate = formData.id === 0
 
   $vform = formData
+  
+  fet.get('attachment/cred').then((res) => {
+    console.log(res)
+  })
 
   function save() {
     if (isMockMode) {
       formData.key = previewUrl
     }
+    const body = {
+      key: $vform.key,
+      summary: $vform.summary
+    }
     if (isCreate) {
-      fet.post('attachment', formData).then((res) => {
+      // 阿里云 STS 临时授权
+
+      // 上传成功后同步到服务器
+      fet.post('attachment', body).then((res) => {
         if (res.ok) {
           $tableData = [<Attachment>res.data, ...$tableData]
           closeForm()
