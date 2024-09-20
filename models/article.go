@@ -20,7 +20,7 @@ type ArticleContent struct {
 }
 
 type ArticleTags struct {
-	ID        uint `json:"id"`
+	ID        uint `gorm:"primaryKey" json:"id"`
 	ArticleID uint `gorm:"notnull" json:"article_id"`
 	TagID     uint `gorm:"notnull" json:"tag_id"`
 }

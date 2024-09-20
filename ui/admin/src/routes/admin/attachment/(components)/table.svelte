@@ -30,6 +30,7 @@
   import type { Filter, SearchParams } from '$src/types/table'
   import { get } from 'svelte/store'
   import { debounce } from '@/helpers/system'
+  import { DateFormat } from '@/helpers/date'
 
   export let itemClick: ((row: Attachment) => void) | null = null
 
@@ -99,8 +100,7 @@
       accessor: 'created',
       header: 'Created',
       cell: ({ value }) => {
-        const time = new Date(value * 1000)
-        return createRender(TableRowDate, { date: time.toLocaleDateString('en') })
+        return createRender(TableRowDate, { date: DateFormat(value) })
       },
       plugins: {
         filter: { exclude: true }

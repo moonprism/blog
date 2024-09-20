@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/moonprism/blog/core"
+	"github.com/moonprism/blog/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -30,18 +31,25 @@ type loginResponseBody struct {
 func (api *authApi) login(w http.ResponseWriter, r *http.Request) {
 	var req loginRequestBody
 	err := json.NewDecoder(r.Body).Decode(&req)
+	defer func() {
+		record := new(models.LoginRecord)
+		record.IP = r.RemoteAddr
+		record.IsFailed = err != nil
+		core.P(api.O.Create(record).Error)
+	}()
 	core.P(err)
-	if req.Username != api.App.Setting.Account.Name {
-		core.P(core.NewErr("login failed", core.ErrCodeLoginFailed))
+	if req.Username != api.Setting.Account.Name {
+		err = core.NewErr("login failed", core.ErrCodeLoginFailed)
+		core.P(err)
 	}
 	err = bcrypt.CompareHashAndPassword(
-		[]byte(api.App.Setting.Account.Pass),
+		[]byte(api.Setting.Account.Pass),
 		[]byte(req.Password),
 	)
 	if err != nil {
 		core.P(core.NewErr("login failed", core.ErrCodeLoginFailed))
 	}
-	_, tokenString, err := api.App.TokenAuth.Encode(map[string]interface{}{"username": req.Username})
+	_, tokenString, err := api.TokenAuth.Encode(map[string]interface{}{"username": req.Username})
 	core.P(err)
 	res := new(loginResponseBody)
 	res.Token = tokenString

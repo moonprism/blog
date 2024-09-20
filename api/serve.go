@@ -14,6 +14,8 @@ func Serve(app *core.App) error {
 	r.Use(middleware.Logger)
 	r.Use(m.Recoverer)
 	r.Use(m.JsonResponse)
+	// https://go-chi.io/#/pages/middleware?id=realip
+	r.Use(middleware.RealIP)
 	//r.Use(m.Delay)
 
 	r.Route("/api", func(r chi.Router) {

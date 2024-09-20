@@ -11,6 +11,10 @@ export const setJwt = (token: string): void => {
   localStorage.setItem(jwtKey, token)
 }
 
+export const removeJwt = (): void => {
+  localStorage.removeItem(jwtKey)
+}
+
 export const getJwtInfo = (): JwtInfo | null => {
   const jwt = getJwt()
   if (jwt == '') {

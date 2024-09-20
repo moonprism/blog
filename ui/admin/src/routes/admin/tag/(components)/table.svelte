@@ -13,6 +13,7 @@
   import { initTableData, selectedViewOption, tableData } from '../(data)/data'
   import TableRowColor from './table-row-color.svelte'
   import type { ViewOption } from '$src/types/table'
+  import { DateFormat } from '@/helpers/date'
 
   if ($tableData.length === 0) {
     initTableData()
@@ -54,8 +55,7 @@
       accessor: 'created',
       header: 'Created',
       cell: ({ value }) => {
-        const time = new Date(value * 1000)
-        return time.toLocaleDateString('en')
+        return DateFormat(value)
       },
       plugins: {
         filter: { exclude: true }
@@ -65,8 +65,7 @@
       accessor: 'updated',
       header: 'Updated',
       cell: ({ value }) => {
-        const time = new Date(value * 1000)
-        return time.toLocaleDateString('en')
+        return DateFormat(value)
       },
       plugins: {
         filter: { exclude: true }

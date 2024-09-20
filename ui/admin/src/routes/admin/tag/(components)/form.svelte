@@ -67,19 +67,19 @@
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />
 
     <Dialog.Header>
-      <Dialog.Title>{isCreate ? '创建' : '编辑'}标签</Dialog.Title>
+      <Dialog.Title>{isCreate ? '新建' : '编辑'}标签</Dialog.Title>
     </Dialog.Header>
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="name">
         <Form.Control let:attrs>
-          <Form.Label>Name</Form.Label>
+          <Form.Label>标签名</Form.Label>
           <Input {...attrs} bind:value={$vform.name} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
       </Form.Field>
       <Form.Field {form} name="color">
         <Form.Control let:attrs>
-          <Form.Label>Color</Form.Label>
+          <Form.Label>颜色</Form.Label>
           <div class="flex items-center space-x-2">
             <Input {...attrs} bind:value={$vform.color} autocomplete="off" />
             <input type="color" bind:value={$vform.color} class="border-0" />

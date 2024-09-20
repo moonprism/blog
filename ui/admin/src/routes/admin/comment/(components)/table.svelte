@@ -19,6 +19,7 @@
   import { isMockMode } from '@/helpers/fetch'
   import { onMount } from 'svelte'
   import { debounce } from '@/helpers/system'
+  import { DateFormat } from '@/helpers/date'
   
   const serverSide = !isMockMode
   let paginationConfig = {}
@@ -82,8 +83,7 @@
       accessor: 'created',
       header: 'Created',
       cell: ({ value }) => {
-        const time = new Date(value * 1000)
-        return time.toLocaleDateString('en')
+        return DateFormat(value)
       },
       plugins: {
         filter: { exclude: true }

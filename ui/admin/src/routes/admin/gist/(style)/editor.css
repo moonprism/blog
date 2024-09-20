@@ -17,7 +17,7 @@ html.dark .carta-theme__gist .carta-input {
 .carta-theme__gist .carta-toolbar-left button {
   font-size: 0.8rem;
   padding: 2px 6px 1px;
-  @apply border-b-2 border-b-muted bg-muted text-primary/90;
+  @apply border-b-2 border-b-muted;
 }
 
 .carta-theme__gist .carta-toolbar-left .carta-active {

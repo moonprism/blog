@@ -143,6 +143,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 						&models.Attachment{},
 						&models.Gist{},
 						&models.Comment{},
+						&models.LoginRecord{},
 					)
 				},
 			},

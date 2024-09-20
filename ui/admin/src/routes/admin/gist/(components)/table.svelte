@@ -21,6 +21,7 @@
   import { debounce } from '@/helpers/system'
   import RowTitle from '@/components/blocks/cell/row-title.svelte'
   import TableRowHtml from './table-row-html.svelte'
+  import { DateFormat } from '@/helpers/date'
   
   const serverSide = !isMockMode
   let paginationConfig = {}
@@ -78,8 +79,7 @@
       accessor: 'created',
       header: 'Created',
       cell: ({ value }) => {
-        const time = new Date(value * 1000)
-        return time.toLocaleDateString('en')
+        return DateFormat(value) 
       },
       plugins: {
         filter: { exclude: true }
@@ -89,8 +89,7 @@
       accessor: 'updated',
       header: 'Updated',
       cell: ({ value }) => {
-        const time = new Date(value * 1000)
-        return time.toLocaleDateString('en')
+        return DateFormat(value)
       },
       plugins: {
         filter: { exclude: true }

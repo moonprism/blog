@@ -108,14 +108,14 @@
       <div class="flex flex-1 space-x-1">
         <Form.Field {form} name="title" class="w-full p-1">
           <Form.Control let:attrs>
-            <Form.Label>Title</Form.Label>
+            <Form.Label>标题</Form.Label>
             <Input {...attrs} bind:value={$vform.title} autocomplete="off" />
           </Form.Control>
           <Form.FieldErrors />
         </Form.Field>
         <Form.Field {form} name="lang" class="p-1">
           <Form.Control let:attrs>
-            <Form.Label>Lang</Form.Label>
+            <Form.Label>语言</Form.Label>
             <Combobox items={langItems} bind:value={lang}></Combobox>
           </Form.Control>
           <Form.FieldErrors />
@@ -132,7 +132,7 @@
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>
       {:else}
-        <Form.Button class="w-full">Save</Form.Button>
+        <Form.Button class="w-full">保存</Form.Button>
       {/if}
     </form>
   </Dialog.Content>

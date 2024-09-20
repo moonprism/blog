@@ -6,7 +6,7 @@ export const tableData = writable([] as Comment[])
 
 export const serverItemCount = writable(0)
 
-export const selectedViewOption = writable(['reply_comment_id', 'root_comment_id'])
+export const selectedViewOption = writable(['reply_comment_id', 'root_comment_id', 'link'])
 
 export const searchUrlQuery = writable('')
 export function initTableData(q = '') {

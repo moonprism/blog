@@ -91,7 +91,7 @@
     <form method="POST" use:enhance class="space-y-2">
       <Form.Field {form} name="title">
         <Form.Control let:attrs>
-          <Form.Label>Title</Form.Label>
+          <Form.Label>标题</Form.Label>
           <Input {...attrs} bind:value={$vform.title} autocomplete="off" />
         </Form.Control>
         <Form.FieldErrors />
@@ -99,7 +99,7 @@
 
       <Form.Field {form} name="status">
         <Form.Control let:attrs>
-          <Form.Label>Status</Form.Label>
+          <Form.Label>状态(是否发布)</Form.Label>
           <Select.Root
             selected={{
               label: $statuses.find((e) => e.id === $vform.status)?.label,
@@ -124,7 +124,7 @@
 
       <Form.Field {form} name="tags">
         <Form.Control let:attrs>
-          <Form.Label>Tags</Form.Label>
+          <Form.Label>标签</Form.Label>
           <div class="ml-1">
             {#each $tagTableData as tag}
               {@const checked = $vform.tags.some((e) => e.id === tag.id)}
@@ -156,7 +156,7 @@
 
       <Form.Field {form} name="image">
         <Form.Control let:attrs>
-          <Form.Label>Image</Form.Label>
+          <Form.Label>配图</Form.Label>
           <div class="ml-1 flex items-center justify-between">
             <div class="flex w-full items-center justify-between">
               <!--自定义图片-->
@@ -211,7 +211,7 @@
 
       <Form.Field {form} name="summary">
         <Form.Control let:attrs>
-          <Form.Label>Summary</Form.Label>
+          <Form.Label>描述</Form.Label>
           <Textarea {...attrs} bind:value={$vform.summary} rows={3} />
         </Form.Control>
         <Form.FieldErrors />
@@ -222,7 +222,7 @@
           <LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
         </Button>
       {:else}
-        <Form.Button class="w-full">Save</Form.Button>
+        <Form.Button class="w-full">保存</Form.Button>
       {/if}
     </form>
   </Dialog.Content>
