@@ -13,13 +13,13 @@ type oss struct {
 	RoleArn    string
 }
 
-func newOSS(ak string, sk string, roleArn string) (o *oss, err error) {
+func newOSS(ak string, sk string, region string, roleArn string) (o *oss, err error) {
 	config := &openapi.Config{
 		AccessKeyId:     tea.String(ak),
 		AccessKeySecret: tea.String(sk),
 	}
 	// Endpoint 请参考 https://api.aliyun.com/product/Sts
-	config.Endpoint = tea.String("sts.cn-hangzhou.aliyuncs.com")
+	config.Endpoint = tea.String("sts." + region + ".aliyuncs.com")
 	stsClient, err := sts20150401.NewClient(config)
 	if err != nil {
 		return

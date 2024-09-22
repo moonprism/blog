@@ -14,7 +14,6 @@ JwtSecret = "2aEtVr"
 [OSS]
   Region = ""
   Bucket = ""
-  Endpoint = ""
   AccessKeyId = ""
   AccessKeySecret = ""
   RoleArn = ""

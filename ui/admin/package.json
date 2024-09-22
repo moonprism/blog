@@ -44,6 +44,7 @@
     "@cartamd/plugin-slash": "^4.0.2",
     "@egjs/svelte-grid": "^1.16.0",
     "@pondorasti/remark-img-links": "^1.0.8",
+    "ali-oss": "^6.21.0",
     "bits-ui": "^0.21.13",
     "carta-md": "^4.4.4",
     "clsx": "^2.1.0",

@@ -56,7 +56,12 @@ func (app *App) InitDatabase() error {
 }
 
 func (app *App) InitOSS() error {
-	oss, err := newOSS(app.Setting.OSS.AccessKeyId, app.Setting.OSS.AccessKeySecret, app.Setting.OSS.RoleArn)
+	oss, err := newOSS(
+		app.Setting.OSS.AccessKeyId,
+		app.Setting.OSS.AccessKeySecret,
+		app.Setting.OSS.Region,
+		app.Setting.OSS.RoleArn,
+	)
 	if err != nil {
 		return err
 	}

@@ -101,3 +101,11 @@ export interface CommentBody {
 }
 
 export interface Comment extends DataModel, CommentBody {}
+
+export interface OssConfig {
+  accessKeyId: string
+  accessKeySecret: string
+  bucket: string
+  region: string
+  stsToken: string
+}

@@ -11,9 +11,11 @@
   import { superForm, defaults } from 'sveltekit-superforms'
   import { zod, zodClient } from 'sveltekit-superforms/adapters'
   import { LoaderCircle, Maximize, Trash2 } from 'lucide-svelte'
-  import type { Attachment } from '$src/types/stream'
+  import type { Attachment, OssConfig } from '$src/types/stream'
   import Textarea from '@/components/ui/textarea/textarea.svelte'
   import type { Writable } from 'svelte/store'
+  // @ts-ignore
+  import OSS from 'ali-oss'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -34,12 +36,10 @@
   const isCreate = formData.id === 0
 
   $vform = formData
-  
-  fet.get('attachment/cred').then((res) => {
-    console.log(res)
-  })
 
-  function save() {
+  let fileData: File
+
+  async function save() {
     if (isMockMode) {
       formData.key = previewUrl
     }
@@ -49,7 +49,14 @@
     }
     if (isCreate) {
       // 阿里云 STS 临时授权
-
+      const credResult = await fet.get('attachment/cred')
+      if (!credResult.ok) {
+        return
+      }
+      const ossConfig = <OssConfig>credResult.data
+      const client = new OSS(ossConfig)
+      const ossResult = await client.put($vform.key, fileData)
+      console.log(ossResult)
       // 上传成功后同步到服务器
       fet.post('attachment', body).then((res) => {
         if (res.ok) {
@@ -70,6 +77,7 @@
   }
 
   let previewUrl: string = getRealSrc(formData.key)
+
   // 图片预览
   function handleFileChange(event: Event) {
     const input = event.target as HTMLInputElement
@@ -82,6 +90,7 @@
         previewUrl = e.target?.result as string
       }
       reader.readAsDataURL(file)
+      fileData = file
     } else {
       $vform.key = previewUrl = ''
     }
@@ -118,7 +127,7 @@
 </Dialog.Root>
 
 <Dialog.Root bind:open={$formOpen}>
-  <Dialog.Content class="sm:max-w-[460px] z-[51]">
+  <Dialog.Content class="z-[51] sm:max-w-[460px]">
     <!-- https://github.com/huntabyte/bits-ui/issues/427#issuecomment-2025696636-->
     <!-- svelte-ignore a11y-autofocus -->
     <input class="fixed left-0 top-0 h-0 w-0" type="checkbox" autofocus={true} />

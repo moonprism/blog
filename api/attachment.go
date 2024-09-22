@@ -135,7 +135,7 @@ func (api *attachmentApi) cred(w http.ResponseWriter, r *http.Request) {
 		credential, err := api.OssClient.GetAssumeRole()
 		core.P(err)
 		oc := &OssConfig{
-			Region:          api.Setting.OSS.Region,
+			Region:          "oss-" + api.Setting.OSS.Region,
 			Bucket:          api.Setting.OSS.Bucket,
 			AccessKeyId:     *credential.AccessKeyId,
 			AccessKeySecret: *credential.AccessKeySecret,
