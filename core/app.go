@@ -27,23 +27,10 @@ func (app *App) AddSubcommand(cmd *cli.Command) {
 }
 
 func (app *App) Run() error {
-	if err := app.initSetting(); err != nil {
-		return err
-	}
-	if err := app.initDatabase(); err != nil {
-		return err
-	}
-	if err := app.initOSS(); err != nil {
-		return err
-	}
-	if err := app.initCache(); err != nil {
-		return err
-	}
-	app.initTokenAuth()
 	return app.RootCmd.Run(os.Args)
 }
 
-func (app *App) initSetting() error {
+func (app *App) InitSetting() error {
 	setting, err := NewSetting()
 	if err != nil {
 		return err
@@ -56,7 +43,7 @@ func (app *App) ReSetting() error {
 	return ReSetting(app.Setting)
 }
 
-func (app *App) initDatabase() error {
+func (app *App) InitDatabase() error {
 	// TODO sqlite
 	db, err := gorm.Open(mysql.Open(app.Setting.Database.Source), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
@@ -68,7 +55,7 @@ func (app *App) initDatabase() error {
 	return nil
 }
 
-func (app *App) initOSS() error {
+func (app *App) InitOSS() error {
 	oss, err := newOSS(app.Setting.OSS.AccessKeyId, app.Setting.OSS.AccessKeySecret, app.Setting.OSS.RoleArn)
 	if err != nil {
 		return err
@@ -77,7 +64,7 @@ func (app *App) initOSS() error {
 	return nil
 }
 
-func (app *App) initCache() error {
+func (app *App) InitCache() error {
 	cache, err := NewCacheClient(app.Setting.Cache.Addr)
 	if err != nil {
 		return err
@@ -86,7 +73,7 @@ func (app *App) initCache() error {
 	return nil
 }
 
-func (app *App) initTokenAuth() {
+func (app *App) InitTokenAuth() {
 	app.TokenAuth = jwtauth.New("HS256", []byte(app.Setting.JwtSecret), nil)
 }
 
@@ -99,6 +86,15 @@ func NewApp() *App {
 		isDev: false,
 		RootCmd: &cli.App{
 			Name: "blog",
+			Flags: []cli.Flag{
+				&cli.StringFlag{
+					Name:        "conf",
+					Aliases:     []string{"c"},
+					Value:       configPath,
+					Usage:       "app config path",
+					Destination: &configPath,
+				},
+			},
 		},
 	}
 }

@@ -21,6 +21,12 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				Name:  "test",
 				Usage: "test import",
 				Action: func(ctx *cli.Context) error {
+					if err := app.InitSetting(); err != nil {
+						return err
+					}
+					if err := app.InitDatabase(); err != nil {
+						return err
+					}
 					fileContent, err := os.Open("file.test.json")
 					if err != nil {
 						return err
@@ -135,6 +141,12 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				Name:  "construct",
 				Usage: "sync database struct",
 				Action: func(ctx *cli.Context) error {
+					if err := app.InitSetting(); err != nil {
+						return err
+					}
+					if err := app.InitDatabase(); err != nil {
+						return err
+					}
 					return app.O.AutoMigrate(
 						&models.Article{},
 						&models.ArticleContent{},
@@ -151,6 +163,9 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				Name:  "passwd",
 				Usage: "set account password",
 				Action: func(ctx *cli.Context) error {
+					if err := app.InitSetting(); err != nil {
+						return err
+					}
 					fmt.Println("please input password:")
 					password, _ := terminal.ReadPassword(0)
 					pass, err := bcrypt.GenerateFromPassword(password, 14)

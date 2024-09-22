@@ -11,6 +11,19 @@ func NewServeCommand(app *core.App) *cli.Command {
 		Name:  "serve",
 		Usage: "start web serve",
 		Action: func(ctx *cli.Context) error {
+			if err := app.InitSetting(); err != nil {
+				return err
+			}
+			if err := app.InitDatabase(); err != nil {
+				return err
+			}
+			if err := app.InitOSS(); err != nil {
+				return err
+			}
+			if err := app.InitCache(); err != nil {
+				return err
+			}
+			app.InitTokenAuth()
 			return api.Serve(app)
 		},
 	}
