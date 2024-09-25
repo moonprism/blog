@@ -1,0 +1,472 @@
+{
+  "gists": {
+    "data": [
+      {
+        "id": 93,
+        "created": 1712262207,
+        "updated": 1727269362,
+        "title": "linux 字体安装",
+        "lang": "sh",
+        "content": "~/.local/share/fonts",
+        "html": "\u003cpre class=\"shiki shiki-themes carta-light carta-dark\" style=\"background-color:transparent;--shiki-dark-bg:transparent;color:#333333;--shiki-dark:#f8f8f2\" tabindex=\"0\"\u003e\u003ccode\u003e\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#E16;--shiki-dark:#FF7CC6\"\u003e~\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e/.local/share/fonts\u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e"
+      },
+      {
+        "id": 92,
+        "created": 1711160736,
+        "updated": 1727269362,
+        "title": "docker-compose禁止访问外部网络",
+        "lang": "md",
+        "content": "`docker-compose.yml`\n```yml\n...\nnetworks:\n  app:\n    driver: bridge\n    driver_opts:\n      com.docker.network.bridge.enable_ip_masquerade: 'false'\n```",
+        "html": "\u003cp\u003e\u003ccode\u003edocker-compose.yml\u003c/code\u003e\u003c/p\u003e\n\u003cpre class=\"shiki shiki-themes carta-light carta-dark\" style=\"background-color:transparent;--shiki-dark-bg:transparent;color:#333333;--shiki-dark:#f8f8f2\" tabindex=\"0\"\u003e\u003ccode\u003e\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003e...\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#22863A;--shiki-dark:#85E89D\"\u003enetworks\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e:\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#22863A;--shiki-dark:#85E89D\"\u003e  app\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e:\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#22863A;--shiki-dark:#85E89D\"\u003e    driver\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e: \u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003ebridge\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#22863A;--shiki-dark:#85E89D\"\u003e    driver_opts\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e:\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#22863A;--shiki-dark:#85E89D\"\u003e      com.docker.network.bridge.enable_ip_masquerade\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e: \u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e'false'\u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e"
+      },
+      {
+        "id": 91,
+        "created": 1705523356,
+        "updated": 1727275773,
+        "title": "MovieQuote",
+        "lang": "md",
+        "content": "\u003e [!NOTE]\n\u003e On a long-enough time line, the survival rate for everyone drops to zero.\n \u003e 在漫长时间轴上的某一点，每个人的存活率都会降为零。",
+        "html": "\u003cdiv class=\"admonition ad-note\"\u003e\n\u003cp class=\"admonition-title\"\u003eNOTE\u003c/p\u003e\n\u003cp\u003eOn a long-enough time line, the survival rate for everyone drops to zero.\n在漫长时间轴上的某一点，每个人的存活率都会降为零。\u003c/p\u003e\n\u003c/div\u003e"
+      },
+      {
+        "id": 90,
+        "created": 1703963710,
+        "updated": 1727269362,
+        "title": "删除旋转建议按钮",
+        "lang": "sh",
+        "content": "adb shell settings put secure show_rotation_suggestions 0",
+        "html": "\u003cpre class=\"shiki shiki-themes carta-light carta-dark\" style=\"background-color:transparent;--shiki-dark-bg:transparent;color:#333333;--shiki-dark:#f8f8f2\" tabindex=\"0\"\u003e\u003ccode\u003e\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003eadb\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e shell\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e settings\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e put\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e secure\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e show_rotation_suggestions\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e 0\u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e"
+      },
+      {
+        "id": 89,
+        "created": 1702172024,
+        "updated": 1727269362,
+        "title": "xorg 屏幕缩放",
+        "lang": "sh",
+        "content": "xrandr  # 查看设备\nxrandr --output HDMI-1 --scale 1.5x1.5 # 缩小倍率\nxrandr --output eDP-1 --off\nxrandr --output HDMI-1 --right-of eDP-1  # eDP-1 | HDMI-1",
+        "html": "\u003cpre class=\"shiki shiki-themes carta-light carta-dark\" style=\"background-color:transparent;--shiki-dark-bg:transparent;color:#333333;--shiki-dark:#f8f8f2\" tabindex=\"0\"\u003e\u003ccode\u003e\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003exrandr\u003c/span\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e  # 查看设备\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003exrandr\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e --output\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e HDMI-1\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e --scale\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e 1.5x1.5\u003c/span\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e # 缩小倍率\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003exrandr\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e --output\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e eDP-1\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e --off\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003exrandr\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e --output\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e HDMI-1\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e --right-of\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e eDP-1\u003c/span\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e  # eDP-1 | HDMI-1\u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e"
+      },
+      {
+        "id": 87,
+        "created": 1699559288,
+        "updated": 1727275748,
+        "title": "摘抄",
+        "lang": "md",
+        "content": "\u003e [!NOTE] \n\u003e ...摆脱尘世的一切羁绊，飞向一片空濛。",
+        "html": "\u003cdiv class=\"admonition ad-note\"\u003e\n\u003cp class=\"admonition-title\"\u003eNOTE\u003c/p\u003e\n\u003cp\u003e...摆脱尘世的一切羁绊，飞向一片空濛。\u003c/p\u003e\n\u003c/div\u003e"
+      },
+      {
+        "id": 86,
+        "created": 1698458294,
+        "updated": 1727269362,
+        "title": "删除所有容器",
+        "lang": "sh",
+        "content": "docker rm $(docker ps -aq)",
+        "html": "\u003cpre class=\"shiki shiki-themes carta-light carta-dark\" style=\"background-color:transparent;--shiki-dark-bg:transparent;color:#333333;--shiki-dark:#f8f8f2\" tabindex=\"0\"\u003e\u003ccode\u003e\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003edocker\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e rm\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e $(\u003c/span\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003edocker\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e ps\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e -aq\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e)\u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e"
+      },
+      {
+        "id": 85,
+        "created": 1698157388,
+        "updated": 1727269362,
+        "title": "crontab日志问题",
+        "lang": "sh",
+        "content": "# https://askubuntu.com/a/967798\n0 3 * * * (cmd1;  cmd2) 2\u003e\u00261 | logger -t mycmd\ngrep 'mycmd' /var/log/syslog",
+        "html": "\u003cpre class=\"shiki shiki-themes carta-light carta-dark\" style=\"background-color:transparent;--shiki-dark-bg:transparent;color:#333333;--shiki-dark:#f8f8f2\" tabindex=\"0\"\u003e\u003ccode\u003e\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e# https://askubuntu.com/a/967798\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003e0\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e 3\u003c/span\u003e\u003cspan style=\"color:#000;--shiki-dark:#FFF\"\u003e *\u003c/span\u003e\u003cspan style=\"color:#000;--shiki-dark:#FFF\"\u003e *\u003c/span\u003e\u003cspan style=\"color:#000;--shiki-dark:#FFF\"\u003e *\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e (cmd1;  \u003c/span\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003ecmd2\u003c/span\u003e\u003cspan style=\"color:#333333;--shiki-dark:#F8F8F2\"\u003e) \u003c/span\u003e\u003cspan style=\"color:#E16;--shiki-dark:#FF7CC6\"\u003e2\u003e\u0026#x26;1\u003c/span\u003e\u003cspan style=\"color:#E16;--shiki-dark:#FF7CC6\"\u003e |\u003c/span\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003e logger\u003c/span\u003e\u003cspan style=\"color:#3BF;--shiki-dark:#71D58A\"\u003e -t\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e mycmd\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003egrep\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e 'mycmd'\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e /var/log/syslog\u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e"
+      },
+      {
+        "id": 84,
+        "created": 1697700876,
+        "updated": 1727269362,
+        "title": "一些meme",
+        "lang": "md",
+        "content": "拭目痛い",
+        "html": "\u003cp\u003e拭目痛い\u003c/p\u003e"
+      },
+      {
+        "id": 83,
+        "created": 1697620706,
+        "updated": 1727269362,
+        "title": "docker导入导出镜像",
+        "lang": "sh",
+        "content": "docker export 20c4ba65cf27 \u003e php.tar #导出\ndocker import - php \u003c php.tar # 导入\n# 上面这种操作只会导入文件系统，运行镜像还得自己指定 command: php-fpm\n# load/save",
+        "html": "\u003cpre class=\"shiki shiki-themes carta-light carta-dark\" style=\"background-color:transparent;--shiki-dark-bg:transparent;color:#333333;--shiki-dark:#f8f8f2\" tabindex=\"0\"\u003e\u003ccode\u003e\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003edocker\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e export\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e 20c4ba65cf27\u003c/span\u003e\u003cspan style=\"color:#E16;--shiki-dark:#FF7CC6\"\u003e \u003e\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e php.tar\u003c/span\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e #导出\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6F42C1;--shiki-dark:#B392F0\"\u003edocker\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e import\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e -\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e php\u003c/span\u003e\u003cspan style=\"color:#E16;--shiki-dark:#FF7CC6\"\u003e \u0026#x3C;\u003c/span\u003e\u003cspan style=\"color:#7D8;--shiki-dark:#4DACFA\"\u003e php.tar\u003c/span\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e # 导入\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e# 上面这种操作只会导入文件系统，运行镜像还得自己指定 command: php-fpm\u003c/span\u003e\u003c/span\u003e\n\u003cspan class=\"line\"\u003e\u003cspan style=\"color:#6A737D;--shiki-dark:#6A737D\"\u003e# load/save\u003c/span\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e"
+      },
+      {
+        "id": 82,
+        "created": 1697616409,
+        "updated": 1727269362,
+        "title": "sftp常用命令",
+        "lang": "sh",
+        "content": "sftp -oPort=22 用户名@IP地址\nsftp\u003e pwd / lpwd             #查看当前目录\nsftp\u003e ls  / lls              #查看文件列表\nsftp\u003e put -r test.txt /test  #上传文件\nsftp\u003e get -r /test/test.txt  #下载文件",
+        "html": ""
+      },
+      {
+        "id": 81,
+        "created": 1696911917,
+        "updated": 1727269362,
+        "title": "挂载U盘",
+        "lang": "sh",
+        "content": "sudo fdisk -l\nsudo mount --mkdir /dev/sda1 /dev/media\n# 卸载\nsudo umount /dev/sda1",
+        "html": ""
+      },
+      {
+        "id": 80,
+        "created": 1687474186,
+        "updated": 1727269362,
+        "title": "nvim调试",
+        "lang": "md",
+        "content": ":lua print(vim.inspect(vim))",
+        "html": ""
+      },
+      {
+        "id": 78,
+        "created": 1685484355,
+        "updated": 1727269362,
+        "title": "东方",
+        "lang": "md",
+        "content": "![](VoZTiyGAjmZJRKidpczn.jpg)\n\u003chttps://twitter.com/aoi_fujiwara_a/status/1568796484228759553\u003e",
+        "html": ""
+      },
+      {
+        "id": 77,
+        "created": 1679854831,
+        "updated": 1727269362,
+        "title": "pacman常用命令",
+        "lang": "sh",
+        "content": "# 更新软件源\npacman -Sy\n# 安装软件\npacman -S 软件名\n# 卸载软件\npacman -Rs 软件名\n# 在仓库中搜索含关键字的软件包，并用简洁方式显示\npacman -Ssq 关键字\npacman -Qsq 关键字 #在本地搜索\n# 清理所有缓存\npacman -Scc",
+        "html": ""
+      },
+      {
+        "id": 76,
+        "created": 1679598423,
+        "updated": 1727269362,
+        "title": " 血源师姐meme",
+        "lang": "md",
+        "content": "![](WbMTqEIDIMQjuNWUJJTM.jpg)",
+        "html": ""
+      },
+      {
+        "id": 75,
+        "created": 1666239120,
+        "updated": 1727269362,
+        "title": "文明6未来时代开幕词",
+        "lang": "md",
+        "content": "这个世界所蕴含奇迹之多绝非远古先知的梦境所能构想，所拥有灾祸之恐怖也非天启所能描绘。世界不但有拥有自我意识的机器，更有编织梦幻仙境的全新事物。长久以前做出的选择将在这个时代产生重大结果，而它们需要坚定不移的答案。前进吧，实现您文明未来的美好愿景。",
+        "html": ""
+      },
+      {
+        "id": 74,
+        "created": 1658257233,
+        "updated": 1727275797,
+        "title": "水龙吟·登建康赏心亭",
+        "lang": "md",
+        "content": "\u003e [!NOTE]\n\u003e 求田问舍，怕应羞见，刘郎才气。",
+        "html": ""
+      },
+      {
+        "id": 73,
+        "created": 1652754213,
+        "updated": 1727269362,
+        "title": "黑魂3备份存档",
+        "lang": "sh",
+        "content": "cd /mnt/c/Users/13708/AppData/Roaming\nzip -r ../../Desktop/DS3_`date '+%Y%m%d_%H%M%S'`.zip ./DarkSoulsIII\n# 载入存档\nunzip -o ../../Desktop/二周目米宝.zip  -d ./",
+        "html": ""
+      },
+      {
+        "id": 72,
+        "created": 1651272248,
+        "updated": 1727269362,
+        "title": "虽然什么都没做，但还是辛苦自己了",
+        "lang": "md",
+        "content": "![](zmMoloCIUFhfadWmORhh.jpg)",
+        "html": ""
+      },
+      {
+        "id": 71,
+        "created": 1637240497,
+        "updated": 1727269362,
+        "title": "2021订阅推荐",
+        "lang": "md",
+        "content": "* 🛸 [GO语言101](https://github.com/golang101/golang101)\n* ⛺ [深入理解简单设计](http://zhangyi.xyz/understand-simple-design/)\n* 🎲 [Roguelike到底是什么？浅谈Roguelike游戏的发展史](https://www.gcores.com/articles/142731)\n* 💰 [vivo 全球商城：优惠券系统架构设计与实践](https://mp.weixin.qq.com/s?__biz=MzI4NjY4MTU5Nw==\u0026mid=2247491631\u0026idx=1\u0026sn=b53c69df13a80c6bf37531e0c3788188\u0026chksm=ebdb90bddcac19ab3dae9eb635089644d6032dfc4394c3f9bcfedf837060eaeb8c5a4d70c532\u0026token=1146302655\u0026lang=zh_CN#rd)\n* 🚩 [被遗忘的先锋：“国际纵队”里的中国人](https://www.gcores.com/articles/137077)\n* ✉️ [简单的Postman，还能玩出花？](https://mp.weixin.qq.com/s/WYGjvmsGG3D8sJ9j5i-d7w)\n* 🦘 [tmux-jump](https://github.com/schasse/tmux-jump)",
+        "html": ""
+      },
+      {
+        "id": 70,
+        "created": 1637235564,
+        "updated": 1727269362,
+        "title": "vim保存宏的特殊字符",
+        "lang": "md",
+        "content": "一些特殊字符的转义\n- **^[** `\u003cC-v\u003e\u003cESC\u003e`\n- **^M** `\u003cC-v\u003e\u003cEnter\u003e`",
+        "html": ""
+      },
+      {
+        "id": 69,
+        "created": 1637234865,
+        "updated": 1727269362,
+        "title": "恢复表从1开始自增",
+        "lang": "sql",
+        "content": "ALTER TABLE TableName AUTO_INCREMENT=1;",
+        "html": ""
+      },
+      {
+        "id": 68,
+        "created": 1623247240,
+        "updated": 1727269362,
+        "title": "あくあちゃん",
+        "lang": "md",
+        "content": "![](wzqLAdBEDSOAJjTxEAYs.jpg)\u003chttps://twitter.com/Mozzi_an1357/status/1387724550113173508\u003e",
+        "html": ""
+      },
+      {
+        "id": 61,
+        "created": 1608300329,
+        "updated": 1727269362,
+        "title": "壁纸推荐",
+        "lang": "md",
+        "content": "![](NSGxlkojQoErWLoXjyRp.jpg)[pixiv:80491198](https://www.pixiv.net/artworks/80491198)\n\n![](HPeqjvqmaCgXjUuNjyLL.jpg)[pixiv:68479906](https://www.pixiv.net/artworks/68479906)\n\n![](augYYlHNoORyMLERTmRV.jpg)\u003chttps://www.deviantart.com/seerlight/art/Let-s-Go-Home-743542427\u003e\n\n![](gFjsJhJcSZCsIyBGbLVL.jpg)[pixiv:68315220](https://www.pixiv.net/artworks/68315220)",
+        "html": ""
+      },
+      {
+        "id": 58,
+        "created": 1602594668,
+        "updated": 1727269362,
+        "title": "❤️",
+        "lang": "md",
+        "content": "![](XnpomBvJrAnIInCjYhPp.jpg)\u003chttps://twitter.com/umaiyo_puyoman/status/1315592567875018754\u003e",
+        "html": ""
+      },
+      {
+        "id": 55,
+        "created": 1601180320,
+        "updated": 1727269362,
+        "title": "alias自定义命令参数",
+        "lang": "sh",
+        "content": "# .zshrc\nJIRA_URL='https://jira-oa.xxx.com/'\nJIRA_JOB_CP='OM0-'\n# bash还是zsh都只能通过函数来实现\nalias jira='_jira(){google-chrome ${JIRA_URL}browse/${JIRA_JOB_CP}$1 };_jira'",
+        "html": ""
+      },
+      {
+        "id": 54,
+        "created": 1598783012,
+        "updated": 1727269362,
+        "title": "ninja aqua",
+        "lang": "md",
+        "content": "![](VXkHWeEBrEPWlMOxxkoG.jpg)\u003chttps://twitter.com/xdarjeelingxtea/status/1294234965639491584\u003e",
+        "html": ""
+      },
+      {
+        "id": 53,
+        "created": 1595947839,
+        "updated": 1727269362,
+        "title": "vim合并行",
+        "lang": "md",
+        "content": "```\nJ # 删除行首空格与换行符(既合并到上一行)的正确命令: VkJ\n```",
+        "html": ""
+      },
+      {
+        "id": 50,
+        "created": 1593511279,
+        "updated": 1727269362,
+        "title": "elasticsearch bulk 批量插入数据",
+        "lang": "go",
+        "content": "// 参考 https://gist.github.com/un1t/ac188472f5dfe759d14f\npackage main\n\nimport (\n\t\"fmt\"\n\t\"math/rand\"\n\t\"net/http\"\n\t\n\t// 不会现在还有人在用 v1 版本的 es 吧，不会吧不会吧\n\t\"gopkg.in/olivere/elastic.v1\"\n)\n\ntype CheckResult struct {\n\tStatus  int     `json:\"status\"`\n}\n\n// 生成随机字符id\nconst letterBytes = \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\"\nfunc RandStringBytes(n int) string {\n\tb := make([]byte, n)\n\tfor i := range b {\n\t\tb[i] = letterBytes[rand.Intn(len(letterBytes))]\n\t}\n\treturn string(b)\n}\n\nfunc main() {\n\tclient, err := elastic.NewClient(http.DefaultClient, \"http://****/\")\n\tif err != nil {\n\t\tfmt.Printf(\"%v\\n\", err)\n\t}\n\tfor i := 0; i \u003c 500; i++ {\n\t\tbulkRequest := client.Bulk()\n\t\tfor j := 0; j \u003c 10000; j++ {\n\t\t\tcheckFake := CheckResult{Status:0}\n\t\t\tid := RandStringBytes(16)\n            req := elastic.NewBulkIndexRequest().Index(\"check\").Type(\"image\").Id(id).Doc(checkFake)\n\t\t\tbulkRequest = bulkRequest.Add(req)\n\t\t}\n\t\tbulkResponse, err := bulkRequest.Do()\n\t\tif err != nil {\n\t\t\tfmt.Println(err)\n\t\t}\n}",
+        "html": ""
+      },
+      {
+        "id": 45,
+        "created": 1590592566,
+        "updated": 1727275839,
+        "title": "周刊 2020-05.4",
+        "lang": "md",
+        "content": "\u003e [!TIP]\n\u003e :bookmark: 第一期，未来会持续分享些好的(博客)文章\n\n- :books: [从零入门 K8s| 人人都能看懂 Pod 与容器设计模式](https://mp.weixin.qq.com/s?__biz=MzA4ODg0NDkzOA==\u0026mid=2247488010\u0026idx=1\u0026sn=37e4a3bff67d5ce466685b646cbab279\u0026chksm=9022adefa75524f9f63ddc98d05210958725b79ba9823ce0e87f8dee8740ee8c59d2ec5de321\u0026mpshare=1\u0026scene=23\u0026srcid=\u0026sharer_sharetime=1590577306539\u0026sharer_shareid=566f67463343b4fd81bb4dbead932b25#rd)\n- :seedling: [为什么 0.1 + 0.2 = 0.300000004](https://draveness.me/whys-the-design-floating-point-arithmetic/)\n- :octocat: [[能不能好好说话]](https://github.com/itorr/nbnhhsh)\n- :baby_chick: [中文互联网中“讨论”的消亡](https://www.gcores.com/articles/121924)\n- :trophy: [高能分享之《优雅的编程者》](http://xiaorui.cc/archives/6643)\n- :fish_cake: [《睡觉的笨蛋》：一个才华不够仍要坚持自我的故事](https://www.gcores.com/articles/120615)\n- :maple_leaf: [环游中国341天后，这位湖北骑士被定格在了家乡外](https://www.yystv.cn/p/6233)",
+        "html": ""
+      },
+      {
+        "id": 44,
+        "created": 1590400668,
+        "updated": 1727269362,
+        "title": "统计文件重复行",
+        "lang": "sh",
+        "content": "sort test.txt | uniq -c | sort -rn",
+        "html": ""
+      },
+      {
+        "id": 41,
+        "created": 1589752475,
+        "updated": 1727269362,
+        "title": "kenshi aqua",
+        "lang": "md",
+        "content": "![](olylErogvBWFgPYrVGel.jpg)",
+        "html": ""
+      },
+      {
+        "id": 40,
+        "created": 1589470804,
+        "updated": 1727269362,
+        "title": "rabbit aqua",
+        "lang": "md",
+        "content": "![](MHHIDoUdAkmqjaaEXJxD.jpg)\u003chttps://twitter.com/umaiyo_puyoman/status/1260173067067637762\u003e",
+        "html": ""
+      },
+      {
+        "id": 38,
+        "created": 1589186191,
+        "updated": 1727269362,
+        "title": "docker容器查看宿主机ip",
+        "lang": "sh",
+        "content": "/sbin/ip route|awk '/default/ { print $3 }'",
+        "html": ""
+      },
+      {
+        "id": 37,
+        "created": 1588948779,
+        "updated": 1727269362,
+        "title": "ssh 端口转发",
+        "lang": "sh",
+        "content": "ssh -N -L 3306:localhost:3306 root@xx.xx",
+        "html": ""
+      },
+      {
+        "id": 36,
+        "created": 1587055616,
+        "updated": 1727275861,
+        "title": "读书",
+        "lang": "md",
+        "content": "\u003e [!NOTE]\n\u003e All the bright，precious things fade so fast.And they don’t come back.\n所有的光鲜靓丽都敌不过时间，并且一去不复返。",
+        "html": ""
+      },
+      {
+        "id": 35,
+        "created": 1586433242,
+        "updated": 1727269362,
+        "title": "vim分屏",
+        "lang": "md",
+        "content": "### 分屏启动\n\n1. 垂直分屏\n```\nvim -On file1 file2\n```\n2. 水平分屏\n```\nvim -on file1 file2\n```\n\n### 关闭分屏\n\n* 关闭当前窗口\n```\nctrl+w q\n```\n\n### 分屏\n\n1. 上下分割，打开一个新文件\n```\n:sp filename\n```\n2. 左右分割，打开一个新文件\n```\n:vsp filename\n```\n\n### 切换分屏\n\n* 移动光标到上、下、左、右屏中\n```\nctrl+w h/j/k/l\n```\n\n* 大小自适应\n````\nctrl+w =\n```",
+        "html": ""
+      },
+      {
+        "id": 34,
+        "created": 1586338154,
+        "updated": 1727269362,
+        "title": "零宽断言",
+        "lang": "md",
+        "content": "顾名思义，零宽断言不占任何字符，仅用来断言\n\n* `(?=)` 表示正向断言，true\n* `(!=)` 表示负向断言，false\n\n### 先行零宽断言\n\n```\n// 匹配ab后为或不为c，但c不会被该正则匹配\nab(?=c)\nab(?!c)\n// 注意这里断言宽度为0，只断言这里是个a，然后匹配ab，才不是匹配aab\n(?=a)ab\n// 所以下面的正则是匹配不了任何字符串的\n(?=b)ab\n```\n\n### 后发零宽断言\n\n```\n// 断言前面是个a，然后匹配之后的ab，也就是用来匹配aab里的ab\n(?\u003c=a)ab\n// 用在markdown.js里的，匹配开头不为\\转义的`code`\n(?\u003c!\\\\)(`+)([^`]|[^`].*?[^`])\\1(?!`)\n```\n\n\u003e[danger] 写好后才发现后发零宽负向断言只有chrome支持\n\n只好改回以前的版本了\n\n```\n([^\\\\`]|^)(`+)([^`]|[^`].*?[^`])\\2(?!`)\n```",
+        "html": ""
+      },
+      {
+        "id": 18,
+        "created": 1582868588,
+        "updated": 1727269362,
+        "title": "Notion教程",
+        "lang": "md",
+        "content": "![](MonBYnWfIjxGhNmlIyeo.jpg)\n\n* [Notion：重新定义数字笔记](https://sspai.com/post/39694)\n* [使用详解：来自未来的笔记协作工具](https://sspai.com/post/52176)\n* [以Notion为原点，我打造了一套极简工作流](https://sspai.com/post/58960)\n\n\u003e 用来替换为知",
+        "html": ""
+      },
+      {
+        "id": 17,
+        "created": 1582636697,
+        "updated": 1727269362,
+        "title": "golang string、int转换",
+        "lang": "go",
+        "content": "// string -\u003e int\ni, err := strconv.Atoi(s)\n// int -\u003e string\ns := strconv.Itoa(i)\n// int64 -\u003e string\ns := strconv.FormatInt(i64, 10)\n// string -\u003e int64\ni64, err := strconv.ParseInt(s, 10, 64)",
+        "html": ""
+      },
+      {
+        "id": 11,
+        "created": 1581345446,
+        "updated": 1727269362,
+        "title": "贴贴",
+        "lang": "md",
+        "content": "![](jQnGJGxGEdSBVAuWvMpQ.jpg)来源：[不就是棒棒糖嘛 下次再给你买就是了](https://t.bilibili.com/353574279182974759?tab=2)",
+        "html": ""
+      },
+      {
+        "id": 9,
+        "created": 1581339129,
+        "updated": 1727269362,
+        "title": "一个简单的代码搜索框",
+        "lang": "css",
+        "content": "input {\n    width: 44.5%;\n}\ninput:focus {\n    border-color: aqua;\n}",
+        "html": ""
+      },
+      {
+        "id": 8,
+        "created": 1581248285,
+        "updated": 1727269362,
+        "title": "git选择提交",
+        "lang": "sh",
+        "content": "git add -p xx.file # y/n 添加",
+        "html": ""
+      },
+      {
+        "id": 7,
+        "created": 1581043591,
+        "updated": 1727269362,
+        "title": "文件压缩与打包",
+        "lang": "sh",
+        "content": "# 打包并压缩\ntar -zcvf /xx.tar.gz /xx\n# 解压缩并解包\ntar -zxvf xx.tar.gz -C /xx",
+        "html": ""
+      },
+      {
+        "id": 5,
+        "created": 1580962408,
+        "updated": 1727269362,
+        "title": "Mysql查看时区",
+        "lang": "sql",
+        "content": "show global variables like'%time_zone%';",
+        "html": ""
+      },
+      {
+        "id": 4,
+        "created": 1580954019,
+        "updated": 1727269362,
+        "title": "git初始化",
+        "lang": "sh",
+        "content": "git config --global user.name \"your name\"\ngit config --global user.email \"email@example.com\"\ngit config --global core.editor vim\n# 存储密码\ngit config --global credential.helper store\ngit config --global core.quotepath false",
+        "html": ""
+      },
+      {
+        "id": 3,
+        "created": 1580928984,
+        "updated": 1727269362,
+        "title": "nmap扫描网段",
+        "lang": "sh",
+        "content": "nmap -sP 192.168.2.1-255\nsudo nmap 192.168.2.105",
+        "html": ""
+      },
+      {
+        "id": 2,
+        "created": 1580928497,
+        "updated": 1727269362,
+        "title": "docker运行容器shell",
+        "lang": "sh",
+        "content": "# docker-compose\ndocker-compose run/exec service /bin/bash\n\n# docker\ndocker run -it ubuntu /bin/bash",
+        "html": ""
+      }
+    ],
+    "pagination": {
+      "count": 49
+    }
+  },
+  "gist-lang": [
+    {
+      "lang": "md",
+      "count": 25
+    },
+    {
+      "lang": "sh",
+      "count": 19
+    },
+    {
+      "lang": "sql",
+      "count": 2
+    },
+    {
+      "lang": "go",
+      "count": 2
+    },
+    {
+      "lang": "css",
+      "count": 1
+    }
+  ]
+}

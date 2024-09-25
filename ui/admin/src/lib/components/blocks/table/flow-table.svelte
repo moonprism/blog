@@ -7,7 +7,7 @@
   import Loading from '../animation/loading.svelte'
   import { onMount, onDestroy } from 'svelte'
   import { isScrollAtBottom, throttle } from '@/helpers/system'
-  import { isRequestIn } from '@/helpers/fetch'
+  import { isMockMode, isRequestIn } from '@/helpers/fetch'
 
   export let tableModel: TableViewModel<any, any>
   export let viewOption: ViewOption
@@ -37,7 +37,7 @@
 
   const handleScroll = throttle(() => {
     if (isScrollAtBottom(thParent)) {
-      if (!$isRequestIn && $hasNextPage) {
+      if (!$isRequestIn && ($hasNextPage || isMockMode)) {
         $pageSize += 20
       }
     }

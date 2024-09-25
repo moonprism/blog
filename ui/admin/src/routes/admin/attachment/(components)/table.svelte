@@ -174,7 +174,7 @@
   }, 100)
   $: {
     $pageSize
-    if (mounted && serverSide) {
+    if (mounted) {
       // 交给下面的监听器初始化
       if ($pageSize !== 20) {
         indexTableData()
@@ -194,7 +194,7 @@
     $filterText
     // todo values不需要防抖处理
     $filterValues
-    if (mounted && serverSide) {
+    if (mounted) {
       searchTableData()
     }
   }

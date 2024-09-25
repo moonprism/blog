@@ -9,6 +9,7 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
 	"github.com/moonprism/blog/models"
+	"gorm.io/gorm"
 )
 
 func bindTagApi(app *core.App, r chi.Router) {
@@ -68,9 +69,12 @@ func (api *tagApi) update(w http.ResponseWriter, r *http.Request) {
 func (api *tagApi) delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.ParseUint(chi.URLParam(r, "id"), 10, 32)
 	core.P(err)
-	tag := new(models.Tag)
-	tag.ID = uint(id)
-	api.O.Select("Articles").Delete(&tag)
+	err = api.O.Transaction(func(tx *gorm.DB) error {
+		if err = tx.Delete(new(models.Tag), id).Error; err != nil {
+			return err
+		}
+		return tx.Where("tag_id = ?", id).Delete(new(models.ArticleTags)).Error
+	})
 	core.P(err)
 	api.JSON(w, id)
 }

@@ -44,22 +44,27 @@
       formData.key = previewUrl
     }
     const body = {
-      key: $vform.key,
+      key: generateFileName($vform.key),
       summary: $vform.summary
     }
     if (isCreate) {
-      // 阿里云 STS 临时授权
-      const credResult = await fet.get('attachment/cred')
-      if (!credResult.ok) {
-        return
+      if (!isMockMode) {
+        // 阿里云 STS 临时授权
+        const credResult = await fet.get('attachment/cred')
+        if (!credResult.ok) {
+          return
+        }
+        const ossConfig = <OssConfig>credResult.data
+        const client = new OSS(ossConfig)
+        const ossResult = await client.put(body.key, fileData)
+        console.log(ossResult)
       }
-      const ossConfig = <OssConfig>credResult.data
-      const client = new OSS(ossConfig)
-      const ossResult = await client.put($vform.key, fileData)
-      console.log(ossResult)
       // 上传成功后同步到服务器
       fet.post('attachment', body).then((res) => {
         if (res.ok) {
+          if (isMockMode) {
+            res.data.key = previewUrl
+          }
           $tableData = [<Attachment>res.data, ...$tableData]
           closeForm()
         }
@@ -74,6 +79,14 @@
         }
       })
     }
+  }
+
+  // 生成唯一文件名的函数
+  function generateFileName(originalName: string) {
+    const timestamp = Date.now() // 时间戳
+    const randomString = Math.random().toString(36).substring(2, 8) // 随机字符串
+    const fileExtension = originalName.split('.').pop() // 获取文件扩展名
+    return `${timestamp}_${randomString}.${fileExtension}` // 生成新的文件名
   }
 
   let previewUrl: string = getRealSrc(formData.key)
@@ -142,7 +155,9 @@
             <div>
               文件
               {#if !isCreate}
-                <span class="mx-1 text-xs text-muted-foreground">{$vform.key}</span>
+                <span class="mx-1 text-xs text-muted-foreground"
+                  >{$vform.key.length > 50 ? $vform.key.substring(0, 50)+'...' : $vform.key}</span
+                >
               {/if}
             </div>
           </Form.Label>

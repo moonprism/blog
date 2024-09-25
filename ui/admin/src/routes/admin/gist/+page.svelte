@@ -18,10 +18,16 @@
     if (!putRes.ok) {
       return
     }
+    $tableData.forEach((gist) => {
+      if (gist.id === id) {
+        gist.html = html
+      }
+    })
     successCount++
     if (successCount === syncCount) {
       successCount = 0
       isRequest = false
+      $tableData = $tableData
       toast.success(`同步完成 ${syncCount} 条`)
     }
   }

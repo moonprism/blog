@@ -17,13 +17,12 @@ import (
 func bindArticleApi(app *core.App, r chi.Router) {
 	api := articleApi{app}
 
-	r.Get("/", api.list)
-	r.Get("/{id}", api.detail)
-
 	r.Group(func(r chi.Router) {
 		r.Use(jwtauth.Verifier(app.TokenAuth))
 		r.Use(jwtauth.Authenticator(app.TokenAuth))
 
+		r.Get("/", api.list)
+		r.Get("/{id}", api.detail)
 		r.Post("/", api.create)
 		r.Put("/{id}", api.update)
 		r.Delete("/{id}", api.delete)

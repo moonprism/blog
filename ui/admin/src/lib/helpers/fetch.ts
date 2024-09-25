@@ -68,11 +68,13 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
       case 'DELETE':
         break
       case 'GET':
-        // article/{id}
+        // article/{id}, group/year, group/gist-lang
         if (ro.includes('/')) {
+          const modules = ro.split('/')
+          const action = modules[0] === 'article' ? 'detail' : modules[1]
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
-          fakeData = apiData[ro.split('/')[0]].detail
+          fakeData = apiData[modules[0]][action]
         } else {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
@@ -97,7 +99,7 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
         // console.log(result)
         isRequestIn.set(false)
         resolve(result)
-      }, 1000)
+      }, 500)
     })
   }
 

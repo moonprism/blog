@@ -1,23 +1,23 @@
 {
-  "id": 58,
-  "created": 1699146996,
-  "updated": 1724465671,
-  "title": "使用 lazy.nvim 安装插件",
-  "status": 1,
-  "rune": 710,
-  "image": "IrytLhwnrSpKXaHZUNjP.jpg",
-  "summary": "",
-  "content": {
-      "text": "# TEST",
-      "html": ""
-  },
-  "tags": [
-      {
-          "id": 3,
-          "created": 1724293853,
-          "updated": 1724295134,
-          "name": "nil",
-          "color": "#0e5809"
-      }
-  ]
+    "id": 57,
+    "created": 1699089187,
+    "updated": 1727140967,
+    "title": "一些工具推荐",
+    "status": 1,
+    "rune": 5525,
+    "image": "",
+    "summary": "这篇文章主要是推荐我在 linux 下喜欢的一些软件/插件",
+    "content": {
+        "text": "这篇文章主要是推荐我在 linux 下喜欢的一些软件/插件， 虽然最近看到的某篇文章说“停止沉迷工具”，如果一样东西足够好、能够完成工作，那就不妨坚持用下去，我十分认同这观点，只是希望能给那些准备尝试某类工具的人一个参考。\n\n## Kitty\n\n官网：\u003chttps://sw.kovidgoyal.net/kitty/\u003e\n\n一个功能丰富、支持 GPU 加速的终端程序，官方文档非常齐全。\n\n在终端显示图片：\n\n```\nalias icat=\"kitty +kitten icat\"\n```\n\n![](FLvKSGvIraGAjEAcChdw.jpg)\n\n## Tmux\n\n文档：\u003chttps://github.com/tmux/tmux/wiki\u003e\n\n终端复用器，linux 下非常实用的分屏工具，此外还可以自定义终端的显示、保存工作区。\n\n\u003e [!WARNING]\n\u003e 虽然[kitty 官方文档](https://sw.kovidgoyal.net/kitty/faq/#i-am-using-tmux-and-have-a-problem)里认为终端复用器是个`bad idea`，应该使用 kitty 丰富的原生功能替换掉它们，但目前来说我认为 tmux 就属于已经足够好、能够完成工作的那类工具，或许等 kitty 再完善一些后会考虑下。\n\n因其配置文件支持 shell，所以可以整很多活，除了之前文章提到过的获取通知展示到状态栏，甚至可以根据当前窗口的运行命令来设置图标:\n\n```\nw_icon=\"#(if [ #W == nvim ];then echo  ;elif [ #W == zsh ];then echo  ;else echo #W ;fi;)\"\n```\n\n推荐插件：\n\n* [tpm](https://github.com/tmux-plugins/tpm) 插件管理器\n* [tmux-yank](https://github.com/tmux-plugins/tmux-yank) 同步系统剪贴板\n* [tmux-jump](https://github.com/schasse/tmux-jump) 快速跳转，配合tmux自带的vi模式，可以快速复制终端上的任意字符串\n* [tmux-fzf-url](https://github.com/wfxr/tmux-fzf-url) 识别终端上的所有链接到 fzf\n  甚至能从包名猜出 github 连接：\n  ![](OZqDaWbgamyKFIQyjrwx.jpg)\n\n## Zsh\n\noh-my-zsh：\u003chttps://ohmyz.sh/\u003e 功能强大的 zsh 框架\n\n推荐插件：\n\n```\n# .zshrc\nplugins=(\n\tgit        # 简化git命令\n\tvi-mode    # 以vi模式编辑输入\n\tz          # 快速访问文件夹\n\tfzf        # fzf插件\n\t\n\t# 第三方插件，需要手动下载\n\tzsh-syntax-highlighting # 输入检测\n\tzsh-autosuggestions     # 输入建议\n)\n```\n\n安装[zsh-syntax-highlighting](https://github.com/zsh-users/zsh-autosuggestions)\u0026[zsh-autosuggestions](https://github.com/zsh-users/zsh-syntax-highlighting.git):\n\n```\ngit clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions\ngit clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting\n```\n\n## Neovim\n\n官网：\u003chttps://neovim.io/\u003e\n\n\u003e 训练自己对无聊的忍耐力...\n\n构思代码或许是种享受，但写代码的过程却很无聊，如果你也对此感同身受，不妨借助 vim 快捷键让自己在像是在玩游戏似的写代码。\n\n自 Neovim 出来以后，vim 社区日新月异，插件彼此兼容，现在只需要少量 lua 脚本就能将其配置成一个功能完善的 IDE （除了 PHP 这种对 LSP 没啥支持的语言。\n\n因为插件更新换代比较快，所以这里按功能分类，只推荐一些非常有必要的功能及其插件：\n\n- 插件管理： [folke/lazy.nvim](https://github.com/folke/lazy.nvim)\n  \u003e 强烈建议大家去看看 lazy.nvim 作者给出的最佳实践 [LazyNvim](https://www.lazyvim.org/)，配置了很多常用插件，而且本身就可以作为一个插件加入到你的配置中，让你方便地自定义它的功能\n- 快速跳转： [folke/flash.nvim](https://github.com/folke/flash.nvim)\n- 自动补全符号： [echasnovski/mini.pairs](https://github.com/echasnovski/mini.pairs)\n- buffer： [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim)\n- LSP： [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)\n- 模糊查找： [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)\n  \u003e 在使用其内置 lsp_references 函数查找引用时会像某些 IDE 那样如果只有一个引用则直接跳转从而导致 bug，不想做多余配置的我就同时用了[ibhagwan/fzf-lua](https://github.com/ibhagwan/fzf-lua)来专门代理 lsp\n- git 信息： [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)\n  借助这个插件还可以方便的进行 git 相关操作，我设置了如下快捷键\n  - `gs` 查看当前块的修改\n    \u003e 在前面提到的 zsh git 插件中短指令`gd`才是`git diff`，但`gd`这个快捷键一般用来*goto definition*，这种无前缀的快捷键最好只用于你认为最常用的操作。\n  - `gco` 撤销当前块的修改\n  - `[g` 跳转到上一个修改块\n  - `]g` 跳转到下一个修改块\n- 状态栏： [nvim-lualine/lualine.nvim](https://github.com/nvim-lualine/lualine.nvim)\n- 文件浏览：[echasnovski/mini.files](https://github.com/echasnovski/mini.files)\n  mini.files 还可以像编辑文本那样编辑文件/目录，使用`=`同步到系统，非常好用\n- 缩进： [lukas-reineke/indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)\n  配合[echasnovski/mini.indentscope](https://github.com/echasnovski/mini.indentscope)用来高亮并且动画化地展示当前缩进线\n  ![](KRZyPnIMVoDYppCImLuj.jpg)\n- 注释： [echasnovski/mini.comment](https://github.com/echasnovski/mini.comment)\n- 其他\n - UI： [folke/noice.nvim](https://github.com/folke/noice.nvim)\n - theme： [folke/tokyonight.nvim](https://github.com/folke/tokyonight.nvim)\n - lint [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim)\n\n\n![](rpTwwCSHbKBLjDmGJJvq.jpg)\n\n![](VwvJOvXYjADKchHensFI.jpg)\n\n![](AgQkLRdVbEgOoXpmNOhR.jpg)\n\n## Miniflux\n\n官网：\u003chttps://miniflux.app/\u003e\n\n一个用 golang 编写的开源 RSS 阅读器，和其他网页端应用不一样，miniflux 没有使用任何 js ，每次打开页面有种看报纸的感觉。并且支持自部署，在服务器上搭建后就可随时多端访问。\n\n[如何从 Docker 构建](https://miniflux.app/docs/dacker.html)，`docker-compose.yml`:\n\n```yaml\nservices:\n  miniflux:\n    image: miniflux/miniflux:latest\n    ports:\n      - \"80:8080\"\n    depends_on:\n      db:\n        condition: service_healthy\n    environment:\n      - DATABASE_URL=postgres://miniflux:secret@db/miniflux?sslmode=disable\n      - RUN_MIGRATIONS=1\n      - CREATE_ADMIN=1\n      - ADMIN_USERNAME=admin\n      - ADMIN_PASSWORD=test123\n  db:\n    image: postgres:15\n    environment:\n      - POSTGRES_USER=miniflux\n      - POSTGRES_PASSWORD=secret\n    volumes:\n      - miniflux-db:/var/lib/postgresql/data\n    healthcheck:\n      test: [\"CMD\", \"pg_isready\", \"-U\", \"miniflux\"]\n      interval: 10s\n      start_period: 30s\nvolumes:\n  miniflux-db:\n```\n\n![](FUPGSogUOeaPRRCLKvnx.jpg)\n\n## Logseq\n\n官网：\u003chttps://logseq.com/\u003e\n\n一个开源且支持双链的笔记应用，与其说是笔记，不如称其为日志系统，因为不像传统笔记分层分类， logseq 以日记为核心，段落为单元，借助双链系统非常适合用来管理碎片化知识。由于没有了规范的限制随便找个地方就可以记录天马行空的想象或者胡言乱语。~~适合用来发病~~\n\n\u003e [!WARNING]\n\u003e 注意这软件在 AUR 下的包是：`yay -S logseq-desktop-bin`\n\n## Calibre\n\n官网：\u003chttps://calibre-ebook.com/\u003e\n\n用来管理 kindle 电子书的神器。\n\n## Scrcpy\n\nGithub: \u003chttps://github.com/Genymobile/scrcpy\u003e\n\n在 PC 上操作安卓设备。\n\n## Chrome/Edge/FireFox\n\n推荐插件：\n\n### [沙拉查词](https://github.com/crimx/ext-saladict)\n\n选词翻译后的那段图标动画可能是我一直喜欢这应用的原因。\n\n### [Surfingkeys](https://github.com/brookhong/Surfingkeys)\n\n以 vim 模式操作页面，相较于 vimium 功能更加丰富，比如自带 vim 编辑器来操作输入框或导航。\n\n### [Infinity](https://www.infinitytab.com/)\n\n一个浏览器新标签页扩展，虽然不能在这个标签页内使用 surfingkeys ，但架不住它朴实无华的好用.\n\n### [沉浸式翻译](https://immersivetranslate.com/)\n\n双语翻译，(现在还支持 YouTube 字幕",
+        "html": ""
+    },
+    "tags": [
+        {
+            "id": 6,
+            "created": 1727140955,
+            "updated": 1727140955,
+            "name": "Linux",
+            "color": "#189a68"
+        }
+    ]
 }
