@@ -11,6 +11,7 @@
   import { fet } from '@/helpers/fetch'
   import type { ArticleDetail } from '$src/types/stream'
   import toast from '$lib/helpers/toast'
+  import { base } from '$app/paths'
 
   let syncCount = 0
   let successCount = 0
@@ -62,7 +63,7 @@
             variant="ghost"
             size="icon"
             on:click={() => {
-              goto('/admin/tag')
+              goto(`${base}/admin/tag`)
             }}
           >
             <Award class="h-5 w-5"></Award>

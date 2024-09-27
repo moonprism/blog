@@ -5,6 +5,7 @@
   import Button from '@/components/ui/button/button.svelte'
   import { Undo } from 'lucide-svelte'
   import { goto } from '$app/navigation'
+  import { base } from '$app/paths'
 </script>
 
 <div class="container mx-auto">
@@ -12,7 +13,7 @@
     variant="ghost"
     size="icon"
     on:click={() => {
-      goto('/admin/article')
+      goto(`${base}/admin/article`)
     }}
   >
     <Undo class="h-4 w-4" />
