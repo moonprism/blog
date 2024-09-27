@@ -7,7 +7,7 @@
   import { goto } from '$app/navigation'
   import * as Tooltip from '$lib/components/ui/tooltip/index.js'
   import { RefreshCcw } from 'lucide-svelte'
-  import { renderMD } from './write/[slug]/(data)/data'
+  import { renderMD } from './write/[[id]]/(data)/data'
   import { fet } from '@/helpers/fetch'
   import type { ArticleDetail } from '$src/types/stream'
   import toast from '$lib/helpers/toast'

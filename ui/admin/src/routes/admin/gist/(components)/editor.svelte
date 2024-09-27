@@ -11,8 +11,8 @@
   import FormImageFlow from '@/components/blocks/cell/form-image-flow.svelte'
   import { writable } from 'svelte/store'
 
-  import AttachmentIcon from '../../article/write/[slug]/(components)/attachment-icon.svelte'
-  import { middlewareTransformers } from '../../article/write/[slug]/(data)/data'
+  import AttachmentIcon from '../../article/write/[[id]]/(components)/attachment-icon.svelte'
+  import { middlewareTransformers } from '../../article/write/[[id]]/(data)/data'
 
   let isOpenImageFlow = writable(false)
   let currentInput: InputEnhancer

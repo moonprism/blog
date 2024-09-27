@@ -11,6 +11,7 @@
   import { getJwtInfo, setJwt } from '@/helpers/jwt'
   import toast from '$lib/helpers/toast'
   import { goto } from '$app/navigation'
+  import { base } from '$app/paths'
 
   let data: LoginRequest = {
     username: '',
@@ -33,7 +34,7 @@
       if (respo.ok) {
         setJwt(respo.data.token)
         toast.success(`登陆成功，${getJwtInfo()?.username}`)
-        goto('/admin')
+        goto(`${base}/admin`)
       }
     })
   }

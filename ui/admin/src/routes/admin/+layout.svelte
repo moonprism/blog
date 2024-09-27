@@ -10,8 +10,9 @@
 
   import { page } from '$app/stores'
   import type { ComponentType } from 'svelte'
+  import { base } from '$app/paths'
 
-  export const adminPath = '/admin'
+  export const adminPath = `${base}/admin`
 
   class Menu {
     title: string

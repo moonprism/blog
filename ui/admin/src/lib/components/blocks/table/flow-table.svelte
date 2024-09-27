@@ -25,7 +25,8 @@
     if (size) {
       maxStretchColumnSize = size
     }
-    grid.updateItems(grid.getItems())
+    const i = grid.getInstance()
+    i.updateItems(i.getItems())
   }
 
   const { pageSize, hasNextPage } = tableModel.pluginStates.page

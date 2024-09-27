@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "generate:mock-import": "",
+    "dev-pages": "NODE_ENV=gh_pages vite dev",
+    "build-pages": "NODE_ENV=gh_pages vite build",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",

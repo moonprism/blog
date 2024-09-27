@@ -10,6 +10,6 @@
 
 <ModeWatcher />
 
-<Toaster closeButton />
+<Toaster position="top-center" />
 
 <slot />

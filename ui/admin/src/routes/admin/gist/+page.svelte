@@ -3,7 +3,7 @@
   import DataActionButton from '@/components/blocks/cell/data-action-button.svelte'
   import { openForm, tableData } from './(data)/data'
   import { RefreshCcw } from 'lucide-svelte'
-  import { renderMD } from '../article/write/[slug]/(data)/data'
+  import { renderMD } from '../article/write/[[id]]/(data)/data'
   import { fet } from '@/helpers/fetch'
   import toast from '$lib/helpers/toast'
   import Button from '@/components/ui/button/button.svelte'

@@ -29,8 +29,9 @@
 
   import { goto } from '$app/navigation'
   import { middlewareTransformers } from './(data)/data'
+  import { base } from '$app/paths'
 
-  const id = Number($page.params.slug)
+  const id = Number($page.params.id)
   let article = {} as ArticleDetail
 
   const saveIcon: Icon = {
@@ -106,7 +107,7 @@
   })
 
   function back() {
-    goto('/admin/article')
+    goto(`${base}/admin/article`)
   }
 
   const ext: Plugin = {
