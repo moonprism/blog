@@ -1,0 +1,1 @@
+const e="jwt_v",o=()=>localStorage.getItem(e)||"",r=t=>{localStorage.setItem(e,t)},a=()=>{localStorage.removeItem(e)},s=()=>{const t=o();return t==""?null:JSON.parse(decodeURIComponent(window.atob(t.split(".")[1].replace(/-/g,"+").replace(/_/g,"/"))))};export{o as a,s as g,a as r,r as s};
