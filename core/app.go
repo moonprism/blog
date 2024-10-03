@@ -7,15 +7,12 @@ import (
 
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/urfave/cli/v2"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 type App struct {
 	isDev       bool
 	RootCmd     *cli.App
-	O           *gorm.DB
+	O           *orm
 	Setting     *setting
 	TokenAuth   *jwtauth.JWTAuth
 	OssClient   *oss
@@ -44,14 +41,11 @@ func (app *App) ReSetting() error {
 }
 
 func (app *App) InitDatabase() error {
-	// TODO sqlite
-	db, err := gorm.Open(mysql.Open(app.Setting.Database.Source), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
+	orm, err := newORM(app.Setting.Database.Driver, app.Setting.Database.Source)
 	if err != nil {
 		return err
 	}
-	app.O = db
+	app.O = orm
 	return nil
 }
 

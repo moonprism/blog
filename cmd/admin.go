@@ -147,7 +147,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					if err := app.InitDatabase(); err != nil {
 						return err
 					}
-					return app.O.AutoMigrate(
+					return app.O.OrmClient.AutoMigrate(
 						&models.Article{},
 						&models.ArticleContent{},
 						&models.Tag{},

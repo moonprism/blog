@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -33,7 +34,7 @@ func (api *groupApi) byYear(w http.ResponseWriter, r *http.Request) {
 	// q := r.URL.Query().Get("model")
 	var result []*GroupByYear
 	api.O.Model(&models.Attachment{}).
-		Select("FROM_UNIXTIME(created, '%Y') AS year, COUNT(*) AS count").
+		Select(fmt.Sprintf("%s AS year, COUNT(*) AS count", api.O.DateFormatField("created", "%Y"))).
 		Group("year").
 		Order("id DESC").
 		Find(&result)

@@ -8,8 +8,9 @@ JwtSecret = "2aEtVr"
   Pass = "$2a$14$z2KmWYDadZlBpSpGg30hB.akygxHkSDnjJ4838A9eBlNYSrZ7XSo."
 
 [Database]
-  Driver = "mysql"
-  Source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"
+  Driver = "sqlite"
+  #Source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"
+  Source = "test.db"
 
 [OSS]
   Region = ""

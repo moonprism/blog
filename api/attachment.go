@@ -66,14 +66,16 @@ func (api *attachmentApi) list(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 			if k == "year" {
-				model = model.Where("FROM_UNIXTIME(created, '%Y') IN ?", v)
+				model = model.Where(fmt.Sprintf("%s IN ?", api.O.DateFormatField("created", "%Y")), core.ItoaSlice(v))
 			}
 		}
 	}
 	err := model.Count(&count).Error
 	core.P(err)
 	var attachments []*Attachment
-	err = model.Select("attachments.*, FROM_UNIXTIME(created, '%Y') AS year").Order("id DESC").
+	err = model.
+		Select(fmt.Sprintf("attachments.*, %s AS year", api.O.DateFormatField("created", "%Y"))).
+		Order("id DESC").
 		Offset((page - 1) * pageSize).
 		Limit(pageSize).
 		Find(&attachments).
