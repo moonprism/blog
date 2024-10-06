@@ -23,6 +23,9 @@ func NewServeCommand(app *core.App) *cli.Command {
 			if err := app.InitCache(); err != nil {
 				return err
 			}
+			if err := app.InitTmpl(); err != nil {
+				return err
+			}
 			app.InitTokenAuth()
 			return api.Serve(app)
 		},

@@ -17,6 +17,7 @@ type App struct {
 	TokenAuth   *jwtauth.JWTAuth
 	OssClient   *oss
 	CacheClient *cacheClient
+	TmplManager *tmplManager
 }
 
 func (app *App) AddSubcommand(cmd *cli.Command) {
@@ -74,6 +75,12 @@ func (app *App) InitCache() error {
 
 func (app *App) InitTokenAuth() {
 	app.TokenAuth = jwtauth.New("HS256", []byte(app.Setting.JwtSecret), nil)
+}
+
+func (app *App) InitTmpl() error {
+	app.TmplManager = NewTmplManager()
+	app.TmplManager.RegisterDir("./ui/vanilla/dist")
+	return nil
 }
 
 func (app *App) JSON(w http.ResponseWriter, data any) error {

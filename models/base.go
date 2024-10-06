@@ -11,7 +11,9 @@ type BaseModel struct {
 }
 
 type Pagination struct {
-	Count int `json:"count"`
+	Page     int `json:"page"`
+	PageSize int `json:"page_size"`
+	Count    int `json:"count"`
 }
 
 type SearchURLParams[T int | string] struct {

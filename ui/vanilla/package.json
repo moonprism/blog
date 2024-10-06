@@ -8,11 +8,13 @@
     "build-mod": "rollup -c rollup.mod.config.js"
   },
   "devDependencies": {
-    "@rollup/plugin-html": "^1.0.3",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "rollup": "^4.14.0",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-css-only": "^4.5.2",
+    "rollup-plugin-delete": "^2.1.0",
+    "rollup-plugin-multi-input": "^1.5.0",
     "rollup-plugin-svelte": "^7.2.0"
   }
 }

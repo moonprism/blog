@@ -1,3 +1,16 @@
-<html>
-    <script src="../src/main-[hash].js"></script>
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="assets/style-{hash}.css" />
+    <title>kicoe's Blog</title>
+  </head>
+  <body>
+    {{range .Data}} {{.Title}} {{end}}
+
+    <mod-pager count="{{.Pagination.Count}}" />
+  </body>
+  <script src="main-{hash}.js"></script>
+  <script type="module" src="mod/index-{hash}.js"></script>
+  <script type="module" src="mod/pager-{hash}.js"></script>
 </html>

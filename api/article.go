@@ -83,7 +83,9 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 				order = "DESC"
 			}
 			if params.SortKey.ID == "tags" {
-				model = model.Select("articles.*, (SELECT COUNT(*) FROM article_tags WHERE article_tags.article_id = articles.id GROUP BY articles.id) AS tag_count").
+				model = model.Select(`articles.*, (
+					SELECT COUNT(*) FROM article_tags WHERE article_tags.article_id = articles.id GROUP BY articles.id
+				) AS tag_count`).
 					Order(fmt.Sprintf("tag_count %s", order))
 			} else {
 				// TODO 使用反射校验该字段和 Article 结构的json 注释是否匹配 || 找个校验库
@@ -104,7 +106,9 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(articleList{
 		Data: articles,
 		Pagination: models.Pagination{
-			Count: int(count),
+			Page:     page,
+			PageSize: pageSize,
+			Count:    int(count),
 		},
 	})
 }
@@ -194,4 +198,32 @@ func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 	})
 	core.P(err)
 	api.JSON(w, id)
+}
+
+func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		pageSize := 10
+		page := 1 //, err := strconv.Atoi(chi.URLParam(r, "page"))
+		//core.P(err)
+		var articles []*models.Article
+		var count int64
+		mo := app.O.Model(&models.Article{}).Where("status = ?", 1)
+		err := mo.Preload("Tags").
+			Order("id DESC").
+			Offset((page - 1) * pageSize).
+			Limit(pageSize).
+			Find(&articles).
+			Error
+		core.P(err)
+		err = mo.Count(&count).Error
+		core.P(err)
+		app.TmplManager.Execute("article_list", w, &articleList{
+			Data: articles,
+			Pagination: models.Pagination{
+				Page:     page,
+				PageSize: pageSize,
+				Count:    int(count),
+			},
+		})
+	}
 }
