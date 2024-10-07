@@ -63,3 +63,11 @@ func (o *orm) Delete(value interface{}, conds ...interface{}) (tx *gorm.DB) {
 func (o *orm) Order(value interface{}) (tx *gorm.DB) {
 	return o.OrmClient.Order(value)
 }
+
+func (o *orm) Raw(sql string, value interface{}) (tx *gorm.DB) {
+	return o.OrmClient.Raw(sql, value)
+}
+
+func (o *orm) Where(query string, value interface{}) (tx *gorm.DB) {
+	return o.OrmClient.Where(query, value)
+}

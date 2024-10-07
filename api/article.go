@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"unicode/utf8"
 
@@ -200,25 +201,45 @@ func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 	api.JSON(w, id)
 }
 
+type articlePageList struct {
+	Data       []*models.Article `json:"data"`
+	Tag        *models.Tag
+	Pagination models.Pagination `json:"pagination"`
+}
+
 func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		pageSize := 10
-		page := 1 //, err := strconv.Atoi(chi.URLParam(r, "page"))
-		//core.P(err)
+		page := 1
+		var err error
+		pageParam := r.URL.Query().Get("page")
+		if pageParam != "" {
+			page, err = strconv.Atoi(pageParam)
+			core.P(err)
+		}
 		var articles []*models.Article
-		var count int64
 		mo := app.O.Model(&models.Article{}).Where("status = ?", 1)
-		err := mo.Preload("Tags").
-			Order("id DESC").
+		var tag models.Tag
+		tagName := chi.URLParam(r, "tagName")
+		if tagName != "" {
+			decodedTagName, err := url.QueryUnescape(tagName)
+			core.P(err)
+			app.O.Where("name = ?", decodedTagName).First(&tag)
+			mo = mo.Joins("INNER JOIN article_tags AS ats ON articles.id = ats.article_id AND ats.tag_id = ?", tag.ID)
+		}
+		var count int64
+		err = mo.Count(&count).Error
+		core.P(err)
+		err = mo.Preload("Tags").
+			Order("articles.id DESC").
 			Offset((page - 1) * pageSize).
 			Limit(pageSize).
 			Find(&articles).
 			Error
 		core.P(err)
-		err = mo.Count(&count).Error
-		core.P(err)
-		app.TmplManager.Execute("article_list", w, &articleList{
+		app.TmplManager.Execute("article_list", w, &articlePageList{
 			Data: articles,
+			Tag:  &tag,
 			Pagination: models.Pagination{
 				Page:     page,
 				PageSize: pageSize,

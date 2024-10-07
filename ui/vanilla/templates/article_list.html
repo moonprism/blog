@@ -1,16 +1,81 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" type="text/css" href="assets/style-{hash}.css" />
     <title>kicoe's Blog</title>
+    <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
   </head>
-  <body>
-    {{range .Data}} {{.Title}} {{end}}
-
-    <mod-pager count="{{.Pagination.Count}}" />
+  <body class="flex flex-col items-center">
+    <div
+      class="bg"
+      style="
+        background-image: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/gFjsJhJcSZCsIyBGbLVL.jpg);
+      "
+    ></div>
+    <div id="up"></div>
+    <nav>
+      <a href="/articles">Blog</a>
+      <a href="/code">Code</a>
+      <a href="/link">Link</a>
+      <a href="/about">About</a>
+    </nav>
+    <div class="content">
+      {{if ne .Tag.ID 0}}
+      <div class="current-tag" style="border-color: {{.Tag.Color}}">
+        当前标签
+        <a
+          class="art-tag"
+          style="color: {{.Tag.Color}}; border-color:{{.Tag.Color}}"
+          >{{.Tag.Name}}</a
+        >
+        ，文章共计 {{.Pagination.Count}} 篇
+      </div>
+      {{end}}
+      <div class="art">
+        {{range .Data}}
+        <div class="art-item">
+          <h1><a href="/article/{{.ID}}">{{.Title}}</a></h1>
+          <div class="anno">
+            <span>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-date"></use>
+              </svg>
+              2012.11.11 Sat</span
+            >
+            <span>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-tag"></use>
+              </svg>
+              {{range .Tags}}
+              <a
+                class="art-tag"
+                href="/articles/tag/{{.Name}}"
+                style="background-color: {{.Color}}"
+                >{{.Name}}</a
+              >
+              {{end}}
+            </span>
+            <span class="rune">runes: {{.Rune}}</span>
+          </div>
+          {{if ne .Image ""}}
+          <img
+            loading="lazy"
+            src="https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/{{.Image}}"
+          />
+          {{end}}
+          <p>{{.Summary}}</p>
+        </div>
+        {{end}}
+      </div>
+      <div class="flex justify-center">
+        <mod-pager
+          count="{{.Pagination.Count}}"
+          currentPage="{{.Pagination.Page}}"
+        />
+      </div>
+    </div>
   </body>
-  <script src="main-{hash}.js"></script>
-  <script type="module" src="mod/index-{hash}.js"></script>
-  <script type="module" src="mod/pager-{hash}.js"></script>
+  <script src="/main-{hash}.js"></script>
+  <script type="module" src="/mod/index-{hash}.js"></script>
+  <script type="module" src="/mod/pager-{hash}.js"></script>
 </html>
