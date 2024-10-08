@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io"
 	"os"
+	"path"
 	"path/filepath"
 )
 
@@ -18,8 +19,14 @@ func NewTmplManager() *tmplManager {
 	}
 }
 
-func (tm *tmplManager) Register(name string, file string) {
-	tm.tmplData[name] = template.Must(template.ParseFiles(file))
+func (tm *tmplManager) Register(name string, file string) (err error) {
+	funcMap := template.FuncMap{
+		"unsafeHTML": func(str string) template.HTML {
+			return template.HTML(str)
+		},
+	}
+	tm.tmplData[name], err = template.New(path.Base(file)).Funcs(funcMap).ParseFiles(file)
+	return
 }
 
 // RegisterFs 挂载目录中所有html文件
@@ -33,7 +40,10 @@ func (tm *tmplManager) RegisterDir(dir string) error {
 			fileName := entry.Name()
 			nameWithoutExt := fileName[:len(fileName)-len(filepath.Ext(fileName))]
 			fmt.Println("Regist tmpl:", nameWithoutExt)
-			tm.Register(nameWithoutExt, filepath.Join(dir, entry.Name()))
+			err = tm.Register(nameWithoutExt, filepath.Join(dir, entry.Name()))
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil

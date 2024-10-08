@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>kicoe's Blog</title>
+    <title>{{.Data.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
   </head>
   <body class="flex flex-col items-center">
@@ -13,21 +13,9 @@
       <a href="/about">About</a>
     </nav>
     <div class="content">
-      {{if ne .Tag.ID 0}}
-      <div class="current-tag" style="border-color: {{.Tag.Color}}">
-        当前标签
-        <a
-          class="art-tag"
-          style="color: {{.Tag.Color}}; border-color:{{.Tag.Color}}"
-          >{{.Tag.Name}}</a
-        >
-        ，文章共计 {{.Pagination.Count}} 篇
-      </div>
-      {{end}}
       <div class="art">
-        {{range .Data}}
         <div class="art-item">
-          <h1><a href="/article/{{.ID}}">{{.Title}}</a></h1>
+          <h1><a>{{.Data.Title}}</a></h1>
           <div class="anno">
             <span>
               <svg class="icon" aria-hidden="true">
@@ -39,7 +27,7 @@
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-tag"></use>
               </svg>
-              {{range .Tags}}
+              {{range .Data.Tags}}
               <a
                 class="art-tag"
                 href="/articles/tag/{{.Name}}"
@@ -48,23 +36,12 @@
               >
               {{end}}
             </span>
-            <span class="rune">runes: {{.Rune}}</span>
           </div>
-          {{if ne .Image ""}}
-          <img
-            loading="lazy"
-            src="https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/{{.Image}}"
-          />
-          {{end}}
-          <p>{{.Summary}}</p>
         </div>
-        {{end}}
-      </div>
-      <div class="flex justify-center">
-        <mod-pager
-          count="{{.Pagination.Count}}"
-          currentPage="{{.Pagination.Page}}"
-        />
+        <div class="markdown-body">
+          {{.Data.ArticleContent.HTML | unsafeHTML}}
+        </div>
+        <mod-comment id="{{.Data.ID}}" />
       </div>
     </div>
   </body>
@@ -78,5 +55,5 @@
   <script src="/main-{hash}.js"></script>
   <script type="module" src="/mod/index-{hash}.js"></script>
   <script type="module" src="/mod/core-{hash}.js"></script>
-  <script type="module" src="/mod/pager-{hash}.js"></script>
+  <script type="module" src="/mod/comment-{hash}.js"></script>
 </html>

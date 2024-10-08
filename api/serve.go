@@ -31,7 +31,7 @@ func Serve(app *core.App) error {
 
 	r.Get("/articles", articlePageListRoute(app))
 	r.Get("/articles/tag/{tagName}", articlePageListRoute(app))
-	//	r.Get("/article/{id}")
+	r.Get("/article/{id}", articlePageDetailRoute(app))
 	//	r.Get("/gists")
 	//	r.Get("/links")
 	//	r.Get("/about")

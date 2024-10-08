@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '../(style)/editor.css'
+  import '../(styles)/editor.css'
   export let html = ''
 </script>
 

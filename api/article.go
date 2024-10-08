@@ -98,7 +98,7 @@ func (api *articleApi) list(w http.ResponseWriter, r *http.Request) {
 		core.P(err)
 	}
 	var articles []*models.Article
-	err := model.Order("id DESC").
+	err := model.Order("articles.id DESC").
 		Offset((page - 1) * pageSize).
 		Limit(pageSize).
 		Find(&articles).
@@ -237,7 +237,7 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 			Find(&articles).
 			Error
 		core.P(err)
-		app.TmplManager.Execute("article_list", w, &articlePageList{
+		err = app.TmplManager.Execute("article_list", w, &articlePageList{
 			Data: articles,
 			Tag:  &tag,
 			Pagination: models.Pagination{
@@ -246,5 +246,30 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 				Count:    int(count),
 			},
 		})
+		core.P(err)
+	}
+}
+
+type articlePageDetail struct {
+	Data *models.Article `json:"data"`
+}
+
+func articlePageDetailRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id, err := strconv.Atoi(chi.URLParam(r, "id"))
+		core.P(err)
+		article := new(models.Article)
+		err = app.O.Model(&models.Article{}).
+			Preload("ArticleContent", func(db *gorm.DB) *gorm.DB {
+				return db.Omit("text")
+			}).
+			Preload("Tags").
+			First(article, id).
+			Error
+		core.P(err)
+		err = app.TmplManager.Execute("article_detail", w, &articlePageDetail{
+			Data: article,
+		})
+		core.P(err)
 	}
 }

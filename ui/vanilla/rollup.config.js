@@ -4,7 +4,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import copy from "rollup-plugin-copy";
 import terser from "@rollup/plugin-terser";
 import del from "rollup-plugin-delete";
-import multiInput from 'rollup-plugin-multi-input';
 
 import crypto from "crypto";
 var hash = crypto.randomBytes(4).toString("hex");
@@ -36,7 +35,11 @@ export default [
     ],
   },
   {
-    input: ["src/components/*.svelte"],
+    input: [
+      "src/components/core.svelte",
+      "src/components/pager.svelte",
+      "src/components/comment.svelte",
+    ],
     output: {
       dir: "dist/mod",
       format: "es",
@@ -45,7 +48,6 @@ export default [
       // plugins: [terser()],
     },
     plugins: [
-      multiInput({relative: 'src/components/'}),
       svelte({
         compilerOptions: {
           customElement: true,

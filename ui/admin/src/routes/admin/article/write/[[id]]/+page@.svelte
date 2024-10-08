@@ -16,7 +16,7 @@
   import { emoji } from '@cartamd/plugin-emoji'
   import '@cartamd/plugin-emoji/default.css'
   // 引用markdown-body样式
-  import 'moonprism-blog-frontend/src/css/markdown.css'
+  import 'moonprism-blog-frontend/src/styles/art.md.css'
 
   import SaveIcon from './(components)/save-icon.svelte'
   import toast from '$lib/helpers/toast'

@@ -1,0 +1,204 @@
+:root {
+  --md-code-color: #f04a62;
+  --md-code-bg-color: rgba(0, 0, 0, 0.04);
+
+  --md-bq-opacity: 0.01;
+  --md-bq-color: 81, 91, 212;
+  --md-bq-success-color: 150, 193, 32;
+  --md-bq-warning-color: 255, 217, 114;
+  --md-bq-danger-color: 221, 42, 123;
+  --md-bq-info-color: 129, 52, 175;
+
+  --gray-200: rgb(229 231 235);
+}
+.art .markdown-body {
+}
+.art .markdown-body a {
+  margin: 0 0.2rem;
+  text-decoration: underline;
+  color: #27e;
+}
+.art .markdown-body h2 {
+  font-size: 1.4rem;
+  margin: 1.6rem 0 1.1rem;
+}
+.art .markdown-body h3 {
+  font-size: 1.1rem;
+  margin: 1.2rem 0 0.6rem;
+}
+.art .markdown-body h4 {
+  font-size: 0.7rem;
+  margin: 0.8rem 0 0.3rem;
+}
+.art .markdown-body strong,
+.art .markdown-body b {
+  font-size: 0.9rem;
+}
+.art .markdown-body > p {
+  line-height: 1.75;
+  margin-bottom: 0.9rem;
+  font-size: 1.05rem;
+}
+.art .markdown-body > ul,
+.art .markdown-body > ol {
+  margin: 1.2rem 0;
+  font-size: 1.05rem;
+}
+.art .markdown-body ul,
+.art .markdown-body ol {
+  padding-left: 1.5rem;
+}
+.art .markdown-body ul li,
+.art .markdown-body ol li {
+  margin-bottom: 5px;
+  padding-left: 5px;
+  line-height: 1.9;
+}
+.art .markdown-body ul li {
+  list-style-type: disc !important;
+}
+.art .markdown-body ul blockquote,
+.art .markdown-body ol blockquote {
+  margin: 5px 0 0;
+}
+.art .markdown-body ul pre,
+.art .markdown-body ol pre {
+  margin-top: 5px;
+}
+.art .markdown-body ol li {
+  list-style-type: decimal !important;
+}
+.art .markdown-body ul ul li,
+.art .markdown-body ol ul li {
+  list-style-type: circle !important;
+}
+.art .markdown-body ol ol li {
+  list-style-type: lower-alpha !important;
+}
+.art .markdown-body ul ol li {
+  list-style-type: lower-roman !important;
+}
+.art .markdown-body ul ul ul li {
+  list-style-type: square !important;
+}
+.art .markdown-body img {
+  max-width: 100%;
+  padding-top: 4px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 1px;
+}
+.art .markdown-body blockquote,
+.art .markdown-body .admonition {
+  margin: 1rem auto;
+  padding: 0.3rem 0.6rem;
+  line-height: 1.7;
+  font-size: 1rem;
+  border-left: 2px solid rgba(var(--md-bq-color));
+  background-color: rgba(var(--md-bq-color), var(--md-bq-opacity));
+  word-wrap: break-word;
+}
+/** 隐藏自定义 blockquote 标题 */
+.admonition .admonition-title {
+  display: none;
+}
+.markdown-body blockquote > p:not(:last-child),
+.admonition > p:not(:last-child) {
+  margin-bottom: 8px;
+}
+.markdown-body blockquote > pre:not(:last-child),
+.admonition > pre:not(:last-child) {
+  margin-bottom: 5px;
+}
+.markdown-body .success,
+.markdown-body .ad-tip {
+  border-left-color: rgba(var(--md-bq-success-color)) !important;
+  background-color: rgba(var(--md-bq-success-color), var(--md-bq-opacity)) !important;
+}
+.markdown-body .warning,
+.markdown-body .ad-warning {
+  border-left-color: rgba(var(--md-bq-warning-color)) !important;
+  background-color: rgba(var(--md-bq-warning-color), var(--md-bq-opacity)) !important;
+}
+.markdown-body .danger,
+.markdown-body .ad-caution {
+  border-left-color: rgba(var(--md-bq-danger-color)) !important;
+  background-color: rgba(var(--md-bq-danger-color), var(--md-bq-opacity)) !important;
+}
+.markdown-body .info,
+.markdown-body .ad-important {
+  border-left-color: rgba(var(--md-bq-info-color)) !important;
+  background-color: rgba(var(--md-bq-info-color), var(--md-bq-opacity)) !important;
+}
+
+.art .markdown-body hr {
+  margin-bottom: 1rem;
+  height: 0;
+  border: none;
+  border-top: 1px solid var(--gray-200);
+}
+.art .markdown-body br {
+}
+.art .markdown-body code {
+  overflow: auto;
+  word-wrap: break-word;
+  font: 0.9em Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,
+    Hiragino Sans GB, Microsoft YaHei, monospace;
+  padding: 0.2em 0.4em 0.1em;
+  border-radius: 3px;
+  margin: 0 0.2em;
+  color: var(--md-code-color);
+  background-color: var(--md-code-bg-color);
+}
+.art .markdown-body pre {
+  position: relative;
+  overflow: auto;
+  word-wrap: break-word;
+  padding: 13px 15px 12px;
+  overflow: auto;
+  border-radius: 3px;
+  background-color: #0d1117 !important;
+  tab-size: 4;
+  --copy-btn-text: "copy";
+  --copy-btn-color: rgb(167 139 250);
+}
+.art .markdown-body pre::after {
+  content: var(--copy-btn-text);
+  color: var(--copy-btn-color);
+  position: absolute;
+  top: 0;
+  right: 3px;
+  opacity: 0;
+  font-size: 0.9rem;
+  transition: opacity 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+.art .markdown-body pre:hover::after {
+  opacity: 1;
+}
+.art .markdown-body > pre {
+  margin: 17px 0 24px;
+}
+.art .markdown-body pre code {
+  padding: 0;
+  margin: 0;
+  color: #e1e4e8;
+  font: 1rem Consolas, "Liberation Mono", Menlo, Courier,
+    "Microsoft Yahei Light", monospace;
+}
+.art .markdown-body table {
+  margin: 1.5rem 0.5rem;
+  overflow: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.art .markdown-body table th {
+}
+.art .markdown-body table th,
+.art .markdown-body table td {
+  padding: 8px 25px;
+  border: 1px solid var(--gray-200);
+}
+
+.art .markdown-body table tr {
+  border-top: 1px solid var(--gray-200);
+}

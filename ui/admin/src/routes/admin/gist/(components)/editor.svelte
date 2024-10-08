@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Carta, MarkdownEditor, type Icon, type InputEnhancer, type Plugin } from 'carta-md'
-  import '../(style)/editor.css'
+  import '../(styles)/editor.css'
 
   // 代码高亮
   import { code } from '@cartamd/plugin-code'
   import '@cartamd/plugin-code/default.css'
   // 引用markdown-body样式
-  import 'moonprism-blog-frontend/src/css/gist.md.css'
+  import 'moonprism-blog-frontend/src/styles/gist.md.css'
 
   import FormImageFlow from '@/components/blocks/cell/form-image-flow.svelte'
   import { writable } from 'svelte/store'

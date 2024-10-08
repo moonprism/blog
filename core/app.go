@@ -79,8 +79,7 @@ func (app *App) InitTokenAuth() {
 
 func (app *App) InitTmpl() error {
 	app.TmplManager = NewTmplManager()
-	app.TmplManager.RegisterDir("./ui/vanilla/dist")
-	return nil
+	return app.TmplManager.RegisterDir("./ui/vanilla/dist")
 }
 
 func (app *App) JSON(w http.ResponseWriter, data any) error {
