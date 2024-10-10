@@ -1,3 +1,4 @@
+/* Atomic CSS 适合已有基础样式库的情况分层堆砌，完全用原子类写起来太累了 */
 .flex {
   display: flex;
 }
@@ -12,8 +13,4 @@
 
 .items-center {
   align-items: center;
-}
-
-.space-x-1 > :not([hidden]) ~ :not([hidden]) {
-  margin-left: 0.25rem; /* 4px */
 }

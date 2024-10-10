@@ -29,12 +29,17 @@ a {
 }
 
 :root {
-  --art-min-w: 720px;
+  --art-min-w: 750px;
 
-  --background: #fff;
+  --background: #fafbfc;
   --foreground: rgb(31 41 55);
-  --border: #3232320f;
   --primary: rgb(17 24 39);
+  --gray-4: rgb(156 163 175);
+  --line: rgba(50, 50, 50, 0.06);
+  --border: rgba(50, 50, 50, 0.15);
+  --outline: rgba(50, 50, 50, 0.3);
+  
+  --destructive: 0 72.2% 50.6%;
 }
 
 .dark {
@@ -82,7 +87,8 @@ nav {
   margin: 40px 0 37px;
   height: 40px;
   line-height: 40px;
-  min-width: var(--art-min-w);
+  width: var(--art-min-w);
+  max-width: 100%;
   background-color: var(--background);
   border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px;
@@ -130,6 +136,7 @@ nav a:hover {
 .content {
   margin-bottom: 250px;
   width: var(--art-min-w);
+  max-width: 100%;
   background-color: var(--background);
   border-radius: 3px;
   padding: 17px 0 0;
@@ -206,5 +213,5 @@ nav a:hover {
 }
 
 .art .art-item:not(:last-child) p {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }

@@ -36,7 +36,7 @@ export default [
   },
   {
     input: [
-      "src/components/core.svelte",
+      "src/components/kit.svelte",
       "src/components/pager.svelte",
       "src/components/comment.svelte",
     ],

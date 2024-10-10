@@ -1,13 +1,13 @@
-:root {
-  --md-code-color: #f04a62;
-  --md-code-bg-color: rgba(0, 0, 0, 0.04);
+.art {
+  --code-color: #f04a62;
+  --code-bg-color: rgba(0, 0, 0, 0.04);
 
-  --md-bq-opacity: 0.01;
-  --md-bq-color: 81, 91, 212;
-  --md-bq-success-color: 150, 193, 32;
-  --md-bq-warning-color: 255, 217, 114;
-  --md-bq-danger-color: 221, 42, 123;
-  --md-bq-info-color: 129, 52, 175;
+  --bq-opacity: 0.01;
+  --bq-color: 81, 91, 212;
+  --bq-success-color: 150, 193, 32;
+  --bq-warning-color: 255, 217, 114;
+  --bq-danger-color: 221, 42, 123;
+  --bq-info-color: 129, 52, 175;
 
   --gray-200: rgb(229 231 235);
 }
@@ -37,12 +37,12 @@
 .art .markdown-body > p {
   line-height: 1.75;
   margin-bottom: 0.9rem;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
 .art .markdown-body > ul,
 .art .markdown-body > ol {
   margin: 1.2rem 0;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
 }
 .art .markdown-body ul,
 .art .markdown-body ol {
@@ -93,8 +93,8 @@
   padding: 0.3rem 0.6rem;
   line-height: 1.7;
   font-size: 1rem;
-  border-left: 2px solid rgba(var(--md-bq-color));
-  background-color: rgba(var(--md-bq-color), var(--md-bq-opacity));
+  border-left: 2px solid rgba(var(--bq-color));
+  background-color: rgba(var(--bq-color), var(--bq-opacity));
   word-wrap: break-word;
 }
 /** 隐藏自定义 blockquote 标题 */
@@ -111,23 +111,23 @@
 }
 .markdown-body .success,
 .markdown-body .ad-tip {
-  border-left-color: rgba(var(--md-bq-success-color)) !important;
-  background-color: rgba(var(--md-bq-success-color), var(--md-bq-opacity)) !important;
+  border-left-color: rgba(var(--bq-success-color)) !important;
+  background-color: rgba(var(--bq-success-color), var(--bq-opacity)) !important;
 }
 .markdown-body .warning,
 .markdown-body .ad-warning {
-  border-left-color: rgba(var(--md-bq-warning-color)) !important;
-  background-color: rgba(var(--md-bq-warning-color), var(--md-bq-opacity)) !important;
+  border-left-color: rgba(var(--bq-warning-color)) !important;
+  background-color: rgba(var(--bq-warning-color), var(--bq-opacity)) !important;
 }
 .markdown-body .danger,
 .markdown-body .ad-caution {
-  border-left-color: rgba(var(--md-bq-danger-color)) !important;
-  background-color: rgba(var(--md-bq-danger-color), var(--md-bq-opacity)) !important;
+  border-left-color: rgba(var(--bq-danger-color)) !important;
+  background-color: rgba(var(--bq-danger-color), var(--bq-opacity)) !important;
 }
 .markdown-body .info,
 .markdown-body .ad-important {
-  border-left-color: rgba(var(--md-bq-info-color)) !important;
-  background-color: rgba(var(--md-bq-info-color), var(--md-bq-opacity)) !important;
+  border-left-color: rgba(var(--bq-info-color)) !important;
+  background-color: rgba(var(--bq-info-color), var(--bq-opacity)) !important;
 }
 
 .art .markdown-body hr {
@@ -146,8 +146,8 @@
   padding: 0.2em 0.4em 0.1em;
   border-radius: 3px;
   margin: 0 0.2em;
-  color: var(--md-code-color);
-  background-color: var(--md-code-bg-color);
+  color: var(--code-color);
+  background-color: var(--code-bg-color);
 }
 .art .markdown-body pre {
   position: relative;

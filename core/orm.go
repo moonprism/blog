@@ -71,3 +71,7 @@ func (o *orm) Raw(sql string, value interface{}) (tx *gorm.DB) {
 func (o *orm) Where(query string, value interface{}) (tx *gorm.DB) {
 	return o.OrmClient.Where(query, value)
 }
+
+func (o *orm) First(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
+	return o.OrmClient.First(dest, conds)
+}

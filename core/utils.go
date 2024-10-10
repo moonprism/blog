@@ -11,6 +11,7 @@ func CreateSlice[T int | string | interface{}](length int, value T) []T {
 	return slice
 }
 
+// ItoaSlice int 切片转换 string 切片
 func ItoaSlice(originSlice []int) []string {
 	strSlice := make([]string, len(originSlice))
 	for i, v := range originSlice {
