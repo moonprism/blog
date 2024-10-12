@@ -9,7 +9,7 @@ import (
 
 type oss struct {
 	stsClient  *sts20150401.Client
-	StsExpTime int64
+	ExpSeconds int64
 	RoleArn    string
 }
 
@@ -26,7 +26,7 @@ func newOSS(ak string, sk string, region string, roleArn string) (o *oss, err er
 	}
 	o = &oss{
 		stsClient:  stsClient,
-		StsExpTime: 3306,
+		ExpSeconds: 3306,
 		RoleArn:    roleArn,
 	}
 	return
@@ -34,7 +34,7 @@ func newOSS(ak string, sk string, region string, roleArn string) (o *oss, err er
 
 func (o *oss) GetAssumeRole() (body *sts20150401.AssumeRoleResponseBodyCredentials, err error) {
 	assumeRoleRequest := &sts20150401.AssumeRoleRequest{
-		DurationSeconds: (*int64)(&o.StsExpTime),
+		DurationSeconds: (*int64)(&o.ExpSeconds),
 		RoleArn:         &o.RoleArn,
 		RoleSessionName: tea.String("alice"),
 	}

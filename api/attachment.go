@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
@@ -131,8 +132,7 @@ type OssConfig struct {
 
 func (api *attachmentApi) cred(w http.ResponseWriter, r *http.Request) {
 	credKey := "stsConfig"
-	ttl, err := api.CacheClient.TTL(credKey)
-	core.P(err)
+	ttl := api.Cache.TTL(credKey)
 	if ttl < 30 {
 		credential, err := api.OssClient.GetAssumeRole()
 		core.P(err)
@@ -145,12 +145,11 @@ func (api *attachmentApi) cred(w http.ResponseWriter, r *http.Request) {
 		}
 		confJson, err := json.Marshal(oc)
 		core.P(err)
-		err = api.CacheClient.Set(credKey, confJson, api.OssClient.StsExpTime)
+		api.Cache.Set(credKey, confJson, time.Duration(api.OssClient.ExpSeconds)*time.Second)
 		core.P(err)
 		api.JSON(w, oc)
 	} else {
-		confJson, err := api.CacheClient.Get(credKey)
-		core.P(err)
-		w.Write([]byte(confJson))
+		confJson := api.Cache.Get(credKey)
+		w.Write([]byte(confJson.(string)))
 	}
 }

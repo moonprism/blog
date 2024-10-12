@@ -20,4 +20,4 @@ JwtSecret = "2aEtVr"
   RoleArn = ""
 
 [Cache]
-  Addr = "localhost:6379"
+  Addr = "local"

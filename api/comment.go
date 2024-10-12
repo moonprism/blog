@@ -41,6 +41,10 @@ type commentPostError struct {
 	System  string `json:"system"`
 }
 
+func getCommentIndexCacheKey(articleId int) string {
+	return "comment_index_data_" + strconv.Itoa(articleId)
+}
+
 func (api *commentApi) post(w http.ResponseWriter, r *http.Request) {
 	comment := new(models.Comment)
 	err := json.NewDecoder(r.Body).Decode(comment)
@@ -119,6 +123,8 @@ func (api *commentApi) post(w http.ResponseWriter, r *http.Request) {
 	})
 	core.P(err)
 	comment.Email = fmt.Sprintf("%x", md5.Sum([]byte(comment.Email)))
+	// 刷新缓存
+	api.Cache.Del(getCommentIndexCacheKey(int(comment.ArticleID)))
 	api.JSON(w, comment)
 }
 
@@ -135,19 +141,29 @@ type commentPageList struct {
 func (api *commentApi) listOnPage(w http.ResponseWriter, r *http.Request) {
 	article_id, err := strconv.ParseUint(chi.URLParam(r, "article_id"), 10, 32)
 	core.P(err)
+	query := r.URL.Query()
 
 	var rootId uint64 = 0
-	rootIdParam := r.URL.Query().Get("root_id")
+	rootIdParam := query.Get("root_id")
 	if rootIdParam != "" {
 		rootId, err = strconv.ParseUint(rootIdParam, 10, 32)
 		core.P(err)
 	}
 
 	var page = 1
-	pageParam := r.URL.Query().Get("page")
+	pageParam := query.Get("page")
 	if pageParam != "" {
 		page, err = strconv.Atoi(pageParam)
 		core.P(err)
+	}
+
+	enableCache := rootId == 0 && page == 1
+	if enableCache {
+		data := api.Cache.Get(getCommentIndexCacheKey(int(article_id)))
+		if data != nil {
+			api.JSON(w, data)
+			return
+		}
 	}
 
 	pageSize := 5
@@ -157,9 +173,7 @@ func (api *commentApi) listOnPage(w http.ResponseWriter, r *http.Request) {
 		Where("root_comment_id = ?", rootId)
 	err = model.Count(&count).Error
 	core.P(err)
-	if count == 0 {
-		return
-	}
+
 	var comments []*models.Comment
 	err = model.Order("updated DESC").
 		Offset((page - 1) * pageSize).
@@ -203,10 +217,22 @@ func (api *commentApi) listOnPage(w http.ResponseWriter, r *http.Request) {
 			HasNext:     subCount > int64(pageSize*page),
 		}
 	}
-	api.JSON(w, commentPageList{
+	data := commentPageList{
 		Data:    pageComments,
 		HasNext: count > int64(pageSize*page),
-	})
+	}
+	if enableCache {
+		// 查询文章是否存在
+		var articleCount int64
+		err = api.O.Model(&models.Article{}).
+			Where("id = ?", article_id).Count(&articleCount).Error
+		core.P(err)
+		if articleCount != 1 {
+			return
+		}
+		api.Cache.Set(getCommentIndexCacheKey(int(article_id)), data, 0)
+	}
+	api.JSON(w, data)
 }
 
 type commentList struct {

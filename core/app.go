@@ -16,7 +16,7 @@ type App struct {
 	Setting     *setting
 	TokenAuth   *jwtauth.JWTAuth
 	OssClient   *oss
-	CacheClient *cacheClient
+	Cache       Cache
 	TmplManager *tmplManager
 }
 
@@ -65,11 +65,11 @@ func (app *App) InitOSS() error {
 }
 
 func (app *App) InitCache() error {
-	cache, err := NewCacheClient(app.Setting.Cache.Addr)
+	cache, err := NewCache(app.Setting.Cache.Addr)
 	if err != nil {
 		return err
 	}
-	app.CacheClient = cache
+	app.Cache = cache
 	return nil
 }
 
