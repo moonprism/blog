@@ -18,6 +18,7 @@ type App struct {
 	OssClient   *oss
 	Cache       Cache
 	TmplManager *tmplManager
+	Validator   *Validator
 }
 
 func (app *App) AddSubcommand(cmd *cli.Command) {
@@ -80,6 +81,10 @@ func (app *App) InitTokenAuth() {
 func (app *App) InitTmpl() error {
 	app.TmplManager = NewTmplManager()
 	return app.TmplManager.RegisterDir("./ui/vanilla/dist")
+}
+
+func (app *App) InitValidator() {
+	app.Validator = NewValidator()
 }
 
 func (app *App) JSON(w http.ResponseWriter, data any) error {

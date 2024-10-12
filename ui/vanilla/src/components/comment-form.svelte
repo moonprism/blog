@@ -12,9 +12,11 @@
   let email = "";
   let content = "";
 
-  let nameErr = "";
-  let emailErr = "";
-  let contentErr = "";
+  let errors = {
+    Name: "",
+    Email: "",
+    Content: "",
+  };
 
   let startCheck = false;
 
@@ -48,9 +50,7 @@
     isPostIn = false;
 
     if (!response.ok) {
-      nameErr = data.name;
-      emailErr = data.email;
-      contentErr = data.content;
+      errors = data;
       return;
     }
 
@@ -60,10 +60,10 @@
   }
 
   function checkFields() {
-    nameErr = name === "" ? "姓名不能为空" : "";
-    emailErr = email === "" ? "邮箱不能为空" : "";
-    contentErr = content === "" ? "没有什么想说的吗？(｡ŏ_ŏ)" : "";
-    return nameErr === "" && emailErr === "" && contentErr === "";
+    errors.Name = name === "" ? "姓名不能为空" : "";
+    errors.Email = email === "" ? "邮箱不能为空" : "";
+    errors.Content = content === "" ? "没有什么想说的吗？(｡ŏ_ŏ)" : "";
+    return errors.Name === "" && errors.Email === "" && errors.Content === "";
   }
 
   $: {
@@ -129,7 +129,7 @@
           required
         />
       </div>
-      <div class="form-field-error">{nameErr}</div>
+      <div class="form-field-error">{errors.Name ? errors.Name : ""}</div>
     </div>
     <div class="form-field">
       <div class="form-field-appear">
@@ -142,7 +142,7 @@
           required
         />
       </div>
-      <div class="form-field-error">{emailErr}</div>
+      <div class="form-field-error">{errors.Email ? errors.Email : ""}</div>
     </div>
   </div>
   <div>
@@ -171,7 +171,7 @@
           @{replyName}
         {/if}
       </div>
-      <div class="form-field-error">{contentErr}</div>
+      <div class="form-field-error">{errors.Content ? errors.Content : ""}</div>
     </div>
   </div>
   <div class="form-buttons">

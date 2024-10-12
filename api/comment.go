@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"regexp"
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
@@ -34,13 +33,6 @@ type commentApi struct {
 	*core.App
 }
 
-type commentPostError struct {
-	Email   string `json:"email"`
-	Name    string `json:"name"`
-	Content string `json:"content"`
-	System  string `json:"system"`
-}
-
 func getCommentIndexCacheKey(articleId int) string {
 	return "comment_index_data_" + strconv.Itoa(articleId)
 }
@@ -49,35 +41,11 @@ func (api *commentApi) post(w http.ResponseWriter, r *http.Request) {
 	comment := new(models.Comment)
 	err := json.NewDecoder(r.Body).Decode(comment)
 	core.P(err)
-	postError := commentPostError{}
 
-	// 或许该找个字段校验库
-	if comment.Email == "" || comment.Name == "" || comment.Content == "" {
-		return
-	}
-
-	if len(comment.Email) > 100 {
-		postError.Email = "邮箱过长"
-	}
-	if len(comment.Name) > 50 {
-		postError.Name = "姓名过长"
-	}
-	if len(comment.Content) > 1000 {
-		postError.Content = "文本过长"
-	}
-
-	if (postError != commentPostError{}) {
-		w.WriteHeader(400)
-		api.JSON(w, postError)
-		return
-	}
-
-	const emailRegex = `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
-	re := regexp.MustCompile(emailRegex)
-	if !re.MatchString(comment.Email) {
-		w.WriteHeader(400)
-		postError.Email = "无效的电子邮箱地址"
-		api.JSON(w, postError)
+	errInfo := api.Validator.Struct(comment)
+	if errInfo != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		api.JSON(w, errInfo)
 		return
 	}
 
@@ -88,7 +56,7 @@ func (api *commentApi) post(w http.ResponseWriter, r *http.Request) {
 		Error
 	core.P(err)
 	if count < 0 {
-		w.WriteHeader(422)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 

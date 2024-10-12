@@ -27,6 +27,7 @@ func NewServeCommand(app *core.App) *cli.Command {
 				return err
 			}
 			app.InitTokenAuth()
+			app.InitValidator()
 			return api.Serve(app)
 		},
 	}

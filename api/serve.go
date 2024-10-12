@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	m "github.com/moonprism/blog/api/http/middleware"
 	"github.com/moonprism/blog/core"
-	m "github.com/moonprism/blog/core/http/middleware"
 )
 
 func Serve(app *core.App) error {

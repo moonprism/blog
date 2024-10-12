@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"time"
 )
 
 type tmplManager struct {
@@ -23,6 +24,9 @@ func (tm *tmplManager) Register(name string, file string) (err error) {
 	funcMap := template.FuncMap{
 		"unsafeHTML": func(str string) template.HTML {
 			return template.HTML(str)
+		},
+		"formatDate": func(timestamp uint) string {
+			return time.Unix(int64(timestamp), 0).Format("2006-01-02 Mon")
 		},
 	}
 	tm.tmplData[name], err = template.New(path.Base(file)).Funcs(funcMap).ParseFiles(file)
