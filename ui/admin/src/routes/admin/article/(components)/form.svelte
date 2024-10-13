@@ -4,7 +4,8 @@
   import { Input } from '@/components/ui/input/index.js'
   import type { Article } from '$src/types/stream'
   import { tableData, closeForm, statuses } from '../(data)/data'
-  import { fet, getRealSrc, isExternalLink, isRequestIn } from '@/helpers/fetch'
+  import { fet, isExternalLink, isRequestIn } from '@/helpers/fetch'
+  import { getRealSrc } from '$src/routes/admin/(data)/data'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'

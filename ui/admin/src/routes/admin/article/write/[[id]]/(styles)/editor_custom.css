@@ -71,6 +71,11 @@ html.dark .carta-theme__custom .carta-input {
   overflow-y: scroll;
 }
 
+.carta-theme__custom .carta-renderer {
+  padding-right: 5px;
+}
+
+
 /* Icons */
 .carta-theme__custom .carta-icon,
 .carta-theme__custom .carta-icon-full {

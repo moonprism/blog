@@ -27,6 +27,7 @@ export interface Respoi extends BadRespoi {
 }
 
 export interface JwtInfo {
+  exp: number
   username: string
 }
 
@@ -108,4 +109,12 @@ export interface OssConfig {
   bucket: string
   region: string
   stsToken: string
+}
+
+export interface AppConfig {
+  title: string
+  attachmentCDN: string
+  // seconds
+  tokenExpiryHours: number
+  lastLoginTime: string
 }

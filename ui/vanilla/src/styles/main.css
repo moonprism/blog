@@ -29,7 +29,7 @@ a {
 }
 
 :root {
-  --art-min-w: 750px;
+  --art-min-w: 755px;
 
   --background: #fafbfc;
   --foreground: rgb(31 41 55);
@@ -38,7 +38,7 @@ a {
   --line: rgba(50, 50, 50, 0.06);
   --border: rgba(50, 50, 50, 0.15);
   --outline: rgba(50, 50, 50, 0.3);
-  
+
   --destructive: 0 72.2% 50.6%;
 }
 
@@ -67,9 +67,14 @@ body {
   z-index: -9;
   top: 0;
   left: 0;
-  background-color: var(--background);
   background-repeat: no-repeat;
   background-size: cover;
+  background: rgb(238, 174, 202);
+  background: linear-gradient(
+    180deg,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
 }
 
 .icon {
@@ -162,7 +167,7 @@ nav a:hover {
 
 .content .art h1 a {
   color: var(--primary);
-  font-size: 17px;
+  font-size: 1.25rem;
   transition: color 0.16s;
 }
 
@@ -192,9 +197,13 @@ nav a:hover {
   transition: color 0.3s ease;
 }
 
+.anno {
+  margin-bottom: 10px;
+}
+
 .anno .rune {
   color: #aaa;
-  font-size: 12px;
+  font-size: 0.9rem;
 }
 
 .art .art-item img {
@@ -207,9 +216,9 @@ nav a:hover {
 .art .art-item p {
   margin-top: 7px;
   padding-bottom: 17px;
-  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.1);
-  letter-spacing: 1px;
+  font-size: 1.05rem;
   line-height: 1.5;
+  letter-spacing: 0.5px;
 }
 
 .art .art-item:not(:last-child) p {

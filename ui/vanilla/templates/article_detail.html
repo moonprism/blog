@@ -7,9 +7,9 @@
   </head>
   <body class="flex flex-col items-center">
     <nav>
-      <a href="/articles">Blog</a>
-      <a href="/code">Code</a>
-      <a href="/link">Link</a>
+      <a href="/posts">Posts</a>
+      <a href="/gists">Gists</a>
+      <a href="/links">Links</a>
       <a href="/about">About</a>
     </nav>
     <div class="content">
@@ -30,7 +30,7 @@
               {{range .Data.Tags}}
               <a
                 class="art-tag"
-                href="/articles/tag/{{.Name}}"
+                href="/posts/tag/{{.Name}}"
                 style="background-color: {{.Color}}"
                 >{{.Name}}</a
               >
@@ -48,7 +48,6 @@
   <div
     class="bg"
     style="
-      background-image: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/gFjsJhJcSZCsIyBGbLVL.jpg);
     "
   ></div>
   <mod-kit />

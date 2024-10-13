@@ -4,7 +4,8 @@
   import { Input } from '@/components/ui/input/index.js'
   import { tableData, closeForm } from '../(data)/data'
   import * as Popover from '@/components/ui/popover'
-  import { fet, getRealSrc, isMockMode, isRequestIn } from '@/helpers/fetch'
+  import { fet, isMockMode, isRequestIn } from '@/helpers/fetch'
+  import { getRealSrc } from '$src/routes/admin/(data)/data'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'

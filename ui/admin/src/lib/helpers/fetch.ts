@@ -1,7 +1,7 @@
 import type { BadRespoi, DataModel, Respoi } from '$src/types/stream'
 import toast from '$lib/helpers/toast'
 
-import { PUBLIC_API_ADDR, PUBLIC_ATTACHMENT_CDN, PUBLIC_MOCK_MODE } from '$env/static/public'
+import { PUBLIC_API_ADDR, PUBLIC_MOCK_MODE } from '$env/static/public'
 import { getJwt } from './jwt'
 import { writable } from 'svelte/store'
 import { apiData } from '$src/mock'
@@ -9,17 +9,9 @@ import { apiData } from '$src/mock'
 const host = PUBLIC_API_ADDR
 
 export const isMockMode = PUBLIC_MOCK_MODE === 'true'
-export const fileCDN = PUBLIC_ATTACHMENT_CDN
 
 export const isExternalLink = (link: string) => {
   return link.startsWith('data') || link.startsWith('http')
-}
-
-export const getRealSrc = (key: string) => {
-  if (key === '' || isExternalLink(key)) {
-    return key
-  }
-  return `${fileCDN}${key}`
 }
 
 export const fet = {

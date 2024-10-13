@@ -300,7 +300,6 @@
     cursor: pointer;
     background-color: var(--background);
     color: var(--foreground);
-    font-size: 0.9rem;
   }
   .form-button-meme {
     padding: 3px 5px;

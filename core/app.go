@@ -10,7 +10,6 @@ import (
 )
 
 type App struct {
-	isDev       bool
 	RootCmd     *cli.App
 	O           *orm
 	Setting     *setting
@@ -93,7 +92,6 @@ func (app *App) JSON(w http.ResponseWriter, data any) error {
 
 func NewApp() *App {
 	return &App{
-		isDev: false,
 		RootCmd: &cli.App{
 			Name: "blog",
 			Flags: []cli.Flag{

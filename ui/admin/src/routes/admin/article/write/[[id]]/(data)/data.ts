@@ -1,6 +1,6 @@
 import { Carta } from 'carta-md'
 import type { UnifiedTransformer } from 'carta-md'
-import { fileCDN } from '@/helpers/fetch'
+import { fileCDN } from '$src/routes/admin/(data)/data'
 import remarkAdmonitions from 'remark-github-beta-blockquote-admonitions'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error

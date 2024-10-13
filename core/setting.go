@@ -2,34 +2,36 @@ package core
 
 import (
 	"os"
+	"time"
 
 	"github.com/BurntSushi/toml"
 )
 
 type setting struct {
-	Server    settingServer
-	Account   settingAccount
-	Database  settingDatabase
-	OSS       OssConfig
-	Cache     cacheConfig
+	Server    serverSet
+	Account   accountSet
+	Database  databaseSet
+	OSS       ossSet
+	Cache     cacheSet
+	System    SystemSet
 	JwtSecret string
 }
 
-type settingServer struct {
+type serverSet struct {
 	Addr string
 }
 
-type settingDatabase struct {
+type databaseSet struct {
 	Driver string
 	Source string
 }
 
-type settingAccount struct {
+type accountSet struct {
 	Name string
 	Pass string
 }
 
-type OssConfig struct {
+type ossSet struct {
 	AccessKeyId     string
 	AccessKeySecret string
 	Region          string
@@ -37,8 +39,15 @@ type OssConfig struct {
 	RoleArn         string
 }
 
-type cacheConfig struct {
+type cacheSet struct {
 	Addr string
+}
+
+type SystemSet struct {
+	Title            string        `json:"title"`
+	AttachmentCDN    string        `json:"attachmentCDN"`
+	TokenExpiryHours time.Duration `json:"tokenExpiryHours"`
+	LastLoginTime    string        `json:"lastLoginTime"`
 }
 
 var configPath = "./app.toml"

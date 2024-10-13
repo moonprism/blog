@@ -1,5 +1,10 @@
 JwtSecret = "2aEtVr"
 
+[System]
+  Title = "kicoe's Blog"
+  AttachmentCDN = "https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/"
+  TokenExpiryHours = 72
+
 [Server]
   Addr = ":3000"
 
