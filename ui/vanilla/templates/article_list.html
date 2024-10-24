@@ -2,30 +2,29 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>kicoe's Blog</title>
+    <title>{{.SystemSet.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
   </head>
   <body class="flex flex-col items-center">
     <nav>
-      <a href="/posts">Posts</a>
-      <a href="/gists">Gists</a>
-      <a href="/links">Links</a>
-      <a href="/about">About</a>
+      {{range .Pages}}
+      <a href="/{{.}}">{{.}}</a>
+      {{end}}
     </nav>
     <div class="content">
-      {{if ne .Tag.ID 0}}
-      <div class="current-tag" style="border-color: {{.Tag.Color}}">
+      {{if ne .Data.QueryTag.ID 0}}
+      <div class="current-tag" style="border-color: {{.Data.QueryTag.Color}}">
         当前标签
         <a
           class="art-tag"
-          style="color: {{.Tag.Color}}; border-color:{{.Tag.Color}}"
-          >{{.Tag.Name}}</a
+          style="color: {{.Data.QueryTag.Color}}; border-color:{{.Data.QueryTag.Color}}"
+          >{{.Data.QueryTag.Name}}</a
         >
-        ，文章共计 {{.Pagination.Count}} 篇
+        ，文章共计 {{.Data.Pagination.Count}} 篇
       </div>
       {{end}}
       <div class="art">
-        {{range .Data}}
+        {{range .Data.Articles}}
         <div class="art-item">
           <h1><a href="/post/{{.ID}}">{{.Title}}</a></h1>
           <div class="anno">
@@ -53,7 +52,7 @@
           {{if ne .Image ""}}
           <img
             loading="lazy"
-            src="https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/{{.Image}}"
+            src="{{$.SystemSet.AttachmentCDN}}{{.Image}}"
           />
           {{end}}
           <p>{{.Summary}}</p>
@@ -62,8 +61,8 @@
       </div>
       <div class="flex justify-center">
         <mod-pager
-          count="{{.Pagination.Count}}"
-          currentPage="{{.Pagination.Page}}"
+          count="{{.Data.Pagination.Count}}"
+          currentPage="{{.Data.Pagination.Page}}"
         />
       </div>
     </div>

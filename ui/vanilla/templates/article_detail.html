@@ -2,15 +2,14 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>{{.Data.Title}}</title>
+    <title>{{.Data.Title}} | {{.SystemSet.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
   </head>
   <body class="flex flex-col items-center">
     <nav>
-      <a href="/posts">Posts</a>
-      <a href="/gists">Gists</a>
-      <a href="/links">Links</a>
-      <a href="/about">About</a>
+      {{range .Pages}}
+      <a href="/{{.}}">{{.}}</a>
+      {{end}}
     </nav>
     <div class="content">
       <div class="art">

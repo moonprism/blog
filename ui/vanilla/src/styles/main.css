@@ -105,6 +105,7 @@ nav a {
   margin: 0 5px;
   color: var(--foreground);
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  text-transform: capitalize;
 }
 
 /* nav:hover 动画 */

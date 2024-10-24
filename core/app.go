@@ -90,6 +90,23 @@ func (app *App) JSON(w http.ResponseWriter, data any) error {
 	return json.NewEncoder(w).Encode(data)
 }
 
+type TmplPageData struct {
+	SystemSet *SystemSet
+	// TODO 自定义页面
+	Pages *[4]string
+	Data  any
+}
+
+var pages = [4]string{"posts", "gists", "links", "about"}
+
+func (app *App) HTML(w http.ResponseWriter, tmplName string, data any) error {
+	return app.TmplManager.Execute(tmplName, w, TmplPageData{
+		&app.Setting.System,
+		&pages,
+		data,
+	})
+}
+
 func NewApp() *App {
 	return &App{
 		RootCmd: &cli.App{

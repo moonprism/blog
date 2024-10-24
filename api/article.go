@@ -201,9 +201,9 @@ func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 	api.JSON(w, id)
 }
 
-type articlePageList struct {
-	Data       []*models.Article `json:"data"`
-	Tag        *models.Tag
+type articlePageListData struct {
+	Articles   []*models.Article `json:"data"`
+	QueryTag   *models.Tag
 	Pagination models.Pagination `json:"pagination"`
 }
 
@@ -237,9 +237,9 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 			Find(&articles).
 			Error
 		core.P(err)
-		err = app.TmplManager.Execute("article_list", w, &articlePageList{
-			Data: articles,
-			Tag:  &tag,
+		err = app.HTML(w, "article_list", &articlePageListData{
+			Articles: articles,
+			QueryTag: &tag,
 			Pagination: models.Pagination{
 				Page:     page,
 				PageSize: pageSize,
@@ -250,8 +250,8 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 	}
 }
 
-type articlePageDetail struct {
-	Data *models.Article `json:"data"`
+type articlePageDetailData struct {
+	*models.Article `json:"data"`
 }
 
 func articlePageDetailRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
@@ -267,8 +267,8 @@ func articlePageDetailRoute(app *core.App) func(w http.ResponseWriter, r *http.R
 			First(article, id).
 			Error
 		core.P(err)
-		err = app.TmplManager.Execute("article_detail", w, &articlePageDetail{
-			Data: article,
+		err = app.HTML(w, "article_detail", &articlePageDetailData{
+			article,
 		})
 		core.P(err)
 	}

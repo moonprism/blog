@@ -8,6 +8,9 @@
 
 <div class="container mx-auto mt-4">
   <div class="my-2">我从来没有觉得写代码开心过</div>
+  <div>
+    <p>站点标题：{appInfo.title}</p>
+  </div>
   <div class="text-sm text-secondary-foreground">
     <!--todo-->
     <p>上次登陆时间：{appInfo.lastLoginTime}</p>
