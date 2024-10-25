@@ -5,7 +5,6 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/go-chi/jwtauth/v5"
 	m "github.com/moonprism/blog/api/http/middleware"
 	"github.com/moonprism/blog/core"
 )
@@ -28,13 +27,7 @@ func Serve(app *core.App) error {
 		r.Route("/comment", func(r chi.Router) { bindCommentApi(app, r) })
 
 		r.Route("/group", func(r chi.Router) { bindGroupApi(app, r) })
-		r.Group(func(r chi.Router) {
-			r.Use(jwtauth.Verifier(app.TokenAuth))
-			r.Use(jwtauth.Authenticator(app.TokenAuth))
-			r.Get("/system", func(w http.ResponseWriter, r *http.Request) {
-				app.JSON(w, app.Setting.System)
-			})
-		})
+		r.Route("/settings", func(r chi.Router) { bindSettingsApi(app, r) })
 	})
 
 	r.Get("/posts", articlePageListRoute(app))
@@ -44,5 +37,5 @@ func Serve(app *core.App) error {
 	//	r.Get("/links")
 	//	r.Get("/about")
 
-	return http.ListenAndServe(app.Setting.Server.Addr, r)
+	return http.ListenAndServe(app.Settings.Server.Addr, r)
 }

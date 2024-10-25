@@ -7,14 +7,13 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-type setting struct {
+type settings struct {
+	JwtSecret string
 	Server    serverSet
-	Account   accountSet
 	Database  databaseSet
 	OSS       ossSet
 	Cache     cacheSet
 	System    SystemSet
-	JwtSecret string
 }
 
 type serverSet struct {
@@ -24,11 +23,6 @@ type serverSet struct {
 type databaseSet struct {
 	Driver string
 	Source string
-}
-
-type accountSet struct {
-	Name string
-	Pass string
 }
 
 type ossSet struct {
@@ -44,27 +38,16 @@ type cacheSet struct {
 }
 
 type SystemSet struct {
-	Title            string        `json:"title"`
 	AttachmentCDN    string        `json:"attachmentCDN"`
 	TokenExpiryHours time.Duration `json:"tokenExpiryHours"`
-	LastLoginTime    string        `json:"lastLoginTime"`
 }
 
 var configPath = "./app.toml"
 
-func NewSetting() (s setting, err error) {
+func NewSettings() (s settings, err error) {
 	if _, err = os.Stat(configPath); err != nil {
 		return
 	}
 	_, err = toml.DecodeFile(configPath, &s)
 	return
-}
-
-func ReSetting(s *setting) error {
-	file, err := os.OpenFile(configPath, os.O_RDWR, 0644)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-	return toml.NewEncoder(file).Encode(s)
 }

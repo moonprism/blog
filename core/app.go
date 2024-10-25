@@ -12,7 +12,7 @@ import (
 type App struct {
 	RootCmd     *cli.App
 	O           *orm
-	Setting     *setting
+	Settings    *settings
 	TokenAuth   *jwtauth.JWTAuth
 	OssClient   *oss
 	Cache       Cache
@@ -29,20 +29,16 @@ func (app *App) Run() error {
 }
 
 func (app *App) InitSetting() error {
-	setting, err := NewSetting()
+	settings, err := NewSettings()
 	if err != nil {
 		return err
 	}
-	app.Setting = &setting
+	app.Settings = &settings
 	return nil
 }
 
-func (app *App) ReSetting() error {
-	return ReSetting(app.Setting)
-}
-
 func (app *App) InitDatabase() error {
-	orm, err := newORM(app.Setting.Database.Driver, app.Setting.Database.Source)
+	orm, err := newORM(app.Settings.Database.Driver, app.Settings.Database.Source)
 	if err != nil {
 		return err
 	}
@@ -52,10 +48,10 @@ func (app *App) InitDatabase() error {
 
 func (app *App) InitOSS() error {
 	oss, err := newOSS(
-		app.Setting.OSS.AccessKeyId,
-		app.Setting.OSS.AccessKeySecret,
-		app.Setting.OSS.Region,
-		app.Setting.OSS.RoleArn,
+		app.Settings.OSS.AccessKeyId,
+		app.Settings.OSS.AccessKeySecret,
+		app.Settings.OSS.Region,
+		app.Settings.OSS.RoleArn,
 	)
 	if err != nil {
 		return err
@@ -65,7 +61,7 @@ func (app *App) InitOSS() error {
 }
 
 func (app *App) InitCache() error {
-	cache, err := NewCache(app.Setting.Cache.Addr)
+	cache, err := NewCache(app.Settings.Cache.Addr)
 	if err != nil {
 		return err
 	}
@@ -74,7 +70,7 @@ func (app *App) InitCache() error {
 }
 
 func (app *App) InitTokenAuth() {
-	app.TokenAuth = jwtauth.New("HS256", []byte(app.Setting.JwtSecret), nil)
+	app.TokenAuth = jwtauth.New("HS256", []byte(app.Settings.JwtSecret), nil)
 }
 
 func (app *App) InitTmpl() error {
@@ -90,21 +86,8 @@ func (app *App) JSON(w http.ResponseWriter, data any) error {
 	return json.NewEncoder(w).Encode(data)
 }
 
-type TmplPageData struct {
-	SystemSet *SystemSet
-	// TODO 自定义页面
-	Pages *[4]string
-	Data  any
-}
-
-var pages = [4]string{"posts", "gists", "links", "about"}
-
 func (app *App) HTML(w http.ResponseWriter, tmplName string, data any) error {
-	return app.TmplManager.Execute(tmplName, w, TmplPageData{
-		&app.Setting.System,
-		&pages,
-		data,
-	})
+	return app.TmplManager.Execute(tmplName, w, data)
 }
 
 func NewApp() *App {

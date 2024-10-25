@@ -242,7 +242,7 @@
     position: absolute;
     right: 76px;
     width: 1px;
-    background: var(--line);
+    background: var(--border);
     transition: height 0.3s;
     -webkit-transition: height 0.3s;
   }
@@ -291,8 +291,8 @@
     font-size: 0.8rem;
   }
   .cmnt-header img {
-    height: 37px;
-    width: 37px;
+    height: 35px;
+    width: 35px;
     border-radius: 50%;
   }
   .cmnt-header-info {

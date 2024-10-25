@@ -64,14 +64,22 @@ func (o *orm) Order(value interface{}) (tx *gorm.DB) {
 	return o.OrmClient.Order(value)
 }
 
-func (o *orm) Raw(sql string, value interface{}) (tx *gorm.DB) {
-	return o.OrmClient.Raw(sql, value)
+func (o *orm) Raw(sql string, values ...interface{}) (tx *gorm.DB) {
+	return o.OrmClient.Raw(sql, values)
 }
 
-func (o *orm) Where(query string, value interface{}) (tx *gorm.DB) {
-	return o.OrmClient.Where(query, value)
+func (o *orm) Where(query interface{}, args ...interface{}) (tx *gorm.DB) {
+	return o.OrmClient.Where(query, args)
 }
 
 func (o *orm) First(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
 	return o.OrmClient.First(dest, conds)
+}
+
+func (o *orm) Exec(sql string, values ...interface{}) (tx *gorm.DB) {
+	return o.OrmClient.Exec(sql, values)
+}
+
+func (o *orm) IsRecordNotFoundErr(err error) bool {
+	return err == gorm.ErrRecordNotFound
 }

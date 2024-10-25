@@ -28,7 +28,7 @@ export interface Respoi extends BadRespoi {
 
 export interface JwtInfo {
   exp: number
-  username: string
+  user: string
 }
 
 // 泛用数据模型
@@ -117,4 +117,5 @@ export interface AppConfig {
   // seconds
   tokenExpiryHours: number
   lastLoginTime: string
+  background: string
 }

@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>{{.SystemSet.Title}}</title>
+    <title>{{.Settings.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
   </head>
   <body class="flex flex-col items-center">
@@ -12,19 +12,19 @@
       {{end}}
     </nav>
     <div class="content">
-      {{if ne .Data.QueryTag.ID 0}}
-      <div class="current-tag" style="border-color: {{.Data.QueryTag.Color}}">
+      {{if ne .QueryTag.ID 0}}
+      <div class="current-tag" style="border-color: {{.QueryTag.Color}}">
         当前标签
         <a
           class="art-tag"
-          style="color: {{.Data.QueryTag.Color}}; border-color:{{.Data.QueryTag.Color}}"
-          >{{.Data.QueryTag.Name}}</a
+          style="color: {{.QueryTag.Color}}; border-color:{{.QueryTag.Color}}"
+          >{{.QueryTag.Name}}</a
         >
-        ，文章共计 {{.Data.Pagination.Count}} 篇
+        ，文章共计 {{.Pagination.Count}} 篇
       </div>
       {{end}}
       <div class="art">
-        {{range .Data.Articles}}
+        {{range .Articles}}
         <div class="art-item">
           <h1><a href="/post/{{.ID}}">{{.Title}}</a></h1>
           <div class="anno">
@@ -50,10 +50,7 @@
             <span class="rune">runes: {{.Rune}}</span>
           </div>
           {{if ne .Image ""}}
-          <img
-            loading="lazy"
-            src="{{$.SystemSet.AttachmentCDN}}{{.Image}}"
-          />
+          <img loading="lazy" src="{{$.SystemSet.AttachmentCDN}}{{.Image}}" />
           {{end}}
           <p>{{.Summary}}</p>
         </div>
@@ -61,16 +58,17 @@
       </div>
       <div class="flex justify-center">
         <mod-pager
-          count="{{.Data.Pagination.Count}}"
-          currentPage="{{.Data.Pagination.Page}}"
+          count="{{.Pagination.Count}}"
+          currentPage="{{.Pagination.Page}}"
         />
       </div>
     </div>
   </body>
   <div
     class="bg"
-    style="
-    "
+    {{if ne .Settings.Background ""}}
+    style="background-image: url({{.Settings.Background | unsafeCSS}});background-size: cover;"
+    {{end}}
   ></div>
   <mod-kit />
   <script src="/main-{hash}.js"></script>

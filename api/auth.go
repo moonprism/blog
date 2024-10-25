@@ -39,25 +39,27 @@ func (api *authApi) login(w http.ResponseWriter, r *http.Request) {
 		core.P(api.O.Create(record).Error)
 	}()
 	core.P(err)
-	if req.Username != api.Setting.Account.Name {
-		err = core.NewErr("login failed", core.ErrCodeLoginFailed)
-		core.P(err)
+	var user models.User
+	err = api.O.Where(&models.User{Name: req.Username}).First(&user).Error
+	if api.O.IsRecordNotFoundErr(err) {
+		core.PanicErr("User does not exist", core.ErrCodeLoginFailed)
 	}
+	core.P(err)
 	err = bcrypt.CompareHashAndPassword(
-		[]byte(api.Setting.Account.Pass),
+		[]byte(user.Pass),
 		[]byte(req.Password),
 	)
 	if err != nil {
-		core.P(core.NewErr("login failed", core.ErrCodeLoginFailed))
+		core.PanicErr("Incorrect password", core.ErrCodeLoginFailed)
 	}
 	_, tokenString, err := api.TokenAuth.Encode(map[string]interface{}{
-		"username": req.Username,
+		"user": req.Username,
 		// jwt 过期时间
-		"exp": time.Now().Add(api.Setting.System.TokenExpiryHours * time.Hour).Unix(),
+		"exp": time.Now().Add(api.Settings.System.TokenExpiryHours * time.Hour).Unix(),
 	})
 	core.P(err)
-	// 很离谱的代码，但是为了接口的优雅，只好出此下策
-	api.Setting.System.LastLoginTime = time.Unix(time.Now().Unix(), 0).Format("2006年01月02日 15:04:05")
+	err = api.O.Model(&user).Updates(models.User{LastLogin: uint(time.Now().Unix())}).Error
+	core.P(err)
 	res := new(loginResponseBody)
 	res.Token = tokenString
 	json.NewEncoder(w).Encode(&res)

@@ -1,7 +1,12 @@
 package cmd
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
+	"syscall"
+
 	"github.com/moonprism/blog/core"
 	"github.com/moonprism/blog/models"
 	"github.com/urfave/cli/v2"
@@ -32,6 +37,8 @@ func NewAdminCommand(app *core.App) *cli.Command {
 						&models.Gist{},
 						&models.Comment{},
 						&models.LoginRecord{},
+						&models.User{},
+						&models.Settings{},
 					)
 				},
 			},
@@ -42,14 +49,31 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					if err := app.InitSetting(); err != nil {
 						return err
 					}
-					fmt.Println("please input password:")
-					password, _ := term.ReadPassword(0)
-					pass, err := bcrypt.GenerateFromPassword(password, 14)
+					if err := app.InitDatabase(); err != nil {
+						return err
+					}
+
+					fmt.Print("Enter Username: ")
+					reader := bufio.NewReader(os.Stdin)
+					username, err := reader.ReadString('\n')
 					if err != nil {
 						return err
 					}
-					app.Setting.Account.Pass = string(pass)
-					return app.ReSetting()
+
+					fmt.Print("Enter Password: ")
+					bytePass, _ := term.ReadPassword(int(syscall.Stdin))
+					pass, err := bcrypt.GenerateFromPassword(bytePass, 14)
+					if err != nil {
+						return err
+					}
+
+					user := models.User{
+						Name: strings.TrimSpace(username),
+						Pass: strings.TrimSpace(string(pass)),
+					}
+					// 单用户
+					app.O.Where("is_del = ?", 0).Unscoped().Delete(&models.User{})
+					return app.O.Create(&user).Error
 				},
 			},
 		},

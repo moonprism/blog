@@ -103,6 +103,7 @@ nav a {
   position: relative;
   padding: 1px 15px;
   margin: 0 5px;
+  font-size: 1.05rem;
   color: var(--foreground);
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
   text-transform: capitalize;

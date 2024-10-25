@@ -202,6 +202,7 @@ func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 }
 
 type articlePageListData struct {
+	*AppSettings
 	Articles   []*models.Article `json:"data"`
 	QueryTag   *models.Tag
 	Pagination models.Pagination `json:"pagination"`
@@ -238,8 +239,9 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 			Error
 		core.P(err)
 		err = app.HTML(w, "article_list", &articlePageListData{
-			Articles: articles,
-			QueryTag: &tag,
+			AppSettings: getAppSettings(*app),
+			Articles:    articles,
+			QueryTag:    &tag,
 			Pagination: models.Pagination{
 				Page:     page,
 				PageSize: pageSize,
@@ -251,6 +253,7 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 }
 
 type articlePageDetailData struct {
+	*AppSettings
 	*models.Article `json:"data"`
 }
 
@@ -268,7 +271,8 @@ func articlePageDetailRoute(app *core.App) func(w http.ResponseWriter, r *http.R
 			Error
 		core.P(err)
 		err = app.HTML(w, "article_detail", &articlePageDetailData{
-			article,
+			AppSettings: getAppSettings(*app),
+			Article:     article,
 		})
 		core.P(err)
 	}

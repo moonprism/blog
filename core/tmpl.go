@@ -25,6 +25,15 @@ func (tm *tmplManager) Register(name string, file string) (err error) {
 		"unsafeHTML": func(str string) template.HTML {
 			return template.HTML(str)
 		},
+		"unsafeAttr": func(str string) template.HTMLAttr {
+			return template.HTMLAttr(str)
+		},
+		"unsafeURL": func(str string) template.URL {
+			return template.URL(str)
+		},
+		"unsafeCSS": func(str string) template.CSS {
+			return template.CSS(str)
+		},
 		"formatDate": func(timestamp uint) string {
 			return time.Unix(int64(timestamp), 0).Format("2006-01-02 Mon")
 		},

@@ -1,7 +1,7 @@
 import type { AppConfig } from '$src/types/stream'
 import { fet, isExternalLink } from '@/helpers/fetch'
 
-const res = await fet.get('system')
+const res = await fet.get('settings')
 export const appInfo = <AppConfig>res.data
 
 export const fileCDN = appInfo.attachmentCDN

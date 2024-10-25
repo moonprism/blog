@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gists | {{.SystemSet.Title}}</title>
+    <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
+  </head>
+  <body class="flex flex-col items-center">
+    <nav>
+      {{range .Pages}}
+      <a href="/{{.}}">{{.}}</a>
+      {{end}}
+    </nav>
+    <div class="content">
+      
+    </div>
+  </body>
+  <div
+    class="bg"
+    style="
+    "
+  ></div>
+  <mod-kit />
+  <script src="/main-{hash}.js"></script>
+  <script type="module" src="/mod/index-{hash}.js"></script>
+  <script type="module" src="/mod/kit-{hash}.js"></script>
+  <script type="module" src="/mod/comment-{hash}.js"></script>
+</html>

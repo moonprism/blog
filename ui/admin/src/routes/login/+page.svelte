@@ -33,7 +33,7 @@
     fet.post('login', data).then((respo) => {
       if (respo.ok) {
         setJwt(respo.data.token)
-        toast.success(`登陆成功，${getJwtInfo()?.username}`)
+        toast.success(`登陆成功，${getJwtInfo()?.user}`)
         goto(`${base}/admin`)
       }
     })

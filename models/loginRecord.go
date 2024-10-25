@@ -1,5 +1,6 @@
 package models
 
+// TODO duckDB
 type LoginRecord struct {
 	ID      uint `gorm:"primaryKey" json:"id"`
 	Created uint `gorm:"notnull;autoCreateTime" json:"created"`

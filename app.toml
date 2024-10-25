@@ -1,21 +1,17 @@
 JwtSecret = "2aEtVr"
 
 [System]
-  Title = "kicoe's Blog"
   AttachmentCDN = "https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/"
   TokenExpiryHours = 72
 
 [Server]
   Addr = ":3000"
 
-[Account]
-  Name = "kicoe"
-  Pass = "$2a$14$z2KmWYDadZlBpSpGg30hB.akygxHkSDnjJ4838A9eBlNYSrZ7XSo."
-
 [Database]
   Driver = "sqlite"
-  #Source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"
   Source = "test.db"
+  # Driver = "mysql"
+  # Source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"
 
 [OSS]
   Region = ""

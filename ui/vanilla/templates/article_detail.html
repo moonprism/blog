@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>{{.Data.Title}} | {{.SystemSet.Title}}</title>
+    <title>{{.Article.Title}} | {{.Settings.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
   </head>
   <body class="flex flex-col items-center">
@@ -14,19 +14,19 @@
     <div class="content">
       <div class="art">
         <div class="art-item">
-          <h1><a>{{.Data.Title}}</a></h1>
+          <h1><a>{{.Article.Title}}</a></h1>
           <div class="anno">
             <span>
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-date"></use>
               </svg>
-              {{.Data.Created | formatDate}}</span
+              {{.Article.Created | formatDate}}</span
             >
             <span>
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-tag"></use>
               </svg>
-              {{range .Data.Tags}}
+              {{range .Article.Tags}}
               <a
                 class="art-tag"
                 href="/posts/tag/{{.Name}}"
@@ -38,16 +38,17 @@
           </div>
         </div>
         <div class="markdown-body">
-          {{.Data.ArticleContent.HTML | unsafeHTML}}
+          {{.Article.ArticleContent.HTML | unsafeHTML}}
         </div>
-        <mod-comment id="{{.Data.ID}}" />
+        <mod-comment id="{{.Article.ID}}" />
       </div>
     </div>
   </body>
   <div
     class="bg"
-    style="
-    "
+    {{if ne .Settings.Background ""}}
+    style="background-image: url({{.Settings.Background | unsafeCSS}});background-size: cover;"
+    {{end}}
   ></div>
   <mod-kit />
   <script src="/main-{hash}.js"></script>
