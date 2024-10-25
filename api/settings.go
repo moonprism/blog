@@ -79,8 +79,9 @@ func (api *settingApi) update(w http.ResponseWriter, r *http.Request) {
 			return tx.Create(&settings).Error
 		}
 		return tx.Model(&models.Settings{}).Where("id = ?", settings.ID).Updates(map[string]interface{}{
-			"title":      body.Title,
-			"background": body.Background,
+			"title":         body.Title,
+			"background":    body.Background,
+			"margin_bottom": body.MarginBottom,
 		}).Error
 	})
 	core.P(err)

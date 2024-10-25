@@ -118,4 +118,6 @@ export interface AppConfig {
   tokenExpiryHours: number
   lastLoginTime: string
   background: string
+  // px
+  marginBottom: number
 }

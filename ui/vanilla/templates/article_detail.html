@@ -11,7 +11,7 @@
       <a href="/{{.}}">{{.}}</a>
       {{end}}
     </nav>
-    <div class="content">
+    <div class="content" style="margin-bottom: {{.Settings.MarginBottom}}px">
       <div class="art">
         <div class="art-item">
           <h1><a>{{.Article.Title}}</a></h1>
@@ -47,7 +47,7 @@
   <div
     class="bg"
     {{if ne .Settings.Background ""}}
-    style="background-image: url({{.Settings.Background | unsafeCSS}});background-size: cover;"
+    style="{{.Settings.Background | unsafeCSS}}"
     {{end}}
   ></div>
   <mod-kit />
