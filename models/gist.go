@@ -3,8 +3,13 @@ package models
 type Gist struct {
 	BaseModel
 
-	Title   string `gorm:"type:varchar(255);notnull" json:"title"`
-	Lang    string `gorm:"type:varchar(20);notnull" json:"lang"`
-	Content string `gorm:"type:text;notnull" json:"content"`
-	HTML    string `gorm:"type:text;notnull;" json:"html"`
+	Title      string      `gorm:"type:varchar(255);notnull" json:"title"`
+	Lang       string      `gorm:"type:varchar(20);notnull" json:"lang"`
+	Content    string      `gorm:"type:text;notnull" json:"content"`
+	GistOutput *GistOutput `json:"output"`
+}
+
+type GistOutput struct {
+	GistID uint   `gorm:"primaryKey" json:"-"`
+	HTML   string `gorm:"type:text;notnull;" json:"html"`
 }

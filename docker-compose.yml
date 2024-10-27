@@ -23,6 +23,8 @@ services:
       - 8888:8080
     networks:
       - app
+    volumes:
+      - .docker/data/adminer:/test
   redis:
     image: redis
     command: ["redis-server", "--appendonly", "yes"]

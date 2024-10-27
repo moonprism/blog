@@ -172,6 +172,6 @@
 
 <style>
   .preview::-webkit-scrollbar {
-    width: 3px;
+    width: 3.5px;
   }
 </style>

@@ -239,7 +239,7 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 			Error
 		core.P(err)
 		err = app.HTML(w, "article_list", &articlePageListData{
-			AppSettings: getAppSettings(*app),
+			AppSettings: getAppSettings(app),
 			Articles:    articles,
 			QueryTag:    &tag,
 			Pagination: models.Pagination{
@@ -271,7 +271,7 @@ func articlePageDetailRoute(app *core.App) func(w http.ResponseWriter, r *http.R
 			Error
 		core.P(err)
 		err = app.HTML(w, "article_detail", &articlePageDetailData{
-			AppSettings: getAppSettings(*app),
+			AppSettings: getAppSettings(app),
 			Article:     article,
 		})
 		core.P(err)

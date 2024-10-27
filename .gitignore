@@ -4,3 +4,5 @@ password.txt
 *test.json
 test.toml
 *.db
+
+libsimple-*

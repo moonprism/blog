@@ -28,18 +28,44 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					if err := app.InitDatabase(); err != nil {
 						return err
 					}
-					return app.O.OrmClient.AutoMigrate(
+
+					err := app.O.OrmClient.AutoMigrate(
 						&models.Article{},
 						&models.ArticleContent{},
 						&models.Tag{},
 						&models.ArticleTags{},
 						&models.Attachment{},
 						&models.Gist{},
+						&models.GistOutput{},
 						&models.Comment{},
 						&models.LoginRecord{},
 						&models.User{},
 						&models.Settings{},
 					)
+					if err != nil {
+						return err
+					}
+
+					_, err = app.O.SqliteFtsDB.Exec(`CREATE VIRTUAL TABLE gists_fts USING fts5(
+						title,
+						lang,
+						content,
+					, content = gists,
+					, content_rowid=id,
+					, tokenize = 'simple')`)
+					/*
+						if err != nil {
+							return err
+						}
+						// sqlite only
+						_, err = app.O.SqliteFtsDB.Exec(`CREATE TRIGGER after_insert_gist
+							AFTER INSERT ON gists
+							BEGIN
+							    INSERT INTO gists_fts (rowid, title, lang, content) VALUES (NEW.id, NEW.title, NEW.lang, NEW.content);
+							END;
+						`)
+					*/
+					return err
 				},
 			},
 			{

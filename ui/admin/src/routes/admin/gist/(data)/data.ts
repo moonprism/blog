@@ -35,7 +35,13 @@ export const searchUrlQuery = writable('')
 export function initTableData(q = '') {
   fet.get(`gist?q=${q}`).then((respoi) => {
     if (respoi.ok) {
-      tableData.set(<Gist[]>respoi.data.data)
+      // 后端修改了数据结构
+      respoi.data.data.forEach((v: { html: string; output: { html: string } | null }) => {
+        if (v.output !== null) {
+          v.html = v.output.html
+        }
+      })
+      tableData.set(respoi.data.data)
       serverItemCount.set(respoi.data.pagination.count)
       searchUrlQuery.set(q)
     }

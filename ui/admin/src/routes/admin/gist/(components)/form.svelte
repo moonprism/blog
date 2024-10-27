@@ -44,15 +44,18 @@
       lines.shift()
       $vform.content = lines.join('\n')
     }
-    const body: GistBody = {
+    const body = {
       lang: $vform.lang,
       title: $vform.title,
       content: $vform.content,
-      html: await editor.render()
+      output: {
+        html: await editor.render()
+      }
     }
     if (isCreate) {
       fet.post('gist', body).then((res) => {
         if (res.ok) {
+          res.data.html = res.data.output.html
           $tableData = [<Gist>res.data, ...$tableData]
           closeForm()
         }
@@ -61,7 +64,7 @@
       fet.put(`gist/${formData.id}`, body).then((res) => {
         if (res.ok) {
           formData = <Gist>$vform
-          formData.html = body.html
+          formData.html = body.output.html
           formData.updated = Date.parse(new Date().toString()) / 1000
           $tableData[$tableData.findIndex((v) => v.id === formData.id)] = formData
           closeForm()
@@ -104,7 +107,7 @@
     <Dialog.Header>
       <Dialog.Title>{isCreate ? 'New' : 'Edit'} Gist</Dialog.Title>
     </Dialog.Header>
-    <form method="POST" use:enhance class="space-y-2 w-full overflow-auto">
+    <form method="POST" use:enhance class="w-full space-y-2 overflow-auto">
       <div class="flex flex-1 space-x-1">
         <Form.Field {form} name="title" class="w-full p-1">
           <Form.Control let:attrs>

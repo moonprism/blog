@@ -231,6 +231,7 @@
     border-radius: 3px;
     outline: 0;
     transition: border-color 0.3s;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
   form textarea:focus,
   .form-field input:focus {

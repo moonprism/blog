@@ -39,6 +39,7 @@ export default [
       "src/components/kit.svelte",
       "src/components/pager.svelte",
       "src/components/comment.svelte",
+      "src/components/gist.svelte",
     ],
     output: {
       dir: "dist/mod",

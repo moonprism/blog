@@ -38,7 +38,7 @@ var appSettings = AppSettings{
 }
 
 // 简单缓存
-func getAppSettings(app core.App) *AppSettings {
+func getAppSettings(app *core.App) *AppSettings {
 	if appSettings.SystemSet == nil {
 		var settings models.Settings
 		app.O.First(&settings)
@@ -61,7 +61,7 @@ func (api *settingApi) detail(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	lastLoginTime := time.Unix(int64(user.LastLogin), 0).Format("2006年01月02日 15:04")
 	api.JSON(w, &settingsResponse{
-		getAppSettings(*api.App),
+		getAppSettings(api.App),
 		&lastLoginTime,
 	})
 }

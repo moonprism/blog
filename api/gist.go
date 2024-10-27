@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/jwtauth/v5"
 	"github.com/moonprism/blog/core"
 	"github.com/moonprism/blog/models"
+	"gorm.io/gorm"
 )
 
 func bindGistApi(app *core.App, r chi.Router) {
@@ -35,7 +36,7 @@ type gistList struct {
 }
 
 func (api *gistApi) list(w http.ResponseWriter, r *http.Request) {
-	model := api.O.Model(&models.Gist{})
+	model := api.O.Model(&models.Gist{}).Preload("GistOutput")
 	page := 1
 	pageSize := 10
 	var count int64
@@ -97,6 +98,14 @@ func (api *gistApi) create(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	err = api.O.Create(gist).Error
 	core.P(err)
+	_, err = api.O.SqliteFtsDB.Exec(
+		"INSERT INTO gists_fts (rowid, title, lang, content) VALUES (?, ?, ?, ?)",
+		gist.ID,
+		gist.Title,
+		gist.Lang,
+		gist.Content,
+	)
+	core.P(err)
 	api.JSON(w, gist)
 }
 
@@ -106,9 +115,27 @@ func (api *gistApi) update(w http.ResponseWriter, r *http.Request) {
 	var data map[string]interface{}
 	err = json.NewDecoder(r.Body).Decode(&data)
 	core.P(err)
-	gist := new(models.Gist)
-	gist.ID = uint(id)
-	err = api.O.Model(gist).Updates(data).Error
+	err = api.O.Transaction(func(tx *gorm.DB) error {
+		gist := new(models.Gist)
+		gist.ID = uint(id)
+
+		if v, ok := data["html"]; ok {
+			content := &models.GistOutput{
+				GistID: gist.ID,
+				HTML:   v.(string),
+			}
+			err = tx.Save(content).Error
+			if err != nil {
+				return err
+			}
+			delete(data, "html")
+		}
+
+		if len(data) == 0 {
+			return nil
+		}
+		return tx.Model(gist).Updates(data).Error
+	})
 	core.P(err)
 	api.JSON(w, id)
 }
@@ -121,4 +148,35 @@ func (api *gistApi) delete(w http.ResponseWriter, r *http.Request) {
 	api.O.Delete(&gist)
 	core.P(err)
 	api.JSON(w, id)
+}
+
+func gistsPageRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		err := app.HTML(w, "gists", getAppSettings(app))
+		core.P(err)
+	}
+}
+
+func gistsSearchRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		q := r.URL.Query().Get("q")
+		rows, err := app.O.SqliteFtsDB.Query(
+			`select
+				rowid,
+				simple_highlight(gists_fts, 0, '[', ']'),
+				simple_highlight(gists_fts, 1, '[', ']'),
+				simple_highlight(gists_fts, 2, '[', ']')
+			from gists_fts where content match simple_query(?) or title match simple_query(?) or lang match ?`,
+			core.CreateSlice[interface{}](3, q)...,
+		)
+		core.P(err)
+		defer rows.Close()
+		for rows.Next() {
+			var id int
+			var title, lang, content string
+			rows.Scan(&id, &title, &lang, &content)
+			fmt.Printf("%d: \n %s \n %s \n %s \n --- \n", id, title, lang, content)
+		}
+		//app.JSON(w, rows)
+	}
 }
