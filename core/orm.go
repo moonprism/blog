@@ -18,7 +18,7 @@ type orm struct {
 	driverName  string
 }
 
-func newORM(driver string, source string) (o *orm, err error) {
+func newORM(driver string, source string, ftsSource string) (o *orm, err error) {
 	o = &orm{}
 	switch driver {
 	case "mysql":
@@ -43,12 +43,20 @@ func newORM(driver string, source string) (o *orm, err error) {
 	if err != nil {
 		return
 	}
-	db, err := sql.Open("sqlite3_simple", source)
+	db, err := sql.Open("sqlite3_simple", ftsSource)
 	if err != nil {
 		return
 	}
 	o.SqliteFtsDB = db
 	return
+}
+
+// TODO ORM, 连接池
+func (o *orm) FtsExec(query string, args ...any) (sql.Result, error) {
+	return o.SqliteFtsDB.Exec(query, args...)
+}
+func (o *orm) FtsQuery(query string, args ...any) (*sql.Rows, error) {
+	return o.SqliteFtsDB.Query(query, args...)
 }
 
 func (o *orm) DateFormatField(field string, format string) string {
@@ -82,19 +90,23 @@ func (o *orm) Order(value interface{}) (tx *gorm.DB) {
 }
 
 func (o *orm) Raw(sql string, values ...interface{}) (tx *gorm.DB) {
-	return o.OrmClient.Raw(sql, values)
+	return o.OrmClient.Raw(sql, values...)
 }
 
 func (o *orm) Where(query interface{}, args ...interface{}) (tx *gorm.DB) {
-	return o.OrmClient.Where(query, args)
+	return o.OrmClient.Where(query, args...)
 }
 
 func (o *orm) First(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
-	return o.OrmClient.First(dest, conds)
+	return o.OrmClient.First(dest, conds...)
+}
+
+func (o *orm) Find(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
+	return o.OrmClient.Find(dest, conds...)
 }
 
 func (o *orm) Exec(sql string, values ...interface{}) (tx *gorm.DB) {
-	return o.OrmClient.Exec(sql, values)
+	return o.OrmClient.Exec(sql, values...)
 }
 
 func (o *orm) Save(value interface{}) (tx *gorm.DB) {

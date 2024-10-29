@@ -37,8 +37,12 @@ func (app *App) InitSetting() error {
 	return nil
 }
 
-func (app *App) InitDatabase() error {
-	orm, err := newORM(app.Settings.Database.Driver, app.Settings.Database.Source)
+func (app *App) InitORM() error {
+	orm, err := newORM(
+		app.Settings.Database.Driver,
+		app.Settings.Database.Source,
+		app.Settings.FTS.Source,
+	)
 	if err != nil {
 		return err
 	}

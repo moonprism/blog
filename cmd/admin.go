@@ -25,7 +25,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					if err := app.InitSetting(); err != nil {
 						return err
 					}
-					if err := app.InitDatabase(); err != nil {
+					if err := app.InitORM(); err != nil {
 						return err
 					}
 
@@ -46,13 +46,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 						return err
 					}
 
-					_, err = app.O.SqliteFtsDB.Exec(`CREATE VIRTUAL TABLE gists_fts USING fts5(
-						title,
-						lang,
-						content,
-					, content = gists,
-					, content_rowid=id,
-					, tokenize = 'simple')`)
+					_, err = app.O.FtsExec(models.GistFtsInitSQL)
 					/*
 						if err != nil {
 							return err
@@ -69,13 +63,44 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				},
 			},
 			{
+				Name:  "sync-fts",
+				Usage: "sync sqlite fts",
+				Action: func(ctx *cli.Context) error {
+					if err := app.InitSetting(); err != nil {
+						return err
+					}
+					if err := app.InitORM(); err != nil {
+						return err
+					}
+					var gists []*models.Gist
+					if err := app.O.Find(&gists).Error; err != nil {
+						return err
+					}
+					_, err := app.O.FtsExec(models.GistFtsInitSQL)
+					if err != nil {
+						return err
+					}
+					for _, v := range gists {
+						_, err := app.O.FtsExec(
+							"INSERT INTO gists_fts(rowid, fulltext) VALUES (?, ?)",
+							v.ID,
+							models.Gist2Text(v),
+						)
+						if err != nil {
+							return err
+						}
+					}
+					return nil
+				},
+			},
+			{
 				Name:  "passwd",
 				Usage: "set account password",
 				Action: func(ctx *cli.Context) error {
 					if err := app.InitSetting(); err != nil {
 						return err
 					}
-					if err := app.InitDatabase(); err != nil {
+					if err := app.InitORM(); err != nil {
 						return err
 					}
 

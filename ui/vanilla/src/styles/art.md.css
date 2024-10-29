@@ -98,38 +98,37 @@
   word-wrap: break-word;
 }
 /** 隐藏自定义 blockquote 标题 */
-.admonition .admonition-title {
+.art .admonition .admonition-title {
   display: none;
 }
-.markdown-body blockquote > p:not(:last-child),
-.admonition > p:not(:last-child) {
+.art .markdown-body blockquote > p:not(:last-child),
+.art .admonition > p:not(:last-child) {
   margin-bottom: 8px;
 }
-.markdown-body blockquote > pre:not(:last-child),
-.admonition > pre:not(:last-child) {
+.art .markdown-body blockquote > pre:not(:last-child),
+.art .admonition > pre:not(:last-child) {
   margin-bottom: 5px;
 }
-.markdown-body .success,
-.markdown-body .ad-tip {
-  border-left-color: rgba(var(--bq-success-color)) !important;
-  background-color: rgba(var(--bq-success-color), var(--bq-opacity)) !important;
+.art .markdown-body .success,
+.art .markdown-body .ad-tip {
+  border-left-color: rgba(var(--bq-success-color));
+  background-color: rgba(var(--bq-success-color), var(--bq-opacity));
 }
-.markdown-body .warning,
-.markdown-body .ad-warning {
-  border-left-color: rgba(var(--bq-warning-color)) !important;
-  background-color: rgba(var(--bq-warning-color), var(--bq-opacity)) !important;
+.art .markdown-body .warning,
+.art .markdown-body .ad-warning {
+  border-left-color: rgba(var(--bq-warning-color));
+  background-color: rgba(var(--bq-warning-color), var(--bq-opacity));
 }
-.markdown-body .danger,
-.markdown-body .ad-caution {
-  border-left-color: rgba(var(--bq-danger-color)) !important;
-  background-color: rgba(var(--bq-danger-color), var(--bq-opacity)) !important;
+.art .markdown-body .danger,
+.art .markdown-body .ad-caution {
+  border-left-color: rgba(var(--bq-danger-color));
+  background-color: rgba(var(--bq-danger-color), var(--bq-opacity));
 }
-.markdown-body .info,
-.markdown-body .ad-important {
-  border-left-color: rgba(var(--bq-info-color)) !important;
-  background-color: rgba(var(--bq-info-color), var(--bq-opacity)) !important;
+.art .markdown-body .info,
+.art .markdown-body .ad-important {
+  border-left-color: rgba(var(--bq-info-color));
+  background-color: rgba(var(--bq-info-color), var(--bq-opacity));
 }
-
 .art .markdown-body hr {
   margin-bottom: 1rem;
   height: 0;
@@ -141,11 +140,11 @@
 .art .markdown-body code {
   overflow: auto;
   word-wrap: break-word;
-  font: 0.9em Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,
+  font: 1rem Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,
     Hiragino Sans GB, Microsoft YaHei, monospace;
-  padding: 0.2em 0.4em 0.1em;
+  padding: 0.2rem 0.4rem 0.1rem;
   border-radius: 3px;
-  margin: 0 0.2em;
+  margin: 0 0.2rem;
   color: var(--code-color);
   background-color: var(--code-bg-color);
 }

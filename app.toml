@@ -13,6 +13,9 @@ JwtSecret = "2aEtVr"
   # Driver = "mysql"
   # Source = "root:123456@tcp(127.0.0.1:3306)/blog?charset=utf8mb4"
 
+[FTS]
+  Source = "test_fts.db"
+
 [OSS]
   Region = ""
   Bucket = ""

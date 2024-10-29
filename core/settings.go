@@ -11,6 +11,7 @@ type settings struct {
 	JwtSecret string
 	Server    serverSet
 	Database  databaseSet
+	FTS       ftsSet
 	OSS       ossSet
 	Cache     cacheSet
 	System    SystemSet
@@ -22,6 +23,10 @@ type serverSet struct {
 
 type databaseSet struct {
 	Driver string
+	Source string
+}
+
+type ftsSet struct {
 	Source string
 }
 

@@ -2,6 +2,7 @@ import "./iconfont.js";
 
 import "./styles/main.css";
 import "./styles/art.md.css";
+import "./styles/gist.md.css";
 import "./styles/wind.css";
 
 // 标签:hover动画

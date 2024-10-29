@@ -14,7 +14,7 @@ func NewServeCommand(app *core.App) *cli.Command {
 			if err := app.InitSetting(); err != nil {
 				return err
 			}
-			if err := app.InitDatabase(); err != nil {
+			if err := app.InitORM(); err != nil {
 				return err
 			}
 			if err := app.InitOSS(); err != nil {

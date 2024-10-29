@@ -1,3 +1,19 @@
+.gist .markdown-body pre {
+}
+.gist .markdown-body pre code {
+  display: block;
+  padding: 0;
+}
+.gist .markdown-body code {
+  overflow: auto;
+  word-wrap: break-word;
+  font: 1rem Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,
+    Hiragino Sans GB, Microsoft YaHei, monospace;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin: 0 0.2em;
+}
+
 .gist .markdown-body {
 }
 .gist .markdown-body > p {
@@ -101,25 +117,8 @@
   padding-top: 4px;
   border-radius: 6px;
 }
-.gist .markdown-body pre {
-  margin: 5px 0.2em 10px;
-}
 .gist .markdown-body ul pre,
 .gist .markdown-body ol pre {
   margin-left: -13px;
   margin-top: 12px;
-}
-.gist .markdown-body pre code {
-  display: block;
-  padding: 0;
-}
-.gist .markdown-body code {
-  overflow: auto;
-  word-wrap: break-word;
-  font: 0.9em Consolas, "Liberation Mono", Menlo, Courier,
-    "Microsoft Yahei Light", monospace;
-  padding: 2px 8px !important;
-  display: inline;
-  border-radius: 3px;
-  margin: 0 0.2em;
 }

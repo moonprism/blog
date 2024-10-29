@@ -98,12 +98,10 @@ func (api *gistApi) create(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	err = api.O.Create(gist).Error
 	core.P(err)
-	_, err = api.O.SqliteFtsDB.Exec(
-		"INSERT INTO gists_fts (rowid, title, lang, content) VALUES (?, ?, ?, ?)",
+	_, err = api.O.FtsExec(
+		"INSERT INTO gists_fts (rowid, fulltext) VALUES (?, ?)",
 		gist.ID,
-		gist.Title,
-		gist.Lang,
-		gist.Content,
+		models.Gist2Text(gist),
 	)
 	core.P(err)
 	api.JSON(w, gist)
@@ -159,24 +157,57 @@ func gistsPageRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) 
 
 func gistsSearchRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		var data = []*models.GistFts{}
+		limit := 12
 		q := r.URL.Query().Get("q")
-		rows, err := app.O.SqliteFtsDB.Query(
-			`select
+		if q != "" {
+			if len(q) > 30 {
+				return
+			}
+			rows, err := app.O.FtsQuery(`
+			SELECT
 				rowid,
-				simple_highlight(gists_fts, 0, '[', ']'),
-				simple_highlight(gists_fts, 1, '[', ']'),
-				simple_highlight(gists_fts, 2, '[', ']')
-			from gists_fts where content match simple_query(?) or title match simple_query(?) or lang match ?`,
-			core.CreateSlice[interface{}](3, q)...,
-		)
-		core.P(err)
-		defer rows.Close()
-		for rows.Next() {
-			var id int
-			var title, lang, content string
-			rows.Scan(&id, &title, &lang, &content)
-			fmt.Printf("%d: \n %s \n %s \n %s \n --- \n", id, title, lang, content)
+				simple_highlight(gists_fts, 0, '<em>', '</em>')
+			FROM gists_fts WHERE
+				fulltext match jieba_query(?)
+			ORDER BY rank LIMIT ?
+			`, q, limit,
+			)
+			core.P(err)
+			defer rows.Close()
+
+			for rows.Next() {
+				row := new(models.GistFts)
+				var fulltext string
+				rows.Scan(&row.ID, &fulltext)
+				// 考虑效率的话这里放到前端去做更好
+				data = append(data, models.Text2Gist(row.ID, &fulltext))
+			}
+		} else {
+			var err error
+			page := 1
+			pageParam := r.URL.Query().Get("page")
+			if pageParam != "" {
+				page, err = strconv.Atoi(pageParam)
+				core.P(err)
+			}
+			var gists []*models.Gist
+			err = app.O.Model(&models.Gist{}).Preload("GistOutput").
+				Order("id DESC").
+				Offset((page - 1) * limit).
+				Limit(limit).
+				Find(&gists).
+				Error
+			core.P(err)
+			for _, v := range gists {
+				data = append(data, &models.GistFts{
+					ID:      v.ID,
+					Title:   v.Title,
+					Lang:    v.Lang,
+					Content: v.GistOutput.HTML,
+				})
+			}
 		}
-		//app.JSON(w, rows)
+		app.JSON(w, data)
 	}
 }

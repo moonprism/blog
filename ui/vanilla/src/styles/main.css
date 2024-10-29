@@ -21,13 +21,6 @@ li {
   margin: 0;
 }
 
-a {
-  outline: 0;
-  color: #00a1d6;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 :root {
   --art-min-w: 755px;
 
@@ -36,7 +29,7 @@ a {
   --primary: rgb(17 24 39);
   --gray-4: rgb(156 163 175);
   --line: rgba(50, 50, 50, 0.06);
-  --border: rgba(50, 50, 50, 0.15);
+  --border: rgba(100, 100, 100, 0.15);
   --outline: rgba(50, 50, 50, 0.3);
 
   --destructive: 0 72.2% 50.6%;
@@ -46,6 +39,22 @@ a {
   --background: #181a1b;
   --foreground: #e8e6e3;
   --primary: #eee;
+}
+
+a {
+  outline: 0;
+  color: #00a1d6;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
 }
 
 html {
