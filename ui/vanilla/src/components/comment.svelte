@@ -51,7 +51,7 @@
 
   function request(rootId = 0, page = 1) {
     isRequestIn = true;
-    fetch("/api/comment/page/" + id + "?root_id=" + rootId + "&page=" + page)
+    fetch(`/api/comment/page/${id}?root_id=${rootId}&page=${page}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

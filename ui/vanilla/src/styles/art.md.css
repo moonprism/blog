@@ -11,7 +11,8 @@
 
   --gray-200: rgb(229 231 235);
 }
-.art .markdown-body {
+.art .markdown-body > *:last-child{
+  margin-bottom: 5px;
 }
 .art .markdown-body a {
   margin: 0 0.2rem;

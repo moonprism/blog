@@ -1,20 +1,30 @@
+/**
+ * @param {function} func - 要防抖的函数。
+ * @param {number} delay - 防抖延迟时间（毫秒）。
+ * @returns {function} 返回一个防抖后的函数。
+ */
 export function debounce(func, delay) {
   let timeoutID;
   return function (...args) {
     clearTimeout(timeoutID);
     timeoutID = setTimeout(function () {
-      func.apply(this, args);
+      func(...args);
     }, delay);
   };
 }
 
+/**
+ * 计算时间戳与当前时间差距的中文表示
+ * @param {number} timeStamp 秒时间戳
+ * @returns {string}
+ */
 export function timeAgoStr(timeStamp) {
   const minute = 1000 * 60;
   const hour = minute * 60;
   const day = hour * 24;
   const month = day * 30;
   const now = new Date().getTime();
-  const diffValue = now - timeStamp*1000;
+  const diffValue = now - timeStamp * 1000;
   if (diffValue < 0) {
     return;
   }

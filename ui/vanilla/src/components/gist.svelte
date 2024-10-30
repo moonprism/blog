@@ -3,10 +3,12 @@
 <script>
   import { debounce } from "../utils";
   import Loading from "./loading.svelte";
+  import markdown from "moonprism-markdown";
 
   let isLoading = false;
 
-  let page = 1;
+  export let cdn = "";
+  let currentPage = 1;
   let queryText = "";
 
   /**
@@ -15,39 +17,71 @@
   let gists = [],
     pageGists = [];
 
-  async function fetchGists() {
-    const response = await fetch(`/gists/search?q=${queryText}&page=${page}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
+  async function search(query = "") {
+    if (queryText === "" || queryText.startsWith("/")) {
+      isLoading = false;
+      return;
+    }
+    const response = await fetch(`/gists/search?q=${query}`);
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      //TODO 查询错误处理
+      isLoading = false;
+      return;
     }
-    if (queryText !== "") {
-      gists = await response.json();
-    } else {
-      pageGists = await response.json();
-    }
+    gists = await response.json();
     isLoading = false;
   }
 
-  fetchGists();
+  async function fetchGists(page = 1) {
+    isLoading = true;
+    const response = await fetch(`/gists/search?page=${page}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    pageGists = await response.json();
+    isLoading = false;
+  }
+  fetchGists(1);
 
-  const search = debounce(fetchGists, 750);
+  let isHelp = false;
+  /**
+   * @param {boolean} show
+   */
+  function help(show = true) {
+    isHelp = show;
+  }
+
+  /**
+   * 执行自定义命令
+   * @param {string} command
+   * @param {...string} args
+   */
+  function exec(command = "", ...args) {
+    switch (command) {
+      case "tags":
+        break;
+      default:
+        help();
+    }
+  }
+
+  const debounceSearch = debounce(search, 600);
+
+  function loading() {
+    isLoading = true;
+  }
 
   $: {
-    if (queryText.startsWith("/")) {
-      gists = [{
-        title: "readme",
-        lang: "md",
-        content: "/p, /ai",
-      }]
-    } else if (queryText !== "" || page !== 1) {
-      isLoading = true;
-      search();
+    if (queryText !== "") {
+      if (queryText.startsWith("/")) {
+        exec(...queryText.slice(1).split(" "));
+      } else {
+        debounceSearch(queryText);
+        loading();
+        help(false);
+      }
+    } else {
+      help(false);
     }
   }
 </script>
@@ -55,7 +89,28 @@
 <div class="gist-main">
   <input bind:value={queryText} placeholder="/" />
   <div class="gists">
-    {#if isLoading}
+    {#if isHelp}
+      <div class="gist">
+        <div class="gist-title">readme<span>.md</span></div>
+        <div class="gist-content markdown-body">
+          <p>
+            一个网络空间中随处可见的输入框，颜色和长度似乎根据设计者的某些喜好精心设定。<br
+            />在曾经个人博客繁荣时代它们常常承载着陌生者的思想游荡于网路，如今却很少被使用了。
+          </p>
+          <h3>Commands</h3>
+          <ul>
+            <li><code>/p </code>搜索posts</li>
+            <li><code>/tags</code>列出全部标签</li>
+            <li><code>/dark|light</code>开启日|夜间模式</li>
+            <li><code>/ai </code>AI对话</li>
+          </ul>
+          <div class="admonition ad-caution">
+            <p class="admonition-title">TIP</p>
+            <p>正在研发中...</p>
+          </div>
+        </div>
+      </div>
+    {:else if isLoading}
       <Loading color="#ff1493" />
     {:else if queryText !== ""}
       {#each gists as gist}
@@ -63,7 +118,15 @@
           <div class="gist-title">
             {@html gist.title} <span>.{@html gist.lang}</span>
           </div>
-          <div class="gist-content">{@html gist.content}</div>
+          {#if gist.lang.replace(new RegExp(`^<em>|</em>$`, "g"), "") === "md"}
+            <div class="gist-content markdown-body">
+              {@html markdown(gist.content, { imageCdnUrl: cdn })}
+            </div>
+          {:else}
+            <div class="gist-content">
+              <pre><code>{@html gist.content}</code></pre>
+            </div>
+          {/if}
         </div>
       {/each}
     {:else}
@@ -72,14 +135,16 @@
           <div class="gist-title">
             {@html gist.title} <span>.{@html gist.lang}</span>
           </div>
-          <div class="gist-content markdown-body">{@html gist.content}</div>
+          <div class="gist-content {gist.lang === 'md' ? 'markdown-body' : ''}">
+            {@html gist.content}
+          </div>
         </div>
       {/each}
       {#if pageGists.length >= 12}
         <div class="next-btn-container">
           <button
             on:click={() => {
-              page++;
+              fetchGists(++currentPage);
             }}>下一页</button
           >
         </div>
@@ -109,6 +174,9 @@
   .gist-main input:focus {
     border-color: aqua;
   }
+  .gist-main input::placeholder {
+    color: var(--outline);
+  }
   .gists {
     width: 100%;
   }
@@ -122,7 +190,8 @@
   .gist .gist-content {
     border: 1px solid var(--border);
     border-radius: 4px;
-    padding: 10px 12px;
+    padding: 13px 17px;
+    overflow: auto;
   }
   .next-btn-container {
     text-align: center;
@@ -133,7 +202,6 @@
   }
   :global(em) {
     border-bottom: 2px solid #ff1493;
-    border-radius: 2px;
     font-style: normal;
   }
 </style>
