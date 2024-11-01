@@ -55,7 +55,7 @@
     if (isCreate) {
       fet.post('gist', body).then((res) => {
         if (res.ok) {
-          res.data.html = res.data.output.html
+          res.data.html = body.output.html
           $tableData = [<Gist>res.data, ...$tableData]
           closeForm()
         }

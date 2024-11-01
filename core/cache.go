@@ -23,21 +23,20 @@ type Cache interface {
 }
 
 func NewCache(addr string) (cache Cache, err error) {
-	if addr == "local" {
-		cache = localCache.New()
-	} else {
-		c := &redisCache{
-			rdb: redis.NewClient(&redis.Options{
-				Addr:     addr,
-				Password: "",
-				DB:       0,
-			}),
-			ctx: context.Background(),
-		}
-		_, err = c.rdb.Ping(c.ctx).Result()
-		cache = c
+	return localCache.New(), nil
+	/**
+	c := &redisCache{
+		rdb: redis.NewClient(&redis.Options{
+			Addr:     addr,
+			Password: "",
+			DB:       0,
+		}),
+		ctx: context.Background(),
 	}
+	_, err = c.rdb.Ping(c.ctx).Result()
+	cache = c
 	return cache, err
+	*/
 }
 
 type redisCache struct {

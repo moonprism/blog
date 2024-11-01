@@ -17,6 +17,6 @@
     "rollup-plugin-svelte": "^7.2.0"
   },
   "dependencies": {
-    "moonprism-markdown": "^2.6.0"
+    "moonprism-markdown": "^2.6.5"
   }
 }

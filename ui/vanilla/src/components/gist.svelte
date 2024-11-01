@@ -17,6 +17,14 @@
   let gists = [],
     pageGists = [];
 
+  const foreseeStartChar = "☾🔮☽";
+  const foreseeEndChar = "☾†🔮☽";
+  function foresee(str) {
+    return str
+      .replaceAll(foreseeStartChar, '<span class="em">')
+      .replaceAll(foreseeEndChar, "</span>");
+  }
+
   async function search(query = "") {
     if (queryText === "" || queryText.startsWith("/")) {
       isLoading = false;
@@ -30,15 +38,29 @@
     }
     gists = await response.json();
     isLoading = false;
+    window.history.pushState({}, 0, "#!/" + gists.map((g) => g.id).join(","));
+  }
+
+  let ids = "";
+  const urlSlices = window.location.href.split("#!/");
+  if (urlSlices.length > 1 && urlSlices[1].length > 0) {
+    ids = decodeURI(urlSlices[1]);
   }
 
   async function fetchGists(page = 1) {
     isLoading = true;
-    const response = await fetch(`/gists/search?page=${page}`);
+    const response = await fetch(`/gists/search?page=${page}&ids=${ids}`);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     pageGists = await response.json();
+    // 按照ids排序
+    if (ids !== "") {
+      const idOrder = ids.split(",").map((s) => Number(s));
+      pageGists = pageGists.sort((a, b) => {
+        return idOrder.indexOf(a.id) - idOrder.indexOf(b.id);
+      });
+    }
     isLoading = false;
   }
   fetchGists(1);
@@ -51,6 +73,7 @@
     isHelp = show;
   }
 
+  let currentCommand = "";
   /**
    * 执行自定义命令
    * @param {string} command
@@ -59,10 +82,32 @@
   function exec(command = "", ...args) {
     switch (command) {
       case "tags":
+        currentCommand = "tags";
+        execTagsCommand();
         break;
       default:
+        currentCommand = "";
         help();
     }
+  }
+
+  /**
+   * @type {Array<{id: number, color: string, name: string}>}
+   */
+  let tags = [];
+  async function execTagsCommand() {
+    help(false);
+    if (tags.length !== 0) {
+      return;
+    }
+    isLoading = true;
+    const response = await fetch("/api/tag");
+    if (!response.ok) {
+      throw new Error("Request tags network response was not ok");
+    }
+    const res = await response.json();
+    tags = res.data;
+    isLoading = false;
   }
 
   const debounceSearch = debounce(search, 600);
@@ -76,7 +121,7 @@
       if (queryText.startsWith("/")) {
         exec(...queryText.slice(1).split(" "));
       } else {
-        debounceSearch(queryText);
+        debounceSearch(queryText.trim());
         loading();
         help(false);
       }
@@ -91,7 +136,7 @@
   <div class="gists">
     {#if isHelp}
       <div class="gist">
-        <div class="gist-title">readme<span>.md</span></div>
+        <div class="gist-title">README<span>.md</span></div>
         <div class="gist-content markdown-body">
           <p>
             一个网络空间中随处可见的输入框，颜色和长度似乎根据设计者的某些喜好精心设定。<br
@@ -99,32 +144,49 @@
           </p>
           <h3>Commands</h3>
           <ul>
-            <li><code>/p </code>搜索posts</li>
+            <li><code>.</code>检索 gists</li>
+            <li><code>/p .</code>检索 posts</li>
             <li><code>/tags</code>列出全部标签</li>
             <li><code>/dark|light</code>开启日|夜间模式</li>
-            <li><code>/ai </code>AI对话</li>
+            <li><code>/ai </code></li>
           </ul>
           <div class="admonition ad-caution">
             <p class="admonition-title">TIP</p>
-            <p>正在研发中...</p>
+            <p>正在完善中...</p>
           </div>
+          <h3>Tips</h3>
+          <p>gists 的搜索结果将记录在当前 url 上，刷新渲染</p>
         </div>
       </div>
     {:else if isLoading}
       <Loading color="#ff1493" />
+    {:else if currentCommand === "tags"}
+      <div class="gist">
+        <div class="gist-title">Tags<span>.md</span></div>
+        <div class="gist-content markdown-body">
+          {#each tags as tag}
+            <a
+              class="art-tag"
+              href="posts/tag/{tag.name}"
+              style="background-color:{tag.color};margin-right: 7px"
+              >{tag.name}</a
+            >
+          {/each}
+        </div>
+      </div>
     {:else if queryText !== ""}
       {#each gists as gist}
         <div class="gist">
           <div class="gist-title">
-            {@html gist.title} <span>.{@html gist.lang}</span>
+            {@html foresee(gist.title)} <span>.{@html foresee(gist.lang)}</span>
           </div>
-          {#if gist.lang.replace(new RegExp(`^<em>|</em>$`, "g"), "") === "md"}
+          {#if gist.lang.replace(new RegExp(`^${foreseeStartChar}|${foreseeEndChar}$`, "g"), "") === "md"}
             <div class="gist-content markdown-body">
-              {@html markdown(gist.content, { imageCdnUrl: cdn })}
+              {@html foresee(markdown(gist.content, { imageCdnUrl: cdn }))}
             </div>
           {:else}
             <div class="gist-content">
-              <pre><code>{@html gist.content}</code></pre>
+              <pre><code>{@html foresee(gist.content)}</code></pre>
             </div>
           {/if}
         </div>
@@ -140,7 +202,7 @@
           </div>
         </div>
       {/each}
-      {#if pageGists.length >= 12}
+      {#if pageGists.length >= 12 && ids === ""}
         <div class="next-btn-container">
           <button
             on:click={() => {
@@ -184,8 +246,11 @@
     margin: 15px 33px;
   }
   .gist .gist-title {
-    margin: 2px;
-    font-size: 17px;
+    margin: 3px 2px;
+    font-size: 16.5px;
+  }
+  .gist .gist-title span {
+    font-size: 15px;
   }
   .gist .gist-content {
     border: 1px solid var(--border);
@@ -200,7 +265,7 @@
   .next-btn-container button {
     font-size: 0.9rem;
   }
-  :global(em) {
+  :global(.em) {
     border-bottom: 2px solid #ff1493;
     font-style: normal;
   }

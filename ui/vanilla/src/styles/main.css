@@ -29,7 +29,7 @@ li {
   --primary: rgb(17 24 39);
   --gray-4: rgb(156 163 175);
   --line: rgba(50, 50, 50, 0.06);
-  --border: rgba(100, 100, 100, 0.15);
+  --border: #e5e7eb;
   --outline: rgba(50, 50, 50, 0.3);
 
   --destructive: 0 72.2% 50.6%;

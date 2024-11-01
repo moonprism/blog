@@ -52,7 +52,6 @@ func (tm *tmplManager) RegisterDir(dir string) error {
 		if !entry.IsDir() && filepath.Ext(entry.Name()) == ".html" {
 			fileName := entry.Name()
 			nameWithoutExt := fileName[:len(fileName)-len(filepath.Ext(fileName))]
-			fmt.Println("Regist tmpl:", nameWithoutExt)
 			err = tm.Register(nameWithoutExt, filepath.Join(dir, entry.Name()))
 			if err != nil {
 				return err

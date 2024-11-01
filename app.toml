@@ -1,3 +1,4 @@
+isDev = true
 JwtSecret = "2aEtVr"
 
 [System]
@@ -24,4 +25,4 @@ JwtSecret = "2aEtVr"
   RoleArn = ""
 
 [Cache]
-  Addr = "local"
+  # Addr = "localhost:3306"

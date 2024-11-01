@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/jwtauth/v5"
@@ -117,22 +118,36 @@ func (api *gistApi) update(w http.ResponseWriter, r *http.Request) {
 		gist := new(models.Gist)
 		gist.ID = uint(id)
 
-		if v, ok := data["html"]; ok {
+		if v, ok := data["output"]; ok {
 			content := &models.GistOutput{
 				GistID: gist.ID,
-				HTML:   v.(string),
+				HTML:   v.(map[string]interface{})["html"].(string),
 			}
 			err = tx.Save(content).Error
 			if err != nil {
 				return err
 			}
-			delete(data, "html")
+			delete(data, "output")
 		}
 
 		if len(data) == 0 {
 			return nil
 		}
-		return tx.Model(gist).Updates(data).Error
+		err = tx.Model(gist).Updates(data).Error
+		if err != nil {
+			return err
+		}
+
+		err = tx.First(gist).Error
+		if err != nil {
+			return err
+		}
+		_, err = api.O.FtsExec(
+			"UPDATE gists_fts SET fulltext = ? WHERE rowid = ?",
+			models.Gist2Text(gist),
+			gist.ID,
+		)
+		return err
 	})
 	core.P(err)
 	api.JSON(w, id)
@@ -144,6 +159,11 @@ func (api *gistApi) delete(w http.ResponseWriter, r *http.Request) {
 	gist := new(models.Gist)
 	gist.ID = uint(id)
 	api.O.Delete(&gist)
+	core.P(err)
+	_, err = api.O.FtsExec(
+		"DELETE FROM gists_fts WHERE rowid = ?",
+		gist.ID,
+	)
 	core.P(err)
 	api.JSON(w, id)
 }
@@ -167,7 +187,7 @@ func gistsSearchRoute(app *core.App) func(w http.ResponseWriter, r *http.Request
 			rows, err := app.O.FtsQuery(`
 			SELECT
 				rowid,
-				simple_highlight(gists_fts, 0, '<em>', '</em>')
+				simple_highlight(gists_fts, 0, '☾🔮☽', '☾†🔮☽')
 			FROM gists_fts WHERE
 				fulltext match jieba_query(?)
 			ORDER BY rank LIMIT ?
@@ -191,12 +211,27 @@ func gistsSearchRoute(app *core.App) func(w http.ResponseWriter, r *http.Request
 				page, err = strconv.Atoi(pageParam)
 				core.P(err)
 			}
+			ids := []uint{}
+			idsParam := r.URL.Query().Get("ids")
+			if idsParam != "" {
+				for _, s := range strings.Split(idsParam, ",") {
+					// 转换每个字符串为 uint
+					num, err := strconv.ParseUint(s, 10, 0) // 10 是基数，0 表示使用 uint 类型的默认位数
+					core.P(err)
+					ids = append(ids, uint(num))
+				}
+			}
 			var gists []*models.Gist
-			err = app.O.Model(&models.Gist{}).Preload("GistOutput").
-				Order("id DESC").
-				Offset((page - 1) * limit).
-				Limit(limit).
-				Find(&gists).
+			model := app.O.Model(&models.Gist{}).Preload("GistOutput").
+				Order("id DESC")
+
+			if len(ids) != 0 {
+				page = 1
+				model.Where("id in (?)", ids)
+			}
+
+			err = model.Offset((page - 1) * limit).
+				Limit(limit).Find(&gists).
 				Error
 			core.P(err)
 			for _, v := range gists {

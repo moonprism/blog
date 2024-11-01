@@ -30,13 +30,19 @@ func Serve(app *core.App) error {
 		r.Route("/settings", func(r chi.Router) { bindSettingsApi(app, r) })
 	})
 
-	r.Get("/posts", articlePageListRoute(app))
-	r.Get("/posts/tag/{tagName}", articlePageListRoute(app))
-	r.Get("/post/{id}", articlePageDetailRoute(app))
-	r.Get("/gists", gistsPageRoute(app))
-	r.Get("/gists/search", gistsSearchRoute(app))
-	//	r.Get("/links")
-	//	r.Get("/about")
+	r.Route("/", func(r chi.Router) {
+		if app.IsDev() {
+			r.Use(m.RefreshTemplate(app))
+		}
+		r.Get("/posts", articlePageListRoute(app))
+		r.Get("/posts/tag/{tagName}", articlePageListRoute(app))
+		r.Get("/post/{id}", articlePageDetailRoute(app))
+		r.Get("/comments/{articleID}", commentPageListRoute(app))
+		r.Get("/gists", gistsPageRoute(app))
+		r.Get("/gists/search", gistsSearchRoute(app))
+		//	r.Get("/links")
+		//	r.Get("/about")
+	})
 
 	return http.ListenAndServe(app.Settings.Server.Addr, r)
 }

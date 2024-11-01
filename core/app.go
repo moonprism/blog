@@ -37,6 +37,10 @@ func (app *App) InitSetting() error {
 	return nil
 }
 
+func (app *App) IsDev() bool {
+	return app.Settings.IsDev
+}
+
 func (app *App) InitORM() error {
 	orm, err := newORM(
 		app.Settings.Database.Driver,

@@ -8,6 +8,7 @@ import (
 )
 
 type settings struct {
+	IsDev     bool
 	JwtSecret string
 	Server    serverSet
 	Database  databaseSet
