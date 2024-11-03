@@ -59,6 +59,63 @@ func (o *orm) FtsQuery(query string, args ...any) (*sql.Rows, error) {
 	return o.SqliteFtsDB.Query(query, args...)
 }
 
+func (o *orm) FtsCreateTable(name string) error {
+	_, err := o.FtsExec(fmt.Sprintf(`
+DROP TABLE IF EXISTS %s_fts;
+CREATE VIRTUAL TABLE %s_fts USING fts5(
+	fulltext,
+	tokenize = 'simple'
+)`, name, name))
+	return err
+}
+
+func (o *orm) FtsInsert(table string, id uint, text *string) error {
+	_, err := o.FtsExec(
+		fmt.Sprintf("INSERT INTO %s_fts (rowid, fulltext) VALUES (?, ?)", table),
+		id,
+		*text,
+	)
+	return err
+}
+
+func (o *orm) FtsUpdate(table string, id uint, text *string) error {
+	_, err := o.FtsExec(
+		fmt.Sprintf("UPDATE %s_fts SET fulltext = ? WHERE rowid = ?", table),
+		*text,
+		id,
+	)
+	return err
+}
+
+func (o *orm) FtsDelete(table string, id uint) error {
+	_, err := o.FtsExec(
+		fmt.Sprintf("DELETE FROM %s_fts WHERE rowid = ?", table),
+		id,
+	)
+	return err
+}
+
+func (o *orm) FtsSelect(table string, keyword string, limit int, split int) (*sql.Rows, error) {
+	var funcName, funcEnd string
+	if split > 0 {
+		funcName = "snippet"
+		funcEnd = " , '...', 10"
+	} else {
+		funcName = "highlight"
+	}
+	return o.FtsQuery(fmt.Sprintf(`
+		SELECT
+			rowid,
+			simple_%s(%s_fts, 0, '☾🔮☽', '☾†🔮☽'%s)
+		FROM %s_fts WHERE
+			fulltext match jieba_query(?)
+		ORDER BY rank LIMIT ?
+			`, funcName, table, funcEnd, table),
+		keyword,
+		limit,
+	)
+}
+
 func (o *orm) DateFormatField(field string, format string) string {
 	switch o.driverName {
 	case "mysql":

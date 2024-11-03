@@ -1,21 +1,49 @@
 <svelte:options customElement="mod-comment" />
 
 <script>
+  /**
+   * @type {string} 文章ID
+   */
   export let id;
 
-  import { timeAgoStr } from "../utils";
-  import CommentForm from "./comment-form.svelte";
-  import Loading from "./loading.svelte";
+  import { timeAgoStr } from "@/utils";
+  import CommentForm from "./form.svelte";
+  import Loading from "@/components/loading.svelte";
 
   let isRequestIn = false;
 
-  let commentsInfo = {
+  /**
+   * @typedef {Object} Comment
+   * @property {number} id
+   * @property {string} name
+   * @property {string} email
+   * @property {string} content
+   * @property {number} article_id
+   * @property {number} reply_comment_id
+   * @property {number} root_comment_i
+   * @property {Comment} sub_comments
+   */
+
+  /**
+   * @typedef {Object} CmntInfo
+   * @property {Comment} data
+   * @property {boolean} has_next
+   */
+
+  /**
+   * @type {CmntInfo}
+   */
+  let cmntInfo = {
     data: [],
-    has_next: false,
+    has_next: false
   };
 
   let replyCommentId = 0;
   let replyName = "";
+
+  /**
+   * @type {Element}
+   */
   let formDom;
   let replyLineDom;
   function replySelect(event, artId, name) {
@@ -35,18 +63,14 @@
         break;
       }
     }
-    const lineHeight =
-      replyCmntDom.offsetTop - formDom.offsetTop - formDom.offsetHeight + 10;
+    const lineHeight = replyCmntDom.offsetTop - formDom.offsetTop - formDom.offsetHeight + 10;
     replyLineDom.style.height = lineHeight + "px";
 
     const rect = formDom.getBoundingClientRect();
     // 计算目标元素的绝对位置
     const scrollToY = window.scrollY + rect.top;
-    // 使用 scrollTo 方法滚动到目标位置
-    window.scrollTo({
-      top: scrollToY,
-      behavior: "smooth", // 平滑滚动
-    });
+    // 滚动到目标位置
+    window.scrollTo({ top: scrollToY, behavior: "smooth" });
   }
 
   function request(rootId = 0, page = 1) {
@@ -60,16 +84,16 @@
       })
       .then((data) => {
         if (rootId === 0 && page === 1) {
-          commentsInfo = data;
+          cmntInfo = data;
         } else {
           if (rootId === 0) {
-            commentsInfo.data = [...commentsInfo.data, ...data.data];
-            commentsInfo.has_next = data.has_next;
+            cmntInfo.data = [...cmntInfo.data, ...data.data];
+            cmntInfo.has_next = data.has_next;
           } else {
-            const cmnt = commentsInfo.data.find((c) => c.id === rootId);
+            const cmnt = cmntInfo.data.find((c) => c.id === rootId);
             cmnt.sub_comments = [...cmnt.sub_comments, ...data.data];
             cmnt.has_next = data.has_next;
-            commentsInfo = commentsInfo;
+            cmntInfo = cmntInfo;
           }
         }
         isRequestIn = false;
@@ -85,17 +109,17 @@
     const rootCmntId = data.detail.root_comment_id;
     if (rootCmntId === 0) {
       data.detail.sub_comments = [];
-      commentsInfo.data.unshift(data.detail);
-      commentsInfo.data = commentsInfo.data;
+      cmntInfo.data.unshift(data.detail);
+      cmntInfo.data = cmntInfo.data;
     } else {
-      const rootCmnt = commentsInfo.data.find((c) => c.id === rootCmntId);
+      const rootCmnt = cmntInfo.data.find((c) => c.id === rootCmntId);
       rootCmnt.sub_comments.push(data.detail);
-      const index = commentsInfo.data.indexOf(rootCmnt);
+      const index = cmntInfo.data.indexOf(rootCmnt);
       if (index > -1) {
-        const element = commentsInfo.data.splice(index, 1)[0]; // 删除元素
-        commentsInfo.data.unshift(element); // 将元素添加到数组开头
+        const element = cmntInfo.data.splice(index, 1)[0]; // 删除元素
+        cmntInfo.data.unshift(element); // 将元素添加到数组开头
       }
-      commentsInfo.data = commentsInfo.data;
+      cmntInfo.data = cmntInfo.data;
     }
     replyCommentId = 0;
     replyName = "";
@@ -109,7 +133,7 @@
 </div>
 
 <div class="board">
-  {#each commentsInfo.data as c1}
+  {#each cmntInfo.data as c1}
     <div class="cmnt">
       <div class="cmnt-box">
         <div class="cmnt-left{replyCommentId == c1.id ? ' selected' : ''}">
@@ -137,16 +161,13 @@
           <p>{c1.content}</p>
         </div>
         {#if replyCommentId != c1.id}
-          <button
-            class="reply-btn"
-            on:click={(e) => replySelect(e, c1.id, c1.name)}
-          >
+          <button class="reply-btn" on:click={(e) => replySelect(e, c1.id, c1.name)}>
             <svg><use href="#icon-reply" /></svg>
           </button>
         {/if}
       </div>
       {#each c1.sub_comments as c2}
-        <!--todo 超出400行就抽象出组件-->
+        <!--todo 超出400行再抽象出组件-->
         <div class="cmnt">
           <div class="cmnt-box">
             <div class="cmnt-left{replyCommentId == c2.id ? ' selected' : ''}">
@@ -160,11 +181,7 @@
                   <div class="name">
                     {c2.name}
                     {#if c2.reply_comment_id != c1.id}
-                      <span
-                        >@{c1.sub_comments.find(
-                          (j) => j.id === c2.reply_comment_id
-                        ).name}</span
-                      >
+                      <span>@{c1.sub_comments.find((j) => j.id === c2.reply_comment_id).name}</span>
                     {/if}
                   </div>
                   <div class="ago">{timeAgoStr(c2.created)}</div>
@@ -183,10 +200,7 @@
               <p>{c2.content}</p>
             </div>
             {#if replyCommentId != c2.id}
-              <button
-                class="reply-btn"
-                on:click={(e) => replySelect(e, c2.id, c2.name)}
-              >
+              <button class="reply-btn" on:click={(e) => replySelect(e, c2.id, c2.name)}>
                 <svg><use href="#icon-reply" /></svg>
               </button>
             {/if}
@@ -208,7 +222,7 @@
       {/if}
     </div>
   {/each}
-  {#if commentsInfo.has_next && !isRequestIn}
+  {#if cmntInfo.has_next && !isRequestIn}
     <div class="load-more">
       <button
         on:click={() => {

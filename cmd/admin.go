@@ -12,6 +12,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/term"
+	"gorm.io/gorm"
 )
 
 func NewAdminCommand(app *core.App) *cli.Command {
@@ -45,8 +46,13 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					if err != nil {
 						return err
 					}
-
-					_, err = app.O.FtsExec(models.GistFtsInitSQL)
+					if err := app.O.FtsCreateTable("gist"); err != nil {
+						return err
+					}
+					if err := app.O.FtsCreateTable("article"); err != nil {
+						return err
+					}
+					return nil
 					/*
 						if err != nil {
 							return err
@@ -59,7 +65,6 @@ func NewAdminCommand(app *core.App) *cli.Command {
 							END;
 						`)
 					*/
-					return err
 				},
 			},
 			{
@@ -72,25 +77,35 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					if err := app.InitORM(); err != nil {
 						return err
 					}
+					if err := app.O.FtsCreateTable("gist"); err != nil {
+						return err
+					}
+					if err := app.O.FtsCreateTable("article"); err != nil {
+						return err
+					}
 					var gists []*models.Gist
 					if err := app.O.Find(&gists).Error; err != nil {
 						return err
 					}
-					_, err := app.O.FtsExec(models.GistFtsInitSQL)
-					if err != nil {
-						return err
-					}
 					for _, v := range gists {
-						_, err := app.O.FtsExec(
-							"INSERT INTO gists_fts(rowid, fulltext) VALUES (?, ?)",
-							v.ID,
-							models.Gist2Text(v),
-						)
-						if err != nil {
+						if err := app.O.FtsInsert("gist", v.ID, models.Gist2Text(v)); err != nil {
 							return err
 						}
 					}
-					return nil
+					err := app.O.Model(&models.Article{}).
+						FindInBatches(&models.Article{}, 20, func(tx *gorm.DB, batch int) error {
+							var articles []*models.Article
+							err := tx.Preload("ArticleContent", func(db *gorm.DB) *gorm.DB {
+								return db.Omit("html")
+							}).Find(&articles).Error
+							for _, art := range articles {
+								if err := app.O.FtsInsert("article", art.ID, models.Art2Text(art)); err != nil {
+									return err
+								}
+							}
+							return err
+						}).Error
+					return err
 				},
 			},
 			{

@@ -1,5 +1,7 @@
 package models
 
+import "strings"
+
 type Article struct {
 	BaseModel
 
@@ -23,4 +25,23 @@ type ArticleTags struct {
 	ID        uint `gorm:"primaryKey" json:"id"`
 	ArticleID uint `gorm:"notnull" json:"article_id"`
 	TagID     uint `gorm:"notnull" json:"tag_id"`
+}
+
+func Art2Text(a *Article) *string {
+	var builder strings.Builder
+	builder.WriteString(a.Title)
+	builder.WriteString("\n")
+	builder.WriteString(a.ArticleContent.Text)
+	s := builder.String()
+	return &s
+}
+
+func Text2ArtGistFts(id uint, s *string) *GistFts {
+	index := strings.IndexByte(*s, '\n')
+	return &GistFts{
+		ID:      id,
+		Title:   (*s)[:index],
+		Lang:    "md",
+		Content: (*s)[index+1:],
+	}
 }

@@ -12,11 +12,17 @@
   let email = "";
   let content = "";
 
-  let errors = {
-    Name: "",
-    Email: "",
-    Content: "",
-  };
+  /**
+   * @typedef {Object} Errors
+   * @property {string} Name
+   * @property {string} Email
+   * @property {string} Content
+   */
+
+  /**
+   * @type {Errors}
+   */
+  let errors = {};
 
   let startCheck = false;
 
@@ -27,7 +33,7 @@
 
   async function post() {
     if (isPostIn) return;
-    if (!checkFields()) {
+    if (!localCheck()) {
       startCheck = true;
       return;
     }
@@ -35,7 +41,7 @@
     const response = await fetch("/api/comment", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
         article_id: Number(id),
@@ -43,8 +49,8 @@
         root_comment_id: 0,
         name,
         email,
-        content,
-      }),
+        content
+      })
     });
     const data = await response.json();
     isPostIn = false;
@@ -59,7 +65,7 @@
     dispatch("post", data);
   }
 
-  function checkFields() {
+  function localCheck() {
     errors.Name = name === "" ? "姓名不能为空" : "";
     errors.Email = email === "" ? "邮箱不能为空" : "";
     errors.Content = content === "" ? "没有什么想说的吗？(｡ŏ_ŏ)" : "";
@@ -70,7 +76,7 @@
     name;
     email;
     content;
-    if (startCheck) checkFields();
+    if (startCheck) localCheck();
   }
 
   let isOpenMemeBoard = false;
@@ -110,7 +116,7 @@
     "(T_T)",
     "∑(O_O；)",
     "Σ(ﾟдﾟ;)",
-    "Ciallo～(∠・ω＜)⌒☆",
+    "Ciallo～(∠・ω＜)⌒☆"
   ];
 
   let textareaDom;
@@ -121,26 +127,14 @@
     <div class="form-field">
       <div class="form-field-appear">
         <label for="name">姓名：</label>
-        <input
-          type="text"
-          id="name"
-          bind:value={name}
-          placeholder="Name / [Name](🔗)"
-          required
-        />
+        <input type="text" id="name" bind:value={name} placeholder="Name / [Name](🔗)" required />
       </div>
       <div class="form-field-error">{errors.Name ? errors.Name : ""}</div>
     </div>
     <div class="form-field">
       <div class="form-field-appear">
         <label for="email">邮箱：</label>
-        <input
-          type="text"
-          id="email"
-          bind:value={email}
-          placeholder="✉️"
-          required
-        />
+        <input type="text" id="email" bind:value={email} placeholder="✉️" required />
       </div>
       <div class="form-field-error">{errors.Email ? errors.Email : ""}</div>
     </div>

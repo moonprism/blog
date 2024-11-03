@@ -1,6 +1,7 @@
 package api
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -99,11 +100,7 @@ func (api *gistApi) create(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	err = api.O.Create(gist).Error
 	core.P(err)
-	_, err = api.O.FtsExec(
-		"INSERT INTO gists_fts (rowid, fulltext) VALUES (?, ?)",
-		gist.ID,
-		models.Gist2Text(gist),
-	)
+	err = api.O.FtsInsert("gist", gist.ID, models.Gist2Text(gist))
 	core.P(err)
 	api.JSON(w, gist)
 }
@@ -142,12 +139,7 @@ func (api *gistApi) update(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return err
 		}
-		_, err = api.O.FtsExec(
-			"UPDATE gists_fts SET fulltext = ? WHERE rowid = ?",
-			models.Gist2Text(gist),
-			gist.ID,
-		)
-		return err
+		return api.O.FtsUpdate("gist", gist.ID, models.Gist2Text(gist))
 	})
 	core.P(err)
 	api.JSON(w, id)
@@ -160,10 +152,7 @@ func (api *gistApi) delete(w http.ResponseWriter, r *http.Request) {
 	gist.ID = uint(id)
 	api.O.Delete(&gist)
 	core.P(err)
-	_, err = api.O.FtsExec(
-		"DELETE FROM gists_fts WHERE rowid = ?",
-		gist.ID,
-	)
+	err = api.O.FtsDelete("gist", gist.ID)
 	core.P(err)
 	api.JSON(w, id)
 }
@@ -180,28 +169,30 @@ func gistsSearchRoute(app *core.App) func(w http.ResponseWriter, r *http.Request
 		var data = []*models.GistFts{}
 		limit := 12
 		q := r.URL.Query().Get("q")
+		source := r.URL.Query().Get("o")
 		if q != "" {
 			if len(q) > 30 {
 				return
 			}
-			rows, err := app.O.FtsQuery(`
-			SELECT
-				rowid,
-				simple_highlight(gists_fts, 0, '☾🔮☽', '☾†🔮☽')
-			FROM gists_fts WHERE
-				fulltext match jieba_query(?)
-			ORDER BY rank LIMIT ?
-			`, q, limit,
-			)
+			var rows *sql.Rows
+			var err error
+			if source == "art" {
+				rows, err = app.O.FtsSelect("article", q, limit, 0) //10)
+			} else {
+				rows, err = app.O.FtsSelect("gist", q, limit, 0)
+			}
 			core.P(err)
 			defer rows.Close()
-
 			for rows.Next() {
 				row := new(models.GistFts)
 				var fulltext string
 				rows.Scan(&row.ID, &fulltext)
 				// 考虑效率的话这里放到前端去做更好
-				data = append(data, models.Text2Gist(row.ID, &fulltext))
+				if source == "art" {
+					data = append(data, models.Text2ArtGistFts(row.ID, &fulltext))
+				} else {
+					data = append(data, models.Text2Gist(row.ID, &fulltext))
+				}
 			}
 		} else {
 			var err error

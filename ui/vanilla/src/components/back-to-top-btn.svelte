@@ -1,5 +1,5 @@
 <script>
-  import { debounce } from "../utils";
+  import { debounce } from "@/utils";
 
   // 回到顶部按钮
   let arrowBtn;
