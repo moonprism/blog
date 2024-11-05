@@ -157,7 +157,7 @@
               文件
               {#if !isCreate}
                 <span class="mx-1 text-xs text-muted-foreground"
-                  >{$vform.key.length > 50 ? $vform.key.substring(0, 50)+'...' : $vform.key}</span
+                  >{$vform.key.length > 50 ? $vform.key.substring(0, 50) + '...' : $vform.key}</span
                 >
               {/if}
             </div>

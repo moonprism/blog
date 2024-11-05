@@ -11,7 +11,7 @@
 
   --gray-200: rgb(229 231 235);
 }
-.art .markdown-body > *:last-child{
+.art .markdown-body > *:last-child {
   margin-bottom: 5px;
 }
 .art .markdown-body a {
@@ -141,8 +141,15 @@
 .art .markdown-body code {
   overflow: auto;
   word-wrap: break-word;
-  font: 1rem Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,
-    Hiragino Sans GB, Microsoft YaHei, monospace;
+  font:
+    1rem Consolas,
+    'Liberation Mono',
+    Menlo,
+    Courier,
+    PingFang SC,
+    Hiragino Sans GB,
+    Microsoft YaHei,
+    monospace;
   padding: 0.2rem 0.4rem 0.1rem;
   border-radius: 3px;
   margin: 0 0.2rem;
@@ -166,8 +173,13 @@
   padding: 0;
   margin: 0;
   color: #e1e4e8;
-  font: 1rem Consolas, "Liberation Mono", Menlo, Courier,
-    "Microsoft Yahei Light", monospace;
+  font:
+    1rem Consolas,
+    'Liberation Mono',
+    Menlo,
+    Courier,
+    'Microsoft Yahei Light',
+    monospace;
 }
 .art .markdown-body table {
   margin: 1.5rem 0.5rem;

@@ -1,18 +1,18 @@
 <script>
-  import { debounce } from "@/utils";
+  import { debounce } from '@/utils';
 
   // 回到顶部按钮
   let arrowBtn;
   function handleArrowBtn() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop
-    const maxHeight = 500
-    if (scrollTop > maxHeight && arrowBtn.style.display === "") {
-      arrowBtn.style.display = "block";
-    } else if (scrollTop < maxHeight && arrowBtn.style.display === "block") {
-      arrowBtn.style.display = "";
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const maxHeight = 500;
+    if (scrollTop > maxHeight && arrowBtn.style.display === '') {
+      arrowBtn.style.display = 'block';
+    } else if (scrollTop < maxHeight && arrowBtn.style.display === 'block') {
+      arrowBtn.style.display = '';
     }
   }
-  window.addEventListener("scroll", debounce(handleArrowBtn, 200));
+  window.addEventListener('scroll', debounce(handleArrowBtn, 200));
 </script>
 
 <button
@@ -44,7 +44,7 @@
   .arrow:before,
   .arrow:after {
     border-right: 2px solid;
-    content: "";
+    content: '';
     display: block;
     height: 8px;
     margin-top: -6px;

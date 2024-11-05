@@ -1,5 +1,5 @@
-const foreseeStartChar = "☾🔮☽";
-const foreseeEndChar = "☾†🔮☽";
+const foreseeStartChar = '☾🔮☽';
+const foreseeEndChar = '☾†🔮☽';
 /**
  * 转换查询标记
  * @param {string} str
@@ -8,7 +8,7 @@ const foreseeEndChar = "☾†🔮☽";
 export function foresee(str) {
   return str
     .replaceAll(foreseeStartChar, '<span class="em">')
-    .replaceAll(foreseeEndChar, "</span>");
+    .replaceAll(foreseeEndChar, '</span>');
 }
 
 /**
@@ -16,7 +16,7 @@ export function foresee(str) {
  * @param {string} lang
  */
 export function isMdLang(lang) {
-  return lang.replace(new RegExp(`^${foreseeStartChar}|${foreseeEndChar}$`, "g"), "") === "md";
+  return lang.replace(new RegExp(`^${foreseeStartChar}|${foreseeEndChar}$`, 'g'), '') === 'md';
 }
 
 /**
@@ -24,10 +24,10 @@ export function isMdLang(lang) {
  * @returns {Array<number>}
  */
 export function getUrlIds() {
-  const urlSlices = window.location.href.split("#(:");
+  const urlSlices = window.location.href.split('#(:');
   if (urlSlices.length > 1 && urlSlices[1].length > 0) {
     return decodeURI(urlSlices[1])
-      .split(",")
+      .split(',')
       .map((s) => Number(s));
   }
   return [];
@@ -39,8 +39,8 @@ export function getUrlIds() {
  */
 export function setUrlIds(ids = []) {
   if (ids.length !== 0) {
-    window.history.pushState({}, 0, "#(:" + ids.join(","));
+    window.history.pushState({}, 0, '#(:' + ids.join(','));
   } else {
-    window.history.pushState({}, 0, " ");
+    window.history.pushState({}, 0, ' ');
   }
 }

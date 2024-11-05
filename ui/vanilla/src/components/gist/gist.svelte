@@ -1,19 +1,19 @@
-<svelte:options customElement={{ tag: "mod-gist", shadow: "none" }} />
+<svelte:options customElement={{ tag: 'mod-gist', shadow: 'none' }} />
 
 <script>
-  import { debounce } from "@/utils";
-  import Loading from "@/components/loading.svelte";
-  import markdown from "moonprism-markdown";
+  import { debounce } from '@/utils';
+  import Loading from '@/components/loading.svelte';
+  import markdown from 'moonprism-markdown';
 
-  import { foresee, getUrlIds, setUrlIds, isMdLang } from "./funcs";
+  import { foresee, getUrlIds, setUrlIds, isMdLang } from './funcs';
 
   let isLoading = false;
 
-  export let cdn = "";
+  export let cdn = '';
 
   let currentPage = 1;
   // 当前输入框文本
-  let currentKeyword = "";
+  let currentKeyword = '';
 
   /**
    * @type {Array<{id: number, title: string, lang: string, content: string}>}
@@ -21,12 +21,12 @@
   let gists = [], // gists 页面数据
     specialGists = []; // 查询结果/自定义数据
 
-  async function search(keyword = "", source = "") {
-    if (currentKeyword === "" || keyword === "") {
+  async function search(keyword = '', source = '') {
+    if (currentKeyword === '' || keyword === '') {
       isLoading = false;
       return;
     }
-    const response = await fetch(`/gists/search?q=${keyword}&o=${source}`);
+    const response = await fetch(`/gists/search?keyword=${keyword}&source=${source}`);
     if (!response.ok) {
       //TODO 查询错误处理
       isLoading = false;
@@ -34,21 +34,28 @@
     }
     specialGists = await response.json();
     isLoading = false;
-    setUrlIds(specialGists.map((g) => g.id));
+    if (source === 'art') {
+      specialGists.map((g) => {
+        g.title = `<a style="color:var(--primary);font-size:1.25rem" href="/post/${g.id}">${g.title}</a>`;
+        return g;
+      });
+    } else {
+      setUrlIds(specialGists.map((g) => g.id));
+    }
   }
 
-  const ids = getUrlIds().join(",");
+  const ids = getUrlIds().join(',');
 
   async function fetchGists(page = 1) {
     isLoading = true;
     const response = await fetch(`/gists/search?page=${page}&ids=${ids}`);
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error('Network response was not ok');
     }
     gists = await response.json();
     // 按照ids排序
-    if (ids !== "") {
-      const idOrder = ids.split(",").map((s) => Number(s));
+    if (ids !== '') {
+      const idOrder = ids.split(',').map((s) => Number(s));
       gists = gists.sort((a, b) => {
         return idOrder.indexOf(a.id) - idOrder.indexOf(b.id);
       });
@@ -70,19 +77,19 @@
    * @param {string} command
    * @param {...string} args
    */
-  function exec(command = "", ...args) {
+  function exec(command = '', ...args) {
     help(false);
     switch (command) {
-      case "tags":
+      case 'tags':
         execTagsCommand();
         break;
-      case "p":
-        const keyword = args.join(" ").trim();
-        if (keyword === "") {
+      case 'p':
+        const keyword = args.join(' ').trim();
+        if (keyword === '') {
           help();
         } else {
           loading();
-          debounceSearch(keyword, "art");
+          debounceSearch(keyword, 'art');
         }
         break;
       default:
@@ -99,16 +106,16 @@
       return;
     }
     isLoading = true;
-    const response = await fetch("/api/tag");
+    const response = await fetch('/api/tag');
     if (!response.ok) {
-      throw new Error("Request tags network response was not ok");
+      throw new Error('Request tags network response was not ok');
     }
     const res = await response.json();
     tags = res.data;
     specialGists = [
       {
-        title: "Tags",
-        lang: "md",
+        title: 'Tags',
+        lang: 'md',
         content: tags
           .map((t) => {
             return `<a class="art-tag"
@@ -116,7 +123,7 @@
                     style="background-color: ${t.color};
                     margin-right: 7px;">${t.name}</a>`;
           })
-          .join("")
+          .join('')
       }
     ];
     isLoading = false;
@@ -128,19 +135,31 @@
     isLoading = true;
   }
 
+  // 输入为空格时不作处理
+  let lastKeyword = '';
+  function setK(k = '') {
+    lastKeyword = k;
+  }
+  function getK() {
+    return lastKeyword;
+  }
   $: {
-    if (currentKeyword !== "") {
-      if (currentKeyword.startsWith("/")) {
-        exec(...currentKeyword.slice(1).split(" "));
-      } else {
-        debounceSearch(currentKeyword.trim());
-        loading();
-        help(false);
+    if (currentKeyword !== '') {
+      if (getK().trim() !== currentKeyword.trim()) {
+        if (currentKeyword.startsWith('/')) {
+          exec(...currentKeyword.slice(1).split(' '));
+        } else {
+          debounceSearch(currentKeyword.trim());
+          loading();
+          help(false);
+        }
       }
     } else {
       setUrlIds([]);
       help(false);
+      specialGists = [];
     }
+    setK(currentKeyword);
   }
 </script>
 
@@ -173,7 +192,7 @@
       </div>
     {:else if isLoading}
       <Loading color="#ff1493" />
-    {:else if currentKeyword !== ""}
+    {:else if currentKeyword !== ''}
       {#each specialGists as gist}
         <div class="gist">
           <div class="gist-title">
@@ -181,7 +200,9 @@
           </div>
           {#if isMdLang(gist.lang)}
             <div class="gist-content markdown-body">
-              {@html foresee(markdown(gist.content, { imageCdnUrl: cdn }))}
+              {#each gist.content.split('\n== 🌟 ==\n') as p}
+                {@html foresee(markdown(p, { imageCdnUrl: cdn }))}
+              {/each}
             </div>
           {:else}
             <div class="gist-content">
@@ -202,9 +223,9 @@
         </div>
       {/each}
       <div class="next-btn-container">
-        {#if ids !== ""}
+        {#if ids !== ''}
           <div>[{ids}]</div>
-        {:else if gists.length >= 12 && ids === ""}
+        {:else if gists.length >= 12 && ids === ''}
           <button
             on:click={() => {
               fetchGists(++currentPage);
@@ -269,5 +290,8 @@
   :global(.em) {
     border-bottom: 2px solid #ff1493;
     font-style: normal;
+  }
+  :global(.content a:hover) {
+    text-decoration: underline;
   }
 </style>

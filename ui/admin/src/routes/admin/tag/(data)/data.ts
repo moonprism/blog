@@ -18,7 +18,7 @@ export function getDefaultFormData() {
   return { id: 0, name: '', color: '#000000' } as Tag
 }
 
-let formComponent:SvelteComponent
+let formComponent: SvelteComponent
 
 const formOpen = writable(false)
 
@@ -29,11 +29,11 @@ export function openForm(t?: Tag) {
   if (formComponent) {
     formComponent.$destroy()
   }
-  formComponent =  new Form({
+  formComponent = new Form({
     target: document.body,
     props: {
       formData: t,
-      formOpen: formOpen,
+      formOpen: formOpen
     }
   })
   formOpen.set(true)

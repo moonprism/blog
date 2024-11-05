@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c",
-    "format": "prettier --write ."
+    "format": "prettier --write src"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^5.1.1",
@@ -21,6 +21,6 @@
     "rollup-plugin-svelte": "^7.2.0"
   },
   "dependencies": {
-    "moonprism-markdown": "^2.6.9"
+    "moonprism-markdown": "^2.6.10"
   }
 }

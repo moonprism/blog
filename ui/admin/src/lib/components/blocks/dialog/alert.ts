@@ -1,5 +1,5 @@
-import { writable, type Unsubscriber } from "svelte/store"
-import Alert from "./alert.svelte"
+import { writable, type Unsubscriber } from 'svelte/store'
+import Alert from './alert.svelte'
 
 const open = writable(false)
 const title = writable('')
@@ -13,7 +13,7 @@ new Alert({
     open,
     description,
     confirm,
-    title,
+    title
   }
 })
 
@@ -22,7 +22,7 @@ export const alertDialog = (desc = '', t = '') => {
   title.set(t)
   open.set(true)
   return new Promise((resolve) => {
-    unsubscribe = confirm.subscribe(value => {
+    unsubscribe = confirm.subscribe((value) => {
       if (value === true) {
         resolve(value)
         confirm.set(false)
@@ -30,6 +30,6 @@ export const alertDialog = (desc = '', t = '') => {
       if (unsubscribe) {
         unsubscribe()
       }
-    });
-  });
+    })
+  })
 }

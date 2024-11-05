@@ -23,7 +23,7 @@ type GistFts struct {
 	Content string `json:"content"`
 }
 
-func Gist2Text(g *Gist) *string {
+func Gist2TextPoint(g *Gist) *string {
 	var builder strings.Builder
 	builder.WriteString(g.Title)
 	builder.WriteString(".")

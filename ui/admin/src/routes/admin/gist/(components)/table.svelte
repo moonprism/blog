@@ -11,7 +11,14 @@
   import { DataTable } from '@/components/blocks/table/index'
 
   import type { Filter, SearchParams } from '$src/types/table'
-  import { tableData, serverItemCount, selectedViewOption, searchUrlQuery, langOptions, initTableData } from '../(data)/data'
+  import {
+    tableData,
+    serverItemCount,
+    selectedViewOption,
+    searchUrlQuery,
+    langOptions,
+    initTableData
+  } from '../(data)/data'
 
   import TableActions from './table-actions.svelte'
 
@@ -22,7 +29,7 @@
   import RowTitle from '@/components/blocks/cell/row-title.svelte'
   import TableRowHtml from './table-row-html.svelte'
   import { DateFormat } from '@/helpers/date'
-  
+
   const serverSide = !isMockMode
   let paginationConfig = {}
   if (serverSide) {
@@ -79,7 +86,7 @@
       accessor: 'created',
       header: 'Created',
       cell: ({ value }) => {
-        return DateFormat(value) 
+        return DateFormat(value)
       },
       plugins: {
         filter: { exclude: true }
@@ -138,7 +145,7 @@
   onMount(() => {
     mounted = true
   })
-  
+
   let params: SearchParams
 
   const fetchData = debounce(() => {

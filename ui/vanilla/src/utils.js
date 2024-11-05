@@ -33,22 +33,22 @@ export function timeAgoStr(timeStamp) {
   const dayC = diffValue / day;
   const hourC = diffValue / hour;
   const minC = diffValue / minute;
-  const rtf = new Intl.RelativeTimeFormat("zh", {
-    numeric: "auto",
+  const rtf = new Intl.RelativeTimeFormat('zh', {
+    numeric: 'auto'
   });
   if (monthC > 12) {
-    return rtf.format(-parseInt(monthC / 12), "year");
+    return rtf.format(-parseInt(monthC / 12), 'year');
   } else if (monthC >= 1 && monthC <= 12) {
-    return rtf.format(-parseInt(monthC), "month");
+    return rtf.format(-parseInt(monthC), 'month');
   } else if (weekC >= 1) {
-    return rtf.format(-parseInt(weekC), "week");
+    return rtf.format(-parseInt(weekC), 'week');
   } else if (dayC >= 1) {
-    return rtf.format(-parseInt(dayC), "day");
+    return rtf.format(-parseInt(dayC), 'day');
   } else if (hourC >= 1) {
-    return rtf.format(-parseInt(hourC), "hour");
+    return rtf.format(-parseInt(hourC), 'hour');
   } else if (minC >= 1) {
-    return rtf.format(-parseInt(minC), "minute");
+    return rtf.format(-parseInt(minC), 'minute');
   } else {
-    return "刚刚";
+    return '刚刚';
   }
 }

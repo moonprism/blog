@@ -11,7 +11,13 @@
   import { DataTable } from '@/components/blocks/table/index'
 
   import type { Filter, SearchParams } from '$src/types/table'
-  import { tableData, serverItemCount, selectedViewOption, searchUrlQuery, initTableData } from '../(data)/data'
+  import {
+    tableData,
+    serverItemCount,
+    selectedViewOption,
+    searchUrlQuery,
+    initTableData
+  } from '../(data)/data'
 
   import TableActions from './table-actions.svelte'
 
@@ -20,7 +26,7 @@
   import { onMount } from 'svelte'
   import { debounce } from '@/helpers/system'
   import { DateFormat } from '@/helpers/date'
-  
+
   const serverSide = !isMockMode
   let paginationConfig = {}
   if (serverSide) {
@@ -106,8 +112,7 @@
   ])
 
   // filter.name 对应该字段配置的colFilter
-  const filters: Filter[] = [
-  ]
+  const filters: Filter[] = []
 
   const tableModel = table.createViewModel(columns)
 
@@ -128,7 +133,7 @@
   onMount(() => {
     mounted = true
   })
-  
+
   let params: SearchParams
 
   const fetchData = debounce(() => {

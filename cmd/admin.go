@@ -88,7 +88,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 						return err
 					}
 					for _, v := range gists {
-						if err := app.O.FtsInsert("gist", v.ID, models.Gist2Text(v)); err != nil {
+						if err := app.O.FtsInsert("gist", v.ID, models.Gist2TextPoint(v)); err != nil {
 							return err
 						}
 					}
@@ -99,7 +99,7 @@ func NewAdminCommand(app *core.App) *cli.Command {
 								return db.Omit("html")
 							}).Find(&articles).Error
 							for _, art := range articles {
-								if err := app.O.FtsInsert("article", art.ID, models.Art2Text(art)); err != nil {
+								if err := app.O.FtsInsert("article", art.ID, models.Art2TextPoint(art)); err != nil {
 									return err
 								}
 							}

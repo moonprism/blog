@@ -19,3 +19,15 @@ func ItoaSlice(originSlice []int) []string {
 	}
 	return strSlice
 }
+
+// AtoISlice string 切片转换 int 切片
+func AtoISlice(originSlice []string) (strSlice []int, err error) {
+	strSlice = make([]int, len(originSlice))
+	for i, v := range originSlice {
+		strSlice[i], err = strconv.Atoi(v)
+		if err != nil {
+			return
+		}
+	}
+	return
+}

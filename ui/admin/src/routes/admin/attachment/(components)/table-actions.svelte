@@ -4,7 +4,7 @@
   import { openForm } from '../(data)/data'
 
   export let row: Attachment
-  export let click: ((row:Attachment) => void) | null = null
+  export let click: ((row: Attachment) => void) | null = null
 
   function cl() {
     if (click === null) {
@@ -24,7 +24,7 @@
     <Keyboard class="h-5"></Keyboard>
   {:else}
     <div class="mb-1 flex h-3 w-3 items-center justify-center rounded-full bg-foreground shadow">
-      <div class="relative top-[1px] font-mono text-[.6rem] text-background font-bold">A</div>
+      <div class="relative top-[1px] font-mono text-[.6rem] font-bold text-background">A</div>
     </div>
   {/if}
 </div>

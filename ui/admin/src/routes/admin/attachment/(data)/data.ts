@@ -46,7 +46,7 @@ export function initGroupInfo() {
           return {
             id: v.year,
             label: String(v.year),
-            icon: createRender(CountFilter, {text: String(v.count)})
+            icon: createRender(CountFilter, { text: String(v.count) })
           }
         })
       )

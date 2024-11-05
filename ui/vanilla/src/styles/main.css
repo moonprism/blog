@@ -65,8 +65,8 @@ html,
 body {
   font-size: 14px;
   scroll-behavior: smooth;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', 'Liberation Sans', sans-serif;
 }
 
 .bg {
@@ -79,11 +79,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background: rgb(238, 174, 202);
-  background: linear-gradient(
-    180deg,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 100%
-  );
+  background: linear-gradient(180deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
 .icon {
@@ -120,7 +116,7 @@ nav a {
 
 /* nav:hover 动画 */
 nav a::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   height: 2px;

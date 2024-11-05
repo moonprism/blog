@@ -14,8 +14,15 @@
 }
 
 .gist .markdown-body code {
-  font: 1rem Consolas, "Liberation Mono", Menlo, Courier, PingFang SC,
-    Hiragino Sans GB, Microsoft YaHei, monospace;
+  font:
+    1rem Consolas,
+    'Liberation Mono',
+    Menlo,
+    Courier,
+    PingFang SC,
+    Hiragino Sans GB,
+    Microsoft YaHei,
+    monospace;
 }
 .gist .markdown-body code:not(pre code) {
   padding: 2px 5px;
@@ -57,12 +64,19 @@
 .gist .markdown-body h5 {
   margin: 5px;
 }
+.gist .markdown-body h1,
+.gist .markdown-body h2 {
+  font-size: 1.2rem;
+}
 .gist .markdown-body h3 {
   font-size: 1.1rem;
 }
 .gist .markdown-body h4 {
   font-size: 1rem;
   margin-left: 7px;
+}
+.gist .markdown-body h5 {
+  font-size: 0.9rem;
 }
 .gist .markdown-body ul,
 .gist .markdown-body ol {

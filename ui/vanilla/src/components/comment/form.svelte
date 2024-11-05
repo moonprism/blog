@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte';
   // 评论表单提交成功后触发父组件事件刷新列表
   const dispatch = createEventDispatcher();
 
@@ -8,9 +8,9 @@
   // 前台这里感觉也没必要，实现起来要维护session增加复杂度
   // export let csrfToken = '';
 
-  let name = "";
-  let email = "";
-  let content = "";
+  let name = '';
+  let email = '';
+  let content = '';
 
   /**
    * @typedef {Object} Errors
@@ -38,10 +38,10 @@
       return;
     }
     isPostIn = true;
-    const response = await fetch("/api/comment", {
-      method: "POST",
+    const response = await fetch('/api/comment', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         article_id: Number(id),
@@ -61,15 +61,15 @@
     }
 
     startCheck = false;
-    email = name = content = "";
-    dispatch("post", data);
+    email = name = content = '';
+    dispatch('post', data);
   }
 
   function localCheck() {
-    errors.Name = name === "" ? "姓名不能为空" : "";
-    errors.Email = email === "" ? "邮箱不能为空" : "";
-    errors.Content = content === "" ? "没有什么想说的吗？(｡ŏ_ŏ)" : "";
-    return errors.Name === "" && errors.Email === "" && errors.Content === "";
+    errors.Name = name === '' ? '姓名不能为空' : '';
+    errors.Email = email === '' ? '邮箱不能为空' : '';
+    errors.Content = content === '' ? '没有什么想说的吗？(｡ŏ_ŏ)' : '';
+    return errors.Name === '' && errors.Email === '' && errors.Content === '';
   }
 
   $: {
@@ -84,39 +84,39 @@
     isOpenMemeBoard = !isOpenMemeBoard;
   }
   const memes = [
-    "(｡・`ω´･)",
-    "（￣▽￣）",
-    "(╹╹)",
-    "( ×ω× )",
-    "(=・ω・=)",
-    "☆～（ゝ。∂)",
-    "(｀・ω・´)",
-    "(｡ŏ_ŏ)",
-    "（¯﹃¯）",
-    "≧▽≦y",
-    "(⁄ ⁄•⁄ω⁄•⁄ ⁄)",
-    ">ㅂ<",
-    "╮(￣▽￣)╭",
-    "<(｀^´)>",
-    "╮(｡>口<｡)╭",
-    "♪(^∇^*)",
-    "（︶︿︶）",
-    "( T﹏T )",
+    '(｡・`ω´･)',
+    '（￣▽￣）',
+    '(╹╹)',
+    '( ×ω× )',
+    '(=・ω・=)',
+    '☆～（ゝ。∂)',
+    '(｀・ω・´)',
+    '(｡ŏ_ŏ)',
+    '（¯﹃¯）',
+    '≧▽≦y',
+    '(⁄ ⁄•⁄ω⁄•⁄ ⁄)',
+    '>ㅂ<',
+    '╮(￣▽￣)╭',
+    '<(｀^´)>',
+    '╮(｡>口<｡)╭',
+    '♪(^∇^*)',
+    '（︶︿︶）',
+    '( T﹏T )',
     '("▔□▔)/',
-    "(ﾟДﾟ≡ﾟдﾟ)!?",
-    "(｡￫‿￩｡)",
-    "( >﹏<。)～",
-    "(^・ω・^ )",
-    "(｡･ω･｡)",
-    "_(:3」∠)_",
-    "(・ω< )★",
-    "(*゜ロ゜)ノ",
-    "（＞д＜）",
-    "(*´∀`)~♥",
-    "(T_T)",
-    "∑(O_O；)",
-    "Σ(ﾟдﾟ;)",
-    "Ciallo～(∠・ω＜)⌒☆"
+    '(ﾟДﾟ≡ﾟдﾟ)!?',
+    '(｡￫‿￩｡)',
+    '( >﹏<。)～',
+    '(^・ω・^ )',
+    '(｡･ω･｡)',
+    '_(:3」∠)_',
+    '(・ω< )★',
+    '(*゜ロ゜)ノ',
+    '（＞д＜）',
+    '(*´∀`)~♥',
+    '(T_T)',
+    '∑(O_O；)',
+    'Σ(ﾟдﾟ;)',
+    'Ciallo～(∠・ω＜)⌒☆'
   ];
 
   let textareaDom;
@@ -129,14 +129,14 @@
         <label for="name">姓名：</label>
         <input type="text" id="name" bind:value={name} placeholder="Name / [Name](🔗)" required />
       </div>
-      <div class="form-field-error">{errors.Name ? errors.Name : ""}</div>
+      <div class="form-field-error">{errors.Name ? errors.Name : ''}</div>
     </div>
     <div class="form-field">
       <div class="form-field-appear">
         <label for="email">邮箱：</label>
         <input type="text" id="email" bind:value={email} placeholder="✉️" required />
       </div>
-      <div class="form-field-error">{errors.Email ? errors.Email : ""}</div>
+      <div class="form-field-error">{errors.Email ? errors.Email : ''}</div>
     </div>
   </div>
   <div>
@@ -161,11 +161,11 @@
     </div>
     <div style="display: flex;">
       <div class="reply-name">
-        {#if replyName !== ""}
+        {#if replyName !== ''}
           @{replyName}
         {/if}
       </div>
-      <div class="form-field-error">{errors.Content ? errors.Content : ""}</div>
+      <div class="form-field-error">{errors.Content ? errors.Content : ''}</div>
     </div>
   </div>
   <div class="form-buttons">

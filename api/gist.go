@@ -100,7 +100,7 @@ func (api *gistApi) create(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	err = api.O.Create(gist).Error
 	core.P(err)
-	err = api.O.FtsInsert("gist", gist.ID, models.Gist2Text(gist))
+	err = api.O.FtsInsert("gist", gist.ID, models.Gist2TextPoint(gist))
 	core.P(err)
 	api.JSON(w, gist)
 }
@@ -139,7 +139,7 @@ func (api *gistApi) update(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return err
 		}
-		return api.O.FtsUpdate("gist", gist.ID, models.Gist2Text(gist))
+		return api.O.FtsUpdate("gist", gist.ID, models.Gist2TextPoint(gist))
 	})
 	core.P(err)
 	api.JSON(w, id)
@@ -164,33 +164,101 @@ func gistsPageRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
+const gistSearchResoultSplitS = "\n== 🌟 ==\n\n...\n"
+
 func gistsSearchRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var data = []*models.GistFts{}
 		limit := 12
-		q := r.URL.Query().Get("q")
-		source := r.URL.Query().Get("o")
-		if q != "" {
-			if len(q) > 30 {
+		keyword := r.URL.Query().Get("keyword")
+		source := r.URL.Query().Get("source")
+		if keyword != "" {
+			if len(keyword) > 30 {
 				return
 			}
 			var rows *sql.Rows
 			var err error
 			if source == "art" {
-				rows, err = app.O.FtsSelect("article", q, limit, 0) //10)
+				rows, err = app.O.FtsSelect("article", keyword, limit, true)
+				core.P(err)
+				defer rows.Close()
+				for rows.Next() {
+					row := new(models.GistFts)
+					var fulltext string
+					// 1,2;3,4;
+					var postext string
+					rows.Scan(&row.ID, &postext, &fulltext)
+					index := strings.IndexByte(fulltext, '\n')
+					title := fulltext[:index]
+					var sBuilder strings.Builder
+					titlePos := len(title) + 1
+
+					// 合并后的位置 相邻查询位置小于50就合并展示[1,2],[5,9] => [1, 9]
+					var displayTextPos [][]int
+					for i, parts := range strings.Split(postext, ";") {
+						if len(parts) == 0 {
+							break
+						}
+						pos, err := core.AtoISlice(strings.Split(parts, ","))
+						core.P(err)
+						// 对齐查询标记
+						startPos := pos[0] + i*core.FtsSearchIdxLen
+						if startPos < titlePos {
+							continue
+						}
+						endPos := pos[1] + (i+1)*core.FtsSearchIdxLen
+						posArrLen := len(displayTextPos)
+						if posArrLen > 0 && displayTextPos[posArrLen-1][1]+50 > startPos {
+							displayTextPos[posArrLen-1][1] = endPos
+						} else {
+							displayTextPos = append(displayTextPos, []int{startPos, endPos})
+						}
+					}
+					lastPos := titlePos
+					for _, pos := range displayTextPos {
+						// 将开始标记往前推50字符再往前寻找一个换行符
+						startPos := max(pos[0]-50, titlePos)
+						for i := startPos; i >= titlePos; i-- {
+							if fulltext[i:i+2] == "\n\n" || i == titlePos {
+								startPos = i
+								break
+							}
+						}
+						// 如果开始标记小于上一个结束标记，合并两标记内容
+						if startPos <= lastPos {
+							startPos = lastPos
+						} else {
+							sBuilder.WriteString(gistSearchResoultSplitS)
+						}
+						// 将结束标记往后推50字符再往后寻找一个换行
+						endPos := min(pos[1]+50, len(fulltext))
+						for i := endPos; i < len(fulltext)+1; i++ {
+							endPos = i
+							if fulltext[i-2:i] == "\n\n" {
+								break
+							}
+						}
+						sBuilder.WriteString(fulltext[startPos:endPos])
+						lastPos = endPos
+					}
+					if lastPos < len(fulltext) {
+						sBuilder.WriteString(gistSearchResoultSplitS)
+					}
+					data = append(data, &models.GistFts{
+						ID:      row.ID,
+						Title:   title,
+						Lang:    "md",
+						Content: sBuilder.String(),
+					})
+				}
 			} else {
-				rows, err = app.O.FtsSelect("gist", q, limit, 0)
-			}
-			core.P(err)
-			defer rows.Close()
-			for rows.Next() {
-				row := new(models.GistFts)
-				var fulltext string
-				rows.Scan(&row.ID, &fulltext)
-				// 考虑效率的话这里放到前端去做更好
-				if source == "art" {
-					data = append(data, models.Text2ArtGistFts(row.ID, &fulltext))
-				} else {
+				rows, err = app.O.FtsSelect("gist", keyword, limit, false)
+				core.P(err)
+				defer rows.Close()
+				for rows.Next() {
+					row := new(models.GistFts)
+					var fulltext string
+					rows.Scan(&row.ID, &fulltext)
 					data = append(data, models.Text2Gist(row.ID, &fulltext))
 				}
 			}

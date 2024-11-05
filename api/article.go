@@ -140,6 +140,11 @@ func (api *articleApi) create(w http.ResponseWriter, r *http.Request) {
 		at := &models.ArticleContent{
 			ArticleID: art.ID,
 		}
+		art.ArticleContent = at
+		err = api.O.FtsInsert("article", art.ID, models.Art2TextPoint(art))
+		if err != nil {
+			return err
+		}
 		return tx.Create(at).Error
 	})
 	core.P(err)
@@ -167,6 +172,15 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 			data["rune"] = utf8.RuneCountInString(content.Text)
 			delete(data, "text")
 			delete(data, "html")
+
+			art := new(models.Article)
+			art.ID = uint(id)
+			err = tx.First(art).Error
+			if err != nil {
+				return err
+			}
+			art.ArticleContent = content
+			err = api.O.FtsUpdate("article", art.ID, models.Art2TextPoint(art))
 		}
 		if v, ok := data["tags"]; ok {
 			tags := v.([]interface{})
@@ -193,6 +207,10 @@ func (api *articleApi) delete(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	err = api.O.Transaction(func(tx *gorm.DB) error {
 		if err = tx.Delete(new(models.Article), id).Error; err != nil {
+			return err
+		}
+		err = api.O.FtsDelete("article", uint(id))
+		if err != nil {
 			return err
 		}
 		return tx.Where("article_id = ?", id).Delete(new(models.ArticleTags)).Error

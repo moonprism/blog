@@ -5,7 +5,7 @@ export const formSchema = z.object({
   status: z.number().int(),
   summary: z.string().max(255),
   image: z.string(),
-  tags: z.array(z.any()),
+  tags: z.array(z.any())
 })
 
 export type FormSchema = typeof formSchema

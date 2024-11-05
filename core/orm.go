@@ -95,22 +95,31 @@ func (o *orm) FtsDelete(table string, id uint) error {
 	return err
 }
 
-func (o *orm) FtsSelect(table string, keyword string, limit int, split int) (*sql.Rows, error) {
-	var funcName, funcEnd string
-	if split > 0 {
-		funcName = "snippet"
-		funcEnd = " , '...', 10"
-	} else {
-		funcName = "highlight"
+const FTS_SEARCH_START_IDX = "☾🔮☽"
+const FTS_SEARCH_END_IDX = "☾†🔮☽"
+
+var FtsSearchIdxLen = len(FTS_SEARCH_START_IDX) + len(FTS_SEARCH_END_IDX)
+
+func (o *orm) FtsSelect(table string, keyword string, limit int, pos bool) (*sql.Rows, error) {
+	var posField string
+	if pos {
+		posField = fmt.Sprintf("simple_highlight_pos(%s_fts, 0),", table)
 	}
 	return o.FtsQuery(fmt.Sprintf(`
 		SELECT
 			rowid,
-			simple_%s(%s_fts, 0, '☾🔮☽', '☾†🔮☽'%s)
+			%s
+			simple_highlight(%s_fts, 0, '%s', '%s')
 		FROM %s_fts WHERE
 			fulltext match jieba_query(?)
 		ORDER BY rank LIMIT ?
-			`, funcName, table, funcEnd, table),
+			`,
+		posField,
+		table,
+		FTS_SEARCH_START_IDX,
+		FTS_SEARCH_END_IDX,
+		table,
+	),
 		keyword,
 		limit,
 	)

@@ -6,9 +6,9 @@
    */
   export let id;
 
-  import { timeAgoStr } from "@/utils";
-  import CommentForm from "./form.svelte";
-  import Loading from "@/components/loading.svelte";
+  import { timeAgoStr } from '@/utils';
+  import CommentForm from './form.svelte';
+  import Loading from '@/components/loading.svelte';
 
   let isRequestIn = false;
 
@@ -39,7 +39,7 @@
   };
 
   let replyCommentId = 0;
-  let replyName = "";
+  let replyName = '';
 
   /**
    * @type {Element}
@@ -49,7 +49,7 @@
   function replySelect(event, artId, name) {
     replyCommentId = artId;
     replyName = name;
-    replyLineDom.style.height = "0";
+    replyLineDom.style.height = '0';
     if (artId === 0) {
       return;
     }
@@ -57,20 +57,20 @@
     // 连线
     let replyCmntDom = event.target;
     for (let i = 0; i < 3; i++) {
-      if (!replyCmntDom.classList.contains("cmnt-box")) {
+      if (!replyCmntDom.classList.contains('cmnt-box')) {
         replyCmntDom = replyCmntDom.parentElement;
       } else {
         break;
       }
     }
     const lineHeight = replyCmntDom.offsetTop - formDom.offsetTop - formDom.offsetHeight + 10;
-    replyLineDom.style.height = lineHeight + "px";
+    replyLineDom.style.height = lineHeight + 'px';
 
     const rect = formDom.getBoundingClientRect();
     // 计算目标元素的绝对位置
     const scrollToY = window.scrollY + rect.top;
     // 滚动到目标位置
-    window.scrollTo({ top: scrollToY, behavior: "smooth" });
+    window.scrollTo({ top: scrollToY, behavior: 'smooth' });
   }
 
   function request(rootId = 0, page = 1) {
@@ -78,7 +78,7 @@
     fetch(`/comments/${id}?root_id=${rootId}&page=${page}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         return response.json();
       })
@@ -98,7 +98,7 @@
         }
         isRequestIn = false;
       })
-      .catch((error) => console.error("Fetch error:", error));
+      .catch((error) => console.error('Fetch error:', error));
   }
   request();
 
@@ -122,8 +122,8 @@
       cmntInfo.data = cmntInfo.data;
     }
     replyCommentId = 0;
-    replyName = "";
-    replyLineDom.style.height = "0";
+    replyName = '';
+    replyLineDom.style.height = '0';
   }
 </script>
 
@@ -151,7 +151,7 @@
               <button
                 class="reply-close-btn"
                 on:click={(e) => {
-                  replySelect(e, 0, "");
+                  replySelect(e, 0, '');
                 }}
               >
                 <svg><use href="#icon-close" /></svg>
@@ -190,7 +190,7 @@
                   <button
                     class="reply-close-btn"
                     on:click={(e) => {
-                      replySelect(e, 0, "");
+                      replySelect(e, 0, '');
                     }}
                   >
                     <svg><use href="#icon-close" /></svg>

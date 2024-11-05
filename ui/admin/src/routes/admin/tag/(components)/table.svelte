@@ -88,7 +88,7 @@
   ])
 
   const tableModel = table.createViewModel(columns)
-  
+
   const viewOption: ViewOption = {
     type: 'hideColumn',
     selected: selectedViewOption,

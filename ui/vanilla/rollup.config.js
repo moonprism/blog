@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 import alias from "@rollup/plugin-alias";
 import crypto from "crypto";
 const hash = crypto.randomBytes(4).toString("hex");
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default [
   {

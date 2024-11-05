@@ -27,7 +27,7 @@ type ArticleTags struct {
 	TagID     uint `gorm:"notnull" json:"tag_id"`
 }
 
-func Art2Text(a *Article) *string {
+func Art2TextPoint(a *Article) *string {
 	var builder strings.Builder
 	builder.WriteString(a.Title)
 	builder.WriteString("\n")

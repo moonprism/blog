@@ -1,5 +1,5 @@
 <script>
-  export let color = "#0d92f4";
+  export let color = '#0d92f4';
 </script>
 
 <div class="loading" style="background-color: {color};"></div>
