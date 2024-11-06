@@ -1,0 +1,96 @@
+.link h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 12px;
+  font-size: 16px;
+  border-bottom: 1.2px solid var(--line);
+}
+
+.link h3 {
+  display: flex;
+  align-items: center;
+  padding: 5px 18px 0;
+  font-size: 14px;
+  color: var(--gray-5);
+}
+
+.link h3 svg {
+  margin-right: 7px;
+}
+
+.link h3 em {
+  font-style: normal;
+  font-size: 14px;
+}
+
+.link blockquote {
+  margin: 9px 8px;
+  font-size: 15px;
+}
+
+.link blockquote a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  min-height: 50px;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  letter-spacing: 0.05rem;
+  text-decoration: none;
+  background-position: center;
+  background-size: 300% 300%;
+  transition:
+    background-size 0.5s ease,
+    background-position 0.5s ease,
+    background-color 0.5s ease;
+}
+
+.link blockquote a:hover {
+  background: linear-gradient(45deg, rgba(238, 174, 202, 1), rgba(148, 187, 233, 1));
+  background-size: 100% 100%;
+  background-position: top left;
+  background-color: transparent;
+}
+
+.link blockquote a:hover code {
+  color: var(--border);
+}
+
+.link blockquote a img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 3px;
+  margin-right: 25px;
+}
+
+.link blockquote a em {
+  font-style: normal;
+  flex: auto;
+  min-width: 144px;
+}
+
+.link blockquote a em del {
+  color: var(--gray-5);
+  text-decoration: none;
+}
+
+.link blockquote a code {
+  color: var(--gray-4);
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+/* seed */
+.link .markdown-body > p > code {
+  display: block;
+  font-size: 13px;
+  text-align: center;
+  color: green;
+  letter-spacing: 0;
+  margin: 18px auto 13px;
+}

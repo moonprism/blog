@@ -28,6 +28,7 @@ li {
   --foreground: rgb(31 41 55);
   --primary: rgb(17 24 39);
   --gray-4: rgb(156 163 175);
+  --gray-5: rgb(107 114 128);
   --line: rgba(50, 50, 50, 0.06);
   --border: #e5e7eb;
   --outline: rgba(50, 50, 50, 0.3);
@@ -152,6 +153,13 @@ nav a:hover {
   background-color: var(--background);
   border-radius: 3px;
   padding: 17px 0 0;
+}
+
+.content .link {
+  padding: 0 40px;
+}
+.content .link .markdown-body {
+  padding: 12px 32px 0;
 }
 
 .content .art {

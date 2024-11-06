@@ -295,3 +295,21 @@ func articlePageDetailRoute(app *core.App) func(w http.ResponseWriter, r *http.R
 		core.P(err)
 	}
 }
+
+func articlePageLinksRoute(app *core.App) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		article := new(models.Article)
+		err := app.O.Model(&models.Article{}).
+			Preload("ArticleContent", func(db *gorm.DB) *gorm.DB {
+				return db.Omit("text")
+			}).
+			First(article, 2).
+			Error
+		core.P(err)
+		err = app.HTML(w, "links", &articlePageDetailData{
+			AppSettings: getAppSettings(app),
+			Article:     article,
+		})
+		core.P(err)
+	}
+}

@@ -40,7 +40,7 @@ func Serve(app *core.App) error {
 		r.Get("/comments/{articleID}", commentPageListRoute(app))
 		r.Get("/gists", gistsPageRoute(app))
 		r.Get("/gists/search", gistsSearchRoute(app))
-		//	r.Get("/links")
+		r.Get("/links", articlePageLinksRoute(app))
 		//	r.Get("/about")
 	})
 

@@ -249,7 +249,7 @@
 
 <style>
   .main-comment-form {
-    padding: 50px 50px 10px;
+    padding: 40px 50px 10px;
     position: relative;
   }
   .reply-line {

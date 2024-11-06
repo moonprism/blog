@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{.Article.Title}} | {{.Settings.Title}}</title>
+    <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
+    <script src="/main-{hash}.js"></script>
+  </head>
+  <body class="flex flex-col items-center">
+    <nav>
+      {{range .Pages}}
+      <a href="/{{.}}">{{.}}</a>
+      {{end}}
+    </nav>
+    <div class="content" style="margin-bottom: {{.Settings.MarginBottom}}px">
+      <div class="link">
+        <div class="markdown-body">
+          {{.Article.ArticleContent.HTML | unsafeHTML}}
+        </div>
+        <mod-comment id="{{.Article.ID}}" />
+      </div>
+    </div>
+  </body>
+  <div
+    class="bg"
+    {{if ne .Settings.Background ""}}
+    style="{{.Settings.Background | unsafeCSS}}"
+    {{end}}
+  ></div>
+  <mod-kit />
+  <script type="module" src="/mod/index-{hash}.js"></script>
+  <script type="module" src="/mod/kit-{hash}.js"></script>
+  <script type="module" src="/mod/comment-{hash}.js"></script>
+</html>

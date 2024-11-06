@@ -64,7 +64,6 @@ export default [
       }),
       alias({
         entries: [
-          // If you add a new top-level-folder besides src which you want to use, add it here
           { find: "@", replacement: `${__dirname}/src/` }
         ]
       })

@@ -172,3 +172,7 @@
   padding-top: 4px;
   border-radius: 6px;
 }
+
+.gist blockquote > p img {
+  max-height: 50px;
+}
