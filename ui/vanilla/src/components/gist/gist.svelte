@@ -196,6 +196,11 @@
       {#each specialGists as gist}
         <div class="gist">
           <div class="gist-title">
+            {#if isMdLang(gist.lang)}
+              <svg><use href="#icon-md" /></svg>
+            {:else}
+              <svg><use href="#icon-terminal" /></svg>
+            {/if}
             {@html foresee(gist.title)} <span>.{@html foresee(gist.lang)}</span>
           </div>
           {#if isMdLang(gist.lang)}
@@ -215,6 +220,11 @@
       {#each gists as gist}
         <div class="gist">
           <div class="gist-title">
+            {#if isMdLang(gist.lang)}
+              <svg><use href="#icon-md" /></svg>
+            {:else}
+              <svg><use href="#icon-terminal" /></svg>
+            {/if}
             {@html gist.title} <span>.{@html gist.lang}</span>
           </div>
           <div class="gist-content {gist.lang === 'md' ? 'markdown-body' : ''}">
@@ -236,6 +246,27 @@
     {/if}
   </div>
 </div>
+
+<symbol id="icon-terminal" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="3" y="5" width="17" height="14" rx="2" stroke="#33363F" stroke-width="2" />
+  <path
+    d="M7 10L9 12L7 14"
+    stroke="#33363F"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path d="M12 14H16" stroke="#33363F" stroke-width="2" stroke-linecap="round" />
+</symbol>
+
+<symbol id="icon-md" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M14.9703 3.3437C13.0166 2.88543 10.9834 2.88543 9.02975 3.3437C6.20842 4.00549 4.0055 6.20841 3.3437 9.02975C2.88543 10.9834 2.88543 13.0166 3.3437 14.9703C4.0055 17.7916 6.20842 19.9945 9.02975 20.6563C10.9834 21.1146 13.0166 21.1146 14.9703 20.6563C17.7916 19.9945 19.9945 17.7916 20.6563 14.9703C21.1146 13.0166 21.1146 10.9834 20.6563 9.02975C19.9945 6.20842 17.7916 4.00549 14.9703 3.3437ZM8.55377 9.12812C8.55377 8.8109 8.81093 8.55374 9.12815 8.55374H12.9573C13.2745 8.55374 13.5317 8.8109 13.5317 9.12812C13.5317 9.44533 13.2745 9.70249 12.9573 9.70249H9.12815C8.81093 9.70249 8.55377 9.44533 8.55377 9.12812ZM8.55377 12C8.55377 11.6828 8.81093 11.4256 9.12815 11.4256H14.8719C15.1891 11.4256 15.4462 11.6828 15.4462 12C15.4462 12.3172 15.1891 12.5743 14.8719 12.5743H9.12815C8.81093 12.5743 8.55377 12.3172 8.55377 12ZM8.55377 14.8718C8.55377 14.5546 8.81093 14.2975 9.12815 14.2975H12C12.3172 14.2975 12.5744 14.5546 12.5744 14.8718C12.5744 15.189 12.3172 15.4462 12 15.4462H9.12815C8.81093 15.4462 8.55377 15.189 8.55377 14.8718Z"
+    fill="#363853"
+  />
+</symbol>
 
 <style>
   .gist-main {
@@ -268,8 +299,16 @@
     margin: 15px 33px;
   }
   .gist .gist-title {
+    line-height: 1.5rem;
     margin: 3px 2px;
     font-size: 16.5px;
+    display: flex;
+    align-items: center;
+  }
+  .gist svg {
+    margin-right: 3px;
+    width: 20px;
+    height: 20px;
   }
   .gist .gist-title span {
     font-size: 15px;

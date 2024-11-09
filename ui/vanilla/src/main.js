@@ -4,6 +4,7 @@ import './styles/main.css';
 import './styles/art.md.css';
 import './styles/gist.md.css';
 import './styles/link.md.css';
+import './styles/about.md.css';
 import './styles/wind.css';
 
 // 标签:hover动画，(用js实现会有一种不流畅的美感
@@ -115,15 +116,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const linkHeadingEl = document.querySelector('.link .markdown-body h2');
   const collectionHEadingEl = document.querySelector('.link .markdown-body h3');
   // 设置图标
-  linkHeadingEl.insertAdjacentHTML('afterbegin', heartSvg);
-  linkHeadingEl.style.marginBottom = '15px';
-  if (collectionHEadingEl) {
-    collectionHEadingEl.insertAdjacentHTML('afterbegin', starSvg);
+  if (linkHeadingEl) {
+    linkHeadingEl.insertAdjacentHTML('afterbegin', heartSvg);
+    linkHeadingEl.style.marginBottom = '15px';
+    if (collectionHEadingEl) {
+      collectionHEadingEl.insertAdjacentHTML('afterbegin', starSvg);
+    }
+    const boardHeadingEl = document.querySelector('.link .markdown-body h2:nth-of-type(2)');
+    boardHeadingEl.insertAdjacentHTML('afterbegin', appleSvg);
   }
-
-  const boardHeadingEl = document.querySelector('.link .markdown-body h2:nth-of-type(2)');
-  boardHeadingEl.insertAdjacentHTML('afterbegin', appleSvg);
-
   const seedEl = document.querySelector('.link .markdown-body > p > code');
   if (seedEl) {
     // 随机排序
@@ -144,5 +145,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     window.history.pushState({}, 0, '?' + seed);
     seedEl.innerHTML += `<span style="font-size:.95em;">${seed}</span>`;
+  }
+
+  // about 页面附加图标
+  const headings = document.querySelectorAll('.about .markdown-body h2');
+  console.log(headings);
+  if (headings.length > 1) {
+    headings[0].insertAdjacentHTML(
+      'afterbegin',
+      '<svg style="font-size: 22px; position: relative; top: 2px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mingmenjuan"></use></svg>'
+    );
+    headings[1].insertAdjacentHTML(
+      'afterbegin',
+      '<svg style="font-size: 19px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mao"></use></svg>'
+    );
   }
 });

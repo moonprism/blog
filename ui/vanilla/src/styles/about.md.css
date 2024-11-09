@@ -1,0 +1,23 @@
+.content .about {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+.about .markdown-body {
+  margin: 15px 12px 50px;
+}
+.about .markdown-body h1 {
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 5px;
+}
+.about .markdown-body h1 img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+.about .markdown-body h2 {
+  font-weight: normal;
+}
+.about .markdown-body h2 svg {
+  margin-right: 5px;
+}

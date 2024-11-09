@@ -56,7 +56,7 @@
   line-height: 1.9;
 }
 .art .markdown-body ul li {
-  list-style-type: disc !important;
+  list-style-type: disc;
 }
 .art .markdown-body ul blockquote,
 .art .markdown-body ol blockquote {
@@ -67,11 +67,11 @@
   margin-top: 5px;
 }
 .art .markdown-body ol li {
-  list-style-type: decimal !important;
+  list-style-type: decimal;
 }
 .art .markdown-body ul ul li,
 .art .markdown-body ol ul li {
-  list-style-type: circle !important;
+  list-style-type: circle;
 }
 .art .markdown-body ol ol li {
   list-style-type: lower-alpha !important;

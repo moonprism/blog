@@ -227,7 +227,7 @@
       <button
         on:click={() => {
           request(0, ++rootPage);
-        }}>加载更多...</button
+        }}>more...</button
       >
     </div>
   {/if}
@@ -305,8 +305,8 @@
     font-size: 0.8rem;
   }
   .cmnt-header img {
-    height: 35px;
-    width: 35px;
+    height: 30px;
+    width: 30px;
     border-radius: 50%;
   }
   .cmnt-header-info {
@@ -356,6 +356,6 @@
     margin-top: 15px;
   }
   .load-more button {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
 </style>

@@ -142,6 +142,43 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					return app.O.Create(&user).Error
 				},
 			},
+			{
+				Name:  "cmnt-time-fix",
+				Usage: "comment updated time sync from created",
+				Action: func(ctx *cli.Context) error {
+					if err := app.InitSetting(); err != nil {
+						return err
+					}
+					if err := app.InitORM(); err != nil {
+						return err
+					}
+
+					var cmnts []*models.Comment
+					if err := app.O.Find(&cmnts).Error; err != nil {
+						return err
+					}
+					for _, v := range cmnts {
+						err := app.O.Model(&v).Updates(map[string]interface{}{"updated": v.Created}).Error
+						if err != nil {
+							return err
+						}
+					}
+					for _, v := range cmnts {
+						if v.RootCommentID == 0 {
+							for _, v2 := range cmnts {
+								if v2.RootCommentID == v.ID {
+									v.Updated = max(v.Updated, v2.Created)
+								}
+							}
+							err := app.O.Model(&v).Updates(map[string]interface{}{"updated": v.Updated}).Error
+							if err != nil {
+								return err
+							}
+						}
+					}
+					return nil
+				},
+			},
 		},
 	}
 	return command
