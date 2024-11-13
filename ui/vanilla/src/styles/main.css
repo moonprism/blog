@@ -33,13 +33,26 @@ li {
   --border: #e5e7eb;
   --outline: rgba(50, 50, 50, 0.3);
 
+  --gist-icon-1: #33363f;
+  --gist-icon-2: #363853;
+
   --destructive: 0 72.2% 50.6%;
 }
 
 .dark {
   --background: #181a1b;
-  --foreground: #e8e6e3;
+  --foreground: rgb(205, 201, 194);
   --primary: #eee;
+  --border: rgba(107, 99, 88, 0.2);
+
+  --gist-icon-1: var(--foreground);
+  --gist-icon-2: var(--foreground);
+}
+
+.dark .carta-light,
+.dark .carta-light code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
 }
 
 a {
@@ -147,12 +160,12 @@ nav a:hover {
 }
 
 .content {
-  margin-bottom: 250px;
   width: var(--art-min-w);
   max-width: 100%;
   background-color: var(--background);
   border-radius: 3px;
   padding: 17px 0 0;
+  color: var(--foreground);
 }
 
 .content .link {
@@ -164,6 +177,15 @@ nav a:hover {
 
 .content .art {
   padding: 0 43px;
+}
+
+.content .about {
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+.content .gist {
+  padding: 0 33px;
 }
 
 .content .current-tag {
@@ -216,6 +238,12 @@ nav a:hover {
   margin-bottom: 10px;
 }
 
+.anno span span {
+  font-size: 0.9rem;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
 .anno .rune {
   color: #aaa;
   font-size: 0.9rem;
@@ -238,4 +266,46 @@ nav a:hover {
 
 .art .art-item:not(:last-child) p {
   border-bottom: 1px solid var(--line);
+}
+
+/* 纠正特殊页面在post中的显示 */
+.markdown-body blockquote > p img {
+  max-height: 50px;
+}
+.markdown-body h1 img {
+  max-height: 100px;
+}
+
+/* 移动端处理 */
+@media (max-width: 768px) {
+  nav {
+    margin: 0;
+    border-radius: 0;
+  }
+  .content {
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .menu-toggle {
+    display: block;
+    padding: 5px;
+    margin-left: 15px;
+    font-size: 23px;
+  }
+  .content .link {
+    padding: 0 20px;
+  }
+  .content .link .markdown-body {
+    padding: 10px 0 0;
+  }
+  .content .art {
+    padding: 0 20px;
+  }
+  .content .gist {
+    padding: 0 10px;
+  }
+  .bg {
+    display: none;
+  }
 }

@@ -18,6 +18,7 @@
    * @property {string} name
    * @property {string} email
    * @property {string} content
+   * @property {string} link
    * @property {number} article_id
    * @property {number} reply_comment_id
    * @property {number} root_comment_i
@@ -216,7 +217,7 @@
                 c1.currentPage = 1;
               }
               request(c1.id, ++c1.currentPage);
-            }}>加载更多...</button
+            }}>more..</button
           >
         </div>
       {/if}
@@ -227,7 +228,7 @@
       <button
         on:click={() => {
           request(0, ++rootPage);
-        }}>more...</button
+        }}>more.</button
       >
     </div>
   {/if}
@@ -244,7 +245,7 @@
 </symbol>
 
 <symbol id="icon-reply" viewBox="0 0 24 24">
-  <path d="M22 2H2v14h2V4h16v12h-8v2h-2v2H8v-4H2v2h4v4h4v-2h2v-2h10V2z" />
+  <path d="M22 2H2v14h2V4h16v12h-8v2h-2v2H8v-4H2v2h4v4h4v-2h2v-2h10V2z" fill="var(--foreground)" />
 </symbol>
 
 <style>
@@ -261,18 +262,18 @@
     -webkit-transition: height 0.3s;
   }
   .board {
-    margin: 10px 40px 30px;
+    margin: 10px 40px 40px;
   }
   .board .cmnt {
     display: flex;
     flex-direction: column;
-    padding-top: 15px;
+    padding-top: 10px;
     border-top: 1px solid var(--line);
     margin-left: 10px;
   }
   .board .cmnt .cmnt {
-    padding-top: 10px;
-    margin-left: 25px;
+    padding-top: 5px;
+    margin-left: 35px;
   }
   .cmnt-box {
     display: flex;
@@ -282,11 +283,10 @@
   }
   .board .cmnt .cmnt-left {
     flex: 1 1 auto;
-    padding-top: 5px;
-    padding-left: 5px;
+    padding: 4px 0 4px 5px;
   }
   .board .cmnt:not(:first-child) {
-    margin-top: 10px;
+    margin-top: 7px;
   }
   .cmnt-header {
     display: flex;
@@ -313,7 +313,7 @@
     flex: 1 1 auto;
   }
   .cmnt p {
-    margin: 0.5rem;
+    margin: 10px 10px 0px;
     white-space: break-spaces;
   }
   button {
@@ -354,8 +354,15 @@
   .load-more {
     text-align: center;
     margin-top: 15px;
+    margin-bottom: -20px;
   }
   .load-more button {
     font-size: 0.9rem;
+    padding: 0px 2px 1px;
+    border-radius: 2px;
+  }
+  .load-more button:hover {
+    background-color: var(--foreground);
+    color: var(--background);
   }
 </style>

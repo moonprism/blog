@@ -5,7 +5,7 @@ type Comment struct {
 
 	Name    string `gorm:"type:varchar(255);notnull" validate:"min=1,max=50" json:"name"`
 	Email   string `gorm:"type:varchar(255);notnull" validate:"email,max=100" json:"email"`
-	Link    string `gorm:"type:varchar(255);notnull" json:"link"`
+	Link    string `gorm:"type:varchar(255);notnull" json:"link" validate:"omitempty,custom_url,max=255"`
 	Content string `gorm:"type:varchar(1000);notnull" validate:"min=1,max=1000" json:"content"`
 
 	ArticleID      uint `gorm:"notnull" json:"article_id"`

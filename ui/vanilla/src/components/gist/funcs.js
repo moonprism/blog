@@ -11,6 +11,18 @@ export function foresee(str) {
     .replaceAll(foreseeEndChar, '</span>');
 }
 
+// 切换主题函数
+export function toggleTheme(isDark = false) {
+  //const isDark = document.body.classList.toggle('dark');
+  if (isDark) {
+    document.body.classList.add('dark');
+  } else {
+    document.body.classList.remove('dark');
+  }
+  // 将用户选择的主题保存到 localStorage
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+}
+
 /**
  * 检测 .md
  * @param {string} lang

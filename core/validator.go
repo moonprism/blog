@@ -1,6 +1,7 @@
 package core
 
 import (
+	"net/url"
 	"strings"
 
 	"github.com/go-playground/locales/en"
@@ -25,6 +26,17 @@ func NewValidator() *Validator {
 	trans, _ := uni.GetTranslator("zh")
 
 	valid := validator.New()
+	// 注册自定义验证函数
+	valid.RegisterValidation("custom_url", func(fl validator.FieldLevel) bool {
+		value := fl.Field().String()
+		// 如果没有协议（如 http:// 或 https://），加上 https://
+		if !strings.HasPrefix(value, "http://") && !strings.HasPrefix(value, "https://") {
+			value = "https://" + value
+		}
+		// 尝试解析 URL
+		_, err := url.ParseRequestURI(value)
+		return err == nil
+	})
 	zhtrans.RegisterDefaultTranslations(valid, trans)
 
 	return &Validator{

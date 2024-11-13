@@ -35,7 +35,27 @@ func (tm *tmplManager) Register(name string, file string) (err error) {
 			return template.CSS(str)
 		},
 		"formatDate": func(timestamp uint) string {
-			return time.Unix(int64(timestamp), 0).Format("2006-01-02 Mon")
+			t := time.Unix(int64(timestamp), 0)
+			dateStr := t.Format("2006/01/02<span>%s</span>Monday")
+			// 获取星期几并转换为日文
+			var weekdayStr string
+			switch t.Weekday() {
+			case time.Sunday:
+				weekdayStr = "日"
+			case time.Monday:
+				weekdayStr = "月"
+			case time.Tuesday:
+				weekdayStr = "火"
+			case time.Wednesday:
+				weekdayStr = "水"
+			case time.Thursday:
+				weekdayStr = "木"
+			case time.Friday:
+				weekdayStr = "金"
+			case time.Saturday:
+				weekdayStr = "土"
+			}
+			return fmt.Sprintf(dateStr, weekdayStr)
 		},
 	}
 	tm.tmplData[name], err = template.New(path.Base(file)).Funcs(funcMap).ParseFiles(file)

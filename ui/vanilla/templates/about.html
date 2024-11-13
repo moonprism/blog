@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <title>about | {{.Settings.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
-    <script src="/main-{hash}.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body class="flex flex-col items-center">
     <nav>
@@ -12,21 +12,16 @@
       <a href="/{{.}}">{{.}}</a>
       {{end}}
     </nav>
-    <div class="content" style="margin-bottom: {{.Settings.MarginBottom}}px">
+    <div class="content">
       <div class="about art">
-        <div class="markdown-body">
-          {{.Article.ArticleContent.HTML | unsafeHTML}}
-        </div>
+        <div class="markdown-body">{{.Article.ArticleContent.HTML | unsafeHTML}}</div>
       </div>
     </div>
+    <mod-box height="{{.Settings.MarginBottom}}"></mod-box>
   </body>
-  <div
-    class="bg"
-    {{if ne .Settings.Background ""}}
-    style="{{.Settings.Background | unsafeCSS}}"
-    {{end}}
-  ></div>
+  <div class="bg" style="{{.Settings.Background | unsafeCSS}}"></div>
   <mod-kit />
+  <script src="/main-{hash}.js"></script>
   <script type="module" src="/mod/index-{hash}.js"></script>
   <script type="module" src="/mod/kit-{hash}.js"></script>
 </html>

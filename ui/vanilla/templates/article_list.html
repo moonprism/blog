@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <title>{{.Settings.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body class="flex flex-col items-center">
     <nav>
@@ -11,13 +12,11 @@
       <a href="/{{.}}">{{.}}</a>
       {{end}}
     </nav>
-    <div class="content" style="margin-bottom: {{.Settings.MarginBottom}}px">
+    <div class="content">
       {{if ne .QueryTag.ID 0}}
       <div class="current-tag" style="border-color: {{.QueryTag.Color}}">
         当前标签
-        <a
-          class="art-tag"
-          style="color: {{.QueryTag.Color}}; border-color:{{.QueryTag.Color}}"
+        <a class="art-tag" style="color: {{.QueryTag.Color}}; border-color:{{.QueryTag.Color}}"
           >{{.QueryTag.Name}}</a
         >
         ，文章共计 {{.Pagination.Count}} 篇
@@ -32,17 +31,14 @@
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-date"></use>
               </svg>
-              {{.Created | formatDate}}</span
+              {{.Created | formatDate | unsafeHTML}}</span
             >
             <span>
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-tag"></use>
               </svg>
               {{range .Tags}}
-              <a
-                class="art-tag"
-                href="/posts/tag/{{.Name}}"
-                style="background-color: {{.Color}}"
+              <a class="art-tag" href="/posts/tag/{{.Name}}" style="background-color: {{.Color}}"
                 >{{.Name}}</a
               >
               {{end}}
@@ -57,19 +53,12 @@
         {{end}}
       </div>
       <div class="flex justify-center">
-        <mod-pager
-          count="{{.Pagination.Count}}"
-          currentPage="{{.Pagination.Page}}"
-        />
+        <mod-pager count="{{.Pagination.Count}}" currentPage="{{.Pagination.Page}}" />
       </div>
     </div>
+    <mod-box height="{{.Settings.MarginBottom}}"></mod-box>
   </body>
-  <div
-    class="bg"
-    {{if ne .Settings.Background ""}}
-    style="{{.Settings.Background | unsafeCSS}}"
-    {{end}}
-  ></div>
+  <div class="bg" style="{{.Settings.Background | unsafeCSS}}"></div>
   <mod-kit />
   <script src="/main-{hash}.js"></script>
   <script type="module" src="/mod/index-{hash}.js"></script>

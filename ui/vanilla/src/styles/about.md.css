@@ -1,12 +1,9 @@
-.content .about {
-  padding-left: 45px;
-  padding-right: 45px;
-}
 .about .markdown-body {
-  margin: 15px 12px 50px;
+  margin: 15px 12px 40px;
 }
 .about .markdown-body h1 {
-  text-align: center;
+    display: flex;
+    justify-content: center;
   border-bottom: 1px solid var(--border);
   padding-bottom: 5px;
 }

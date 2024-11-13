@@ -17,6 +17,8 @@
   import '@cartamd/plugin-emoji/default.css'
   // 引用markdown-body样式
   import 'moonprism-blog-frontend/src/styles/art.md.css'
+  import 'moonprism-blog-frontend/src/styles/about.md.css'
+  import 'moonprism-blog-frontend/src/styles/link.md.css'
 
   import SaveIcon from './(components)/save-icon.svelte'
   import toast from '$lib/helpers/toast'
@@ -28,7 +30,7 @@
   import { alertDialog } from '@/components/blocks/dialog/alert'
 
   import { goto } from '$app/navigation'
-  import { middlewareTransformers } from './(data)/data'
+  import { middlewareTransformers, slashSnippets } from './(data)/data'
   import { base } from '$app/paths'
 
   const id = Number($page.params.id)
@@ -117,7 +119,14 @@
 
   const carta = new Carta({
     sanitizer: false,
-    extensions: [slash(), code({ theme: 'carta-dark' }), emoji(), ext]
+    extensions: [
+      slash({
+        snippets: slashSnippets
+      }),
+      code({ theme: 'carta-dark' }),
+      emoji(),
+      ext
+    ]
   })
 
   let value = '',
@@ -129,6 +138,16 @@
       originValue = value = article.content.text
     }
   })
+
+  let isArt = true
+  let isLinks = false
+  let isAbout = false
+  if (id === 1) {
+    isAbout = true
+  } else if (id === 2) {
+    isArt = false
+    isLinks = true
+  }
 </script>
 
 <button
@@ -138,7 +157,7 @@
   <SquareX class="h-5 w-5 group-hover:h-6 group-hover:w-6"></SquareX>
 </button>
 
-<div class="art">
+<div class:art={isArt} class:link={isLinks} class:about={isAbout}>
   <MarkdownEditor {carta} bind:value theme="custom" />
 
   <FormImageFlow

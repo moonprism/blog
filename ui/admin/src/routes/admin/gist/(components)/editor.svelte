@@ -13,6 +13,7 @@
 
   import AttachmentIcon from '../../article/write/[[id]]/(components)/attachment-icon.svelte'
   import { middlewareTransformers } from '../../article/write/[[id]]/(data)/data'
+  import { emoji } from '@cartamd/plugin-emoji'
 
   let isOpenImageFlow = writable(false)
   let currentInput: InputEnhancer
@@ -34,7 +35,7 @@
   const carta = new Carta({
     disableIcons: true,
     sanitizer: false,
-    extensions: [code(), ext]
+    extensions: [code(), ext, emoji()] // 不建议使用emoji()
   })
 
   export let value = ''

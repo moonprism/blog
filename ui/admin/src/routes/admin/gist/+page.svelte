@@ -14,7 +14,7 @@
 
   async function render(id: number, text: string) {
     const html = await renderMD(text)
-    const putRes = await fet.put(`gist/${id}`, { html })
+    const putRes = await fet.put(`gist/${id}`, { output: {html} })
     if (!putRes.ok) {
       return
     }

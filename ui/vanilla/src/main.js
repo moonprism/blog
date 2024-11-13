@@ -7,6 +7,25 @@ import './styles/link.md.css';
 import './styles/about.md.css';
 import './styles/wind.css';
 
+// 检查用户的系统主题偏好
+const userPrefersDark =
+  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+// 尝试从 localStorage 中加载用户设置的主题，如果没有则根据系统偏好设置
+const savedTheme = localStorage.getItem('theme');
+
+// 如果用户之前设置了主题，则使用该主题，否则使用系统偏好
+if (savedTheme) {
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark');
+  } else {
+    document.body.classList.remove('dark');
+  }
+} else {
+  if (userPrefersDark) {
+    document.body.classList.add('dark');
+  }
+}
+
 // 标签:hover动画，(用js实现会有一种不流畅的美感
 document.querySelectorAll('.art > .art-item > .anno').forEach((anno) => {
   anno.querySelectorAll('.art-tag').forEach((a) => {
@@ -104,60 +123,57 @@ function hashStringToInt(str) {
   return Math.abs(hash);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  // 适应字体大小
-  document.querySelectorAll('.link .markdown-body blockquote').forEach((e) => {
-    const bio = e.querySelector('code');
-    if (bio.innerText.length >= 21) {
-      bio.style.fontSize = '13px';
-    }
-  });
-
-  const linkHeadingEl = document.querySelector('.link .markdown-body h2');
-  const collectionHEadingEl = document.querySelector('.link .markdown-body h3');
-  // 设置图标
-  if (linkHeadingEl) {
-    linkHeadingEl.insertAdjacentHTML('afterbegin', heartSvg);
-    linkHeadingEl.style.marginBottom = '15px';
-    if (collectionHEadingEl) {
-      collectionHEadingEl.insertAdjacentHTML('afterbegin', starSvg);
-    }
-    const boardHeadingEl = document.querySelector('.link .markdown-body h2:nth-of-type(2)');
-    boardHeadingEl.insertAdjacentHTML('afterbegin', appleSvg);
-  }
-  const seedEl = document.querySelector('.link .markdown-body > p > code');
-  if (seedEl) {
-    // 随机排序
-    const blockquoteEls = getElementsBetween(
-      linkHeadingEl,
-      collectionHEadingEl ? collectionHEadingEl : boardHeadingEl,
-      'blockquote'
-    );
-    const url = window.location.href;
-    const seed =
-      url.indexOf('?') != -1
-        ? parseInt(url.split('?')[1])
-        : Math.round(Math.random() * 899999) + 100000;
-
-    blockquoteEls.map((v, i) => {
-      const j = (seed * hashStringToInt(v.innerText)) % blockquoteEls.length;
-      [blockquoteEls[j].innerHTML, v.innerHTML] = [v.innerHTML, blockquoteEls[j].innerHTML];
-    });
-    window.history.pushState({}, 0, '?' + seed);
-    seedEl.innerHTML += `<span style="font-size:.95em;">${seed}</span>`;
-  }
-
-  // about 页面附加图标
-  const headings = document.querySelectorAll('.about .markdown-body h2');
-  console.log(headings);
-  if (headings.length > 1) {
-    headings[0].insertAdjacentHTML(
-      'afterbegin',
-      '<svg style="font-size: 22px; position: relative; top: 2px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mingmenjuan"></use></svg>'
-    );
-    headings[1].insertAdjacentHTML(
-      'afterbegin',
-      '<svg style="font-size: 19px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mao"></use></svg>'
-    );
+// 适应字体大小
+document.querySelectorAll('.link .markdown-body blockquote').forEach((e) => {
+  const bio = e.querySelector('code');
+  if (bio.innerText.length >= 21) {
+    bio.style.fontSize = '13px';
   }
 });
+
+const linkHeadingEl = document.querySelector('.link .markdown-body h2');
+const collectionHEadingEl = document.querySelector('.link .markdown-body h3');
+// 设置图标
+if (linkHeadingEl) {
+  linkHeadingEl.insertAdjacentHTML('afterbegin', heartSvg);
+  linkHeadingEl.style.marginBottom = '15px';
+  if (collectionHEadingEl) {
+    collectionHEadingEl.insertAdjacentHTML('afterbegin', starSvg);
+  }
+  const boardHeadingEl = document.querySelector('.link .markdown-body h2:nth-of-type(2)');
+  boardHeadingEl.insertAdjacentHTML('afterbegin', appleSvg);
+}
+const seedEl = document.querySelector('.link .markdown-body > p > code');
+if (seedEl) {
+  // 随机排序
+  const blockquoteEls = getElementsBetween(
+    linkHeadingEl,
+    collectionHEadingEl ? collectionHEadingEl : boardHeadingEl,
+    'blockquote'
+  );
+  const url = window.location.href;
+  const seed =
+    url.indexOf('?') != -1
+      ? parseInt(url.split('?')[1])
+      : Math.round(Math.random() * 899999) + 100000;
+
+  blockquoteEls.map((v, i) => {
+    const j = (seed * hashStringToInt(v.innerText)) % blockquoteEls.length;
+    [blockquoteEls[j].innerHTML, v.innerHTML] = [v.innerHTML, blockquoteEls[j].innerHTML];
+  });
+  window.history.pushState({}, 0, '?' + seed);
+  seedEl.innerHTML += `<span style="font-size:.95em;">${seed}</span>`;
+}
+
+// about 页面附加图标
+const headings = document.querySelectorAll('.about .markdown-body h2');
+if (headings.length > 1) {
+  headings[0].insertAdjacentHTML(
+    'afterbegin',
+    '<svg style="font-size: 22px; position: relative; top: 2px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mingmenjuan"></use></svg>'
+  );
+  headings[1].insertAdjacentHTML(
+    'afterbegin',
+    '<svg style="font-size: 19px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mao"></use></svg>'
+  );
+}

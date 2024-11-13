@@ -17,6 +17,7 @@
    * @property {string} Name
    * @property {string} Email
    * @property {string} Content
+   * @property {string} Link
    */
 
   /**
@@ -38,6 +39,13 @@
       return;
     }
     isPostIn = true;
+    let postName = name;
+    let postLink = '';
+    // 解析[](url)
+    const matchResult = name.match(/^\[(.+?)\]\((.+?)\)$/);
+    if (matchResult) {
+      [, postName, postLink] = matchResult;
+    }
     const response = await fetch('/api/comment', {
       method: 'POST',
       headers: {
@@ -47,9 +55,10 @@
         article_id: Number(id),
         reply_comment_id: Number(replyCommentId),
         root_comment_id: 0,
-        name,
+        name: postName,
         email,
-        content
+        content,
+        link: postLink
       })
     });
     const data = await response.json();
@@ -129,7 +138,9 @@
         <label for="name">姓名：</label>
         <input type="text" id="name" bind:value={name} placeholder="Name / [Name](🔗)" required />
       </div>
-      <div class="form-field-error">{errors.Name ? errors.Name : ''}</div>
+      <div class="form-field-error">
+        {errors.Name ? errors.Name : ''}{errors.Link ? errors.Link : ''}
+      </div>
     </div>
     <div class="form-field">
       <div class="form-field-appear">
@@ -160,11 +171,6 @@
       {/if}
     </div>
     <div style="display: flex;">
-      <div class="reply-name">
-        {#if replyName !== ''}
-          @{replyName}
-        {/if}
-      </div>
       <div class="form-field-error">{errors.Content ? errors.Content : ''}</div>
     </div>
   </div>
@@ -175,6 +181,11 @@
     <button type="button" class="form-button-post" on:click={post}>
       {#if isPostIn}
         <div class="loading"></div>
+      {:else if replyName !== ''}
+        <div class="reply-name">
+          @{replyName}
+        </div>
+        回复
       {:else}
         发布
       {/if}
@@ -282,10 +293,8 @@
     justify-content: flex-end;
   }
   .reply-name {
-    flex: 1 1 auto;
-    margin-left: 1px;
-    margin-top: 0.5px;
-    font-size: 0.8rem;
+    margin-right: 2px;
+    font-size: 0.9rem;
     color: var(--gray-4);
   }
   .form-buttons > button {
@@ -309,6 +318,8 @@
     animation: shake 0.4s infinite;
   }
   .form-button-post {
+    display: flex;
+    align-items: center;
     padding: 3px 13px;
     transition: background-color 0.3s ease;
     transition: color 0.3s ease;

@@ -28,7 +28,7 @@
   margin: 1.2rem 0 0.6rem;
 }
 .art .markdown-body h4 {
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   margin: 0.8rem 0 0.3rem;
 }
 .art .markdown-body strong,
@@ -37,7 +37,7 @@
 }
 .art .markdown-body > p {
   line-height: 1.75;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.95rem;
   font-size: 16px;
 }
 .art .markdown-body > ul,
@@ -94,7 +94,7 @@
   padding: 0.3rem 0.6rem;
   line-height: 1.7;
   font-size: 15px;
-  border-left: 2px solid rgba(var(--bq-color));
+  border-left: 2.3px solid rgba(var(--bq-color));
   background-color: rgba(var(--bq-color), var(--bq-opacity));
   word-wrap: break-word;
 }
