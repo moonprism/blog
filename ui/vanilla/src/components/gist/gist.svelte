@@ -94,10 +94,12 @@
         break;
       case 'dark':
         toggleTheme(true);
-        help();
+        currentKeyword = '';
         break;
       case 'light':
         toggleTheme(false);
+        currentKeyword = '';
+        break;
       default:
         help();
     }
@@ -186,14 +188,11 @@
             <li><code>/p .</code>检索 posts</li>
             <li><code>/tags</code>列出全部标签</li>
             <li><code>/dark|light</code>开启日|夜间模式</li>
-            <li><code>/ai </code></li>
           </ul>
-          <div class="admonition ad-caution">
-            <p class="admonition-title">TIP</p>
-            <p>正在完善中...</p>
-          </div>
           <h3>Tips</h3>
-          <p>gists 的搜索结果将记录在当前 url 上，刷新渲染</p>
+          <ul>
+            <li>gists 的搜索结果将记录在当前 url 上，刷新渲染</li>
+          </ul>
         </div>
       </div>
     {:else if isLoading}

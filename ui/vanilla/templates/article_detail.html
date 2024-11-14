@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>{{.Article.Title}} | {{.Settings.Title}}</title>
-    <link rel="stylesheet" type="text/css" href="/assets/style-{hash}.css" />
+    <link rel="stylesheet" type="text/css" href="/main-{hash}.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body class="flex flex-col items-center">
@@ -18,15 +19,11 @@
           <h1><a>{{.Article.Title}}</a></h1>
           <div class="anno">
             <span>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-date"></use>
-              </svg>
+              <mod-icon id="date"></mod-icon>
               {{.Article.Created | formatDate | unsafeHTML}}</span
             >
             <span>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-tag"></use>
-              </svg>
+              <mod-icon id="tag"></mod-icon>
               {{range .Article.Tags}}
               <a class="art-tag" href="/posts/tag/{{.Name}}" style="background-color: {{.Color}}"
                 >{{.Name}}</a

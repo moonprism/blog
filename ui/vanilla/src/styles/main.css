@@ -44,6 +44,8 @@ li {
   --foreground: rgb(205, 201, 194);
   --primary: #eee;
   --border: rgba(107, 99, 88, 0.2);
+  /* TODO 夜间模式 */
+  --outline: #aaa;
 
   --gist-icon-1: var(--foreground);
   --gist-icon-2: var(--foreground);
@@ -94,15 +96,6 @@ body {
   background-size: cover;
   background: rgb(238, 174, 202);
   background: linear-gradient(180deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-}
-
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-  font-size: 17px;
 }
 
 nav {

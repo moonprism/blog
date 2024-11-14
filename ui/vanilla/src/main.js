@@ -1,5 +1,3 @@
-import './iconfont.js';
-
 import './styles/main.css';
 import './styles/art.md.css';
 import './styles/gist.md.css';
@@ -41,21 +39,7 @@ document.querySelectorAll('.art > .art-item > .anno').forEach((anno) => {
   });
 });
 
-// 代码copy按钮
-document.querySelectorAll('.art > .markdown-body > pre').forEach((pre) => {
-  pre.addEventListener('click', (event) => {
-    const offsetX = event.offsetX;
-    const offsetY = event.offsetY;
-    if (offsetX > 597 && offsetY < 17) {
-      navigator.clipboard.writeText(pre.innerText);
-      pre.style.setProperty('--copy-btn-text', "'copied'");
-      pre.style.setProperty('--copy-btn-color', '#d2e3c8');
-    }
-  });
-});
-
 // Links 页面随机排序等处理
-
 /**
  * 获取两元素之间的所有元素
  * @param {Element} el1
@@ -89,23 +73,35 @@ const starSvg = `
 <svg fill="#FFAC33" width="18px" height="18px" viewBox="-2 0 19 19" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg"><path d="m12.673 10.779.798 4.02c.221 1.11-.407 1.566-1.395 1.013L8.5 13.81l-3.576 2.002c-.988.553-1.616.097-1.395-1.013l.397-2.001.401-2.02-1.51-1.397-1.498-1.385c-.832-.769-.592-1.507.532-1.64l2.026-.24 2.044-.242 1.717-3.722c.474-1.028 1.25-1.028 1.724 0l1.717 3.722 2.044.242 2.026.24c1.124.133 1.364.871.533 1.64L14.184 9.38z"/></svg>
 `;
 
-const appleSvg = `
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- License: CC0. Made by SVG Repo: https://www.svgrepo.com/svg/42619/apple-fruit -->
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 fill="#8FD14F" width="19.5px" height="19.5px" viewBox="0 0 45.721 45.721" style="enable-background:new 0 0 45.721 45.721;"
-	 xml:space="preserve">
-<g>
-	<path d="M31.686,11.161c-2.615-0.057-5.047,1.063-7.073,2.882c-0.344-2.371-1.271-4.273-1.271-4.273
-		c10.967-1.485,7.901-9.753,7.901-9.753c-7.738-0.328-9.239,4.304-9.399,7.344c-2.385-2.55-5.077-4.009-6.202-4.518
-		c-1.071-0.484-2.329,0.074-2.775,1.159c-0.446,1.088,0.094,2.284,1.161,2.774c1.411,0.649,5.841,2.251,7.181,7.409
-		c-2.058-1.907-4.548-3.024-7.231-3.024c-7.066,0-13.598,5.845-11.318,17.281c1.866,9.357,8.678,17.279,15.744,17.279
-		c1.842,0,3.291-0.527,4.427-1.475c1.138,0.946,2.586,1.484,4.428,1.475c7.307-0.045,13.542-7.505,15.744-17.279
-		C45.232,18.552,40.071,11.343,31.686,11.161z"/>
-</g>
-</svg>
+const fishcakeSvg = `
+<!-- License: CC Attribution. Made by Muhammad Ridlo: mailto:m.ridlo@gmail.com -->
+<svg
+  width="29px"
+  height="29px"
+  viewBox="0 0 64 64"
+  style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;"
+  version="1.1"
+  xml:space="preserve"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:serif="http://www.serif.com/"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  ><g transform="matrix(1,0,0,1,-84,0)"
+    ><g id="Naruto" transform="matrix(1,0,0,1,-188.333,0)"
+      ><rect height="64" style="fill:none;" width="64" x="272.333" y="0" /><g
+        transform="matrix(1,0,0,1,180.333,0)"
+        ><path
+          d="M121.475,5.673C121.904,4.659 122.899,4 124,4C125.101,4 126.096,4.659 126.525,5.673L128.37,10.03L131.742,6.711C132.526,5.938 133.697,5.71 134.715,6.131C135.733,6.553 136.399,7.542 136.408,8.644L136.445,13.375L140.83,11.598C141.851,11.185 143.02,11.422 143.799,12.201C144.578,12.98 144.815,14.149 144.402,15.17L142.625,19.555L147.356,19.592C148.458,19.601 149.447,20.267 149.869,21.285C150.29,22.303 150.062,23.474 149.289,24.258L145.97,27.63L150.327,29.475C151.341,29.904 152,30.899 152,32C152,33.101 151.341,34.096 150.327,34.525L145.97,36.37L149.289,39.742C150.062,40.526 150.29,41.697 149.869,42.715C149.447,43.733 148.458,44.399 147.356,44.408L142.625,44.445L144.402,48.83C144.815,49.851 144.578,51.02 143.799,51.799C143.02,52.578 141.851,52.815 140.83,52.402L136.445,50.625L136.408,55.356C136.399,56.458 135.733,57.447 134.715,57.869C133.697,58.29 132.526,58.062 131.742,57.289L128.37,53.97L126.525,58.327C126.096,59.341 125.101,60 124,60C122.899,60 121.904,59.341 121.475,58.327L119.63,53.97L116.258,57.289C115.474,58.062 114.303,58.29 113.285,57.869C112.267,57.447 111.601,56.458 111.592,55.356L111.555,50.625L107.17,52.402C106.149,52.815 104.98,52.578 104.201,51.799C103.422,51.02 103.185,49.851 103.598,48.83L105.375,44.445L100.644,44.408C99.542,44.399 98.553,43.733 98.131,42.715C97.71,41.697 97.938,40.526 98.711,39.742L102.03,36.37L97.673,34.525C96.659,34.096 96,33.101 96,32C96,30.899 96.659,29.904 97.673,29.475L102.03,27.63L98.711,24.258C97.938,23.474 97.71,22.303 98.131,21.285C98.553,20.267 99.542,19.601 100.644,19.592L105.375,19.555L103.598,15.17C103.185,14.149 103.422,12.98 104.201,12.201C104.98,11.422 106.149,11.185 107.17,11.598L111.555,13.375L111.592,8.644C111.601,7.542 112.267,6.553 113.285,6.131C114.303,5.71 115.474,5.938 116.258,6.711L119.63,10.03L121.475,5.673Z"
+          style="fill:white;stroke:rgb(34,32,77);stroke-width:2px;"
+        /></g
+      ><g transform="matrix(1.01035,0,0,1.05877,185.386,2.13651)"
+        ><path
+          d="M116,31C116,31 114.349,24.48 122,25C129.651,25.52 126.254,32.473 123,35C119.746,37.527 107.184,38.659 109,28C110.816,17.341 120,20 120,20"
+          style="fill:none;stroke:rgb(205,90,70);stroke-width:1.93px;"
+        /></g
+      ></g
+    ></g
+  ></svg
+>
 `;
 
 /**
@@ -141,7 +137,8 @@ if (linkHeadingEl) {
     collectionHEadingEl.insertAdjacentHTML('afterbegin', starSvg);
   }
   const boardHeadingEl = document.querySelector('.link .markdown-body h2:nth-of-type(2)');
-  boardHeadingEl.insertAdjacentHTML('afterbegin', appleSvg);
+  boardHeadingEl.insertAdjacentHTML('afterbegin', fishcakeSvg);
+  boardHeadingEl.style.fontSize = '17px';
 }
 const seedEl = document.querySelector('.link .markdown-body > p > code');
 if (seedEl) {
@@ -163,17 +160,4 @@ if (seedEl) {
   });
   window.history.pushState({}, 0, '?' + seed);
   seedEl.innerHTML += `<span style="font-size:.95em;">${seed}</span>`;
-}
-
-// about 页面附加图标
-const headings = document.querySelectorAll('.about .markdown-body h2');
-if (headings.length > 1) {
-  headings[0].insertAdjacentHTML(
-    'afterbegin',
-    '<svg style="font-size: 22px; position: relative; top: 2px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mingmenjuan"></use></svg>'
-  );
-  headings[1].insertAdjacentHTML(
-    'afterbegin',
-    '<svg style="font-size: 19px;" class="icon" aria-hidden="true"><use xlink:href="#icon-mao"></use></svg>'
-  );
 }
