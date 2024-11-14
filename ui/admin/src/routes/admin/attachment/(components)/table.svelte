@@ -26,7 +26,6 @@
   import TableRowSummary from './table-row-summary.svelte'
   import type { Attachment } from '$src/types/stream'
   import { isMockMode } from '@/helpers/fetch'
-  import { getRealSrc } from '$src/routes/admin/(data)/data'
   import { onMount } from 'svelte'
   import type { Filter, SearchParams } from '$src/types/table'
   import { get } from 'svelte/store'
@@ -65,7 +64,7 @@
       header: 'Key',
       cell: ({ value }) => {
         return createRender(TableRowImage, {
-          src: getRealSrc(value)
+          src: value
         })
       }
     }),

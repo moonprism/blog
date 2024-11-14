@@ -29,6 +29,7 @@
   import RowTitle from '@/components/blocks/cell/row-title.svelte'
   import TableRowHtml from './table-row-html.svelte'
   import { DateFormat } from '@/helpers/date'
+  import { get } from 'svelte/store'
 
   const serverSide = !isMockMode
   let paginationConfig = {}
@@ -69,7 +70,20 @@
     }),
     table.column({
       accessor: 'lang',
-      header: 'Lang'
+      header: 'Lang',
+      plugins: {
+        colFilter: {
+          fn: ({ filterValue, value }) => {
+            if (filterValue.length === 0) return true
+            if (!Array.isArray(filterValue)) return true
+            return filterValue.includes(value)
+          },
+          initialFilterValue: [],
+          render: ({ filterValue }) => {
+            return get(filterValue)
+          }
+        },
+      },
     }),
     table.column({
       accessor: 'content',

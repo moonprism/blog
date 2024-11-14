@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>{{.Article.Title}} | {{.Settings.Title}}</title>
-    <link rel="stylesheet" type="text/css" href="/main-{hash}.css" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" type="text/css" href="/v/main-{hash}.css" />
+    <link rel="icon" href="/v/favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body class="flex flex-col items-center">
@@ -40,8 +40,8 @@
   </body>
   <div class="bg" style="{{.Settings.Background | unsafeCSS}}"></div>
   <mod-kit />
-  <script src="/main-{hash}.js"></script>
-  <script type="module" src="/mod/index-{hash}.js"></script>
-  <script type="module" src="/mod/kit-{hash}.js"></script>
-  <script type="module" src="/mod/comment-{hash}.js"></script>
+  <script src="/v/main-{hash}.js"></script>
+  <script type="module" src="/v/mod/index-{hash}.js"></script>
+  <script type="module" src="/v/mod/kit-{hash}.js"></script>
+  <script type="module" src="/v/mod/comment-{hash}.js"></script>
 </html>

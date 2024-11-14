@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	m "github.com/moonprism/blog/api/http/middleware"
 	"github.com/moonprism/blog/core"
+	"github.com/moonprism/blog/ui"
 )
 
 func Serve(app *core.App) error {
@@ -16,6 +17,9 @@ func Serve(app *core.App) error {
 	// https://go-chi.io/#/pages/middleware?id=realip
 	r.Use(middleware.RealIP)
 	//r.Use(m.Delay)
+
+	vanillaFileServer := http.FileServer(http.FS(ui.GetVanillaEmbedFS()))
+	r.Handle("/v/*", http.StripPrefix("/v", vanillaFileServer))
 
 	r.Route("/api", func(r chi.Router) {
 		r.Use(m.JsonResponse)
@@ -31,9 +35,7 @@ func Serve(app *core.App) error {
 	})
 
 	r.Route("/", func(r chi.Router) {
-		if app.IsDev() {
-			r.Use(m.RefreshTemplate(app))
-		}
+		r.Get("/", articlePageListRoute(app))
 		r.Get("/posts", articlePageListRoute(app))
 		r.Get("/posts/tag/{tagName}", articlePageListRoute(app))
 		r.Get("/post/{id}", articlePageDetailRoute(app))

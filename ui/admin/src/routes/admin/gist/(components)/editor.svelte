@@ -9,11 +9,12 @@
   import 'moonprism-blog-frontend/src/styles/gist.md.css'
 
   import FormImageFlow from '@/components/blocks/cell/form-image-flow.svelte'
-  import { writable } from 'svelte/store'
+  import { get, writable } from 'svelte/store'
 
   import AttachmentIcon from '../../article/write/[[id]]/(components)/attachment-icon.svelte'
-  import { middlewareTransformers } from '../../article/write/[[id]]/(data)/data'
+  import { getMiddlewareTransformers } from '../../article/write/[[id]]/(data)/data'
   import { emoji } from '@cartamd/plugin-emoji'
+  import { appInfo } from '../../(data)/data'
 
   let isOpenImageFlow = writable(false)
   let currentInput: InputEnhancer
@@ -29,7 +30,7 @@
 
   const ext: Plugin = {
     icons: [attachmentIcon],
-    transformers: middlewareTransformers
+    transformers: getMiddlewareTransformers(get(appInfo).attachmentCDN)
   }
 
   const carta = new Carta({

@@ -34,7 +34,6 @@
   import TableRowTagColors from './table-row-tag-colors.svelte'
   import TableRowImage from './table-row-image.svelte'
   import { isMockMode } from '@/helpers/fetch'
-  import { getRealSrc } from '$src/routes/admin/(data)/data'
   import { onMount } from 'svelte'
   import { debounce } from '@/helpers/system'
   import { DateFormat } from '@/helpers/date'
@@ -107,7 +106,7 @@
       accessor: 'image',
       header: 'Image',
       cell: ({ value }) => {
-        return createRender(TableRowImage, { src: getRealSrc(value) })
+        return createRender(TableRowImage, { src: value })
       }
     }),
     table.column({

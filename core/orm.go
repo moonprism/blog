@@ -36,7 +36,7 @@ func newORM(driver string, source string, ftsSource string) (o *orm, err error) 
 	sql.Register("sqlite3_simple",
 		&sqlite3.SQLiteDriver{
 			Extensions: []string{
-				"libsimple-aarch64-linux-gnu-gcc-9/libsimple",
+				"libsimple/libsimple",
 			},
 		},
 	)

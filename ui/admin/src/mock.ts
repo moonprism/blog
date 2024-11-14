@@ -4,6 +4,7 @@ import tags from '$src/routes/admin/tag/(data)/mock.json'
 import attachmentMock from '$src/routes/admin/attachment/(data)/mock.json'
 import gistMock from '$src/routes/admin/gist/(data)/mock.json'
 import comments from '$src/routes/admin/comment/(data)/mock.json'
+import appInfo from '$src/routes/admin/(data)/mock.json'
 export const apiData = {
   article: {
     list: articles,
@@ -24,5 +25,8 @@ export const apiData = {
   },
   comment: {
     list: comments
+  },
+  settings: {
+    list: appInfo
   }
 }

@@ -1,12 +1,13 @@
 import { Carta } from 'carta-md'
 import type { InputEnhancer, UnifiedTransformer } from 'carta-md'
-import { fileCDN } from '$src/routes/admin/(data)/data'
 import remarkAdmonitions from 'remark-github-beta-blockquote-admonitions'
 import { emoji } from '@cartamd/plugin-emoji'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 import remarkImgLinks from '@pondorasti/remark-img-links'
 import { code } from '@cartamd/plugin-code'
+import { get } from 'svelte/store'
+import { appInfo } from '$src/routes/admin/(data)/data'
 
 const alertTypes = ['NOTE', 'IMPORTANT', 'WARNING', 'TIP', 'CAUTION']
 
@@ -19,20 +20,24 @@ const remarkAdConfig = {
   titleFilter: alertTypes.map((v) => `[!${v}]`)
 }
 
-export const middlewareTransformers: UnifiedTransformer<'sync' | 'async'>[] = [
-  {
-    execution: 'async',
-    type: 'remark',
-    transform({ processor }) {
-      // remark plugins
-      processor
-        .use(remarkImgLinks, {
-          absolutePath: fileCDN
-        })
-        .use(remarkAdmonitions, remarkAdConfig)
+export const getMiddlewareTransformers = (
+  absolutePath: string
+): UnifiedTransformer<'sync' | 'async'>[] => {
+  return [
+    {
+      execution: 'async',
+      type: 'remark',
+      transform({ processor }) {
+        // remark plugins
+        processor
+          .use(remarkImgLinks, {
+            absolutePath
+          })
+          .use(remarkAdmonitions, remarkAdConfig)
+      }
     }
-  }
-]
+  ]
+}
 
 export const slashSnippets = alertTypes.map((v) => {
   return {
@@ -51,33 +56,23 @@ export const slashSnippets = alertTypes.map((v) => {
   }
 })
 
-// TODO 冗余
-const carta = new Carta({
-  sanitizer: false,
-  extensions: [
-    {
-      transformers: middlewareTransformers
-    },
-    code(),
-    emoji()
-  ]
-})
-
-const cartaDark = new Carta({
-  sanitizer: false,
-  extensions: [
-    {
-      transformers: middlewareTransformers
-    },
-    code({ theme: 'carta-dark' }),
-    emoji()
-  ]
-})
+function newCarta(isDark = false) {
+  let codeExt = code()
+  if (isDark) {
+    codeExt = code({ theme: 'carta-dark' })
+  }
+  return new Carta({
+    sanitizer: false,
+    extensions: [
+      {
+        transformers: getMiddlewareTransformers(get(appInfo).attachmentCDN)
+      },
+      codeExt,
+      emoji()
+    ]
+  })
+}
 
 export async function renderMD(value: string, isDark = false): Promise<string> {
-  if (isDark) {
-    return await cartaDark.render(value)
-  } else {
-    return await carta.render(value)
-  }
+  return await newCarta(isDark).render(value)
 }

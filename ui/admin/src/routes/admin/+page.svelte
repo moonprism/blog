@@ -3,7 +3,7 @@
   import Button from '@/components/ui/button/button.svelte'
   import { getJwtInfo, removeJwt } from '@/helpers/jwt'
   import { base } from '$app/paths'
-  import { appInfo, getRealSrc } from './(data)/data'
+  import { getRealSrc, appInfo } from './(data)/data'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from './(data)/schema'
@@ -27,7 +27,7 @@
         const body = {
           title: $vform.title,
           background: $vform.background,
-          marginBottom: $vform.marginBottom
+          marginBottom: marginBottoms[0]
         }
         fet.post('settings', body).then((res) => {
           if (res.ok) {
@@ -40,7 +40,19 @@
   })
   const { form: vform, enhance } = form
 
-  $vform = appInfo
+  let marginBottoms: number[] = []
+  function initMarginBottoms() {
+    if (marginBottoms.length === 0 && $appInfo.marginBottom) {
+      marginBottoms[0] = $appInfo.marginBottom
+    }
+  }
+
+  $: {
+    $vform = $appInfo
+    initMarginBottoms()
+  }
+
+  $vform = $appInfo
 
   let isOpenImageFlow = writable(false)
 
@@ -51,10 +63,6 @@
   function setBg(selectImage: string) {
     $vform.background = `background-image: url(${getRealSrc(selectImage)});background-size: cover;`
   }
-
-  let marginBottoms = [$vform.marginBottom]
-
-  $: $vform.marginBottom = marginBottoms[0]
 </script>
 
 <FormImageFlow
@@ -158,7 +166,7 @@
   </div>
   <div class="mt-7 text-sm text-secondary-foreground">
     <!--todo-->
-    <p>上次登陆时间：{appInfo.lastLoginTime}</p>
+    <p>上次登陆时间：{$appInfo.lastLoginTime}</p>
     <Button
       size="sm"
       class="mt-1 h-7 rounded-sm"

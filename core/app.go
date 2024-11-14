@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/go-chi/jwtauth/v5"
+	"github.com/moonprism/blog/ui"
 	"github.com/urfave/cli/v2"
 )
 
@@ -82,8 +83,8 @@ func (app *App) InitTokenAuth() {
 }
 
 func (app *App) InitTmpl() error {
-	app.TmplManager = NewTmplManager()
-	return app.TmplManager.RegisterDir("./ui/vanilla/dist")
+	app.TmplManager = NewTmplManager("vanilla")
+	return app.TmplManager.RegistFS(ui.GetVanillaEmbedFS())
 }
 
 func (app *App) InitValidator() {

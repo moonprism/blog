@@ -5,7 +5,6 @@
   import type { Article } from '$src/types/stream'
   import { tableData, closeForm, statuses } from '../(data)/data'
   import { fet, isExternalLink, isRequestIn } from '@/helpers/fetch'
-  import { getRealSrc } from '$src/routes/admin/(data)/data'
 
   import * as Form from '@/components/ui/form'
   import { formSchema, type FormSchema } from '../(data)/schema'
@@ -22,6 +21,7 @@
   import { writable, type Writable } from 'svelte/store'
   import FormImageFlow from '@/components/blocks/cell/form-image-flow.svelte'
   import { onMount } from 'svelte'
+  import TableRowImage from './table-row-image.svelte'
 
   const form = superForm(defaults(zod(formSchema)), {
     validators: zodClient(formSchema),
@@ -175,7 +175,7 @@
                 </HoverCard.Trigger>
                 <HoverCard.Content class="w-auto">
                   {#if $vform.image !== ''}
-                    <img src={getRealSrc($vform.image)} class="max-h-[320px]" alt="" />
+                    <TableRowImage src={$vform.image}></TableRowImage>
                   {:else}
                     <ImageOff class="h-4 w-4"></ImageOff>
                   {/if}

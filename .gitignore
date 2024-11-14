@@ -5,5 +5,7 @@ password.txt
 test.toml
 *.db
 
-libsimple-*
+libsimple*
 dict
+
+blog

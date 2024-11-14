@@ -17,10 +17,13 @@
   import { ChevronsLeft } from 'lucide-svelte'
 
   import { page } from '$app/stores'
-  import type { ComponentType } from 'svelte'
+  import { type ComponentType } from 'svelte'
   import { base } from '$app/paths'
+  import { initAppInfo } from './(data)/data'
 
   export const adminPath = `${base}/admin`
+
+  initAppInfo()
 
   class Menu {
     title: string
