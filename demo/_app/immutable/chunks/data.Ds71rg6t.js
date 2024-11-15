@@ -1,0 +1,1 @@
+import{f as e,i as n}from"./fetch.D3Syd-y6.js";import{w as r}from"./index.BL8zyt_-.js";import{m as s}from"./scheduler.6pVAEnVZ.js";const a=r({});async function c(){if(Object.keys(s(a)).length===0){const t=await e.get("settings");a.set(t.data)}}const m=t=>t===""||n(t)?t:`${s(a).attachmentCDN}${t}`;export{a,m as g,c as i};

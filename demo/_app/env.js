@@ -1,1 +1,1 @@
-export const env={"PUBLIC_MOCK_MODE":"true","PUBLIC_API_ADDR":"http://localhost:2999/api/","PUBLIC_ATTACHMENT_CDN":"https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/"}
+export const env={"PUBLIC_MOCK_MODE":"true","PUBLIC_API_ADDR":"/api/"}
