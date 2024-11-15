@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 	"strconv"
 	"unicode/utf8"
 
@@ -239,12 +238,13 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 		var articles []*models.Article
 		mo := app.O.Model(&models.Article{}).Where("status = ?", 1)
 		var tag models.Tag
-		tagName := chi.URLParam(r, "tagName")
-		if tagName != "" {
-			decodedTagName, err := url.QueryUnescape(tagName)
+		tagIdParam := chi.URLParam(r, "id")
+		if tagIdParam != "" {
+			tagId, err := strconv.Atoi(tagIdParam)
 			core.P(err)
-			app.O.Where("name = ?", decodedTagName).First(&tag)
-			mo = mo.Joins("INNER JOIN article_tags AS ats ON articles.id = ats.article_id AND ats.tag_id = ?", tag.ID)
+			err = app.O.Where("id = ?", tagId).First(&tag).Error
+			core.P(err)
+			mo = mo.Joins("INNER JOIN article_tags AS ats ON articles.id = ats.article_id AND ats.tag_id = ?", tagId)
 		}
 		var count int64
 		err = mo.Count(&count).Error

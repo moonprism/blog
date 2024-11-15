@@ -4,13 +4,12 @@
     <meta charset="UTF-8" />
     <title>{{.Article.Title}} | {{.Settings.Title}}</title>
     <link rel="stylesheet" type="text/css" href="/v/main-{hash}.css" />
-    <link rel="icon" href="/v/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/v/favicon.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body class="flex flex-col items-center">
     <nav>
-      {{range .Pages}}
-      <a href="/{{.}}">{{.}}</a>
+      {{range .Pages}}<a href="/{{.}}">{{.}}</a>
       {{end}}
     </nav>
     <div class="content">
@@ -19,15 +18,13 @@
           <h1><a>{{.Article.Title}}</a></h1>
           <div class="anno">
             <span>
-              <mod-icon id="date"></mod-icon>
+              <mod-icon name="date"></mod-icon>
               {{.Article.Created | formatDate | unsafeHTML}}</span
             >
             <span>
-              <mod-icon id="tag"></mod-icon>
+              <mod-icon name="tag"></mod-icon>
               {{range .Article.Tags}}
-              <a class="art-tag" href="/posts/tag/{{.Name}}" style="background-color: {{.Color}}"
-                >{{.Name}}</a
-              >
+              <mod-tag i="{{.ID}}" color="{{.Color}}">{{.Name}}</mod-tag>
               {{end}}
             </span>
           </div>
@@ -36,7 +33,7 @@
         <mod-comment id="{{.Article.ID}}" />
       </div>
     </div>
-    <mod-box height="{{.Settings.MarginBottom}}"></mod-box>
+    <mod-box h="{{.Settings.MarginBottom}}"></mod-box>
   </body>
   <div class="bg" style="{{.Settings.Background | unsafeCSS}}"></div>
   <mod-kit />

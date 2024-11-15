@@ -126,10 +126,7 @@
         lang: 'md',
         content: tags
           .map((t) => {
-            return `<a class="art-tag"
-                    href="posts/tag/${t.name}"
-                    style="background-color: ${t.color};
-                    margin-right: 7px;">${t.name}</a>`;
+            return `<mod-tag i="${t.id}" color="${t.color}">${t.name}</mod-tag> `;
           })
           .join('')
       }
@@ -343,8 +340,5 @@
   :global(.em) {
     border-bottom: 2px solid #ff1493;
     font-style: normal;
-  }
-  :global(.content a:hover) {
-    text-decoration: underline;
   }
 </style>

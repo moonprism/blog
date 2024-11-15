@@ -1,10 +1,10 @@
 <svelte:options customElement="mod-box" />
 
 <script>
-  export let height = '';
+  export let h = '';
 </script>
 
-<div style="height: {height}px"></div>
+<div style="height: {h}px"></div>
 
 <style>
 @media (max-width: 768px) {

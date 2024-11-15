@@ -9,8 +9,7 @@
   </head>
   <body class="flex flex-col items-center">
     <nav>
-      {{range .Pages}}
-      <a href="/{{.}}">{{.}}</a>
+      {{range .Pages}}<a href="/{{.}}">{{.}}</a>
       {{end}}
     </nav>
     <div class="content">
@@ -18,7 +17,7 @@
         <div class="markdown-body">{{.Article.ArticleContent.HTML | unsafeHTML}}</div>
       </div>
     </div>
-    <mod-box height="{{.Settings.MarginBottom}}"></mod-box>
+    <mod-box h="{{.Settings.MarginBottom}}"></mod-box>
   </body>
   <div class="bg" style="{{.Settings.Background | unsafeCSS}}"></div>
   <mod-kit />

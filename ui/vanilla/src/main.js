@@ -24,21 +24,6 @@ if (savedTheme) {
   }
 }
 
-// 标签:hover动画，(用js实现会有一种不流畅的美感
-document.querySelectorAll('.art > .art-item > .anno').forEach((anno) => {
-  anno.querySelectorAll('.art-tag').forEach((a) => {
-    a.addEventListener('mouseover', () => {
-      a.style.color = a.style.borderColor = a.style.backgroundColor;
-      a.style.backgroundColor = 'var(--background)';
-    });
-    a.addEventListener('mouseout', () => {
-      a.style.backgroundColor = a.style.color;
-      a.style.color = 'white';
-      a.style.borderColor = 'var(--background)';
-    });
-  });
-});
-
 // Links 页面随机排序等处理
 /**
  * 获取两元素之间的所有元素

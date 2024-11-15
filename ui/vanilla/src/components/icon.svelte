@@ -1,12 +1,12 @@
 <svelte:options customElement="mod-icon" />
 
 <script>
-  export let id = '';
+  export let name = '';
 </script>
 
-{#if id === 'date'}
+{#if name === 'date'}
   <svg class="icon"><use href="#icon-date" /></svg>
-{:else if id === 'tag'}
+{:else if name === 'tag'}
   <svg class="icon"><use href="#icon-tag" /></svg>
 {/if}
 

@@ -37,7 +37,7 @@ func Serve(app *core.App) error {
 	r.Route("/", func(r chi.Router) {
 		r.Get("/", articlePageListRoute(app))
 		r.Get("/posts", articlePageListRoute(app))
-		r.Get("/posts/tag/{tagName}", articlePageListRoute(app))
+		r.Get("/posts/tag/{id}", articlePageListRoute(app))
 		r.Get("/post/{id}", articlePageDetailRoute(app))
 		r.Get("/comments/{articleID}", commentPageListRoute(app))
 		r.Get("/gists", gistsPageRoute(app))

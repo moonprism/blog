@@ -175,7 +175,7 @@
                 </HoverCard.Trigger>
                 <HoverCard.Content class="w-auto">
                   {#if $vform.image !== ''}
-                    <TableRowImage src={$vform.image}></TableRowImage>
+                    <TableRowImage class="max-h-[350px]" src={$vform.image}></TableRowImage>
                   {:else}
                     <ImageOff class="h-4 w-4"></ImageOff>
                   {/if}
