@@ -1,11 +1,14 @@
-//go:build embed
+//go:build !embed
 
 package ui
 
 import (
 	"embed"
+	"errors"
 	"io/fs"
 )
+
+// 默认不带admin前端的静态文件
 
 //go:embed vanilla/dist/*
 var vanillaDistFiles embed.FS
@@ -15,9 +18,6 @@ func GetVanillaEmbedFS() fs.FS {
 	return staticFs
 }
 
-//go:embed admin/build/*
-var adminDistFiles embed.FS
-
 func ReadAdminDistFile(name string) ([]byte, error) {
-	return adminDistFiles.ReadFile("admin/build/" + name)
+	return nil, errors.New("nombed")
 }

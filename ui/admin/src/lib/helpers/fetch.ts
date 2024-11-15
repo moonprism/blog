@@ -4,11 +4,18 @@ import toast from '$lib/helpers/toast'
 import { PUBLIC_API_ADDR, PUBLIC_MOCK_MODE } from '$env/static/public'
 import { getJwt } from './jwt'
 import { writable } from 'svelte/store'
-import { apiData } from '$src/mock'
 
 const host = PUBLIC_API_ADDR
 
 export const isMockMode = PUBLIC_MOCK_MODE === 'true'
+
+// 编译时动态加载mock文件
+let fakeApiData = {}
+if (isMockMode) {
+  import('$src/mock').then((module) => {
+    fakeApiData = module.apiData
+  })
+}
 
 export const isExternalLink = (link: string) => {
   return link.startsWith('data') || link.startsWith('http')
@@ -66,11 +73,11 @@ const request = async (path: string, method: string, data?: unknown): Promise<Re
           const action = modules[0] === 'article' ? 'detail' : modules[1]
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
-          fakeData = apiData[modules[0]][action]
+          fakeData = fakeApiData[modules[0]][action]
         } else {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-expect-error
-          fakeData = apiData[ro].list
+          fakeData = fakeApiData[ro].list
         }
         break
       case 'POST':

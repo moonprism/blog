@@ -26,9 +26,7 @@ func newORM(driver string, source string, ftsSource string) (o *orm, err error) 
 			Logger: logger.Default.LogMode(logger.Info),
 		})
 	case "sqlite":
-		o.OrmClient, err = gorm.Open(sqlite.Open(source), &gorm.Config{
-			Logger: logger.Default.LogMode(logger.Info),
-		})
+		o.OrmClient, err = gorm.Open(sqlite.Open(source), &gorm.Config{})
 	default:
 		err = errors.New("the Driver is not supported")
 	}
@@ -36,7 +34,7 @@ func newORM(driver string, source string, ftsSource string) (o *orm, err error) 
 	sql.Register("sqlite3_simple",
 		&sqlite3.SQLiteDriver{
 			Extensions: []string{
-				"libsimple/libsimple",
+				"dict/libsimple",
 			},
 		},
 	)

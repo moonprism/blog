@@ -40,7 +40,7 @@ li {
 }
 
 .dark {
-  --background: #181a1b;
+  --background: rgba(0,0,0,0.75);
   --foreground: rgb(205, 201, 194);
   --primary: #eee;
   --border: rgba(107, 99, 88, 0.2);

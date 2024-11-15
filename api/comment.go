@@ -266,6 +266,9 @@ func (api *commentApi) delete(w http.ResponseWriter, r *http.Request) {
 	core.P(err)
 	comment := new(models.Comment)
 	comment.ID = uint(id)
+	api.O.First(&comment)
+	// 刷新缓存
+	api.Cache.Del(getCommentIndexCacheKey(int(comment.ArticleID)))
 	api.O.Delete(&comment)
 	core.P(err)
 	api.JSON(w, id)

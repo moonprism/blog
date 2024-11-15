@@ -15,7 +15,7 @@ const config = {
       fallback: '404.html'
     }),
     paths: {
-      base: process.env.NODE_ENV == 'gh_pages' ? '/blog/demo' : ''
+      base: process.env.NODE_ENV == 'gh_pages' ? '/blog/demo' : '/404'
     },
     alias: {
       '@/*': './src/lib/*',

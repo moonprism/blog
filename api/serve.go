@@ -2,6 +2,8 @@ package api
 
 import (
 	"net/http"
+	"path/filepath"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -12,7 +14,9 @@ import (
 
 func Serve(app *core.App) error {
 	r := chi.NewRouter()
-	r.Use(middleware.Logger)
+	if app.IsDev() {
+		r.Use(middleware.Logger)
+	}
 	r.Use(m.Recoverer)
 	// https://go-chi.io/#/pages/middleware?id=realip
 	r.Use(middleware.RealIP)
@@ -20,6 +24,26 @@ func Serve(app *core.App) error {
 
 	vanillaFileServer := http.FileServer(http.FS(ui.GetVanillaEmbedFS()))
 	r.Handle("/v/*", http.StripPrefix("/v", vanillaFileServer))
+
+	r.Get("/404/*", func(w http.ResponseWriter, r *http.Request) {
+		filePath := chi.URLParam(r, "*")
+		data, err := ui.ReadAdminDistFile(filePath)
+		if err != nil {
+			// 如果文件不存在，返回自定义 404 页面
+			data, err = ui.ReadAdminDistFile("404.html")
+			core.P(err)
+		}
+		ext := strings.ToLower(strings.TrimPrefix(filepath.Ext(filePath), "."))
+		switch ext {
+		case "css":
+			w.Header().Set("Content-Type", "text/css")
+		case "js":
+			w.Header().Set("Content-Type", "application/javascript")
+		default:
+			w.Header().Set("Content-Type", "text/html")
+		}
+		w.Write(data)
+	})
 
 	r.Route("/api", func(r chi.Router) {
 		r.Use(m.JsonResponse)
