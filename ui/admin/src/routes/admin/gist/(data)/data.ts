@@ -1,8 +1,8 @@
 import type { Gist, GistLangGroupInfo } from '$src/types/stream'
-import { writable } from 'svelte/store'
+import { get, writable } from 'svelte/store'
 import type { Option } from '$src/types/table'
 import { createRender } from 'svelte-headless-table'
-import { fet } from '@/helpers/fetch'
+import { fet, isMockMode } from '@/helpers/fetch'
 import type { SvelteComponent } from 'svelte'
 import CountFilter from '@/components/blocks/cell/count-filter.svelte'
 import Form from '../(components)/form.svelte'
@@ -33,6 +33,9 @@ initGroupInfo()
 
 export const searchUrlQuery = writable('')
 export function initTableData(q = '') {
+  if (isMockMode && get(tableData).length !== 0) {
+    return
+  }
   fet.get(`gist?q=${q}`).then((respoi) => {
     if (respoi.ok) {
       // 后端修改了数据结构

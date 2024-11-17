@@ -222,7 +222,7 @@
   .form-field-error {
     text-align: right;
     font-size: 0.8rem;
-    color: hsl(var(--destructive));
+    color: hsl(0 72.2% 50.6%);
   }
   .form-field input {
     flex: 1;
@@ -304,6 +304,7 @@
     cursor: pointer;
     background-color: var(--background);
     color: var(--foreground);
+    font-family: var(--ui-font);
   }
   .form-button-meme {
     padding: 3px 5px;

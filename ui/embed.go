@@ -7,10 +7,20 @@ import (
 	"io/fs"
 )
 
+// -tags embed 编译出单个可执行文件用于开发测试
+
+//go:embed vanilla/dist/tmpl/*
+var vanillaTmplFiles embed.FS
+
+func GetVanillaTmplFS() fs.FS {
+	staticFs, _ := fs.Sub(vanillaTmplFiles, "vanilla/dist/tmpl")
+	return staticFs
+}
+
 //go:embed vanilla/dist/*
 var vanillaDistFiles embed.FS
 
-func GetVanillaEmbedFS() fs.FS {
+func GetVanillaDistFS() fs.FS {
 	staticFs, _ := fs.Sub(vanillaDistFiles, "vanilla/dist")
 	return staticFs
 }

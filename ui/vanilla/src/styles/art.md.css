@@ -173,13 +173,7 @@
   padding: 0;
   margin: 0;
   color: #e1e4e8;
-  font:
-    1rem Consolas,
-    'Liberation Mono',
-    Menlo,
-    Courier,
-    'Microsoft Yahei Light',
-    monospace;
+  font-size: 1rem;
 }
 .art .markdown-body table {
   margin: 1.5rem 0.5rem;

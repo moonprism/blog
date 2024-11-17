@@ -1,10 +1,10 @@
 package core
 
 import (
-	"context"
+	// "context"
 	"time"
 
-	"github.com/redis/go-redis/v9"
+	// "github.com/redis/go-redis/v9"
 
 	localCache "github.com/moonprism/blog/core/pkg/cache"
 )
@@ -39,6 +39,9 @@ func NewCache(addr string) (cache Cache, err error) {
 	*/
 }
 
+// RedisCache 虽然实现了 Cache 接口，但只返回 string 类型
+// 或许以后会用到，现在为了精简编译大小先注释
+/*
 type redisCache struct {
 	rdb *redis.Client
 	ctx context.Context
@@ -64,3 +67,4 @@ func (c *redisCache) TTL(key string) time.Duration {
 func (c *redisCache) Del(key string) bool {
 	return c.rdb.Del(c.ctx, key).Err() != nil
 }
+*/

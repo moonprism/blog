@@ -22,8 +22,11 @@ func Serve(app *core.App) error {
 	r.Use(middleware.RealIP)
 	//r.Use(m.Delay)
 
-	vanillaFileServer := http.FileServer(http.FS(ui.GetVanillaEmbedFS()))
-	r.Handle("/v/*", http.StripPrefix("/v", vanillaFileServer))
+	vanillaStaticFS := ui.GetVanillaDistFS()
+	if vanillaStaticFS != nil {
+		vanillaFileServer := http.FileServer(http.FS(vanillaStaticFS))
+		r.Handle("/v/*", http.StripPrefix("/v", vanillaFileServer))
+	}
 
 	r.Get("/404/*", func(w http.ResponseWriter, r *http.Request) {
 		filePath := chi.URLParam(r, "*")

@@ -4,9 +4,10 @@
   import { openForm, tableData } from './(data)/data'
   import { RefreshCcw } from 'lucide-svelte'
   import { renderMD } from '../article/write/[[id]]/(data)/data'
-  import { fet } from '@/helpers/fetch'
+  import { fet, isMockMode } from '@/helpers/fetch'
   import toast from '$lib/helpers/toast'
   import Button from '@/components/ui/button/button.svelte'
+  import { onMount } from 'svelte'
 
   let syncCount = 0
   let successCount = 0
@@ -14,7 +15,7 @@
 
   async function render(id: number, text: string) {
     const html = await renderMD(text)
-    const putRes = await fet.put(`gist/${id}`, { output: {html} })
+    const putRes = await fet.put(`gist/${id}`, { output: { html } })
     if (!putRes.ok) {
       return
     }
@@ -28,7 +29,24 @@
       successCount = 0
       isRequest = false
       $tableData = $tableData
-      toast.success(`同步完成 ${syncCount} 条`)
+      if (!isMockMode) {
+        toast.success(`同步完成 ${syncCount} 条`)
+      }
+    }
+  }
+
+  // 精简mock数据
+  let once = true
+  const renderMockData = () => {
+    if (isMockMode && once) {
+      sync()
+      once = false
+    }
+  }
+
+  $: {
+    if ($tableData.length > 0) {
+      renderMockData()
     }
   }
 

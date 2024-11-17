@@ -32,7 +32,7 @@ export default [
         targets: [
           {
             src: 'templates/*.html',
-            dest: 'dist',
+            dest: 'dist/tmpl',
             transform: (contents, filename) => contents.toString().replaceAll('{hash}', hash)
           },
           {

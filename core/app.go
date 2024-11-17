@@ -84,7 +84,7 @@ func (app *App) InitTokenAuth() {
 
 func (app *App) InitTmpl() error {
 	app.TmplManager = NewTmplManager("vanilla")
-	return app.TmplManager.RegistFS(ui.GetVanillaEmbedFS())
+	return app.TmplManager.RegistFS(ui.GetVanillaTmplFS())
 }
 
 func (app *App) InitValidator() {

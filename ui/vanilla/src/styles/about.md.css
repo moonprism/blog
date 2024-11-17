@@ -1,5 +1,5 @@
 .about .markdown-body {
-  margin: 15px 12px 40px;
+  margin: 15px 12px 43px;
 }
 .about .markdown-body h1 {
   display: flex;
@@ -20,5 +20,5 @@
   font-weight: 400;
 }
 .about .markdown-body blockquote {
-  border-left: 3px solid #4d89a5
+  border-left: 3px solid #2e2a53
 }

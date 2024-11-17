@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "generate:mock-import": "",
-    "dev-pages": "NODE_ENV=gh_pages vite dev",
-    "build-pages": "NODE_ENV=gh_pages vite build",
+    "dev-pages": "PUBLIC_MOCK_MODE=true NODE_ENV=gh_pages vite dev",
+    "build-pages": "PUBLIC_MOCK_MODE=true NODE_ENV=gh_pages vite build",
+    "build-pro": "PUBLIC_MOCK_MODE=false PUBLIC_API_ADDR='/api/' vite build",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",

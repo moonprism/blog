@@ -5,12 +5,8 @@ import './styles/link.md.css';
 import './styles/about.md.css';
 import './styles/wind.css';
 
-// 检查用户的系统主题偏好
-const userPrefersDark =
-  window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-// 尝试从 localStorage 中加载用户设置的主题，如果没有则根据系统偏好设置
+// 设置主题
 const savedTheme = localStorage.getItem('theme');
-
 // 如果用户之前设置了主题，则使用该主题，否则使用系统偏好
 if (savedTheme) {
   if (savedTheme === 'dark') {
@@ -18,11 +14,14 @@ if (savedTheme) {
   } else {
     document.body.classList.remove('dark');
   }
-} else {
+} /* else {
+  // 检查用户的系统主题偏好
+  const userPrefersDark =
+    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   if (userPrefersDark) {
     document.body.classList.add('dark');
   }
-}
+}*/
 
 // Links 页面随机排序等处理
 /**
@@ -46,20 +45,18 @@ function getElementsBetween(el1, el2, tagName = '') {
   return elements;
 }
 
+// License: MIT. Made by halfmage: https://github.com/halfmage/majesticons
 const heartSvg = `
-<?xml version="1.0" encoding="utf-8"?>
-<!-- License: MIT. Made by halfmage: https://github.com/halfmage/majesticons -->
 <svg width="21px" height="21px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#e5404f" stroke="#e5404f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 4c-3.2 0-5 2.667-5 4 0-1.333-1.8-4-5-4S3 6.667 3 8c0 7 9 12 9 12s9-5 9-12c0-1.333-.8-4-4-4z"/></svg>
 `;
 
+// License: PD. Made by CFPB: https://github.com/cfpb/design-system
 const starSvg = `
-<?xml version="1.0" encoding="utf-8"?>
-<!-- License: PD. Made by CFPB: https://github.com/cfpb/design-system -->
 <svg fill="#FFAC33" width="18px" height="18px" viewBox="-2 0 19 19" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg"><path d="m12.673 10.779.798 4.02c.221 1.11-.407 1.566-1.395 1.013L8.5 13.81l-3.576 2.002c-.988.553-1.616.097-1.395-1.013l.397-2.001.401-2.02-1.51-1.397-1.498-1.385c-.832-.769-.592-1.507.532-1.64l2.026-.24 2.044-.242 1.717-3.722c.474-1.028 1.25-1.028 1.724 0l1.717 3.722 2.044.242 2.026.24c1.124.133 1.364.871.533 1.64L14.184 9.38z"/></svg>
 `;
 
+// License: CC Attribution. Made by Muhammad Ridlo: mailto:m.ridlo@gmail.com
 const fishcakeSvg = `
-<!-- License: CC Attribution. Made by Muhammad Ridlo: mailto:m.ridlo@gmail.com -->
 <svg
   width="29px"
   height="29px"
@@ -125,6 +122,9 @@ if (linkHeadingEl) {
   boardHeadingEl.insertAdjacentHTML('afterbegin', fishcakeSvg);
   boardHeadingEl.style.fontSize = '17px';
 }
+
+// 当link页面markdown带有单独的code时随机排序
+// `🌱 random seed:` 在末尾附加 seed
 const seedEl = document.querySelector('.link .markdown-body > p > code');
 if (seedEl) {
   // 随机排序
@@ -143,6 +143,6 @@ if (seedEl) {
     const j = (seed * hashStringToInt(v.innerText)) % blockquoteEls.length;
     [blockquoteEls[j].innerHTML, v.innerHTML] = [v.innerHTML, blockquoteEls[j].innerHTML];
   });
-  window.history.pushState({}, 0, '?' + seed);
+  window.history.pushState({}, 0, '?' + seed); // 改变url
   seedEl.innerHTML += `<span style="font-size:.95em;">${seed}</span>`;
 }

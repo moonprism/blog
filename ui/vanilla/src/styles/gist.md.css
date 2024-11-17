@@ -3,6 +3,10 @@
   --code-bg-color: rgba(0, 0, 0, 0.04);
 }
 
+.gist a:hover{
+  text-decoration: underline;
+}
+
 .gist .markdown-body {
   overflow: auto;
 }
@@ -14,15 +18,7 @@
 }
 
 .gist .markdown-body code {
-  font:
-    14px Consolas,
-    'Liberation Mono',
-    Menlo,
-    Courier,
-    PingFang SC,
-    Hiragino Sans GB,
-    Microsoft YaHei,
-    monospace;
+  font-size: 14px;
 }
 .gist .markdown-body code:not(pre code) {
   padding: 2px 5px;

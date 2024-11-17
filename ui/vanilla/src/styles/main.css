@@ -22,7 +22,7 @@ li {
 }
 
 :root {
-  --art-min-w: 755px;
+  --content-w: 755px;
 
   --background: #fafbfc;
   --foreground: rgb(31 41 55);
@@ -33,22 +33,23 @@ li {
   --border: #e5e7eb;
   --outline: rgba(50, 50, 50, 0.3);
 
-  --gist-icon-1: #33363f;
-  --gist-icon-2: #363853;
+  --ui-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', 'Liberation Sans', sans-serif;
+}
 
-  --destructive: 0 72.2% 50.6%;
+@media (min-width: 1500px) {
+  :root {
+    --content-w: 815px;
+  }
 }
 
 .dark {
-  --background: rgba(0,0,0,0.75);
+  --background: rgba(0, 0, 0, 0.75);
   --foreground: rgb(205, 201, 194);
   --primary: #eee;
   --border: rgba(107, 99, 88, 0.2);
   /* TODO 夜间模式 */
   --outline: #aaa;
-
-  --gist-icon-1: var(--foreground);
-  --gist-icon-2: var(--foreground);
 }
 
 .dark .carta-light,
@@ -81,8 +82,11 @@ html,
 body {
   font-size: 14px;
   scroll-behavior: smooth;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', 'Liberation Sans', sans-serif;
+  font-family: var(--ui-font);
+}
+
+code {
+  font-family: 'Fira Code', Consolas, 'Courier New', monospace;
 }
 
 .bg {
@@ -104,7 +108,7 @@ nav {
   margin: 40px 0 37px;
   height: 40px;
   line-height: 40px;
-  width: var(--art-min-w);
+  width: var(--content-w);
   max-width: 100%;
   background-color: var(--background);
   border-radius: 3px;
@@ -153,7 +157,7 @@ nav a:hover {
 }
 
 .content {
-  width: var(--art-min-w);
+  width: var(--content-w);
   max-width: 100%;
   background-color: var(--background);
   border-radius: 3px;
