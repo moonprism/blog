@@ -83,27 +83,42 @@ func NewAdminCommand(app *core.App) *cli.Command {
 					if err := app.O.FtsCreateTable("article"); err != nil {
 						return err
 					}
-					var gists []*models.Gist
-					if err := app.O.Find(&gists).Error; err != nil {
+					// 初始化gists查询
+					err := app.O.Model(&models.Gist{}).
+						FindInBatches(&models.Gist{}, 20, func(tx *gorm.DB, batch int) error {
+							var gists []*models.Gist
+							if err := tx.Find(&gists).Error; err != nil {
+								return err
+							}
+							for _, g := range gists {
+								if err := app.O.FtsInsert("gist", g.ID, models.Gist2TextPoint(g)); err != nil {
+									return err
+								}
+							}
+							return nil
+						}).Error
+					if err != nil {
 						return err
 					}
-					for _, v := range gists {
-						if err := app.O.FtsInsert("gist", v.ID, models.Gist2TextPoint(v)); err != nil {
-							return err
-						}
-					}
-					err := app.O.Model(&models.Article{}).
-						FindInBatches(&models.Article{}, 20, func(tx *gorm.DB, batch int) error {
+					// 初始化文章查询
+					err = app.O.Model(&models.Article{}).
+						FindInBatches(&models.Article{}, 10, func(tx *gorm.DB, batch int) error {
 							var articles []*models.Article
 							err := tx.Preload("ArticleContent", func(db *gorm.DB) *gorm.DB {
 								return db.Omit("html")
 							}).Find(&articles).Error
+							if err != nil {
+								return err
+							}
 							for _, art := range articles {
+								if art.Status != models.ArticleStatusPublished {
+									continue
+								}
 								if err := app.O.FtsInsert("article", art.ID, models.Art2TextPoint(art)); err != nil {
 									return err
 								}
 							}
-							return err
+							return nil
 						}).Error
 					return err
 				},

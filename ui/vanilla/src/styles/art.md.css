@@ -139,18 +139,10 @@
 .art .markdown-body br {
 }
 .art .markdown-body code {
+  font-size: 14px;
   overflow: auto;
   word-wrap: break-word;
-  font:
-    1rem Consolas,
-    'Liberation Mono',
-    Menlo,
-    Courier,
-    PingFang SC,
-    Hiragino Sans GB,
-    Microsoft YaHei,
-    monospace;
-  padding: 0.2rem 0.4rem 0.1rem;
+  padding: 1px 3px;
   border-radius: 3px;
   margin: 0 0.2rem;
   color: var(--code-color);

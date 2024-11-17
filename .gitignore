@@ -8,4 +8,5 @@ test.toml
 libsimple*
 dict
 
-blog
+blog*
+www*

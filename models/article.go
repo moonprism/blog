@@ -15,6 +15,11 @@ type Article struct {
 	Tags           []Tag           `gorm:"many2many:article_tags" json:"tags"`
 }
 
+const (
+	ArticleStatusDraft     = 0
+	ArticleStatusPublished = 1
+)
+
 type ArticleContent struct {
 	ArticleID uint   `gorm:"primaryKey" json:"-"`
 	Text      string `gorm:"type:text;notnull;" json:"text"`

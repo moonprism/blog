@@ -37,7 +37,7 @@ li {
     'Noto Sans', 'Liberation Sans', sans-serif;
 }
 
-@media (min-width: 1500px) {
+@media (min-width: 1600px) {
   :root {
     --content-w: 815px;
   }

@@ -181,6 +181,28 @@ func (api *articleApi) update(w http.ResponseWriter, r *http.Request) {
 			art.ArticleContent = content
 			err = api.O.FtsUpdate("article", art.ID, models.Art2TextPoint(art))
 		}
+		if v, ok := data["status"]; ok {
+			_ = api.O.FtsDelete("article", uint(id))
+			if uint(v.(float64)) == models.ArticleStatusPublished {
+				art := new(models.Article)
+				art.ID = uint(id)
+				err = tx.First(art).Error
+				if err != nil {
+					return err
+				}
+				art.ArticleContent = &models.ArticleContent{
+					ArticleID: art.ID,
+				}
+				err = tx.First(art.ArticleContent).Error
+				if err != nil {
+					return err
+				}
+				err = api.O.FtsInsert("article", art.ID, models.Art2TextPoint(art))
+				if err != nil {
+					return err
+				}
+			}
+		}
 		if v, ok := data["tags"]; ok {
 			tags := v.([]interface{})
 			tx.Where("article_id = ?", id).Delete(new(models.ArticleTags))
@@ -236,7 +258,7 @@ func articlePageListRoute(app *core.App) func(w http.ResponseWriter, r *http.Req
 			core.P(err)
 		}
 		var articles []*models.Article
-		mo := app.O.Model(&models.Article{}).Where("status = ?", 1)
+		mo := app.O.Model(&models.Article{}).Where("status = ?", models.ArticleStatusPublished)
 		var tag models.Tag
 		tagIdParam := chi.URLParam(r, "id")
 		if tagIdParam != "" {
@@ -288,6 +310,9 @@ func articlePageDetailRoute(app *core.App) func(w http.ResponseWriter, r *http.R
 			First(article, id).
 			Error
 		core.P(err)
+		if article.Status != models.ArticleStatusPublished {
+			return
+		}
 		err = app.HTML(w, "article_detail", &articlePageDetailData{
 			AppSettings: getAppSettings(app),
 			Article:     article,
