@@ -72,4 +72,10 @@
       opacity: 1;
     }
   }
+  @media (max-width: 768px) {
+    .arrow {
+      right: calc(50% + -11px);
+      border: 1px solid var(--border);
+    }
+  }
 </style>

@@ -84,9 +84,14 @@ body {
   scroll-behavior: smooth;
   font-family: var(--ui-font);
 }
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 code {
-  font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+  font-family: 'Fira Code', Consolas, 'Liberation Mono', monospace;
 }
 
 .bg {
@@ -291,5 +296,8 @@ nav a:hover {
   }
   .bg {
     display: none;
+  }
+  .link blockquote a em {
+    min-width: 90px !important;
   }
 }

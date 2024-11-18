@@ -365,4 +365,12 @@
     background-color: var(--foreground);
     color: var(--background);
   }
+  @media (max-width: 768px) {
+    .main-comment-form {
+      padding: 40px 10px 10px;
+    }
+    .board {
+      margin: 10px 10px 40px;
+    }
+  }
 </style>

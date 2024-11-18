@@ -34,7 +34,7 @@
   padding: 8px 10px;
   border-radius: 3px;
   tab-size: 4;
-  margin: 5px 0.2em 10px;
+  margin: 5px 0.2rem 10px;
 }
 .gist .markdown-body pre code {
   padding: 0;
@@ -79,7 +79,7 @@
   margin: 8px 0 10px;
   font-size: 15px;
   color: #494949;
-  padding-left: 1.7em;
+  padding-left: 1.7rem;
 }
 .gist .markdown-body ul li,
 .gist .markdown-body ol li {
@@ -91,6 +91,7 @@
 .gist .markdown-body ol ol,
 .gist .markdown-body ol ul {
   margin: 4px 0 5px;
+  padding-left: 1rem;
 }
 
 .gist .markdown-body ul li {
