@@ -31,13 +31,13 @@
   border: 1px solid var(--border);
   overflow: auto;
   word-wrap: break-word;
-  padding: 8px 10px;
   border-radius: 3px;
   tab-size: 4;
   margin: 5px 0.2rem 10px;
 }
 .gist .markdown-body pre code {
-  padding: 0;
+  display: block;
+  padding: 8px 10px;
   overflow: auto;
   word-wrap: break-word;
 }

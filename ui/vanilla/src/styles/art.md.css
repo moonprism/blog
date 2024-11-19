@@ -150,10 +150,7 @@
 }
 .art .markdown-body pre {
   position: relative;
-  overflow: auto;
   word-wrap: break-word;
-  padding: 13px 15px 12px;
-  overflow: auto;
   border-radius: 3px;
   background-color: #0d1117 !important;
   tab-size: 4;
@@ -162,7 +159,8 @@
   margin: 17px 0 24px;
 }
 .art .markdown-body pre code {
-  padding: 0;
+  display: block;
+  padding: 13px 15px 12px;
   margin: 0;
   color: #e1e4e8;
   font-size: 1rem;

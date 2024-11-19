@@ -23,10 +23,10 @@ if (savedTheme) {
   }
 }*/
 
+// 图片缩放，art class 中只要设置了'cursor: zoom-in'将挂载imageModal组件
 const zoomInImages = Array.from(document.querySelectorAll('.art img')).filter((img) => {
   return window.getComputedStyle(img).cursor === 'zoom-in';
 });
-
 if (zoomInImages.length > 0) {
   const imageModal = document.createElement('mod-img-modal');
   document.body.appendChild(imageModal);
@@ -36,6 +36,23 @@ if (zoomInImages.length > 0) {
     });
   });
 }
+
+// 代码copy按钮
+document.querySelectorAll('.art .markdown-body pre').forEach((e) => {
+  const button = document.createElement('button');
+  button.classList.add('copy');
+  button.textContent = 'copy';
+  e.prepend(button);
+  button.addEventListener('click', () => {
+    navigator.clipboard.writeText(e.querySelector('code').innerText);
+    button.textContent = 'copied';
+  });
+  e.addEventListener('mouseenter', () => {
+    if (button.textContent === 'copied') {
+      button.textContent = 'copy';
+    }
+  });
+});
 
 // 适应字体大小
 document.querySelectorAll('.link .markdown-body blockquote').forEach((e) => {

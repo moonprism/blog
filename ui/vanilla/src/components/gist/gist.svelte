@@ -37,7 +37,7 @@
       ? currentKeyword.slice('/p '.length)
       : currentKeyword;
     if (currentSk != keyword) {
-      return
+      return;
     }
     isLoading = false;
     if (source === 'art') {
@@ -172,9 +172,11 @@
     }
     setK(currentKeyword);
   }
+
+  let copyColor = 'var(--foreground)';
 </script>
 
-<div class="gist-main">
+<div class="gist-main" style="--copy-color: {copyColor};">
   <input bind:value={currentKeyword} placeholder="/" />
   <div class="gists">
     {#if showHelpPanel}
@@ -228,16 +230,40 @@
       {#each gists as gist}
         <div class="gist">
           <div class="gist-title">
-            {#if isMdLang(gist.lang)}
+            {#if gist.lang === 'md'}
               <svg><use href="#icon-md" /></svg>
             {:else}
               <svg><use href="#icon-terminal" /></svg>
             {/if}
             {@html gist.title} <span>.{@html gist.lang}</span>
           </div>
-          <div class="gist-content {gist.lang === 'md' ? 'markdown-body' : ''}">
-            {@html gist.content}
-          </div>
+          {#if gist.lang === 'md'}
+            <div class="gist-content markdown-body">
+              {@html gist.content}
+            </div>
+          {:else}
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <div
+              class="gist-content"
+              on:mouseenter={() => {
+                copyColor = 'var(--foreground)';
+              }}
+            >
+              <div class="copy">
+                <button
+                  on:click={(event) => {
+                    let el = event.target.parentElement;
+                    while (!el.classList.contains('gist-content')) {
+                      el = el.parentElement;
+                    }
+                    navigator.clipboard.writeText(el.innerText);
+                    copyColor = 'rgb(34 197 94)';
+                  }}><svg><use href="#icon-copy" /></svg></button
+                >
+              </div>
+              {@html gist.content}
+            </div>
+          {/if}
         </div>
       {/each}
       <div class="next-btn-container">
@@ -267,12 +293,38 @@
   <path d="M12 14H16" stroke="var(--icon-sh-color)" stroke-width="2" stroke-linecap="round" />
 </symbol>
 
+<!-- License: CC Attribution. Made by Amir Baqian: https://dribbble.com/amirbaqian -->
 <symbol id="icon-md" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path
     fill-rule="evenodd"
     clip-rule="evenodd"
     d="M14.9703 3.3437C13.0166 2.88543 10.9834 2.88543 9.02975 3.3437C6.20842 4.00549 4.0055 6.20841 3.3437 9.02975C2.88543 10.9834 2.88543 13.0166 3.3437 14.9703C4.0055 17.7916 6.20842 19.9945 9.02975 20.6563C10.9834 21.1146 13.0166 21.1146 14.9703 20.6563C17.7916 19.9945 19.9945 17.7916 20.6563 14.9703C21.1146 13.0166 21.1146 10.9834 20.6563 9.02975C19.9945 6.20842 17.7916 4.00549 14.9703 3.3437ZM8.55377 9.12812C8.55377 8.8109 8.81093 8.55374 9.12815 8.55374H12.9573C13.2745 8.55374 13.5317 8.8109 13.5317 9.12812C13.5317 9.44533 13.2745 9.70249 12.9573 9.70249H9.12815C8.81093 9.70249 8.55377 9.44533 8.55377 9.12812ZM8.55377 12C8.55377 11.6828 8.81093 11.4256 9.12815 11.4256H14.8719C15.1891 11.4256 15.4462 11.6828 15.4462 12C15.4462 12.3172 15.1891 12.5743 14.8719 12.5743H9.12815C8.81093 12.5743 8.55377 12.3172 8.55377 12ZM8.55377 14.8718C8.55377 14.5546 8.81093 14.2975 9.12815 14.2975H12C12.3172 14.2975 12.5744 14.5546 12.5744 14.8718C12.5744 15.189 12.3172 15.4462 12 15.4462H9.12815C8.81093 15.4462 8.55377 15.189 8.55377 14.8718Z"
     fill="var(--icon-md-color)"
+  />
+</symbol>
+
+<!-- License: PD. Made by Sargam Icons: https://github.com/planetabhi/sargam-icons -->
+<symbol
+  id="icon-copy"
+  width="20px"
+  height="20px"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M18.6 9h-7.2A2.4 2.4 0 0 0 9 11.4v7.2a2.4 2.4 0 0 0 2.4 2.4h7.2a2.4 2.4 0 0 0 2.4-2.4v-7.2A2.4 2.4 0 0 0 18.6 9Z"
+    fill="var(--copy-color)"
+    fill-opacity=".16"
+    stroke="var(--copy-color)"
+    stroke-width="1.5"
+    stroke-miterlimit="10"
+  /><path
+    d="M6 15h-.6C4.07 15 3 13.93 3 12.6V5.4C3 4.07 4.07 3 5.4 3h7.2C13.93 3 15 4.07 15 5.4V6"
+    stroke="var(--copy-color)"
+    stroke-width="1.5"
+    stroke-miterlimit="10"
+    stroke-linecap="round"
   />
 </symbol>
 
@@ -338,6 +390,20 @@
     border-radius: 4px;
     padding: 13px 17px;
     overflow: auto;
+  }
+  .gist-content .copy {
+    position: relative;
+  }
+  .gist-content .copy button {
+    position: absolute;
+    right: -14px;
+    top: -7px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    background-color: unset;
+  }
+  .gist-content:hover .copy button {
+    opacity: 1;
   }
   .next-btn-container {
     text-align: center;
