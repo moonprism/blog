@@ -33,6 +33,12 @@
       return;
     }
     specialGists = await response.json();
+    const currentSk = currentKeyword.startsWith('/p ')
+      ? currentKeyword.slice('/p '.length)
+      : currentKeyword;
+    if (currentSk != keyword) {
+      return
+    }
     isLoading = false;
     if (source === 'art') {
       specialGists.map((g) => {

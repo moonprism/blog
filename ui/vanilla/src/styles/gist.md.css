@@ -127,14 +127,14 @@
 .gist .markdown-body blockquote p {
   margin: 0 !important;
 }
-.gist .markdown-body .admonition:not(.ad-note) .admonition-title {
+.gist .markdown-body .admonition:not(.alert-note) .admonition-title {
   display: none;
 }
-.gist .markdown-body .ad-note .admonition-title {
+.gist .markdown-body .alert-note .admonition-title {
   font-size: 10px;
   color: var(--gray-4);
 }
-.gist .markdown-body .ad-note p:not(.admonition-title) {
+.gist .markdown-body .alert-note p:not(.admonition-title) {
   text-decoration: underline;
   font-style: italic;
 }
@@ -145,22 +145,22 @@
   margin: 3px 0;
 }
 .gist .markdown-body .success,
-.gist .markdown-body .ad-tip {
+.gist .markdown-body .alert-tip {
   background-color: #f0f9eb;
   color: #67c23a;
 }
 .gist .markdown-body .warning,
-.gist .markdown-body .ad-warning {
+.gist .markdown-body .alert-warning {
   background-color: #fdf6ec;
   color: #e6a23c;
 }
 .gist .markdown-body .danger,
-.gist .markdown-body .ad-caution {
+.gist .markdown-body .alert-caution {
   color: #f56c6c;
   background-color: #fef0f0;
 }
 .gist .markdown-body .info,
-.gist .markdown-body .ad-important {
+.gist .markdown-body .alert-important {
   background-color: #f4f4f5;
   color: #909399;
 }

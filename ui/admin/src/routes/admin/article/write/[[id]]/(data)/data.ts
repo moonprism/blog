@@ -14,7 +14,7 @@ const alertTypes = ['NOTE', 'IMPORTANT', 'WARNING', 'TIP', 'CAUTION']
 // https://github.com/myl7/remark-github-beta-blockquote-admonitions
 const remarkAdConfig = {
   classNameMaps: {
-    block: (title: string) => `admonition ad-${title.toLowerCase()}`,
+    block: (title: string) => `admonition alert-${title.toLowerCase()}`,
     title: 'admonition-title'
   },
   titleFilter: alertTypes.map((v) => `[!${v}]`)
