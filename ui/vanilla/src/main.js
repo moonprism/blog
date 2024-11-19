@@ -23,6 +23,30 @@ if (savedTheme) {
   }
 }*/
 
+const zoomInImages = Array.from(document.querySelectorAll('.art img')).filter((img) => {
+  return window.getComputedStyle(img).cursor === 'zoom-in';
+});
+
+if (zoomInImages.length > 0) {
+  const imageModal = document.createElement('mod-img-modal');
+  document.body.appendChild(imageModal);
+  zoomInImages.forEach((img) => {
+    img.addEventListener('click', () => {
+      imageModal.setAttribute('src', img.src);
+    });
+  });
+}
+
+// 适应字体大小
+document.querySelectorAll('.link .markdown-body blockquote').forEach((e) => {
+  const bio = e.querySelector('code');
+  if (bio.innerText.length >= 21) {
+    bio.style.fontSize = '13px';
+  }
+});
+
+//document.body.appendChild(myComponent);
+
 // Links 页面随机排序等处理
 /**
  * 获取两元素之间的所有元素

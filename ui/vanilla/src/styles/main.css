@@ -265,6 +265,13 @@ nav a:hover {
   max-height: 100px;
 }
 
+@media (min-width: 768px) {
+  .art .markdown-body p img,
+  .art .art-item img {
+    cursor: zoom-in;
+  }
+}
+
 /* 移动端处理 */
 @media (max-width: 768px) {
   nav {
