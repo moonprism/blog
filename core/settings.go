@@ -16,6 +16,7 @@ type settings struct {
 	OSS       ossSet
 	Cache     cacheSet
 	System    SystemSet
+	Github    githubSet
 }
 
 type serverSet struct {
@@ -41,6 +42,10 @@ type ossSet struct {
 
 type cacheSet struct {
 	Addr string
+}
+
+type githubSet struct {
+	ImagesApi string
 }
 
 type SystemSet struct {

@@ -8,6 +8,8 @@
   import { onMount, onDestroy } from 'svelte'
   import { isScrollAtBottom, throttle } from '@/helpers/system'
   import { isMockMode, isRequestIn } from '@/helpers/fetch'
+  // 瀑布流组件目前只用于图片所以暂时直接绑定attachment
+  import { loadingImageCount } from '$src/routes/admin/attachment/(data)/data'
 
   export let tableModel: TableViewModel<any, any>
   export let viewOption: ViewOption
@@ -38,7 +40,7 @@
 
   const handleScroll = throttle(() => {
     if (isScrollAtBottom(thParent)) {
-      if (!$isRequestIn && ($hasNextPage || isMockMode)) {
+      if (!$isRequestIn && ($hasNextPage || isMockMode) && $loadingImageCount === 0) {
         $pageSize += 20
       }
     }
@@ -76,7 +78,7 @@
   </MasonryGrid>
 
   <div class="flex justify-center text-base leading-9">
-    {#if $isRequestIn}
+    {#if $isRequestIn || $loadingImageCount !== 0}
       <Loading></Loading>
     {/if}
   </div>

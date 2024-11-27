@@ -9,6 +9,7 @@ func main() {
 	app := core.NewApp()
 	app.AddSubcommand(cmd.NewServeCommand(app))
 	app.AddSubcommand(cmd.NewAdminCommand(app))
+	app.AddSubcommand(cmd.NewDbCommand(app))
 	if err := app.Run(); err != nil {
 		panic(err)
 	}

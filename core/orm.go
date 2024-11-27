@@ -177,6 +177,10 @@ func (o *orm) Save(value interface{}) (tx *gorm.DB) {
 	return o.OrmClient.Save(value)
 }
 
+func (o *orm) FirstOrCreate(dest interface{}, conds ...interface{}) (tx *gorm.DB) {
+	return o.OrmClient.FirstOrCreate(dest, conds...)
+}
+
 func (o *orm) IsRecordNotFoundErr(err error) bool {
 	return err == gorm.ErrRecordNotFound
 }

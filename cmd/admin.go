@@ -3,8 +3,11 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"strings"
+	"sync"
 	"syscall"
 
 	"github.com/moonprism/blog/core"
@@ -20,113 +23,9 @@ func NewAdminCommand(app *core.App) *cli.Command {
 		Name: "admin",
 		Subcommands: []*cli.Command{
 			{
-				Name:  "construct",
-				Usage: "sync database struct",
-				Action: func(ctx *cli.Context) error {
-					if err := app.InitSetting(); err != nil {
-						return err
-					}
-					if err := app.InitORM(); err != nil {
-						return err
-					}
-
-					err := app.O.OrmClient.AutoMigrate(
-						&models.Article{},
-						&models.ArticleContent{},
-						&models.Tag{},
-						&models.ArticleTags{},
-						&models.Attachment{},
-						&models.Gist{},
-						&models.GistOutput{},
-						&models.Comment{},
-						&models.LoginRecord{},
-						&models.User{},
-						&models.Settings{},
-					)
-					if err != nil {
-						return err
-					}
-					if err := app.O.FtsCreateTable("gist"); err != nil {
-						return err
-					}
-					if err := app.O.FtsCreateTable("article"); err != nil {
-						return err
-					}
-					return nil
-					/*
-						if err != nil {
-							return err
-						}
-						// sqlite only
-						_, err = app.O.SqliteFtsDB.Exec(`CREATE TRIGGER after_insert_gist
-							AFTER INSERT ON gists
-							BEGIN
-							    INSERT INTO gists_fts (rowid, title, lang, content) VALUES (NEW.id, NEW.title, NEW.lang, NEW.content);
-							END;
-						`)
-					*/
-				},
-			},
-			{
-				Name:  "sync-fts",
-				Usage: "sync sqlite fts",
-				Action: func(ctx *cli.Context) error {
-					if err := app.InitSetting(); err != nil {
-						return err
-					}
-					if err := app.InitORM(); err != nil {
-						return err
-					}
-					if err := app.O.FtsCreateTable("gist"); err != nil {
-						return err
-					}
-					if err := app.O.FtsCreateTable("article"); err != nil {
-						return err
-					}
-					// 初始化gists查询
-					err := app.O.Model(&models.Gist{}).
-						FindInBatches(&models.Gist{}, 20, func(tx *gorm.DB, batch int) error {
-							var gists []*models.Gist
-							if err := tx.Find(&gists).Error; err != nil {
-								return err
-							}
-							for _, g := range gists {
-								if err := app.O.FtsInsert("gist", g.ID, models.Gist2TextPoint(g)); err != nil {
-									return err
-								}
-							}
-							return nil
-						}).Error
-					if err != nil {
-						return err
-					}
-					// 初始化文章查询
-					err = app.O.Model(&models.Article{}).
-						FindInBatches(&models.Article{}, 10, func(tx *gorm.DB, batch int) error {
-							var articles []*models.Article
-							err := tx.Preload("ArticleContent", func(db *gorm.DB) *gorm.DB {
-								return db.Omit("html")
-							}).Find(&articles).Error
-							if err != nil {
-								return err
-							}
-							for _, art := range articles {
-								if art.Status != models.ArticleStatusPublished {
-									continue
-								}
-								if err := app.O.FtsInsert("article", art.ID, models.Art2TextPoint(art)); err != nil {
-									return err
-								}
-							}
-							return nil
-						}).Error
-					return err
-				},
-			},
-			{
 				Name:  "passwd",
 				Usage: "set account password",
-				Action: func(ctx *cli.Context) error {
+				Action: func(_ *cli.Context) error {
 					if err := app.InitSetting(); err != nil {
 						return err
 					}
@@ -158,38 +57,57 @@ func NewAdminCommand(app *core.App) *cli.Command {
 				},
 			},
 			{
-				Name:  "cmnt-time-fix",
-				Usage: "comment updated time sync from created",
-				Action: func(ctx *cli.Context) error {
+				Name:  "save-attachments",
+				Usage: "download attachments to /attachments dir",
+				Action: func(_ *cli.Context) error {
 					if err := app.InitSetting(); err != nil {
 						return err
 					}
 					if err := app.InitORM(); err != nil {
 						return err
 					}
-
-					var cmnts []*models.Comment
-					if err := app.O.Find(&cmnts).Error; err != nil {
-						return err
-					}
-					for _, v := range cmnts {
-						err := app.O.Model(&v).Updates(map[string]interface{}{"updated": v.Created}).Error
-						if err != nil {
-							return err
-						}
-					}
-					for _, v := range cmnts {
-						if v.RootCommentID == 0 {
-							for _, v2 := range cmnts {
-								if v2.RootCommentID == v.ID {
-									v.Updated = max(v.Updated, v2.Created)
-								}
-							}
-							err := app.O.Model(&v).Updates(map[string]interface{}{"updated": v.Updated}).Error
-							if err != nil {
+					err := app.O.Model(&models.Attachment{}).
+						FindInBatches(&models.Attachment{}, 3, func(tx *gorm.DB, batch int) error {
+							var wg sync.WaitGroup
+							var attachments []*models.Attachment
+							if err := tx.Find(&attachments).Error; err != nil {
 								return err
 							}
-						}
+							for _, attachment := range attachments {
+								wg.Add(1)
+								go func(v *models.Attachment) {
+									defer wg.Done()
+
+									// 发送 GET 请求
+									resp, err := http.Get(app.Settings.System.AttachmentCDN + v.Key)
+									if err != nil {
+										fmt.Println("Error fetching URL:", err)
+										return
+									}
+									defer resp.Body.Close()
+
+									os.Mkdir("attachments", 0755)
+									// 创建目标文件
+									file, err := os.Create("attachments/" + v.Key)
+									if err != nil {
+										fmt.Println("Error creating file:", err)
+										return
+									}
+									// 将响应体复制到文件
+									_, err = io.Copy(file, resp.Body)
+									if err != nil {
+										fmt.Println("Error copying response body to file:", err)
+										return
+									}
+									fmt.Println("Downloaded:", v.Key)
+									defer file.Close()
+								}(attachment)
+							}
+							wg.Wait()
+							return nil
+						}).Error
+					if err != nil {
+						return err
 					}
 					return nil
 				},

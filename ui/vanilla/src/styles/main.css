@@ -278,10 +278,11 @@ nav a:hover {
 }
 .markdown-body h1 img {
   max-height: 100px;
+  cursor: pointer !important;
 }
 
 @media (min-width: 768px) {
-  .art .markdown-body p img,
+  .art .markdown-body img,
   .art .art-item img {
     cursor: zoom-in;
   }

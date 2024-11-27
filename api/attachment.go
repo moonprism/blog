@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -25,6 +26,7 @@ func bindAttachmentApi(app *core.App, r chi.Router) {
 		r.Delete("/{id}", api.delete)
 
 		r.Get("/cred", api.cred)
+		r.Post("/sync", api.syncFromGithub)
 	})
 }
 
@@ -152,4 +154,56 @@ func (api *attachmentApi) cred(w http.ResponseWriter, r *http.Request) {
 		confJson := api.Cache.Get(credKey)
 		w.Write([]byte(confJson.(string)))
 	}
+}
+
+var syncGithubLock core.AtomicLock
+
+type GithubFile struct {
+	Name string `json:"name"`
+}
+
+func (api *attachmentApi) syncFromGithub(w http.ResponseWriter, r *http.Request) {
+	if !syncGithubLock.TryLock() {
+		core.PanicErr("Requests are too frequent", core.ErrCodeFrequentRequests)
+	}
+	defer syncGithubLock.Unlock()
+
+	apiURL := api.Settings.Github.ImagesApi
+	if apiURL == "" {
+		return
+	}
+
+	// 请求gitub api，没有key的话每分钟只能60次哦
+	resp, err := http.Get(apiURL)
+	if err != nil {
+		fmt.Printf("Error sync github making request: %v\n", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		fmt.Printf("Error: sync github received status code %d\n", resp.StatusCode)
+		return
+	}
+
+	// 读取响应体
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Printf("Error: sync github reading response body: %v\n", err)
+		return
+	}
+
+	var data []GithubFile
+
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		fmt.Printf("Error: sync github unmarshalling JSON: %v\n", err)
+		return
+	}
+
+	for _, f := range data {
+		attachment := models.Attachment{Key: f.Name}
+		api.O.FirstOrCreate(&attachment, attachment)
+	}
+	api.JSON(w, len(data))
 }

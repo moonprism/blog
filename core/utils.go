@@ -1,6 +1,9 @@
 package core
 
-import "strconv"
+import (
+	"strconv"
+	"sync/atomic"
+)
 
 // CreateSlice 创建指定长度并初始化为相同值的切片
 func CreateSlice[T int | string | interface{}](length int, value T) []T {
@@ -30,4 +33,17 @@ func AtoISlice(originSlice []string) (strSlice []int, err error) {
 		}
 	}
 	return
+}
+
+// 简单的 CAS 机制锁
+type AtomicLock struct {
+	state int32 // 0 表示未锁定，1 表示锁定
+}
+
+func (l *AtomicLock) TryLock() bool {
+	return atomic.CompareAndSwapInt32(&l.state, 0, 1)
+}
+
+func (l *AtomicLock) Unlock() {
+	atomic.StoreInt32(&l.state, 0)
 }

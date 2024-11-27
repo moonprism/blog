@@ -1,8 +1,9 @@
 package core
 
 const (
-	ErrCodeDefault     = 100
-	ErrCodeLoginFailed = 101
+	ErrCodeDefault          = 100
+	ErrCodeLoginFailed      = 101
+	ErrCodeFrequentRequests = 102
 )
 
 type Err struct {

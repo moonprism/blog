@@ -50,7 +50,8 @@ func getAppSettings(app *core.App) *AppSettings {
 
 type settingsResponse struct {
 	*AppSettings
-	LastLoginTime *string `json:"lastLoginTime"`
+	LastLoginTime  *string `json:"lastLoginTime"`
+	IsGithubImages bool    `json:"isGithubImages"`
 }
 
 func (api *settingApi) detail(w http.ResponseWriter, r *http.Request) {
@@ -60,9 +61,11 @@ func (api *settingApi) detail(w http.ResponseWriter, r *http.Request) {
 	err := api.O.Where(&models.User{Name: username}).First(&user).Error
 	core.P(err)
 	lastLoginTime := time.Unix(int64(user.LastLogin), 0).Format("2006年01月02日 15:04")
+	isGithubImages := api.Settings.Github.ImagesApi != ""
 	api.JSON(w, &settingsResponse{
 		getAppSettings(api.App),
 		&lastLoginTime,
+		isGithubImages,
 	})
 }
 

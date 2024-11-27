@@ -120,4 +120,5 @@ export interface AppConfig {
   background: string
   // px
   marginBottom: number
+  isGithubImages: boolean
 }

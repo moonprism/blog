@@ -54,6 +54,8 @@ export function initGroupInfo() {
   })
 }
 
+export const loadingImageCount = writable(0)
+
 export function getDefaultFormData() {
   return { id: 0, key: '', summary: '' } as Attachment
 }
