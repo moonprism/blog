@@ -22,3 +22,7 @@
 .about .markdown-body blockquote {
   border-left: 3px solid #2e2a53
 }
+
+.about .markdown-body pre code {
+  overflow: hidden;
+}

@@ -53,6 +53,7 @@
   const ids = getUrlIds().join(',');
 
   async function fetchGists(page = 1) {
+    window.scrollTo(0, 0);
     isLoading = true;
     const response = await fetch(`/gists/search?page=${page}&ids=${ids}`);
     if (!response.ok) {
@@ -306,8 +307,8 @@
 <!-- License: PD. Made by Sargam Icons: https://github.com/planetabhi/sargam-icons -->
 <symbol
   id="icon-copy"
-  width="20px"
-  height="20px"
+  width="18px"
+  height="18px"
   viewBox="0 0 24 24"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
@@ -396,7 +397,7 @@
   }
   .gist-content .copy button {
     position: absolute;
-    right: -14px;
+    right: -16px;
     top: -7px;
     opacity: 0;
     transition: opacity 0.2s ease-in-out;

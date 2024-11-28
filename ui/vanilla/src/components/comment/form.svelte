@@ -322,8 +322,6 @@
     display: flex;
     align-items: center;
     padding: 3px 13px;
-    transition: background-color 0.3s ease;
-    transition: color 0.3s ease;
   }
   .form-button-post:hover {
     background-color: var(--foreground);

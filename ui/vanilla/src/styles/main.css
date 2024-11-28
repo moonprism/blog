@@ -22,7 +22,7 @@ li {
 }
 
 :root {
-  --content-w: 755px;
+  --content-w: 735px;
 
   --background: #fafbfc;
   --foreground: rgb(31 41 55);
@@ -40,7 +40,7 @@ li {
 
 @media (min-width: 1600px) {
   :root {
-    --content-w: 815px;
+    --content-w: 800px;
   }
 }
 

@@ -45,7 +45,11 @@
         {{end}}
       </div>
       <div class="flex justify-center">
-        <mod-pager count="{{.Pagination.Count}}" currentPage="{{.Pagination.Page}}" />
+        <mod-pager
+          count="{{.Pagination.Count}}"
+          currentPage="{{.Pagination.Page}}"
+          pageSize="{{.Pagination.PageSize}}"
+        />
       </div>
     </div>
     <mod-box h="{{.Settings.MarginBottom}}"></mod-box>

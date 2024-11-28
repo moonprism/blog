@@ -85,6 +85,7 @@
 .gist .markdown-body ol li {
   margin-bottom: 6px;
   padding-left: 3px;
+  padding-right: 4px;
 }
 .gist .markdown-body ul ol,
 .gist .markdown-body ul ul,

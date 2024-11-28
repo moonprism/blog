@@ -3,18 +3,40 @@
 <script>
   export let count;
   export let currentPage = 1;
+  export let pageSize = 10;
 
-  // 暂时写死分页大小吧
-  const pages = Math.ceil(count / 10);
+  const pages = Math.ceil(count / pageSize);
+  const page = Number(currentPage);
+  let pageList = [];
+  for (let i = 1; i <= pages; i++) {
+    if (page > 3 && i > 1 && i < page - 1) {
+      if (i === page - 2) {
+        pageList.push(0);
+      }
+      if (page >= pages -1 && i === pages - 2) {
+        pageList.push(i)
+      }
+      continue;
+    } else if (page < pages - 1 && i > page + 1 && i < pages) {
+      if ( page <= 2 && i === 3) {
+        pageList.push(i)
+      }
+      if (i === pages - 1) {
+        pageList.push(0);
+      }
+      continue;
+    }
+    pageList.push(i);
+  }
 </script>
 
 {#if pages > 1}
   <div>
-    {#each Array(pages)
-      .fill(0)
-      .map((_, i) => i + 1) as i}
-      {#if i === Number(currentPage)}
+    {#each pageList as i}
+      {#if i === page}
         <span>{i}</span>
+      {:else if i === 0}
+        ...
       {:else}
         <a href="?page={i}">{i}</a>
       {/if}
