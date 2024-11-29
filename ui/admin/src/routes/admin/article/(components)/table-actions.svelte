@@ -42,7 +42,6 @@
         goto(`${$page.url.pathname}/write/${row.id}`)
       }}>编辑内容</DropdownMenu.Item
     >
-    <DropdownMenu.Item>预览</DropdownMenu.Item>
     <DropdownMenu.Item
       on:click={() => {
         alertDialog(`删除文章：${row.title}`).then(() => {
@@ -51,7 +50,6 @@
       }}
     >
       删除
-      <DropdownMenu.Shortcut>⌘⌫</DropdownMenu.Shortcut>
     </DropdownMenu.Item>
   </DropdownMenu.Content>
 </DropdownMenu.Root>

@@ -43,7 +43,6 @@
       }}
     >
       删除
-      <DropdownMenu.Shortcut>⌘⌫</DropdownMenu.Shortcut>
     </DropdownMenu.Item>
   </DropdownMenu.Content>
 </DropdownMenu.Root>

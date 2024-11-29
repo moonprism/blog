@@ -164,7 +164,12 @@
   <FormImageFlow
     open={isOpenImageFlow}
     callback={(v) => {
-      currentInput.insertAt(currentInput.getSelection().start, `![](${v.key})`)
+      const s = `![](${v.key})`
+      const line = currentInput.getSelection()
+      currentInput.insertAt(line.start, s)
+      const newPos = line.end + s.length
+      currentInput.textarea.selectionStart = newPos
+      currentInput.textarea.selectionEnd = newPos
       currentInput.update()
     }}
   ></FormImageFlow>

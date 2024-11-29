@@ -22,7 +22,7 @@ li {
 }
 
 :root {
-  --content-w: 735px;
+  --content-w: 738px;
 
   --background: #fafbfc;
   --foreground: rgb(31 41 55);
@@ -270,6 +270,10 @@ nav a:hover {
 
 .markdown-body pre:hover .copy {
   opacity: 1;
+}
+
+.about .markdown-body {
+  margin: 15px 12px 43px;
 }
 
 /* 纠正特殊页面在post中的显示 */

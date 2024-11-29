@@ -2,7 +2,7 @@
   --code-color: #f04a62;
   --code-bg-color: rgba(0, 0, 0, 0.04);
 
-  --bq-opacity: 0.01;
+  --bq-opacity: 0.02;
   --bq-color: 81, 91, 212;
   --bq-success-color: 150, 193, 32;
   --bq-warning-color: 255, 217, 114;
@@ -15,29 +15,40 @@
   margin-bottom: 5px;
 }
 .art .markdown-body a {
-  margin: 0 0.2rem;
+  margin: 0 0.1rem;
   text-decoration: underline;
   color: #27e;
 }
+.art .markdown-body h2,
+.art .markdown-body h3,
+.art .markdown-body h4 {
+  font-weight: 500;
+  color: var(--primary);
+}
 .art .markdown-body h2 {
-  font-size: 1.4rem;
-  margin: 1.6rem 0 1.1rem;
+  font-size: 22px;
+  margin: 24px 0 15px;
 }
 .art .markdown-body h3 {
-  font-size: 1.1rem;
-  margin: 1.2rem 0 0.6rem;
+  font-size: 19px;
+  margin: 20px 0 10px;
 }
 .art .markdown-body h4 {
-  font-size: 0.9rem;
-  margin: 0.8rem 0 0.3rem;
+  font-size: 17px;
+  margin: 18px 0 8px;
 }
+.art .markdown-body th,
 .art .markdown-body strong,
 .art .markdown-body b {
-  font-size: 14px;
+  font-weight: normal;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--primary);
+  color: var(--primary);
 }
 .art .markdown-body > p {
+  margin: 13.5px 0;
   line-height: 1.75;
-  margin-bottom: 0.95rem;
   font-size: 16px;
 }
 .art .markdown-body > ul,
@@ -91,7 +102,7 @@
 .art .markdown-body blockquote,
 .art .markdown-body .admonition {
   margin: 1rem auto;
-  padding: 0.3rem 0.6rem;
+  padding: 8px;
   line-height: 1.7;
   font-size: 15px;
   border-left: 2.3px solid rgba(var(--bq-color));
@@ -142,9 +153,9 @@
   font-size: 14px;
   overflow: auto;
   word-wrap: break-word;
-  padding: 1px 3px;
+  padding: 2px 4px;
   border-radius: 3px;
-  margin: 0 0.2rem;
+  margin: 0 0.1rem;
   color: var(--code-color);
   background-color: var(--code-bg-color);
 }
