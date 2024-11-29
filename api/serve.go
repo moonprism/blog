@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -22,31 +23,48 @@ func Serve(app *core.App) error {
 	r.Use(middleware.RealIP)
 	//r.Use(m.Delay)
 
-	vanillaStaticFS := ui.GetVanillaDistFS()
-	if vanillaStaticFS != nil {
-		vanillaFileServer := http.FileServer(http.FS(vanillaStaticFS))
-		r.Handle("/v/*", http.StripPrefix("/v", vanillaFileServer))
+	if app.IsDev() {
+		vanillaStaticFS := ui.GetVanillaDistFS()
+		if vanillaStaticFS != nil {
+			// 单个可执行文件专用
+			vanillaFileServer := http.FileServer(http.FS(vanillaStaticFS))
+			r.Handle("/v/*", http.StripPrefix("/v", vanillaFileServer))
+			r.Get("/404/*", func(w http.ResponseWriter, r *http.Request) {
+				filePath := chi.URLParam(r, "*")
+				data, err := ui.ReadAdminDistFile(filePath)
+				if err != nil {
+					// 如果文件不存在，返回自定义 404 页面
+					data, err = ui.ReadAdminDistFile("404.html")
+					core.P(err)
+				}
+				ext := strings.ToLower(strings.TrimPrefix(filepath.Ext(filePath), "."))
+				switch ext {
+				case "css":
+					w.Header().Set("Content-Type", "text/css")
+				case "js":
+					w.Header().Set("Content-Type", "application/javascript")
+				default:
+					w.Header().Set("Content-Type", "text/html")
+				}
+				w.Write(data)
+			})
+		} else {
+			// 直接使用当前目录静态文件
+			staticDir := "./www"
+			r.Handle("/v/*", http.StripPrefix("/v", http.FileServer(http.Dir(filepath.Join(staticDir, "/v")))))
+			r.Get("/404/*", func(w http.ResponseWriter, r *http.Request) {
+				filePath := filepath.Join(staticDir, r.URL.Path)
+				if _, err := os.Stat(filePath); os.IsNotExist(err) {
+					data, err := os.ReadFile(filepath.Join(staticDir, "404/404.html"))
+					core.P(err)
+					w.Header().Set("Content-Type", "text/html")
+					w.Write(data)
+					return
+				}
+				http.ServeFile(w, r, filePath)
+			})
+		}
 	}
-
-	r.Get("/404/*", func(w http.ResponseWriter, r *http.Request) {
-		filePath := chi.URLParam(r, "*")
-		data, err := ui.ReadAdminDistFile(filePath)
-		if err != nil {
-			// 如果文件不存在，返回自定义 404 页面
-			data, err = ui.ReadAdminDistFile("404.html")
-			core.P(err)
-		}
-		ext := strings.ToLower(strings.TrimPrefix(filepath.Ext(filePath), "."))
-		switch ext {
-		case "css":
-			w.Header().Set("Content-Type", "text/css")
-		case "js":
-			w.Header().Set("Content-Type", "application/javascript")
-		default:
-			w.Header().Set("Content-Type", "text/html")
-		}
-		w.Write(data)
-	})
 
 	r.Route("/api", func(r chi.Router) {
 		r.Use(m.JsonResponse)

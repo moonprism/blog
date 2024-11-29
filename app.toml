@@ -2,7 +2,7 @@ isDev = true
 JwtSecret = "2aEtVr"
 
 [System]
-  AttachmentCDN = "https://raw.githubusercontent.com/moonprism/cdn/master/blog_attachments/" #"https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/"
+  AttachmentCDN = "https://raw.githubusercontent.com/moonprism/cdn/master/blog_attachments/"
   TokenExpiryHours = 72
 
 [Server]
@@ -28,4 +28,4 @@ JwtSecret = "2aEtVr"
   # Addr = "localhost:3306"
 
 [Github]
-  imagesApi = "https://api.github.com/repos/moonprism/cdn/contents/blog_attachments"
+  ImagesApi = "https://api.github.com/repos/moonprism/cdn/contents/blog_attachments"

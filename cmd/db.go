@@ -5,7 +5,15 @@ import (
 	"github.com/moonprism/blog/models"
 	"github.com/urfave/cli/v2"
 	"gorm.io/gorm"
+
+	_ "embed"
 )
+
+//go:embed about_tmpl.md
+var aboutTmpl string
+
+//go:embed links_tmpl.md
+var linksTmpl string
 
 func NewDbCommand(app *core.App) *cli.Command {
 	command := &cli.Command{
@@ -35,6 +43,43 @@ func NewDbCommand(app *core.App) *cli.Command {
 						&models.User{},
 						&models.Settings{},
 					)
+
+					var a1 models.Article
+					// 载入默认模板 1: about 2: links
+					if err := app.O.Where("id = ?", 1).Take(&a1).Error; err != nil {
+						if app.O.IsRecordNotFoundErr(err) {
+							a1.ID = 1
+							a1.Title = "About"
+							a1.ArticleContent = &models.ArticleContent{ArticleID: 1, Text: aboutTmpl}
+							app.O.Create(&a1)
+						} else {
+							return err
+						}
+					}
+					var a2 models.Article
+					if err := app.O.Where("id = ?", 2).Take(&a2).Error; err != nil {
+						if app.O.IsRecordNotFoundErr(err) {
+							a2.ID = 2
+							a2.Title = "Links"
+							a2.ArticleContent = &models.ArticleContent{ArticleID: 2, Text: linksTmpl}
+							app.O.Create(&a2)
+						} else {
+							return err
+						}
+					}
+
+					var settings models.Settings
+					if err := app.O.First(&settings).Error; err != nil {
+						if app.O.IsRecordNotFoundErr(err) {
+							settings.Title = "kicoe's Blog"
+							settings.Background = "background-image: url(https://raw.githubusercontent.com/moonprism/cdn/master/blog_attachments/1731659598830_cyijlt.jpg);background-size: cover;"
+							settings.MarginBottom = 337
+							app.O.Create(&settings)
+						} else {
+							return err
+						}
+					}
+
 					if err != nil {
 						return err
 					}

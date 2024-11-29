@@ -37,14 +37,12 @@ test: build_vanilla
 	go run -tags fts5,embed main.go serve
 
 build: build_f build_go
-	@echo "编译 blog 可执行文件 打包前端静态文件 www.tar.gz"
-	mkdir www
-	cp -r ui/vanilla/dist www/v
-	cp -r ui/admin/build www/404
-	tar -zcvf www.tar.gz www
-	rm -r www
-	mkdir blog_sp
-	cp www.tar.gz blog_sp
+	@echo "编译 blog 可执行文件 打包前端静态文件"
+	mkdir -p blog_sp/www
+	cp -r ui/vanilla/dist blog_sp/www/v
+	cp -r ui/admin/build blog_sp/www/404
 	cp $(BIN) blog_sp
+	cp app.toml blog_sp
+	cp -r dict blog_sp/
 	tar -zcvf blog_sp.tar.gz blog_sp
 	rm -r blog_sp
