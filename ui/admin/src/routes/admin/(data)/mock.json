@@ -1,17 +1,18 @@
 {
-  "attachmentCDN": "https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/",
+  "attachmentCDN": "https://raw.githubusercontent.com/moonprism/cdn/master/blog_attachments/",
   "tokenExpiryHours": 72,
   "id": 1,
   "created": 1730800706,
-  "updated": 1731659615,
+  "updated": 1732945337,
   "title": "kicoe's Blog",
-  "background": "background-image: url(https://kicoe-blog.oss-cn-shanghai.aliyuncs.com/1731659598830_cyijlt.jpg);background-size: cover;",
+  "background": "background: linear-gradient( 180deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);",
   "marginBottom": 337,
   "Pages": [
-      "posts",
-      "gists",
-      "links",
-      "about"
+    "posts",
+    "gists",
+    "links",
+    "about"
   ],
-  "lastLoginTime": "2024年11月15日 16:44"
+  "lastLoginTime": "2024年11月30日 13:41",
+  "isGithubImages": false
 }

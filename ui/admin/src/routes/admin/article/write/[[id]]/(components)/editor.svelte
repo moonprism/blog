@@ -168,9 +168,9 @@
       const line = currentInput.getSelection()
       currentInput.insertAt(line.start, s)
       const newPos = line.end + s.length
+      currentInput.update()
       currentInput.textarea.selectionStart = newPos
       currentInput.textarea.selectionEnd = newPos
-      currentInput.update()
     }}
   ></FormImageFlow>
 </div>
