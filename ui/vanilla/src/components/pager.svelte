@@ -5,23 +5,30 @@
   export let currentPage = 1;
   export let pageSize = 10;
 
+  // 总页数
   const pages = Math.ceil(count / pageSize);
+  // 当前页数
   const page = Number(currentPage);
+  /**
+   * @type {Number[]}
+   */
   let pageList = [];
   for (let i = 1; i <= pages; i++) {
     if (page > 3 && i > 1 && i < page - 1) {
       if (i === page - 2) {
+        // 如果当前页数与第一页距离较大，插入省略号
         pageList.push(0);
       }
-      if (page >= pages -1 && i === pages - 2) {
-        pageList.push(i)
+      if (page >= pages - 1 && i === pages - 2) {
+        pageList.push(i);
       }
       continue;
     } else if (page < pages - 1 && i > page + 1 && i < pages) {
-      if ( page <= 2 && i === 3) {
-        pageList.push(i)
+      if (page <= 2 && i === 3) {
+        pageList.push(i);
       }
       if (i === pages - 1) {
+        // 如果当前页数与最后一页距离较大，插入省略号
         pageList.push(0);
       }
       continue;

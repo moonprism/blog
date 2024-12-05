@@ -72,12 +72,6 @@
   fetchGists(1);
 
   let showHelpPanel = false;
-  /**
-   * @param {boolean} show
-   */
-  function help(show = true) {
-    showHelpPanel = show;
-  }
 
   /**
    * 执行自定义命令
@@ -85,7 +79,7 @@
    * @param {...string} args
    */
   function exec(command = '', ...args) {
-    help(false);
+    showHelpPanel = false;
     switch (command) {
       case 'tags':
         execTagsCommand();
@@ -93,9 +87,9 @@
       case 'p':
         const keyword = args.join(' ').trim();
         if (keyword === '') {
-          help();
+          showHelpPanel = true;
         } else {
-          loading();
+          isLoading = true;
           debounceSearch(keyword, 'art');
         }
         break;
@@ -108,7 +102,7 @@
         currentKeyword = '';
         break;
       default:
-        help();
+        showHelpPanel = true;
     }
   }
 
@@ -143,42 +137,35 @@
 
   const debounceSearch = debounce(search, 600);
 
-  function loading() {
-    isLoading = true;
-  }
-
   // 输入为空格时不作处理
   let lastKeyword = '';
-  function setK(k = '') {
-    lastKeyword = k;
-  }
-  function getK() {
-    return lastKeyword;
-  }
-  $: {
+
+  function handleKeywordInput() {
     if (currentKeyword !== '') {
-      if (getK().trim() !== currentKeyword.trim()) {
-        if (currentKeyword.startsWith('/')) {
-          exec(...currentKeyword.slice(1).split(' '));
-        } else {
-          debounceSearch(currentKeyword.trim());
-          loading();
-          help(false);
-        }
+      if (lastKeyword.trim() === currentKeyword.trim()) {
+        lastKeyword = currentKeyword;
+        return;
+      }
+      if (currentKeyword.startsWith('/')) {
+        exec(...currentKeyword.slice(1).split(' '));
+      } else {
+        debounceSearch(currentKeyword.trim());
+        isLoading = true;
+        showHelpPanel = false;
       }
     } else {
       setUrlIds([]);
-      help(false);
+      showHelpPanel = false;
       specialGists = [];
     }
-    setK(currentKeyword);
+    lastKeyword = currentKeyword;
   }
 
   let copyColor = 'var(--foreground)';
 </script>
 
 <div class="gist-main" style="--copy-color: {copyColor};">
-  <input bind:value={currentKeyword} placeholder="/" />
+  <input bind:value={currentKeyword} on:input={handleKeywordInput} placeholder="/" />
   <div class="gists">
     {#if showHelpPanel}
       <div class="gist">

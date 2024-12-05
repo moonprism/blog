@@ -4,7 +4,8 @@
   /**
    * @type {string} 文章ID
    */
-  export let id;
+  let id;
+  export { id as i };
 
   import { timeAgoStr } from '@/utils';
   import CommentForm from './form.svelte';

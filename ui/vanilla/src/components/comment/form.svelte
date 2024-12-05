@@ -182,10 +182,10 @@
       {#if isPostIn}
         <div class="loading"></div>
       {:else if replyName !== ''}
+        回复
         <div class="reply-name">
           @{replyName}
         </div>
-        回复
       {:else}
         发布
       {/if}
