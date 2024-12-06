@@ -2,7 +2,7 @@ FROM archlinux:latest
 
 WORKDIR /app
 
-COPY blog .
+COPY main .
 COPY dict dict
 
-ENTRYPOINT ["./blog"]
+ENTRYPOINT ["./main"]

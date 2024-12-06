@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/mattn/go-sqlite3"
 	"gorm.io/driver/mysql"
@@ -26,7 +27,13 @@ func newORM(driver string, source string, ftsSource string) (o *orm, err error) 
 			Logger: logger.Default.LogMode(logger.Info),
 		})
 	case "sqlite":
-		o.OrmClient, err = gorm.Open(sqlite.Open(source), &gorm.Config{})
+		var sqliteDB *sql.DB
+		sqliteDB, err = sql.Open("sqlite3", source)
+		if err != nil {
+			return
+		}
+		// 使用 GORM 包装原生 *sql.DB
+		o.OrmClient, err = gorm.Open(sqlite.Dialector{Conn: sqliteDB}, &gorm.Config{})
 	default:
 		err = errors.New("the Driver is not supported")
 	}
@@ -34,7 +41,7 @@ func newORM(driver string, source string, ftsSource string) (o *orm, err error) 
 	sql.Register("sqlite3_simple",
 		&sqlite3.SQLiteDriver{
 			Extensions: []string{
-				"dict/libsimple",
+				fmt.Sprintf("dict%clibsimple", os.PathSeparator),
 			},
 		},
 	)

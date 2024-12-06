@@ -72,8 +72,8 @@ func NewDbCommand(app *core.App) *cli.Command {
 					if err := app.O.First(&settings).Error; err != nil {
 						if app.O.IsRecordNotFoundErr(err) {
 							settings.Title = "kicoe's Blog"
-							settings.Background = "background-image: url(https://raw.githubusercontent.com/moonprism/cdn/master/blog_attachments/1731659598830_cyijlt.jpg);background-size: cover;"
-							settings.MarginBottom = 337
+							settings.Background = "background: linear-gradient( 180deg, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);"
+							settings.MarginBottom = 140
 							app.O.Create(&settings)
 						} else {
 							return err
