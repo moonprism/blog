@@ -25,20 +25,45 @@
   font-weight: 500;
   color: var(--primary);
 }
+.art .markdown-body h2::before,
+.art .markdown-body h3::before,
+.art .markdown-body h4::before {
+  margin-left: -15px;
+  margin-right: 2px;
+  content: '#';
+  font-weight: bold;
+  opacity: 0;
+}
+.art .markdown-body h2:hover::before,
+.art .markdown-body h3:hover::before,
+.art .markdown-body h4:hover::before {
+  opacity: 1;
+}
 .art .markdown-body h2 {
   font-size: 22px;
   margin: 24px 0 15px;
+}
+.art .markdown-body h2::before {
+  color: deeppink;
+  font-size: 25px;
 }
 .art .markdown-body h3 {
   font-size: 19px;
   margin: 20px 0 10px;
 }
+.art .markdown-body h3::before {
+  color: hotpink;
+  font-size: 21px;
+}
 .art .markdown-body h4 {
-  font-size: 17px;
+  font-size: 16px;
   margin: 18px 0 8px;
 }
-.art .markdown-body th,
-.art .markdown-body strong,
+.art .markdown-body h4::before {
+  color: pink;
+  font-size: 18px;
+}
+.art .markdown-body strong:not(table strong),
 .art .markdown-body b {
   font-weight: normal;
   text-decoration: underline;

@@ -16,6 +16,9 @@
   font-size: 1.4rem;
   font-weight: 400;
 }
+.about .markdown-body h2::before {
+  display: none;
+}
 .about .markdown-body blockquote {
   border-left: 3px solid #2e2a53
 }
