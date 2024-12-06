@@ -285,6 +285,16 @@ nav a:hover {
   cursor: pointer !important;
 }
 
+.art .markdown-body img,
+.art .art-item img {
+  opacity: 0;
+}
+
+.art .markdown-body img.loaded,
+.art .art-item img.loaded {
+  opacity: 1;
+}
+
 @media (min-width: 768px) {
   .art .markdown-body img,
   .art .art-item img {

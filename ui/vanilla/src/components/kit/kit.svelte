@@ -6,6 +6,7 @@
   import './box.svelte';
   import './icon.svelte';
   import './tag.svelte';
+  import './img-loading.svelte';
 </script>
 
 <BackToTopBtn />

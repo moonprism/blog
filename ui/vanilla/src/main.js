@@ -23,8 +23,9 @@ if (savedTheme) {
   }
 }*/
 
+const images = Array.from(document.querySelectorAll('.art img'));
 // 图片缩放，art class 中只要设置了'cursor: zoom-in'将挂载imageModal组件
-const zoomInImages = Array.from(document.querySelectorAll('.art img')).filter((img) => {
+const zoomInImages = images.filter((img) => {
   return window.getComputedStyle(img).cursor === 'zoom-in';
 });
 if (zoomInImages.length > 0) {
@@ -33,6 +34,30 @@ if (zoomInImages.length > 0) {
   zoomInImages.forEach((img) => {
     img.addEventListener('click', () => {
       imageModal.setAttribute('src', img.src);
+    });
+  });
+}
+// 图片加载动画,class 中设置 opacity: 0
+const transparentImages = images.filter((img) => {
+  return window.getComputedStyle(img).opacity === '0';
+});
+if (transparentImages.length > 0) {
+  transparentImages.forEach((img) => {
+    if (img.complete) {
+      img.classList.add('loaded');
+      return;
+    }
+    const loadingElement = document.createElement('mod-img-loading');
+    // 生成随机颜色
+    loadingElement.color =
+      '#' +
+      Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, '0');
+    img.parentElement.insertBefore(loadingElement, img);
+    img.addEventListener('load', () => {
+      img.classList.add('loaded');
+      img.parentElement.removeChild(loadingElement);
     });
   });
 }

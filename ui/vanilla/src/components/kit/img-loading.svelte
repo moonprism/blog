@@ -1,4 +1,7 @@
+<svelte:options customElement="mod-img-loading" />
+
 <script>
+  // to be continued
   export let color = '#0d92f4';
 </script>
 
@@ -6,11 +9,12 @@
 
 <style>
   div {
-    width: 40px;
-    height: 40px;
-    margin: 100px auto;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
     border-radius: 100%;
-    animation: scaleout 1s infinite ease-in-out;
+    animation: scaleout 1.5s infinite ease-in-out;
   }
   @keyframes scaleout {
     0% {
