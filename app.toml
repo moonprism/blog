@@ -1,5 +1,5 @@
 isDev = true
-JwtSecret = "2aEtVr"
+JwtSecret = "z8xgbmykvNViZkhwZnc1Tr/JnKNqNfbBThPYxiVBLgE="
 
 [System]
   AttachmentCDN = "https://raw.githubusercontent.com/moonprism/cdn/master/blog_attachments/"

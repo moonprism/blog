@@ -8,21 +8,25 @@ BUILD_DIR := ./dist
 # pacman -S mingw-w64-gcc 用于交叉编译 windows cgo
 .PHONY: build
 build: init_dict
-	$(foreach os, $(GOOS), \
-		$(eval s_os := $(word $(shell echo $(os) | awk '{print NR}'), $(SIMPLE_OS))) \
-		$(eval blog_dir := $(BUILD_DIR)/blog-$(os)) \
-		$(eval bin_file := $(if $(filter windows,$(os)), $(BIN).exe, $(BIN))) \
-		$(eval cc := $(if $(filter windows,$(os)), CC=x86_64-w64-mingw32-gcc CGO_ENABLED=1, )) \
-		mkdir -p $(blog_dir)/www; \
-		$(cc) GOOS=$(os) GOARCH=$(GOARCH) go build -tags fts5 -o $(bin_file); \
-		mv $(bin_file) $(blog_dir); \
-		unzip -j $(BUILD_DIR)/libsimple-$(s_os).zip -d $(blog_dir)/dict; \
-		cp -r ui/vanilla/dist $(blog_dir)/www/v; \
-		cp -r ui/admin/build $(blog_dir)/www/404; \
-		cp app.toml $(blog_dir); \
-		(cd $(BUILD_DIR) && tar -zcvf blog-$(os).tar.gz blog-$(os)); \
-		rm -r ./$(blog_dir); \
-	)
+	@paste -d ' ' <(echo $(GOOS) | tr ' ' '\n') <(echo $(SIMPLE_OS) | tr ' ' '\n') | while read goos simple_os; do \
+		dir=$(BUILD_DIR)/blog-$$goos; \
+		mkdir $$dir; \
+		cp app.toml $$dir; \
+		unzip -j $(BUILD_DIR)/libsimple-$$simple_os.zip -d $$dir/dict; \
+		if [ "$$goos" == "windows" ]; then \
+			CC=x86_64-w64-mingw32-gcc CGO_ENABLED=1 GOOS=$$goos GOARCH=$(GOARCH) go build -tags fts5,embed -o $(BIN).exe; \
+			mv $(BIN).exe $$dir; \
+			mv $$dir/dict/simple.dll $$dir/dict/libsimple.dll; \
+		else \
+			GOOS=$$goos GOARCH=$(GOARCH) go build -tags fts5 -o $(BIN); \
+			mv $(BIN) $$dir; \
+			mkdir $$dir/www; \
+			cp -r ui/vanilla/dist $$dir/www/v; \
+			cp -r ui/admin/build $$dir/www/404; \
+		fi; \
+		(cd $(BUILD_DIR) && tar -zcvf blog-$$goos.tar.gz blog-$$goos); \
+		rm -r ./$$dir; \
+	done
 
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
@@ -67,6 +71,6 @@ test: build_vanilla
 	@echo "测试 vanilla"
 	go run -tags fts5,embed main.go serve
 
-docs-dev:
-	@echo "测试文档"
-	(cd docs && npm run docs:dev)
+build_docs:
+	@echo "编译文档"
+	(cd docs && npm run docs:build)

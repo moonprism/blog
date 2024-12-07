@@ -1,1 +1,1 @@
-后台演示地址：<https://moonprism.github.io/blog/demo/login>
+📄 使用指南：<https://moonprism.github.io/blog/docs/>
