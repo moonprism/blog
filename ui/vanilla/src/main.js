@@ -6,22 +6,37 @@ import './styles/about.md.css';
 import './styles/wind.css';
 
 // 设置主题
-const savedTheme = localStorage.getItem('theme');
-// 如果用户之前设置了主题，则使用该主题，否则使用系统偏好
-if (savedTheme) {
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark');
-  } else {
-    document.body.classList.remove('dark');
+document.body.classList.add(localStorage.getItem('theme'));
+
+// sparkle
+// License: MIT. Made by Ionicons: https://github.com/ionic-team/ionicons
+const sparkleSvg = `
+<svg
+  width="20px"
+  height="20px"
+  viewBox="130 -100 500 500"
+  id="icon-sparkle"
+  xmlns="http://www.w3.org/2000/svg"
+  ><polygon
+    points="426.67 117.33 400 48 373.33 117.33 304 144 373.33 170.67 400 240 426.67 170.67 496 144 426.67 117.33"
+    fill="none"
+    stroke="var(--primary)"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="32"
+  /></svg
+>
+`;
+const getRoute = () => {
+  const path = window.location.pathname;
+  const segments = path.split('/').filter(Boolean);
+  return segments[0] || 'posts';
+};
+document.querySelectorAll('nav a').forEach((a) => {
+  if (getRoute() === a.innerText.toLowerCase()) {
+    a.insertAdjacentHTML('afterbegin', sparkleSvg);
   }
-} /* else {
-  // 检查用户的系统主题偏好
-  const userPrefersDark =
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (userPrefersDark) {
-    document.body.classList.add('dark');
-  }
-}*/
+});
 
 const images = Array.from(document.querySelectorAll('.art img'));
 // 图片缩放，art class 中只要设置了'cursor: zoom-in'将挂载imageModal组件
@@ -111,14 +126,20 @@ function getElementsBetween(el1, el2, tagName = '') {
   return elements;
 }
 
-// License: MIT. Made by halfmage: https://github.com/halfmage/majesticons
+// License: PD. Made by Sargam Icons: https://github.com/planetabhi/sargam-icons
 const heartSvg = `
-<svg width="21px" height="21px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none"><path fill="#e5404f" stroke="#e5404f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 4c-3.2 0-5 2.667-5 4 0-1.333-1.8-4-5-4S3 6.667 3 8c0 7 9 12 9 12s9-5 9-12c0-1.333-.8-4-4-4z"/></svg>
+<svg width="19px" height="19px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.696 3C14.652 3 12.887 4.197 12 5.943 11.113 4.197 9.348 3 7.304 3 4.374 3 2 5.457 2 8.481s1.817 5.796 4.165 8.073S12 21 12 21s3.374-2.133 5.835-4.446C20.46 14.088 22 11.514 22 8.481 22 5.448 19.626 3 16.696 3Z" fill="#e5404f" fill-opacity=".9" stroke="#e5404f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 `;
 
-// License: PD. Made by CFPB: https://github.com/cfpb/design-system
+// License: CC Attribution. Made by Benjamin Bely: https://dribbble.com/benbely
 const starSvg = `
-<svg fill="#FFAC33" width="18px" height="18px" viewBox="-2 0 19 19" xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg"><path d="m12.673 10.779.798 4.02c.221 1.11-.407 1.566-1.395 1.013L8.5 13.81l-3.576 2.002c-.988.553-1.616.097-1.395-1.013l.397-2.001.401-2.02-1.51-1.397-1.498-1.385c-.832-.769-.592-1.507.532-1.64l2.026-.24 2.044-.242 1.717-3.722c.474-1.028 1.25-1.028 1.724 0l1.717 3.722 2.044.242 2.026.24c1.124.133 1.364.871.533 1.64L14.184 9.38z"/></svg>
+<svg width="16px" height="16px" viewBox="0 -2.12 95.444 95.444" xmlns="http://www.w3.org/2000/svg">
+  <g id="Group_10" data-name="Group 10" transform="translate(-595.671 -698.786)">
+    <g id="Group_5" data-name="Group 5">
+      <path id="Path_61" data-name="Path 61" d="M687.689,737.222,667.74,756.675l4.727,27.475a8.46,8.46,0,0,1,.048,1.1c0,1.426-.657,2.748-2.251,2.748a4.444,4.444,0,0,1-2.2-.661l-24.676-12.971-24.676,12.971a4.622,4.622,0,0,1-2.2.661c-1.594,0-2.307-1.322-2.307-2.748a8.559,8.559,0,0,1,.1-1.1l4.727-27.475-20.005-19.453a4.292,4.292,0,0,1-1.37-2.639c0-1.651,1.706-2.308,3.076-2.528l27.592-4.014,12.362-25c.5-1.042,1.426-2.251,2.692-2.251s2.2,1.209,2.692,2.251l12.362,25,27.592,4.014c1.322.22,3.076.877,3.076,2.528A4.1,4.1,0,0,1,687.689,737.222Z" fill="#fbb141" stroke="#2d4d68" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+    </g>
+  </g>
+</svg>
 `;
 
 // License: CC Attribution. Made by Muhammad Ridlo: mailto:m.ridlo@gmail.com
@@ -206,7 +227,7 @@ if (seedEl) {
       : Math.round(Math.random() * 899999) + 100000;
 
   blockquoteEls.map((v, i) => {
-    const j = (seed * hashStringToInt(v.innerText)) % blockquoteEls.length;
+    const j = (seed + hashStringToInt(v.innerText)) % blockquoteEls.length;
     [blockquoteEls[j].innerHTML, v.innerHTML] = [v.innerHTML, blockquoteEls[j].innerHTML];
   });
   window.history.pushState({}, 0, '?' + seed); // 改变url

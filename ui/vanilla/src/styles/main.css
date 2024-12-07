@@ -162,6 +162,12 @@ nav a:hover {
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
+nav a svg {
+  position: absolute;
+  top: 1px;
+  left: -5px;
+}
+
 .content {
   width: var(--content-w);
   max-width: 100%;
@@ -179,7 +185,7 @@ nav a:hover {
 }
 
 .content .art {
-  padding: 0 43px;
+  padding: 0 41px;
 }
 
 .content .about {
@@ -273,7 +279,7 @@ nav a:hover {
 }
 
 .about .markdown-body {
-  margin: 15px 12px 43px;
+  margin: 15px 12px 41px;
 }
 
 /* 纠正特殊页面在post中的显示 */

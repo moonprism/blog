@@ -17,6 +17,8 @@
 
 .link h3 svg {
   margin-right: 7px;
+  position: relative;
+  bottom: 2px;
 }
 
 .link h3 em {

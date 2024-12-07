@@ -22,7 +22,7 @@
 .art .markdown-body h2,
 .art .markdown-body h3,
 .art .markdown-body h4 {
-  font-weight: 500;
+  font-weight: bold;
   color: var(--primary);
 }
 .art .markdown-body h2::before,
@@ -33,6 +33,7 @@
   content: '#';
   font-weight: bold;
   opacity: 0;
+  transition: opacity 0.3s;
 }
 .art .markdown-body h2:hover::before,
 .art .markdown-body h3:hover::before,
@@ -40,7 +41,7 @@
   opacity: 1;
 }
 .art .markdown-body h2 {
-  font-size: 22px;
+  font-size: 20px;
   margin: 24px 0 15px;
 }
 .art .markdown-body h2::before {
@@ -48,20 +49,20 @@
   font-size: 25px;
 }
 .art .markdown-body h3 {
-  font-size: 19px;
+  font-size: 16px;
   margin: 20px 0 10px;
 }
 .art .markdown-body h3::before {
   color: hotpink;
-  font-size: 21px;
+  font-size: 20px;
 }
 .art .markdown-body h4 {
-  font-size: 16px;
-  margin: 18px 0 8px;
+  font-size: 14px;
+  margin: 17px 0 8px;
 }
 .art .markdown-body h4::before {
   color: pink;
-  font-size: 18px;
+  font-size: 17px;
 }
 .art .markdown-body strong:not(table strong),
 .art .markdown-body b {
